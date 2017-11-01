@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.apache.commons.lang3.SystemUtils;
+
 
 /*To read the Property file*/
 public class ConfigReader {
@@ -28,4 +30,30 @@ public class ConfigReader {
 	public String getDriverPath(String driverPath){
 		return properties.getProperty(driverPath);
 	}
+	
+	/**
+	 * Gets the base driver path from the configuration properties file
+	 * @return The base path for the drivers
+	 */
+	public String getDriverBasePath(){
+		if (SystemUtils.IS_OS_WINDOWS) {
+			return properties.getProperty("DriverPath_Win");
+		} else if (SystemUtils.IS_OS_MAC_OSX) {
+			return properties.getProperty("DriverPath_Mac");
+		} else if (SystemUtils.IS_OS_LINUX) {
+			return properties.getProperty("DriverPath_Linux");
+		} else {
+			throw new RuntimeException("Could not get base driver path, unknown OS");
+		}
+	}
+	
+	/**
+	 * Gets the driver name (geckodriver) based on the selected driver (FirefoxDriver)
+	 * @param driver
+	 * @return
+	 */
+	public String getDriverName(String driver) {
+		return properties.getProperty("DriverName_" + driver);
+	}
+	
 }
