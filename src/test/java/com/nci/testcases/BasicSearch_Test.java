@@ -24,25 +24,28 @@ import org.testng.annotations.Test;
 import com.nci.Utilities.BrowserFactory;
 import com.nci.Utilities.ConfigReader;
 import com.nci.clinicalTrial.pages.BasicSearch;
+import com.relevantcodes.extentreports.LogStatus;
 
-public class BasicSearch_Test {
+public class BasicSearch_Test extends BaseClass{
 	
-	WebDriver driver;
+	//WebDriver driver;
 	BasicSearch basicSearch;
 	String resultPageUrl;
 	String advSearchPageUrl;
-	ConfigReader config = new ConfigReader();
+	//ConfigReader config = new ConfigReader();
 	
-	@BeforeTest (groups={"Smoke"})
+	@BeforeClass(groups={"Smoke"})
 	@Parameters({"browser"})
 	public void setup(String browser){
+		logger = report.startTest(this.getClass().getSimpleName());
 		//String url="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search";
-		String pageUrl= config.getPageURL("BasicClinicalTrialSearchURL");
-		System.out.println("PageURL: "+pageUrl);
-		driver= BrowserFactory.startBrowser(browser, pageUrl);
+		pageURL= config.getPageURL("BasicClinicalTrialSearchURL");
+		System.out.println("PageURL: "+pageURL);
+		driver= BrowserFactory.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		basicSearch = PageFactory.initElements(driver, BasicSearch.class);
-		System.out.println("PageFactory initiated");
+		//basicSearch = PageFactory.initElements(driver, BasicSearch.class);
+		basicSearch = new BasicSearch(driver);
+		System.out.println("Basic search setup done");
 		}
 	
 	@Test (groups={"Smoke"})
@@ -62,6 +65,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the default search "+driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Default Search on Basic CTS");
 		
 	}
 	
@@ -100,6 +104,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the cancer type search "+driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type on Basic CTS");
 		
 	}
 	
@@ -124,7 +129,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the age search "+driver.getCurrentUrl());
-		
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age on Basic CTS");
 			}
 	
 	 @Test (groups={"Smoke"})
@@ -140,7 +145,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the zip search "+driver.getCurrentUrl());
-		
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for ZipCode on Basic CTS");
 	}
 	 
 	 @Test (groups={"Smoke"})
@@ -158,7 +163,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the age search "+driver.getCurrentUrl());
-		
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age and ZipCode on Basic CTS");
 	}
 	 
 	 @Test (groups={"Smoke"})
@@ -173,7 +178,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check "+driver.getCurrentUrl());
-		
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Basic CTS");
 	}
 	 
 	 @Test (groups={"Smoke"})
@@ -188,7 +193,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check "+driver.getCurrentUrl());
-		
+		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Basic CTS");
 	}
 	 
 	 @Test (groups={"Smoke"})
@@ -203,7 +208,7 @@ public class BasicSearch_Test {
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check "+driver.getCurrentUrl());
-		
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Basic CTS");
 	}
 	 
 	 @Test (groups={"Smoke"})
@@ -219,13 +224,13 @@ public class BasicSearch_Test {
 			driver.navigate().back();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			System.out.println("Page URL after the coming back to basic search "+driver.getCurrentUrl());
-			
+			logger.log(LogStatus.PASS, "Pass => " + "Verify navigation to Advanced CTS on Basic CTS");
 		}
 	 
-	@AfterTest (groups={"Smoke"})
+	/*@AfterTest (groups={"Smoke"})
 	public void endSession(){
 		driver.quit();
-	}
+	}*/
 	
 }
 

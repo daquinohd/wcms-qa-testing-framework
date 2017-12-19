@@ -19,54 +19,57 @@ import com.nci.Utilities.BrowserFactory;
 import com.nci.Utilities.ConfigReader;
 import com.nci.clinicalTrial.pages.AdvanceSearch;
 import com.nci.clinicalTrial.pages.BasicSearch;
+import com.relevantcodes.extentreports.LogStatus;
 
-public class AdvanceSearch_Test {
+public class AdvanceSearch_Test extends BaseClass {
 
-	WebDriver driver;
+	//WebDriver driver;
 	AdvanceSearch advanceSearch;
-	ConfigReader config = new ConfigReader();
+	//ConfigReader config = new ConfigReader();
 	
 	@BeforeTest (groups={"Smoke"})
 	@Parameters({"browser"})
 	public void setup(String browser) throws MalformedURLException{
+		logger = report.startTest(this.getClass().getSimpleName());
 		//String url="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search";
-		String pageUrl= config.getPageURL("AdvanceSearchPageURL");
-		System.out.println("PageURL: "+pageUrl);
-		driver= BrowserFactory.startBrowser(browser, pageUrl);
+		pageURL= config.getPageURL("AdvanceSearchPageURL");
+		System.out.println("PageURL: "+pageURL);
+		driver= BrowserFactory.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		//basicSearch = PageFactory.initElements(driver, BasicSearch.class);
-		//System.out.println("PageFactory initiated");
 		advanceSearch = new AdvanceSearch(driver);
+		System.out.println("Advance Search setup done");
 		}
 	
 	@Test (groups = {"Smoke"}, priority = 1)
 	public void verifyPageTitle()
 	{
 		Assert.assertEquals(advanceSearch.getAdvanceSearchPageTitle(), AdvanceSearch.ADVANCE_SEARCH_PAGE_TITLE);
-		//logger.log(LogStatus.PASS, "Verifying the Title of the page is *Find NCI-Supported Clinical Trials* | Actual Result: "+advanceSearch.getAdvanceSearchPageTitle());
+		logger.log(LogStatus.PASS, "Verifying the Title of the page is *Find NCI-Supported Clinical Trials* | Actual Result: "+advanceSearch.getAdvanceSearchPageTitle());
 	}
 	
 	@Test (groups = {"Smoke"}, priority = 2)
 	public void defaultSearchTest() {
 		
 		advanceSearch.defaultSearch();
-		System.out.println("default Search function executed");
+		System.out.println("defaultSearchTest: default Search function executed");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
 		//Verify page title
 		String pageTitle = driver.getTitle();
-		System.out.println("Advance Search Results Page Title: "+pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result" ));
+		System.out.println("defaultSearchTest: Advance Search Results Page Title: "+pageTitle);
+		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results" ));
 				
 		/*Verify that search result summary text contains the "all trials" 
 		Ex- Results 1-10 of 5384 for your search for: "all trials"  */ 
 		
 		String searchStatus = driver.findElement(By.xpath(".//*[@class='cts-results-label']/strong")).getText();
-		System.out.println("SR Status Body Text: "+searchStatus);
+		System.out.println("defaultSearchTest: SR Status Body Text: "+searchStatus);
 		Assert.assertTrue(searchStatus.contains("all trials"));
 		
 		driver.navigate().back();
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Default Search on Advanced CTS");
 	}
 	
 	@Test(dataProvider="AdvanceSearch", groups = {"Smoke"}, priority = 2)
@@ -80,15 +83,15 @@ public class AdvanceSearch_Test {
 		
 		//Verify page title
 		String pageTitle = driver.getTitle();
-		System.out.println("Advance Search Results Page Title: "+pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result" ));
+		System.out.println("advancesearch_CancerType_SubType: Advance Search Results Page Title: "+pageTitle);
+		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results" ));
 		
 		//Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
-		System.out.println("Current Page URL: "+pageURL);
+		System.out.println("advancesearch_CancerType_SubType: Current Page URL: "+pageURL);
 		//Assert.assertTrue(pageURL.contains("t=C9312&st=C53707" ));
 		Assert.assertTrue(pageURL.contains("t="+cancerTypeId+"&st="+cancerSubTypeId));
-		System.out.println("Cancer Type ID: t="+cancerTypeId+"&st="+cancerSubTypeId);
+		System.out.println("advancesearch_CancerType_SubType: Cancer Type ID: t="+cancerTypeId+"&st="+cancerSubTypeId);
 				
 		/*Verify that show search criteria table contains the selected search criteria */ 
 		driver.findElement(By.xpath(".//*[@class='ctscb']")).click();
@@ -100,7 +103,7 @@ public class AdvanceSearch_Test {
 		//WebElement cancerType=table_element.findElement(By.className("table no-auto-enlarge"));
 		
 		List<WebElement> tr_collection=table_element.findElements(By.tagName("tr"));
-        System.out.println("NUMBER OF ROWS IN THIS TABLE = "+tr_collection.size());
+        System.out.println("advancesearch_CancerType_SubType: NUMBER OF ROWS IN THIS TABLE = "+tr_collection.size());
         data = new Object[tr_collection.size()][2];
         int row_num,col_num;
         row_num=0;
@@ -108,14 +111,14 @@ public class AdvanceSearch_Test {
         for(WebElement trElement : tr_collection)
         {
             List<WebElement> td_collection=trElement.findElements(By.xpath("td"));
-            System.out.println("NUMBER OF COLUMNS="+td_collection.size());
+            System.out.println("advancesearch_CancerType_SubType: NUMBER OF COLUMNS="+td_collection.size());
             
             col_num=0;
             for(WebElement tdElement : td_collection)
             {
-                System.out.println("row # "+row_num+", col # "+col_num+ "text="+tdElement.getText());
+                System.out.println("advancesearch_CancerType_SubType: row # "+row_num+", col # "+col_num+ "text="+tdElement.getText());
                 data[row_num][col_num]=tdElement.getText();
-                System.out.println("DATA="+data[row_num][col_num]);
+                System.out.println("advancesearch_CancerType_SubType: DATA="+data[row_num][col_num]);
                 col_num++;
             }
             row_num++;
@@ -125,6 +128,7 @@ public class AdvanceSearch_Test {
         Assert.assertEquals(data[2][1], cancerSubType);
           
 		driver.navigate().back();
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search by Cancer Type and SubType on Advanced CTS");
 	}
 	
 	@Test(dataProvider="AdvanceSearch1", groups = {"Smoke"}, priority = 2)
@@ -139,15 +143,15 @@ public class AdvanceSearch_Test {
 			
 			//Verify page title
 			String pageTitle = driver.getTitle();
-			System.out.println("Advance Search Results Page Title: "+pageTitle);
+			System.out.println("advancesearch_CancerType_SubType_Stage: Advance Search Results Page Title: "+pageTitle);
 			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result" ));
 			
 			//Verify search criteria in URL
 			String pageURL = driver.getCurrentUrl();
-			System.out.println("Current Page URL: "+pageURL);
+			System.out.println("advancesearch_CancerType_SubType_Stage: Current Page URL: "+pageURL);
 			//Assert.assertTrue(pageURL.contains("t=C9312&st=C53707&stg=C6468" ));
 			Assert.assertTrue(pageURL.contains("t="+cancerTypeId+"&st="+cancerSubTypeId+"&stg="+cancerStageId));
-			System.out.println("Cancer Type ID: t="+cancerTypeId+"&st="+cancerSubTypeId+"&stg="+cancerStageId);
+			System.out.println("advancesearch_CancerType_SubType_Stage: Cancer Type ID: t="+cancerTypeId+"&st="+cancerSubTypeId+"&stg="+cancerStageId);
 					
 			/*Verify that show search criteria table contains the selected search criteria */ 
 			driver.findElement(By.xpath(".//*[@class='ctscb']")).click();
@@ -159,7 +163,7 @@ public class AdvanceSearch_Test {
 			//WebElement cancerType=table_element.findElement(By.className("table no-auto-enlarge"));
 			
 			List<WebElement> tr_collection=table_element.findElements(By.tagName("tr"));
-	        System.out.println("NUMBER OF ROWS IN THIS TABLE = "+tr_collection.size());
+	        System.out.println("advancesearch_CancerType_SubType_Stage: NUMBER OF ROWS IN THIS TABLE = "+tr_collection.size());
 	        data = new Object[tr_collection.size()][2];
 	        int row_num,col_num;
 	        row_num=0;
@@ -167,14 +171,14 @@ public class AdvanceSearch_Test {
 	        for(WebElement trElement : tr_collection)
 	        {
 	            List<WebElement> td_collection=trElement.findElements(By.xpath("td"));
-	            System.out.println("NUMBER OF COLUMNS="+td_collection.size());
+	            System.out.println("advancesearch_CancerType_SubType_Stage: NUMBER OF COLUMNS="+td_collection.size());
 	            
 	            col_num=0;
 	            for(WebElement tdElement : td_collection)
 	            {
-	                System.out.println("row # "+row_num+", col # "+col_num+ "text="+tdElement.getText());
+	                System.out.println("advancesearch_CancerType_SubType_Stage: row # "+row_num+", col # "+col_num+ "text="+tdElement.getText());
 	                data[row_num][col_num]=tdElement.getText();
-	                System.out.println("DATA="+data[row_num][col_num]);
+	                System.out.println("advancesearch_CancerType_SubType_Stage: DATA="+data[row_num][col_num]);
 	                col_num++;
 	            }
 	            row_num++;
@@ -185,12 +189,13 @@ public class AdvanceSearch_Test {
 	        Assert.assertEquals(data[3][1], cancerStage);
 	          
 			driver.navigate().back();
+			logger.log(LogStatus.PASS, "Pass => " + "Verify Search by Cancer Type, SubType and Stage on Advanced CTS");
 		}	
 	 
-	@AfterTest (groups={"Smoke"})
+	/*@AfterTest (groups={"Smoke"})
 	public void endSession(){
 		driver.quit();
-	}
+	}*/
 	
 	@DataProvider(name="AdvanceSearch")
 	public Object[][] readAdvanceSearchData() {

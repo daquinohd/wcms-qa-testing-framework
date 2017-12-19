@@ -9,10 +9,10 @@
 			</run>
 		</groups>
 		<classes> 	
-			<class name="com.nci.testcases.BasicSearch_Test" />
-		<class name="com.nci.testcases.AdvanceSearch_Test" />
+			<class name="com.nci.testcases.BasicSearch_Test" /> 
+		<class name="com.nci.testcases.AdvanceSearch_Test" /> 
 		</classes>
-	</test>--> 
+	</test> -->
 	
 	<!--<test name="NCI - Chrome Testing Headless" >
 		<parameter name="browser" value="ChromeHeadless" />
@@ -26,7 +26,7 @@
 		<class name="com.nci.testcases.AdvanceSearch_Test" />
 		</classes>
 	</test>--> 
-	<!--<test name="NCI - Firefox Testing" >
+	<test name="NCI - Firefox Testing" >
 		<parameter name="browser" value="Firefox" />
 		<groups>
 			<run>
@@ -34,11 +34,11 @@
 			</run>
 		</groups>
 		<classes> 	
-			<class name="com.nci.testcases.BasicSearch_Test" />
-			<class name="com.nci.testcases.AdvanceSearch_Test" />
+			<!-- <class name="com.nci.testcases.BasicSearch_Test" /> -->
+			  <class name="com.nci.testcases.AdvanceSearch_Test" />   
 		</classes>
-	</test>-->
-	<test name="NCI - Firefox Testing Headless" >
+	</test>
+	<!-- <test name="NCI - Firefox Testing Headless" >
 		<parameter name="browser" value="FirefoxHeadless" />
 		<groups>
 			<run>
@@ -49,6 +49,6 @@
 			<class name="com.nci.testcases.BasicSearch_Test" />
 			<class name="com.nci.testcases.AdvanceSearch_Test" />
 		</classes>
-	</test>
+	</test>  -->
 </suite>
 

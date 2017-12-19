@@ -15,4 +15,6 @@ DriverPath_Linux=./resources/drivers/linux
 DriverName_ChromeDriver=chromedriver
 DriverName_FirefoxDriver=geckodriver
 
-************************
+***********************Reporting******************************************
+ExtentReports= ./test-output/ExtentReport/
+ScreenShots= ./test-output/Screenshots/

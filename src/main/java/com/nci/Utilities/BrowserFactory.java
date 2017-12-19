@@ -38,6 +38,7 @@ public class BrowserFactory {
 			System.setProperty("webdriver.chrome.driver", driverFullPath);
 			System.out.println("Chrome Driver Path: " + driverFullPath);
 			driver=new ChromeDriver();
+			
 			driver.manage().window().maximize();
 			driver.get(url);
 		}

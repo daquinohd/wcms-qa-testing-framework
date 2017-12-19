@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 
 public class BasicSearch {
 
@@ -13,6 +14,8 @@ public class BasicSearch {
 	public BasicSearch(WebDriver driver) 
 		{
 			this.driver = driver;
+			PageFactory.initElements(driver, this);
+			System.out.println("PageFactory initiated");
 		}
 	
 	@FindBy(how=How.XPATH, using=".//*[@id='cgvBody']/div[1]/p/a[3]") WebElement lnk_AdvSearch;

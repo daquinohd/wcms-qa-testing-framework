@@ -56,4 +56,11 @@ public class ConfigReader {
 		return properties.getProperty("DriverName_" + driver);
 	}
 	
+	public String getExtentReportPath() {
+		return properties.getProperty("ExtentReports");
+	}
+	
+	public String getScreenShotsPath() {
+		return properties.getProperty("ScreenShots");
+	}
 }
