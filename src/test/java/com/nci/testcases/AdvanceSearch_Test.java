@@ -201,7 +201,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	public Object[][] readAdvanceSearchData() {
 		 return new Object[][] { 
 		   //{cancerTypeIndex, cancerTypeID, cancerTypeName, cancerSubTypeIndex, cancerSubTypeID, cancerSubTypeName, cancerStageIndex, cancerStageId, cancerStageName}
-			 {129, "C2991", "Other Disease", 10, "C34783", "Alcoholic Liver Disease"},
+			 {129, "C2991", "Other Disease", 9, "C34783", "Alcoholic Liver Disease"},
 			 {12, "C9312", "Bone Sarcoma", 1, "C53707", "Bone Osteosarcoma"},
 			 {14, "C4872", "Breast Cancer", 1, "C5214", "Breast Adenocarcinoma"} };	
 	}

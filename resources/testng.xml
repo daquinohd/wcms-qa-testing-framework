@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="QA Environment">
-	<!--<test name="NCI - Chrome Testing" >
+	<test name="NCI - Chrome Testing" >
 		<parameter name="browser" value="Chrome" />
 		<groups>
 			<run>
@@ -9,10 +9,10 @@
 			</run>
 		</groups>
 		<classes> 	
-			<class name="com.nci.testcases.BasicSearch_Test" /> 
-		<class name="com.nci.testcases.AdvanceSearch_Test" /> 
+			 <class name="com.nci.testcases.BasicSearch_Test" />
+		 <class name="com.nci.testcases.AdvanceSearch_Test" />
 		</classes>
-	</test> -->
+	</test> 
 	
 	<!--<test name="NCI - Chrome Testing Headless" >
 		<parameter name="browser" value="ChromeHeadless" />
@@ -25,8 +25,8 @@
 			<class name="com.nci.testcases.BasicSearch_Test" />
 		<class name="com.nci.testcases.AdvanceSearch_Test" />
 		</classes>
-	</test>--> 
-	<test name="NCI - Firefox Testing" >
+	</test>  -->
+	<!-- <test name="NCI - Firefox Testing" >
 		<parameter name="browser" value="Firefox" />
 		<groups>
 			<run>
@@ -34,10 +34,10 @@
 			</run>
 		</groups>
 		<classes> 	
-			<!-- <class name="com.nci.testcases.BasicSearch_Test" /> -->
+			 <class name="com.nci.testcases.BasicSearch_Test" /> 
 			  <class name="com.nci.testcases.AdvanceSearch_Test" />   
 		</classes>
-	</test>
+	</test>  -->
 	<!-- <test name="NCI - Firefox Testing Headless" >
 		<parameter name="browser" value="FirefoxHeadless" />
 		<groups>

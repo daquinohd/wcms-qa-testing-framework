@@ -1,5 +1,8 @@
 package com.nci.testcases;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -32,9 +35,10 @@ public class BaseClass {
 	
 	public void beforeTest(){
 		log.info("Starting a new test");
+		String fileName= new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
-		System.out.println("Logger Path" + extentReportPath);
-		report= new ExtentReports(extentReportPath +"test"+System.currentTimeMillis()+".html");
+		System.out.println("Logger Path:" + extentReportPath);
+		report= new ExtentReports(extentReportPath +config.getProperty("Environment")+"-"+fileName+".html");
 		System.out.println("Report Path: ");
 		
 	}

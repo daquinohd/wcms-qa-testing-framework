@@ -31,6 +31,7 @@ public class AdvanceSearch {
 	@FindBy(how=How.CSS, using="#ct-select option") List <WebElement> dpd_cancerType;
 	@FindBy(how=How.CSS, using="#st-multiselect") WebElement dpd_subTypeBox;
 	@FindBy(how=How.CSS, using="#st-multiselect") List <WebElement> dpd_subType;
+	//@FindBy(how=How.CSS, using=".cssSelector(".select2-selection__rendered [placeholder='Select a subtype']")) WebElement box_subType;
 	
 	
 	
@@ -49,16 +50,27 @@ public class AdvanceSearch {
 		return AdvanceSearchPageTitle.getText();
 	}
 	
-	public List <WebElement> getCancerType() {
-		return dpd_cancerType;
+	public WebElement getCancerTypeBox() {
+		return box_primaryCancerType;
 	}
 	
-	public List <WebElement> getSubType() {
-		return dpd_subType;
+	public List <WebElement> getCancerType() {
+		box_primaryCancerType.click();
+		System.out.println("Clicked on the CancerType drop down");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		List <WebElement> cancerTypeList = lst_primaryCancerTypeResults.findElements(By.tagName("li"));
+		System.out.println("Total # of cancerTypes: "+cancerTypeList.size());
+		return cancerTypeList;		
 	}
+	
 	
 	public WebElement getSubTypeBox() {
 		return dpd_subTypeBox;
+	}
+	
+	public List <WebElement> getSubType() {
+		dpd_subTypeBox.click();
+		return dpd_subType;
 	}
 	
 	public String getSearchResultPageTitle() {
@@ -69,9 +81,9 @@ public class AdvanceSearch {
 		return btn_Print;
 	}
 	
-	public WebElement getCancerTypeBox() {
-		return box_primaryCancerType;
-	}
+	
+	
+	
 	
 	public void defaultSearch() {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", box_LeadOrganization);
@@ -81,15 +93,11 @@ public class AdvanceSearch {
 	}
 	
 	public void advSearch_CancerType_SubType(int cancerTypeIndex, int cancerSubTypeIndex) {
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		box_primaryCancerType.click();
-		System.out.println("Clicked on the CancerType drop down");
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		List <WebElement> cancerTypeList = lst_primaryCancerTypeResults.findElements(By.tagName("li"));
-		System.out.println("Total # of cancerTypes: "+cancerTypeList.size());
-		cancerTypeList.get(cancerTypeIndex).click();
+		
+		getCancerType().get(cancerTypeIndex).click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.findElement(By.cssSelector(".select2-selection__rendered [placeholder='Select a subtype']")).click();
+		//getSubTypeBox().click();
 		System.out.println("Clicked on the SubType drop down");
 		// Get the list of elements under the select tag
 		Select multi = new Select(driver.findElement(By.id("st-multiselect")));
