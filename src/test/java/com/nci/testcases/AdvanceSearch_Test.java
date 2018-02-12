@@ -19,12 +19,18 @@ import com.nci.Utilities.BrowserFactory;
 import com.nci.Utilities.ConfigReader;
 import com.nci.clinicalTrial.pages.AdvanceSearch;
 import com.nci.clinicalTrial.pages.BasicSearch;
+import com.nci.commonobjects.ApiReference;
+import com.nci.commonobjects.Banner;
+import com.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
 
 	//WebDriver driver;
 	AdvanceSearch advanceSearch;
+	BreadCrumb crumb;
+	Banner banner;
+	ApiReference api;
 	//ConfigReader config = new ConfigReader();
 	
 	@BeforeTest (groups={"Smoke"})
@@ -39,6 +45,9 @@ public class AdvanceSearch_Test extends BaseClass {
 		//basicSearch = PageFactory.initElements(driver, BasicSearch.class);
 		advanceSearch = new AdvanceSearch(driver);
 		System.out.println("Advance Search setup done");
+		crumb = new BreadCrumb (driver);
+		banner = new Banner (driver);
+		api = new ApiReference (driver);
 		}
 	
 	@Test (groups = {"Smoke"}, priority = 1)
@@ -46,6 +55,28 @@ public class AdvanceSearch_Test extends BaseClass {
 	{
 		Assert.assertEquals(advanceSearch.getAdvanceSearchPageTitle(), AdvanceSearch.ADVANCE_SEARCH_PAGE_TITLE);
 		logger.log(LogStatus.PASS, "Verifying the Title of the page is *Find NCI-Supported Clinical Trials* | Actual Result: "+advanceSearch.getAdvanceSearchPageTitle());
+	}
+	
+	@Test (groups = {"Smoke"}, priority = 1)  
+	public void verifyBanner()
+	{
+		banner.getBanner();
+		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
+	}
+	
+	@Test (groups = {"Smoke"}, priority = 1)  
+	public void verify_bread_crumb()
+	{
+		crumb.getBreadCrumb(AdvanceSearch.BREAD_CRUMB);
+		logger.log(LogStatus.PASS, "Verifying the Breadcrumb of the page");
+	}
+	
+	@Test (groups = {"Smoke"}, priority = 2)  
+	public void verifyApiReference()
+	{
+		api.getApiReference();
+		api.verifyApiReferenceLink();
+		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
 	}
 	
 	@Test (groups = {"Smoke"}, priority = 2)
@@ -69,7 +100,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertTrue(searchStatus.contains("all trials"));
 		
 		driver.navigate().back();
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Default Search on Advanced CTS");
+		logger.log(LogStatus.PASS, "Verify Default Search on Advanced CTS");
 	}
 	
 	@Test(dataProvider="AdvanceSearch", groups = {"Smoke"}, priority = 2)
@@ -77,14 +108,14 @@ public class AdvanceSearch_Test extends BaseClass {
 										int cancerSubTypeIndex, String cancerSubTypeId, String cancerSubType) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(500);
-		advanceSearch.advSearch_CancerType_SubType(cancerTypeIndex, cancerSubTypeIndex);
+		advanceSearch.advSearch_CancerType_SubType(cancerTypeIndex, cancerSubType);	
 		Thread.sleep(500);
-		advanceSearch.defaultSearch();
+		//advanceSearch.defaultSearch();
 		
 		//Verify page title
 		String pageTitle = driver.getTitle();
 		System.out.println("advancesearch_CancerType_SubType: Advance Search Results Page Title: "+pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results" ));
+		//Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results" ));
 		
 		//Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -95,7 +126,7 @@ public class AdvanceSearch_Test extends BaseClass {
 				
 		/*Verify that show search criteria table contains the selected search criteria */ 
 		driver.findElement(By.xpath(".//*[@class='ctscb']")).click();
-		Thread.sleep(500);
+		Thread.sleep(100);
 		
 		WebElement table_element = driver.findElement(By.xpath(".//table[@class='table no-auto-enlarge']"));
 		//List<WebElement> tr_collection=table_element.findElements(By.xpath(".//table[@class='table no-auto-enlarge']/tbody/tr"));
@@ -126,9 +157,16 @@ public class AdvanceSearch_Test extends BaseClass {
         
         Assert.assertEquals(data[1][1], cancerType);
         Assert.assertEquals(data[2][1], cancerSubType);
+        
+        System.out.println("data[1][1]==== "+data[1][1]);
+        System.out.println("cancerType==== "+cancerType);
+        System.out.println("data[2][1]==== "+data[2][1]);
+        System.out.println("cancerSubType==== "+cancerSubType);
           
-		driver.navigate().back();
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Search by Cancer Type and SubType on Advanced CTS");
+		//driver.navigate().to(pageURL);
+        driver.findElement(By.linkText("Start Over")).click();
+        //driver.navigate().back();
+		logger.log(LogStatus.PASS, "Verify Search by Cancer Type and SubType on Advanced CTS");
 	}
 	
 	@Test(dataProvider="AdvanceSearch1", groups = {"Smoke"}, priority = 2)
@@ -137,9 +175,9 @@ public class AdvanceSearch_Test extends BaseClass {
 											int cancerStageIndex, String cancerStageId, String cancerStage ) throws InterruptedException {
 			Object[][] data;
 			Thread.sleep(500);
-			advanceSearch.advSearch_CancerType_SubType_Stage(cancerTypeIndex, cancerSubTypeIndex, cancerStageIndex);
+			advanceSearch.advSearch_CancerType_SubType_Stage(cancerTypeIndex, cancerSubType, cancerStage);
 			Thread.sleep(500);
-			advanceSearch.defaultSearch();
+			//advanceSearch.defaultSearch();
 			
 			//Verify page title
 			String pageTitle = driver.getTitle();
@@ -155,8 +193,8 @@ public class AdvanceSearch_Test extends BaseClass {
 					
 			/*Verify that show search criteria table contains the selected search criteria */ 
 			driver.findElement(By.xpath(".//*[@class='ctscb']")).click();
-			Thread.sleep(500);
-			
+			Thread.sleep(100);
+					
 			WebElement table_element = driver.findElement(By.xpath(".//table[@class='table no-auto-enlarge']"));
 			//List<WebElement> tr_collection=table_element.findElements(By.xpath(".//table[@class='table no-auto-enlarge']/tbody/tr"));
 			//WebElement cancerType=table_element.findElement(By.xpath(".//table[@class='table no-auto-enlarge']//tbody//tr[1]//td[2]"));
@@ -188,8 +226,8 @@ public class AdvanceSearch_Test extends BaseClass {
 	        Assert.assertEquals(data[2][1], cancerSubType);
 	        Assert.assertEquals(data[3][1], cancerStage);
 	          
-			driver.navigate().back();
-			logger.log(LogStatus.PASS, "Pass => " + "Verify Search by Cancer Type, SubType and Stage on Advanced CTS");
+	        driver.findElement(By.linkText("Start Over")).click();
+			logger.log(LogStatus.PASS, "Verify Search by Cancer Type, SubType and Stage on Advanced CTS");
 		}	
 	 
 	/*@AfterTest (groups={"Smoke"})
@@ -201,7 +239,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	public Object[][] readAdvanceSearchData() {
 		 return new Object[][] { 
 		   //{cancerTypeIndex, cancerTypeID, cancerTypeName, cancerSubTypeIndex, cancerSubTypeID, cancerSubTypeName, cancerStageIndex, cancerStageId, cancerStageName}
-			 {129, "C2991", "Other Disease", 9, "C34783", "Alcoholic Liver Disease"},
+			 {130, "C2991", "Other Disease", 9, "C34783", "Alcoholic Liver Disease"},
 			 {12, "C9312", "Bone Sarcoma", 1, "C53707", "Bone Osteosarcoma"},
 			 {14, "C4872", "Breast Cancer", 1, "C5214", "Breast Adenocarcinoma"} };	
 	}
