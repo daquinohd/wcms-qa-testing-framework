@@ -70,24 +70,7 @@ public class BasicSearch_Test extends BaseClass{
 		
 	}
 	
-	@Test (groups={"Smoke"})
-	public void displayAPI(){
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id='cgvBody']/div[2]/div/div[2]")).isDisplayed());
-		basicSearch.displayAPI();
-		if(driver.getTitle().equals("Cancer Clinical Trials API")){
-			System.out.println("CTS ApI page should be displayed");
-			resultPageUrl=driver.getCurrentUrl();
-			System.out.println("Result page url: "+resultPageUrl);}
-		else 
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		logger.log(LogStatus.PASS, "Pass => " + "Verify CTS API is displayed on Basic CTS");
 		
-	}
-	
 	@Test (groups={"Smoke"})
 	public void searchCancerType() throws InterruptedException{
 		String cancerType="Breast Cancer";

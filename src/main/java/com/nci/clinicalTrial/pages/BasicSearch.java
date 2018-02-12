@@ -40,9 +40,7 @@ public class BasicSearch {
 		btn_Search.click();		
 	}
 	
-	
-	
-		
+			
 	//Search based on cancer type
 	public void searchCancerType(String cancerType){
 		txt_CancerType.sendKeys(cancerType);
