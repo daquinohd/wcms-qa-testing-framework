@@ -9,8 +9,13 @@
 			</run>
 		</groups>
 		<classes> 	
+<<<<<<< HEAD
 		 <class name="com.nci.testcases.AdvanceSearch_Test" />
 		 <class name="com.nci.testcases.BasicSearch_Test" />
+=======
+			 <class name="com.nci.testcases.BasicSearch_Test" />
+		 <!-- <class name="com.nci.testcases.AdvanceSearch_Test" /> -->
+>>>>>>> 088dc15539ac24b9d77ad8e5ed15e2eba7e2bfd0
 		</classes>
 	</test> 
 	

@@ -65,11 +65,12 @@ public class BasicSearch_Test extends BaseClass{
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the default search "+driver.getCurrentUrl());
+		
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Default Search on Basic CTS");
 		
 	}
 	
-	
+		
 	@Test (groups={"Smoke"})
 	public void searchCancerType() throws InterruptedException{
 		String cancerType="Breast Cancer";
@@ -162,8 +163,91 @@ public class BasicSearch_Test extends BaseClass{
 		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found "+age);
 		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		System.out.println("Page URL after the age search "+driver.getCurrentUrl());
+		System.out.println("Page URL after the search "+driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age and ZipCode on Basic CTS");
+	}
+	 
+	 @Test (groups={"Smoke"})
+	 public void searchCancerTypeAge(){
+		int age=65;
+		String cancerType="Breast Cancer";
+		
+		//Performing the search using Age and Zipcode parameter
+		basicSearch.searchCancerTypeAge(cancerType, age);
+		
+		if(driver.findElement(By.name("printButton")).isDisplayed()){
+			System.out.println("search results page should be displayed");
+			resultPageUrl=driver.getCurrentUrl();
+			System.out.println("Result page url: "+resultPageUrl);}
+		else 
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		//Checking the Results page URL for the parameters passed in order to validate correct search results are displayed
+		resultPageUrl=driver.getCurrentUrl();
+		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
+		System.out.println("New String: " +cancerTypeWithoutSpace);
+		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace), "Keyword not found "+cancerTypeWithoutSpace);	
+		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found "+age);
+		driver.navigate().back();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Page URL after the search "+driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and Age on Basic CTS");
+	}
+	 
+	 @Test (groups={"Smoke"})
+	 public void searchCancerTypeZip(){
+		int zip=20105;
+		String cancerType="Breast Cancer";
+		
+		//Performing the search using Age and Zipcode parameter
+		basicSearch.searchCancerTypeZip(cancerType, zip);
+		
+		if(driver.findElement(By.name("printButton")).isDisplayed()){
+			System.out.println("search results page should be displayed");
+			resultPageUrl=driver.getCurrentUrl();
+			System.out.println("Result page url: "+resultPageUrl);}
+		else 
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		//Checking the Results page URL for the parameters passed in order to validate correct search results are displayed
+		resultPageUrl=driver.getCurrentUrl();
+		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
+		System.out.println("New String: " +cancerTypeWithoutSpace);
+		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace), "Keyword not found "+cancerTypeWithoutSpace);	
+		Assert.assertTrue(resultPageUrl.contains(Integer.toString(zip)), "Keyword not found "+zip);
+		driver.navigate().back();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Page URL after the search "+driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
+	}
+	 
+	 @Test (groups={"Smoke"})
+	 public void searchCancerTypeAgeZip(){
+		int age=65;
+		int zip=20105;
+		String cancerType="Breast Cancer";
+		
+		//Performing the search using Age and Zipcode parameter
+		basicSearch.searchCancerTypeAgeZip(cancerType, age, zip);
+		
+		if(driver.findElement(By.name("printButton")).isDisplayed()){
+			System.out.println("search results page should be displayed");
+			resultPageUrl=driver.getCurrentUrl();
+			System.out.println("Result page url: "+resultPageUrl);}
+		else 
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		//Checking the Results page URL for the parameters passed in order to validate correct search results are displayed
+		resultPageUrl=driver.getCurrentUrl();
+		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
+		System.out.println("New String: " +cancerTypeWithoutSpace);
+		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace), "Keyword not found "+cancerTypeWithoutSpace);	
+		Assert.assertTrue(resultPageUrl.contains(Integer.toString(zip)), "Keyword not found "+zip);
+		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found "+age);
+		driver.navigate().back();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Page URL after the search "+driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type, Age and ZipCode on Basic CTS");
 	}
 	 
 	 @Test (groups={"Smoke"})

@@ -22,8 +22,9 @@ public class BasicSearch {
 	@FindBy(how=How.XPATH, using=".//input[@id='q']") WebElement txt_CancerType;
 	@FindBy(how=How.XPATH, using=".//input[@id='z']") WebElement txt_Zipcode;
 	@FindBy(how=How.XPATH, using=".//input[@id='a']") WebElement txt_Age;
-	@FindBy(how=How.XPATH, using=".//div[@class='btn-group']/input[@value='Search']") WebElement btn_Search;
-	//@FindBy(how=How.XPATH, using=".//input[@type='submit'][@class='submit button'] [@value='Search']") WebElement btn_Search;
+	//@FindBy(how=How.XPATH, using=".//*[@id='form--cts-basic']/div[2]/input") WebElement btn_Search;
+	//@FindBy(how=How.XPATH, using=".//div[@class='btn-group']/input[@value='Search']") WebElement btn_Search;
+	@FindBy(how=How.XPATH, using=".//input[@type='submit'][@class='submit button'] [@value='Search']") WebElement btn_Search;
 	@FindBy(how=How.CSS, using=".delighter.cts-livehelp") WebElement delighter_LiveHelp;
 	@FindBy(how=How.CSS, using=".delighter.cts-what") WebElement delighter_What;
 	@FindBy(how=How.CSS, using=".delighter.cts-which") WebElement delighter_Which;
@@ -31,13 +32,15 @@ public class BasicSearch {
 	@FindBy(how=How.CSS, using=".delighter.cts-feedback>h4") WebElement sendUsYourFeedback;
 	@FindBy(how=How.CSS, using=".ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.cts-feedback-dialog") WebElement delighter_FeedbackPopup;
 	@FindBy(how=How.CSS, using="#cts-feedback-cancel") WebElement delighter_FeedbackPopupCancel;
-	
+	@FindBy(how=How.XPATH, using=".//*[@id='cgvBody']/div[2]/div/div[2]") WebElement module_CTSApi;
+	//@FindBy(how=How.XPATH, using=".//*[@id='cgvBody']/div[2]/div/div[2]/div/p/a") WebElement lnk_CTSApi;
+	@FindBy(how=How.CSS, using=".api-reference-content > p:nth-child(1) > a:nth-child(1)") WebElement lnk_CTSApi;
 	//Default Search
 	public void searchDefault(){
 		btn_Search.click();		
 	}
 	
-	
+			
 	//Search based on cancer type
 	public void searchCancerType(String cancerType){
 		txt_CancerType.sendKeys(cancerType);
@@ -65,13 +68,15 @@ public class BasicSearch {
 	public void searchCancerTypeAge(String cancerType, int age){
 		txt_CancerType.sendKeys(cancerType);
 		txt_Age.sendKeys(Integer.toString(age));
-		btn_Search.click();	
+		btn_Search.click();
+		//txt_CancerType.sendKeys(Keys.RETURN);	
 	}
 	
 	public void searchCancerTypeZip(String cancerType, int zipCode){
 		txt_CancerType.sendKeys(cancerType);
 		txt_Zipcode.sendKeys(Integer.toString(zipCode));
-		btn_Search.click();	
+		btn_Search.click();
+		//txt_CancerType.sendKeys(Keys.RETURN);	
 	}
 	
 	public void searchAgeZip(int age, int zipCode){
@@ -84,7 +89,8 @@ public class BasicSearch {
 		txt_CancerType.sendKeys(cancerType);
 		txt_Age.sendKeys(Integer.toString(age));
 		txt_Zipcode.sendKeys(Integer.toString(zipCode));
-		btn_Search.click();	
+		btn_Search.click();
+		//txt_CancerType.sendKeys(Keys.RETURN);
 	}
 	
 	public void clickDelighterLiveHelp(){
