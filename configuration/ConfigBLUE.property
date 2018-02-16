@@ -1,6 +1,6 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
-AdvancedClinicalTrialSearchURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+AdvanceSearchPageURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-blue-dev.cancer.gov/contact
 DelighterWhatURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
@@ -19,5 +19,5 @@ DriverName_FirefoxDriver=geckodriver
 ***********************Reporting******************************************
 ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
-Environment= STAGEEnvironment
+Environment= BLUEEnvironment
 

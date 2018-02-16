@@ -55,14 +55,14 @@ public class AdvanceSearch_Test extends BaseClass {
 	public void verifyPageTitle()
 	{
 		Assert.assertEquals(advanceSearch.getAdvanceSearchPageTitle(), AdvanceSearch.ADVANCE_SEARCH_PAGE_TITLE);
-		//logger.log(LogStatus.PASS, "Verifying the Title of the page is *Find NCI-Supported Clinical Trials* | Actual Result: "+advanceSearch.getAdvanceSearchPageTitle());
+		logger.log(LogStatus.PASS, "Verifying the Title of the page is *Find NCI-Supported Clinical Trials* | Actual Result: "+advanceSearch.getAdvanceSearchPageTitle());
 	}
 	
 	@Test (groups = {"Smoke"}, priority = 1)  
 	public void verifyBanner()
 	{
 		banner.getBanner();
-		//logger.log(LogStatus.PASS, "Verifying the Banner of the page");
+		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 	
 	@Test (groups = {"Smoke"}, priority = 1)  
