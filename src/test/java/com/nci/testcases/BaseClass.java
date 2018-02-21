@@ -3,8 +3,6 @@ package com.nci.testcases;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -20,67 +18,63 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-
-
 public class BaseClass {
 
-	//private static Logger log= LogManager.getLogger(BaseClass.class.getName());
+	// private static Logger log=
+	// LogManager.getLogger(BaseClass.class.getName());
 	public static ExtentReports report;
 	public static ExtentTest logger;
 	public static WebDriver driver;
 	public String pageURL;
-	ConfigReader config= new ConfigReader();
-		
-	@BeforeTest (groups={"Smoke"})
+	ConfigReader config = new ConfigReader();
+
+	@BeforeTest(groups = { "Smoke" })
 	@Parameters
-	
-	public void beforeTest(){
-		//log.info("Starting a new test");
+
+	public void beforeTest() {
+		// log.info("Starting a new test");
 		System.out.println(this.getClass().getSimpleName());
-		String fileName= new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
+		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath);
-		report= new ExtentReports(extentReportPath +config.getProperty("Environment")+"-"+fileName+".html");
+		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
 		System.out.println("Report Path: ");
-		report.addSystemInfo("Environment", config.getProperty("Environment"));		
+		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
-	
-	@BeforeClass (groups = {"Desktop", "Mobile", "current"})
-	public void beforeClass()
-	{
+
+	@BeforeClass(groups = { "Smoke" })
+	public void beforeClass() {
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
-	
-	@AfterMethod (groups={"Smoke"})
-	public void tearDown(ITestResult result){
-		if (result.getStatus()== ITestResult.FAILURE)
-			{
-				String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
-				String image = logger.addScreenCapture(screenshotPath);
-				//logger.addScreenCapture("./test-output/ExtentReport/");
-				logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
-				driver.get(pageURL);
-			} 
-	
-		if (result.getStatus()== ITestResult.SKIP)
-			{
-				logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
-				driver.get(pageURL);
-			} 
+
+	@AfterMethod(groups = { "Smoke" })
+	public void tearDown(ITestResult result) {
+		if (result.getStatus() == ITestResult.FAILURE) {
+			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
+			String image = logger.addScreenCapture(screenshotPath);
+			// logger.addScreenCapture("./test-output/ExtentReport/");
+			logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
+			driver.get(pageURL);
+		}
+
+		if (result.getStatus() == ITestResult.SKIP) {
+			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
+			driver.get(pageURL);
+		}
 	}
 
-	@AfterClass (groups={"Smoke"})
-	public void afterClass(){
+	@AfterClass(groups = { "Smoke" })
+	public void afterClass() {
+		System.out.println("***********Quiting Driver*********");
 		driver.quit();
-		report.endTest(logger);	
-	}
-	
-	@AfterTest (groups={"Smoke"})
-	public void afterTest(){
-		report.flush();
-		report.close();
-		//log.info("Test ends here");
+		report.endTest(logger);
 	}
 
+	@AfterTest(groups = { "Smoke" })
+	public void afterTest() {
+		report.flush();
+		// report.close();
+		// log.info("Test ends here");
+	}
 
 }
