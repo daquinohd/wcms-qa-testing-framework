@@ -9,15 +9,10 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 public class BasicSearch {
-
-	WebDriver driver; 
-	public BasicSearch(WebDriver driver) 
-		{
-			this.driver = driver;
-			PageFactory.initElements(driver, this);
-			System.out.println("PageFactory initiated");
-		}
 	
+	WebDriver driver;
+	
+	/*************** Basic Search Page WebElements **********************/
 	@FindBy(how=How.XPATH, using=".//*[@id='cgvBody']/div[1]/p/a[3]") WebElement lnk_AdvSearch;
 	@FindBy(how=How.XPATH, using=".//input[@id='q']") WebElement txt_CancerType;
 	@FindBy(how=How.XPATH, using=".//input[@id='z']") WebElement txt_Zipcode;
@@ -35,6 +30,17 @@ public class BasicSearch {
 	@FindBy(how=How.XPATH, using=".//*[@id='cgvBody']/div[2]/div/div[2]") WebElement module_CTSApi;
 	//@FindBy(how=How.XPATH, using=".//*[@id='cgvBody']/div[2]/div/div[2]/div/p/a") WebElement lnk_CTSApi;
 	@FindBy(how=How.CSS, using=".api-reference-content > p:nth-child(1) > a:nth-child(1)") WebElement lnk_CTSApi;
+	
+	
+
+	//Constructor - Initializing the Page objects  
+	public BasicSearch(WebDriver driver) 
+		{
+			this.driver = driver;
+			PageFactory.initElements(driver, this);
+			System.out.println("PageFactory initiated");
+		}
+	
 	//Default Search
 	public void searchDefault(){
 		btn_Search.click();		
@@ -44,20 +50,14 @@ public class BasicSearch {
 	//Search based on cancer type
 	public void searchCancerType(String cancerType){
 		txt_CancerType.sendKeys(cancerType);
-		/*System.out.println("send keys complete");
-		JavascriptExecutor jse = (JavascriptExecutor)driver;
-		jse.executeScript("scroll(0, 250);"); 
-		//jse.executeScript("arguments[0].scrollIntoView(true);",btn_Search); 
-				btn_Search.click();
-		System.out.println("click method done");*/
 		txt_CancerType.sendKeys(Keys.RETURN); 
 
 	}
 	
+	//Search based on Age
 	public void searchAge(int age){
 		txt_Age.sendKeys(Integer.toString(age));
 		btn_Search.click();
-		//txt_CancerType.sendKeys(Keys.RETURN);
 	}
 	
 	public void searchZip(int zipCode){
