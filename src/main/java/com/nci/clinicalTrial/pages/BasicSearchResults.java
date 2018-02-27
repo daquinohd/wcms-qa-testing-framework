@@ -28,9 +28,9 @@ public class BasicSearchResults {
 	
 	public void selectCheckBox(){
 		
-		if (!((WebElement)check_SearchTrials.get(0)).isSelected()) 
+		if (!((WebElement)check_SearchTrials.get(1)).isSelected()) 
 		{
-			((WebElement)check_SearchTrials.get(0)).click();
+			((WebElement)check_SearchTrials.get(1)).click();
 		}
 		
 		System.out.println("Checkbox selected");

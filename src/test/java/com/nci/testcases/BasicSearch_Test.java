@@ -109,7 +109,7 @@ public class BasicSearch_Test extends BaseClass{
 		
 	}
 	
-	
+
 	@Test (groups={"Smoke"})
 	public void searchAge(){
 		int age=65;
@@ -117,7 +117,7 @@ public class BasicSearch_Test extends BaseClass{
 
 		//Performing the search using Age parameter
 		basicSearch.searchAge(age);
-		
+	
 		if(driver.findElement(By.name("printButton")).isDisplayed()){
 			System.out.println("search results page should be displayed");
 			resultPageUrl=driver.getCurrentUrl();
@@ -166,6 +166,7 @@ public class BasicSearch_Test extends BaseClass{
 		System.out.println("Page URL after the search "+driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age and ZipCode on Basic CTS");
 	}
+	
 	 
 	 @Test (groups={"Smoke"})
 	 public void searchCancerTypeAge(){
@@ -194,7 +195,7 @@ public class BasicSearch_Test extends BaseClass{
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and Age on Basic CTS");
 	}
 	 
-	 @Test (groups={"Smoke"})
+	@Test (groups={"Smoke"})
 	 public void searchCancerTypeZip(){
 		int zip=20105;
 		String cancerType="Breast Cancer";
@@ -221,7 +222,7 @@ public class BasicSearch_Test extends BaseClass{
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
 	}
 	 
-	 @Test (groups={"Smoke"})
+	@Test (groups={"Smoke"})
 	 public void searchCancerTypeAgeZip(){
 		int age=65;
 		int zip=20105;
@@ -311,11 +312,27 @@ public class BasicSearch_Test extends BaseClass{
 			logger.log(LogStatus.PASS, "Pass => " + "Verify navigation to Advanced CTS on Basic CTS");
 		}
 	 
-	/*@AfterTest (groups={"Smoke"})
-	public void endSession(){
-		driver.quit();
-	}*/
-	
+	 @Test (groups={"Smoke"})
+	 public void SearchInvalidAge(){
+		driver.findElement(By.xpath(".//input[@id='a']")).sendKeys("abc");
+		basicSearch.searchDefault();
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText().contains("Please enter a number between 1 and 120.") );
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Age on Basic CTS");
+		driver.findElement(By.xpath(".//input[@id='a']")).clear();
+	}
+	 
+	 @Test (groups={"Smoke"})
+	 public void SearchInvalidZip(){
+		////div[@class='error-msg']
+		driver.findElement(By.xpath(".//input[@id='z']")).sendKeys("abc");
+		basicSearch.searchDefault();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText().contains("Please enter a valid 5 digit ZIP code."));
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Zip on Basic CTS");
+		driver.findElement(By.xpath(".//input[@id='z']")).clear();
+	}
 }
 
 /*@Test
