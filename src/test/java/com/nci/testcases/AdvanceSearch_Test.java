@@ -175,8 +175,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify Search by Cancer Type and SubType on Advanced CTS");
 	}
 
-	// @Test(dataProvider = "AdvanceSearch1", groups = { "Smoke" }, priority =
-	// 2)
+	// @Test(dataProvider = "AdvanceSearch1", groups = { "Smoke" }, priority =2)
 	public void advancesearch_CancerType_SubType_Stage(int cancerTypeIndex, String cancerTypeId, String cancerType,
 			int cancerSubTypeIndex, String cancerSubTypeId, String cancerSubType, int cancerStageIndex,
 			String cancerStageId, String cancerStage) throws InterruptedException {
@@ -312,17 +311,55 @@ public class AdvanceSearch_Test extends BaseClass {
 					"Keyword/Phrase not found " + phraseWithoutSpace);
 
 		}
+	}
+
+	@Test(dataProvider = "zipcode", groups = { "Smoke" }, priority = 4)
+	public void advancesearch_Zipcode(String zip) throws InterruptedException {
+		Object[][] data;
+		Thread.sleep(300);
+		advanceSearch.searchZipcode(zip);
 
 		// Verify that show search criteria table contains the selected
 		// search criteria
-		data = verifySearchCriteriaTable();
+		if (zip == "99999") {
+			System.out.println("**********zip=99999***********");
+			System.out.println(driver.getPageSource());
+			Assert.assertTrue(driver.getPageSource().contains(
+					"Sorry, you seem to have entered invalid criteria.  Please check the following, and try your search again:"));
 
-		Assert.assertEquals(data[1][1], keyword, "Keyword/Phrase not matched" + keyword);
-		System.out.println("data[1][1]==== " + data[1][1]);
+			;
+			driver.findElement(By.linkText("Try a new search")).click();
+			logger.log(LogStatus.PASS, "Verify Search by invalid zipcode on Advanced CTS. Zipcode = " + zip);
+		} else if (zip == "abc") {
 
-		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Keyword/Phrase on Advanced CTS. Keyword/Phrase = " + keyword);
+			WebElement error_Msg = driver.findElement(By.xpath("//div[@class='error-msg']"));
+			error_Msg.getText();
+			Assert.assertTrue(error_Msg.getText().contains("Please enter a valid 5 digit ZIP code."));
+			System.out.println("Error message for age: " + error_Msg.getText());
+			logger.log(LogStatus.PASS, "Verify Search by Age on Advanced CTS. Age = " + zip);
+		}
 
+		else {
+			// Verify page title
+			String pageTitle = driver.getTitle();
+			System.out.println("Page title for zipcode search :" + pageTitle);
+			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
+
+			// Verify search criteria in URL
+			String pageURL = driver.getCurrentUrl();
+			System.out.println("advancesearch_Zipcode: Current Page URL: " + pageURL);
+			Assert.assertTrue(pageURL.contains("z=" + zip));
+			System.out.println("advancesearch_Zipcode: Zipcode: z=" + zip);
+
+			data = verifySearchCriteriaTable();
+
+			Assert.assertTrue(data[1][1].toString().contains(zip), "zip not matched" + zip);
+			System.out.println("data[1][1]==== " + data[1][1]);
+
+			driver.findElement(By.linkText("Start Over")).click();
+			logger.log(LogStatus.PASS, "Verify Search by zipcode on Advanced CTS. Zipcode = " + zip);
+
+		}
 	}
 
 	/********************** Data Providers **********************/
@@ -360,6 +397,13 @@ public class AdvanceSearch_Test extends BaseClass {
 		return new Object[][] {
 				// {keywords, Phrase}
 				{ "PSA" }, { "\"Paget Disease\"" }, { "Brain Cancer" } };
+	}
+
+	@DataProvider(name = "zipcode")
+	public Object[][] readAdvanceSearchZipcode() {
+		return new Object[][] {
+				// {zipcode}
+				{ "20105" }, { "99999" }, { "abc" } };
 	}
 
 	/********************** Common Functions **********************/

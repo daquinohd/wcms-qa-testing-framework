@@ -45,6 +45,12 @@ public class AdvanceSearch {
 	WebElement lbl_side_effects;
 	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['CANCER TYPE / CONDITION']")
 	WebElement lgd_cancerType;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--location']/legend['LOCATION']")
+	WebElement lgd_location;
+	@FindBy(how = How.XPATH, using = "//label[@for='zip-code']")
+	WebElement rbtn_zipcode;
+	@FindBy(how = How.XPATH, using = "//input[@id='z']")
+	WebElement txt_zipcode;
 
 	/*************** Search Result Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
@@ -148,6 +154,18 @@ public class AdvanceSearch {
 		txt_keywords.clear();
 		txt_keywords.sendKeys(keyword);
 		System.out.println("Typed the keyword/phrase in KEYWORDS/PHRASES field");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(500);
+	}
+
+	public void searchZipcode(String zip) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
+		rbtn_zipcode.click();
+		txt_zipcode.click();
+		txt_zipcode.clear();
+		txt_zipcode.sendKeys(zip);
+		System.out.println("Typed the zipcode");
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		defaultSearch();
 		Thread.sleep(500);

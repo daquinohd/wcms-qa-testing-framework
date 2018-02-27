@@ -26,7 +26,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
-		pageURL = config.getProperty("AdvanceSearchResultsPageURL");
+		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserFactory.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -69,32 +69,45 @@ public class AdvanceSearchResults_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verify_PrintWithTrialSelection() throws InterruptedException {
+		System.out.println("**************Executing Print with Trial Selection");
 		Thread.sleep(500);
 		advanceSearchResults.clickOnSelectAllCheckBox();
 		// advanceSearchResults.clickOnCheckBox();
 		advanceSearchResults.clickPrintButton();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		String currentPageURL = driver.getCurrentUrl();
 		System.out.println("Current Page URL: " + currentPageURL);
-		Assert.assertTrue(currentPageURL.contains("https://www.cancer.gov/CTS.Print/Display?printid="));
+		Assert.assertTrue(currentPageURL.contains("/CTS.Print/Display?printid="));
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@id='clinical-trials-print']")).isDisplayed());
+		Thread.sleep(500);
+
 		logger.log(LogStatus.PASS,
 				"Verifying that Print page is displayed when Print Selected button is clicked after selecting all trials");
 	}
 
-	// @Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" }, priority = 3)
 	public void verify_PrintWithOneTrialSelection() throws InterruptedException {
+		System.out.println("**************Executing Print with One Trial Selection");
+		driver.get(pageURL);
 		Thread.sleep(500);
 		advanceSearchResults.getCheckBoxesNumber();
+		Thread.sleep(1000);
 		advanceSearchResults.clickOnCheckBox();
+		String resultLinkText = advanceSearchResults.getResultsLinks().get(0).getText();
+		System.out.println(
+				"Result text on Search Result Page: " + advanceSearchResults.getResultsLinks().get(0).getText());
 		Thread.sleep(1000);
 		// advanceSearchResults.clickOnCheckBox();
 		advanceSearchResults.clickPrintButton();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		String currentPageURL = driver.getCurrentUrl();
 		System.out.println("Current Page URL: " + currentPageURL);
-		Assert.assertTrue(currentPageURL.contains("https://www.cancer.gov/CTS.Print/Display?printid="));
+		Assert.assertTrue(currentPageURL.contains("/CTS.Print/Display?printid="));
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@id='clinical-trials-print']")).isDisplayed());
+
+		String resultTestOnPrintPage = driver.findElement(By.xpath("//h2")).getText();
+		System.out.println("Result text on Print Page: " + resultTestOnPrintPage);
+		Assert.assertTrue(resultTestOnPrintPage.contains(resultLinkText), "Result test not matching on print page");
 		logger.log(LogStatus.PASS,
 				"Verifying that Print page is displayed when Print Selected button is clicked after selecting all trials");
 	}
