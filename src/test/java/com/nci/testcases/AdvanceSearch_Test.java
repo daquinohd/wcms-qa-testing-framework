@@ -12,17 +12,19 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserFactory;
+import com.nci.Utilities.BrowserManager;
 import com.nci.clinicalTrial.pages.AdvanceSearch;
 import com.nci.commonobjects.ApiReference;
 import com.nci.commonobjects.Banner;
 import com.nci.commonobjects.BreadCrumb;
+import com.nci.commonobjects.Delighters;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
 
 	// WebDriver driver;
 	AdvanceSearch advanceSearch;
+	Delighters delighter;
 	BreadCrumb crumb;
 	Banner banner;
 	ApiReference api;
@@ -35,10 +37,11 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("AdvanceSearchPageURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserFactory.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		advanceSearch = new AdvanceSearch(driver);
 		System.out.println("Advance Search setup done");
+		delighter = new Delighters(driver);
 		crumb = new BreadCrumb(driver);
 		banner = new Banner(driver);
 		api = new ApiReference(driver);
@@ -70,6 +73,33 @@ public class AdvanceSearch_Test extends BaseClass {
 		api.verifyApiReferenceLink();
 		System.out.println("**********API function executed***********");
 		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
+	}
+
+	@Test(groups = { "Smoke" }, priority = 2)
+	public void verifyDelighterLiveHelp() {
+		// Verifying the LiveHelp Delighter
+		delighter.verifyDelighterLiveHelp();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
+	}
+
+	@Test(groups = { "Smoke" }, priority = 2)
+	public void verifyDelighterWhat() {
+		// Verifying the LiveHelp Delighter
+		delighter.verifyDelighterWhat();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
+	}
+
+	@Test(groups = { "Smoke" }, priority = 2)
+	public void verifyDelighterWhich() {
+		// Verifying the LiveHelp Delighter
+		delighter.verifyDelighterWhich();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Advance CTS");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 2)
@@ -323,7 +353,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		// search criteria
 		if (zip == "99999") {
 			System.out.println("**********zip=99999***********");
-			System.out.println(driver.getPageSource());
+			// System.out.println(driver.getPageSource());
 			Assert.assertTrue(driver.getPageSource().contains(
 					"Sorry, you seem to have entered invalid criteria.  Please check the following, and try your search again:"));
 

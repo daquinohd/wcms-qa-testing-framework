@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.apache.commons.lang3.SystemUtils;
 
-public class BrowserFactory {
+public class BrowserManager {
 
 	static WebDriver driver;
 	

@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserFactory;
+import com.nci.Utilities.BrowserManager;
 import com.nci.clinicalTrial.pages.AdvanceSearchResults;
 import com.nci.commonobjects.Banner;
 import com.nci.commonobjects.BreadCrumb;
@@ -28,7 +28,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserFactory.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// basicSearch = PageFactory.initElements(driver, BasicSearch.class);
 		advanceSearchResults = new AdvanceSearchResults(driver);

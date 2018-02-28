@@ -23,7 +23,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserFactory;
+import com.nci.Utilities.BrowserManager;
 import com.nci.Utilities.ConfigReader;
 import com.nci.clinicalTrial.pages.BasicSearchResults;
 import com.relevantcodes.extentreports.LogStatus;
@@ -38,7 +38,7 @@ public class BasicSearchResults_Test extends BaseClass{
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL= config.getPageURL("BasicSearchResultsURL");
 		System.out.println("PageURL: "+pageURL);
-		driver= BrowserFactory.startBrowser(browser, pageURL);
+		driver= BrowserManager.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		basicSearchResults = new BasicSearchResults(driver);
 		System.out.println("Basic search results setup done");
