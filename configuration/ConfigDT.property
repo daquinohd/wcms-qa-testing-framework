@@ -1,0 +1,23 @@
+************************Environment URLs***********************************
+BasicClinicalTrialSearchURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search
+AdvanceSearchPageURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+DelighterLiveHelpURL=https://www-dt-qa.cancer.gov/contact
+DelighterWhatURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+DelighterWhichURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
+DelighterFeedbackURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+
+************************Drivers Path***************************************
+ChromeDriver=./resources/drivers/chromedriver.exe
+FirefoxDriver=./resources/drivers/geckodriver.exe
+DriverPath_Mac=./resources/drivers/macos
+DriverPath_Win=./resources/drivers/win
+DriverPath_Linux=./resources/drivers/linux
+DriverName_ChromeDriver=chromedriver
+DriverName_FirefoxDriver=geckodriver
+
+
+***********************Reporting******************************************
+ExtentReports= ./test-output/ExtentReport/
+ScreenShots= ./test-output/Screenshots/
+Environment= DTQAEnvironment
+

@@ -63,4 +63,9 @@ public class ConfigReader {
 	public String getScreenShotsPath() {
 		return properties.getProperty("ScreenShots");
 	}
+	
+	public String getProperty(String property) {
+		return properties.getProperty(property);
+	}
+	
 }
