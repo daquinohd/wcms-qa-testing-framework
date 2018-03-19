@@ -1,4 +1,4 @@
-# WCMA QA Testing Framework
+# WCMS QA Testing Framework
 Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 
 ## Prerequisites on testing machine:
