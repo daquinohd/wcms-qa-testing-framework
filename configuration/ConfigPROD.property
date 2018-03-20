@@ -21,3 +21,6 @@ DriverName_FirefoxDriver=geckodriver
 ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= PRODEnvironment
+
+***********************Test Data******************************************
+TestData= ./test-data/TestData.xlsx

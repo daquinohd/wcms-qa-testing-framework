@@ -1,14 +1,18 @@
 package com.nci.testcases;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.nci.Utilities.BrowserManager;
+import com.nci.Utilities.ExcelManager;
 import com.nci.clinicalTrial.pages.BasicSearch;
 import com.nci.commonobjects.Delighters;
 import com.relevantcodes.extentreports.LogStatus;
@@ -16,10 +20,14 @@ import com.relevantcodes.extentreports.LogStatus;
 public class BasicSearch_Test extends BaseClass {
 
 	// WebDriver driver;
+	public static final String TESTDATA_SHEET_NAME = "BasicSearch";
+	
 	BasicSearch basicSearch;
 	Delighters delighter;
 	String resultPageUrl;
 	String advSearchPageUrl;
+	String testDataFilePath;
+	
 	// ConfigReader config = new ConfigReader();
 
 	@BeforeClass(groups = { "Smoke" })
@@ -36,6 +44,8 @@ public class BasicSearch_Test extends BaseClass {
 		basicSearch = new BasicSearch(driver);
 		delighter = new Delighters(driver);
 		System.out.println("Basic search setup done");
+		testDataFilePath= config.getProperty("TestData");
+		
 	}
 
 	@Test(groups = { "Smoke" })
@@ -60,9 +70,9 @@ public class BasicSearch_Test extends BaseClass {
 
 	}
 
-	@Test(groups = { "Smoke" })
-	public void searchCancerType() throws InterruptedException {
-		String cancerType = "Breast Cancer";
+	@Test(dataProvider= "CancerType", groups = { "Smoke" })
+	public void searchCancerType(String cancerType) throws InterruptedException {
+		//String cancerType = "Breast Cancer";
 
 		// Performing the search using Cancer type parameter
 		basicSearch.searchCancerType(cancerType);
@@ -100,7 +110,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void searchAge() {
 		int age = 65;
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -124,7 +134,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void searchZip() {
 		int zip = 20105;
 
@@ -141,7 +151,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for ZipCode on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void searchAgeZip() {
 		int zip = 20105;
 		int age = 65;
@@ -160,7 +170,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age and ZipCode on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void searchCancerTypeAge() {
 		int age = 65;
 		String cancerType = "Breast Cancer";
@@ -189,7 +199,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and Age on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void searchCancerTypeZip() {
 		int zip = 20105;
 		String cancerType = "Breast Cancer";
@@ -218,7 +228,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void searchCancerTypeAgeZip() {
 		int age = 65;
 		int zip = 20105;
@@ -249,7 +259,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type, Age and ZipCode on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verifyDelighterLiveHelp() {
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
@@ -258,7 +268,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verifyDelighterWhat() {
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
@@ -267,7 +277,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verifyDelighterWhich() {
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();
@@ -276,7 +286,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void clickAdvSearch() {
 		// Click on Advance Search link
 		basicSearch.clickAdvSearch();
@@ -292,7 +302,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify navigation to Advanced CTS on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void SearchInvalidAge() {
 		driver.findElement(By.xpath(".//input[@id='a']")).sendKeys("abc");
 		basicSearch.searchDefault();
@@ -303,7 +313,7 @@ public class BasicSearch_Test extends BaseClass {
 		driver.findElement(By.xpath(".//input[@id='a']")).clear();
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void SearchInvalidZip() {
 		//// div[@class='error-msg']
 		driver.findElement(By.xpath(".//input[@id='z']")).sendKeys("abc");
@@ -317,67 +327,24 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Zip on Basic CTS");
 		driver.findElement(By.xpath(".//input[@id='z']")).clear();
 	}
+	
+	/********************Data Providers****************/
+	
+	@DataProvider(name="CancerType")
+public Iterator<Object[]> readCancerType(){
+	ExcelManager excelReader = new ExcelManager(testDataFilePath);
+	
+	ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+	
+	for( int rowNum=2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++){
+		
+		String cancerType= excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
+		Object ob[]={cancerType};
+		
+		myObjects.add(ob);
+		
+	}
+	 return myObjects.iterator();
+}
 }
 
-/*
- * @Test public void verifyDelighterFeedback() throws InterruptedException{
- * 
- * //Verifying the LiveHelp Delighter ((JavascriptExecutor)
- * driver).executeScript("arguments[0].scrollIntoView(true);",
- * basicSearch.getDelighterWhich()); Thread.sleep(1000);
- * basicSearch.clickDelighterFeedback();
- * System.out.println("Delighter Feedback clicked"); WebElement
- * popUp=basicSearch.delighterFeedbackPopup(); driver.switchTo().frame(popUp);
- * driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
- * Assert.assertTrue(popUp.isDisplayed());
- * System.out.println("Popup dispalyed? "+popUp.isDisplayed()); if
- * (popUp.isDisplayed()) { basicSearch.clickDelighterFeedbackPopupCancel(); }
- * System.out.println("Page URL after the delighter check "+driver.getCurrentUrl
- * ());
- * 
- * }
- */
-
-/*
- * //WebDriverWait wait = new WebDriverWait(driver, 10);
- * //wait.until(driver.findElement(By.className("action button printSelected")).
- * isDisplayed()); //ExpectedCondition<Boolean> e = new
- * ExpectedCondition<Boolean>() { // public Boolean apply(WebDriver d) {
- * //return
- * (d.findElement(By.className("action button printSelected")).isDisplayed());
- * //return (d.getCurrentUrl() != previousURL); // } // };
- * 
- * //wait.until(e); //wait.
- * (driver.findElement(By.className("action button printSelected")).isDisplayed(
- * ));
- * 
- * 
- * //driver.findElement(By.xpath("//*[@id='cgvBody']/div[2]/div[1]/div[2]/label"
- * )).click(); //System.out.println("Show Search Criteria is displayed");
- * 
- * WebElement table_Element =
- * driver.findElement(By.xpath(".//table[@class='table no-auto-enlarge']"));
- * List<WebElement>
- * tr_collection=table_Element.findElements(By.xpath(".//tbody/tr"));
- * 
- * WebElement trElement; List<WebElement>
- * td_collection=tr_collection.findElements(By.xpath("td"));
- * 
- * System.out.println("No of rows in table: "+tr_collection);
- * System.out.println("Cell value in table: "+tr_collection.get(0));
- * 
- * int row_num, col_num; row_num=1; for(WebElement trElement : tr_collection) {
- * List<WebElement> td_collection=trElement.findElements(By.xpath("td"));
- * System.out.println("No of Columns in table: "+td_collection.size());
- * col_num=1; for(WebElement tdElement : td_collection) {
- * System.out.println("Row # "+row_num+ ", Col # "+col_num+ "Text= "
- * +tdElement.getText()); col_num++; } row_num++; }
- * 
- * 
- * //WebElement yourSearch= driver.findElement(By.xpath(
- * ".//div[@class='clinicaltrials-results-criteria-display']//tbody/tr/td[2]"));
- * 
- * //System.out.println("Your Search criteria: "+yourSearch.getText());
- * //Assert.assertTrue(yourSearch.getText().contains(cancerType));
- * //Assert.assertTrue(yourSearch.getText().contains(cancerType));
- */
