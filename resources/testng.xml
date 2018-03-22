@@ -2,16 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="QA Environment" parallel="none">
 	<test name="NCI - Chrome Testing" >
-		<parameter name="browser" value="Chrome" />
+		<parameter name="browser" value="iPhone6" />
 		<groups>
 			<run>
 				<include name="Smoke" />
 			</run>
 		</groups>
 		<classes> 	
-			
 			<class name="com.nci.testcases.BasicSearch_Test" />
-			<!--<class name="com.nci.testcases.AdvanceSearch_Test" /> 
+			<class name="com.nci.testcases.AdvanceSearch_Test" />
+			
+			<!-- 
 			 <class name="com.nci.testcases.AdvanceSearchResults_Test" /> -->
 			
 		</classes>

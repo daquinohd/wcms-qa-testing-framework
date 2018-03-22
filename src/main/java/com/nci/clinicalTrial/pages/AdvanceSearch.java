@@ -153,10 +153,10 @@ public class AdvanceSearch {
 		txt_keywords.click();
 		txt_keywords.clear();
 		txt_keywords.sendKeys(keyword);
-		System.out.println("Typed the keyword/phrase in KEYWORDS/PHRASES field");
+		System.out.println("Typed the keyword/phrase in KEYWORDS/PHRASES field: " + keyword);
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		defaultSearch();
-		Thread.sleep(500);
+		// Thread.sleep(500);
 	}
 
 	public void searchZipcode(String zip) throws InterruptedException {
