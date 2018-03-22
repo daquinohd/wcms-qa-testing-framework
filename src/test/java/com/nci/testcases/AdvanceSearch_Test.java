@@ -1,6 +1,8 @@
 package com.nci.testcases;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +15,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.nci.Utilities.BrowserManager;
+import com.nci.Utilities.ExcelManager;
 import com.nci.clinicalTrial.pages.AdvanceSearch;
 import com.nci.commonobjects.ApiReference;
 import com.nci.commonobjects.Banner;
@@ -22,14 +25,14 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
 
-	// WebDriver driver;
+	public static final String TESTDATA_SHEET_NAME = "AdvanceSearch";
+
 	AdvanceSearch advanceSearch;
 	Delighters delighter;
 	BreadCrumb crumb;
 	Banner banner;
 	ApiReference api;
-
-	// ConfigReader config = new ConfigReader();
+	String testDataFilePath;
 
 	@BeforeClass(groups = { "Smoke" })
 	@Parameters({ "browser" })
@@ -45,6 +48,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		crumb = new BreadCrumb(driver);
 		banner = new Banner(driver);
 		api = new ApiReference(driver);
+		testDataFilePath = config.getProperty("TestData");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 1)
@@ -127,53 +131,13 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify Default Search on Advanced CTS");
 	}
 
-	// @Test(dataProvider = "AdvanceSearch", groups = { "Smoke" }, priority = 2)
-	public void advancesearch_CancerType_SubType(int cancerTypeIndex, String cancerTypeId, String cancerType,
-			int cancerSubTypeIndex, String cancerSubTypeId, String cancerSubType) throws InterruptedException {
-		Object[][] data;
-		Thread.sleep(500);
-		advanceSearch.advSearch_CancerType_SubType(cancerType, cancerSubType);
-		Thread.sleep(500);
-		// advanceSearch.defaultSearch();
-
-		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_CancerType_SubType: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"));
-
-		// Verify search criteria in URL
-		String pageURL = driver.getCurrentUrl();
-		System.out.println("advancesearch_CancerType_SubType: Current Page URL: " + pageURL);
-		Assert.assertTrue(pageURL.contains("t=" + cancerTypeId + "&st=" + cancerSubTypeId));
-		System.out.println(
-				"advancesearch_CancerType_SubType: Cancer Type ID: t=" + cancerTypeId + "&st=" + cancerSubTypeId);
-
-		// Verify that show search criteria table contains the selected search
-		// criteria
-		data = verifySearchCriteriaTable();
-
-		Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
-		Assert.assertEquals(data[2][1], cancerSubType, "CancerSubType not matched");
-
-		System.out.println("data[1][1]==== " + data[1][1]);
-		System.out.println("cancerType==== " + cancerType);
-		System.out.println("data[2][1]==== " + data[2][1]);
-		System.out.println("cancerSubType==== " + cancerSubType);
-
-		// driver.navigate().to(pageURL);
-		driver.findElement(By.linkText("Start Over")).click();
-		// driver.navigate().back();
-		logger.log(LogStatus.PASS, "Verify Search by Cancer Type and SubType on Advanced CTS");
-	}
-
-	@Test(dataProvider = "AdvanceSearch", groups = { "Smoke" }, priority = 2)
+	@Test(dataProvider = "CancerType_SubType", groups = { "Smoke" }, priority = 2)
 	public void advancesearch_CancerType_SubType(String cancerTypeId, String cancerType, String cancerSubTypeId,
 			String cancerSubType) throws InterruptedException {
 		Object[][] data;
-		Thread.sleep(500);
+		// Thread.sleep(500);
 		advanceSearch.advSearch_CancerType_SubType(cancerType, cancerSubType);
-		Thread.sleep(500);
-		// advanceSearch.defaultSearch();
+		// Thread.sleep(500);
 
 		// Verify page title
 		String pageTitle = driver.getTitle();
@@ -205,47 +169,13 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify Search by Cancer Type and SubType on Advanced CTS");
 	}
 
-	// @Test(dataProvider = "AdvanceSearch1", groups = { "Smoke" }, priority =2)
-	public void advancesearch_CancerType_SubType_Stage(int cancerTypeIndex, String cancerTypeId, String cancerType,
-			int cancerSubTypeIndex, String cancerSubTypeId, String cancerSubType, int cancerStageIndex,
-			String cancerStageId, String cancerStage) throws InterruptedException {
-		Object[][] data;
-		Thread.sleep(500);
-		advanceSearch.advSearch_CancerType_SubType_Stage(cancerType, cancerSubType, cancerStage);
-		Thread.sleep(500);
-		// advanceSearch.defaultSearch();
-
-		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_CancerType_SubType_Stage: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
-
-		// Verify search criteria in URL
-		String pageURL = driver.getCurrentUrl();
-		System.out.println("advancesearch_CancerType_SubType_Stage: Current Page URL: " + pageURL);
-		Assert.assertTrue(pageURL.contains("t=" + cancerTypeId + "&st=" + cancerSubTypeId + "&stg=" + cancerStageId));
-		System.out.println("advancesearch_CancerType_SubType_Stage: Cancer Type ID: t=" + cancerTypeId + "&st="
-				+ cancerSubTypeId + "&stg=" + cancerStageId);
-
-		// Verify that show search criteria table contains the selected search
-		// criteria
-		data = verifySearchCriteriaTable();
-
-		Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
-		Assert.assertEquals(data[2][1], cancerSubType, "CancerSubType not matched");
-		Assert.assertEquals(data[3][1], cancerStage, "CancerStage not matched");
-
-		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Cancer Type, SubType and Stage on Advanced CTS");
-	}
-
-	@Test(dataProvider = "AdvanceSearch1", groups = { "Smoke" }, priority = 2)
+	@Test(dataProvider = "CancerType_SubType_Stage", groups = { "Smoke" }, priority = 2)
 	public void advancesearch_CancerType_SubType_Stage(String cancerTypeId, String cancerType, String cancerSubTypeId,
 			String cancerSubType, String cancerStageId, String cancerStage) throws InterruptedException {
 		Object[][] data;
-		Thread.sleep(500);
+		// Thread.sleep(200);
 		advanceSearch.advSearch_CancerType_SubType_Stage(cancerType, cancerSubType, cancerStage);
-		Thread.sleep(500);
+		// Thread.sleep(200);
 		// advanceSearch.defaultSearch();
 
 		// Verify page title
@@ -274,8 +204,9 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(dataProvider = "Age", groups = { "Smoke" }, priority = 3)
 	public void advancesearch_AgeTest(int age) throws InterruptedException {
+		System.out.println("Age from Data Provider: " + age);
 		Object[][] data;
-		Thread.sleep(300);
+		// Thread.sleep(300);
 		advanceSearch.getAge(age);
 
 		if (age < 1 || age > 120) {
@@ -311,10 +242,11 @@ public class AdvanceSearch_Test extends BaseClass {
 		}
 	}
 
-	@Test(dataProvider = "keywords", groups = { "Smoke" }, priority = 3)
+	@Test(dataProvider = "Keyword", groups = { "Smoke" }, priority = 3)
 	public void advancesearch_Keywords_PhraseTest(String keyword) throws InterruptedException {
+		System.out.println("Keyword from Data Provider: " + keyword);
 		Object[][] data;
-		Thread.sleep(300);
+		// Thread.sleep(300);
 		advanceSearch.getKeywordPhrase(keyword);
 
 		// Verify page title
@@ -331,6 +263,7 @@ public class AdvanceSearch_Test extends BaseClass {
 			String pageURL = driver.getCurrentUrl();
 			System.out.println("Phrase without space and double quote replaced by %22 :" + phraseWithoutSpace);
 			Assert.assertTrue(pageURL.contains("q=" + phraseWithoutSpace), "Phrase not found " + phraseWithoutSpace);
+			driver.findElement(By.linkText("Start Over")).click();
 
 		} else {
 			// Replace space with +
@@ -339,19 +272,23 @@ public class AdvanceSearch_Test extends BaseClass {
 			System.out.println("Keyword/Phrase with space replaced by + :" + phraseWithoutSpace);
 			Assert.assertTrue(pageURL.contains("q=" + phraseWithoutSpace),
 					"Keyword/Phrase not found " + phraseWithoutSpace);
+			driver.findElement(By.linkText("Start Over")).click();
 
 		}
 	}
 
-	@Test(dataProvider = "zipcode", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "Zipcode", groups = { "Smoke" }, priority = 4)
 	public void advancesearch_Zipcode(String zip) throws InterruptedException {
+		System.out.println("Zipcode from Data Provider: " + zip);
+		// zip = zip.toString();
+		// System.out.println("Zipcode after converting to String: " + zip);
 		Object[][] data;
 		Thread.sleep(300);
 		advanceSearch.searchZipcode(zip);
 
 		// Verify that show search criteria table contains the selected
 		// search criteria
-		if (zip == "99999") {
+		if (zip.equals("99999")) {
 			System.out.println("**********zip=99999***********");
 			// System.out.println(driver.getPageSource());
 			Assert.assertTrue(driver.getPageSource().contains(
@@ -360,7 +297,7 @@ public class AdvanceSearch_Test extends BaseClass {
 			;
 			driver.findElement(By.linkText("Try a new search")).click();
 			logger.log(LogStatus.PASS, "Verify Search by invalid zipcode on Advanced CTS. Zipcode = " + zip);
-		} else if (zip == "abc") {
+		} else if (zip.equals("abc")) {
 
 			WebElement error_Msg = driver.findElement(By.xpath("//div[@class='error-msg']"));
 			error_Msg.getText();
@@ -393,29 +330,87 @@ public class AdvanceSearch_Test extends BaseClass {
 	}
 
 	/********************** Data Providers **********************/
-	@DataProvider(name = "AdvanceSearch")
-	public Object[][] readAdvanceSearchData() {
-		return new Object[][] {
-				// {cancerTypeIndex, cancerTypeID, cancerTypeName,
-				// cancerSubTypeIndex, cancerSubTypeID, cancerSubTypeName,
-				// cancerStageIndex, cancerStageId, cancerStageName}
-				{ "C2991", "Other Disease", "C34783", "Alcoholic Liver Disease" },
-				{ "C9312", "Bone Sarcoma", "C53707", "Bone Osteosarcoma" },
-				{ "C4872", "Breast Cancer", "C5214", "Breast Adenocarcinoma" } };
+	@DataProvider(name = "CancerType_SubType")
+	public Iterator<Object[]> readCancerType_SubType_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String cancerTypeId = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerTypeId", rowNum);
+			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
+			String cancerSubTypeId = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerSubTypeId", rowNum);
+			String cancerSubType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerSubType", rowNum);
+			Object ob[] = { cancerTypeId, cancerType, cancerSubTypeId, cancerSubType };
+
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+
 	}
 
-	@DataProvider(name = "AdvanceSearch1")
-	public Object[][] readAdvanceSearchData1() {
-		return new Object[][] {
-				// {cancerTypeIndex, cancerTypeID, cancerTypeName,
-				// cancerSubTypeIndex, cancerSubTypeID, cancerSubTypeName,
-				// cancerStageIndex, cancerStageId, cancerStageName}
-				{ "C9312", "Bone Sarcoma", "C53707", "Bone Osteosarcoma", "C6468", "Stage III Bone Sarcoma" },
-				{ "C4872", "Breast Cancer", "C5214", "Breast Adenocarcinoma", "C36301",
-						"Breast Carcinoma Metastatic in the Brain" } };
+	@DataProvider(name = "CancerType_SubType_Stage")
+	public Iterator<Object[]> readCancerType_SubType_Stage_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String cancerTypeId = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerTypeId", rowNum);
+			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
+			String cancerSubTypeId = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerSubTypeId", rowNum);
+			String cancerSubType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerSubType", rowNum);
+			String cancerStageId = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerStageId", rowNum);
+			String cancerStage = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerStage", rowNum);
+			Object ob[] = { cancerTypeId, cancerType, cancerSubTypeId, cancerSubType, cancerStageId, cancerStage };
+
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+
 	}
 
 	@DataProvider(name = "Age")
+	public Iterator<Object[]> readAge_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "Age", rowNum);
+			int age1 = Integer.valueOf(age);
+			Object ob[] = { age1 };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "Keyword")
+	public Iterator<Object[]> readKeyword_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String keyword = excelReader.getCellData(TESTDATA_SHEET_NAME, "Keyword", rowNum);
+			System.out.println("Keyword in data provider ======= " + keyword);
+			Object ob[] = { keyword };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "Zipcode")
+	public Iterator<Object[]> readZipcode_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "Zipcode", rowNum);
+			String zipcode1 = String.valueOf(zipcode);
+			Object ob[] = { zipcode1 };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
 	public Object[][] readAdvanceSearchAge() {
 		return new Object[][] {
 				// {age}
