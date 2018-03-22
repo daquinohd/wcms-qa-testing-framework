@@ -110,7 +110,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void searchAge() {
 		int age = 65;
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -134,7 +134,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void searchZip() {
 		int zip = 20105;
 
@@ -151,7 +151,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for ZipCode on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void searchAgeZip() {
 		int zip = 20105;
 		int age = 65;
@@ -170,7 +170,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age and ZipCode on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void searchCancerTypeAge() {
 		int age = 65;
 		String cancerType = "Breast Cancer";
@@ -199,7 +199,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and Age on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void searchCancerTypeZip() {
 		int zip = 20105;
 		String cancerType = "Breast Cancer";
@@ -228,7 +228,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void searchCancerTypeAgeZip() {
 		int age = 65;
 		int zip = 20105;
@@ -259,7 +259,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type, Age and ZipCode on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterLiveHelp() {
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
@@ -268,7 +268,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhat() {
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
@@ -277,7 +277,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhich() {
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();
@@ -286,7 +286,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void clickAdvSearch() {
 		// Click on Advance Search link
 		basicSearch.clickAdvSearch();
@@ -302,7 +302,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify navigation to Advanced CTS on Basic CTS");
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void SearchInvalidAge() {
 		driver.findElement(By.xpath(".//input[@id='a']")).sendKeys("abc");
 		basicSearch.searchDefault();
@@ -313,7 +313,7 @@ public class BasicSearch_Test extends BaseClass {
 		driver.findElement(By.xpath(".//input[@id='a']")).clear();
 	}
 
-	//@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void SearchInvalidZip() {
 		//// div[@class='error-msg']
 		driver.findElement(By.xpath(".//input[@id='z']")).sendKeys("abc");
