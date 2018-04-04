@@ -8,16 +8,17 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 public class Analytics {
+	
+	public static final String S_CODE_NAME = "Find NCI-Supported Clinical Trials";
+	public static final String S_ACCOUNT = "s_account";
+	public static final String NCI_FUNCTIONS_NAME = "Clinical Trials Search Results";
 
 	WebDriver driver;
 
 	/*************** Basic Search Page WebElements **********************/
-	@FindBy(how = How.LINK_TEXT, using = "advanced search")
-	WebElement lnk_AdvSearch;
-
-	@FindBy(how = How.CSS, using = "#accessible-megamenu-1522852087022-1")
-	WebElement megaMenuLink;
-
+	@FindBy(how = How.XPATH, using = "//*[contains(text(), 's_account')]")
+	WebElement SAccount;
+	
 	// Constructor - Initializing the Page objects
 	public Analytics(WebDriver driver) {
 		this.driver = driver;
@@ -25,10 +26,14 @@ public class Analytics {
 		System.out.println("PageFactory initiated");
 	}
 
+	// Get inner text of element containing s_account
+	public String getSAccountText() {
+		return SAccount.getText();
+	}
+	
 	// Click mega menu
 	public void clickMegaMenu() {
-		megaMenuLink.click();
+		//megaMenuLink.click();
 	}
-
 
 }

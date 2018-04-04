@@ -1,4 +1,5 @@
 ************************Environment URLs***********************************
+HomePage=https://www-stage.cancer.gov
 BasicClinicalTrialSearchURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-stage.cancer.gov/contact
