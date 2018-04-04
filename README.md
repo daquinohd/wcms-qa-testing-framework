@@ -22,7 +22,7 @@ Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 
 ## To change tests or browsers: 
 1. In Eclipse navigator, expand resources -> drivers.
-2. Open **testing.xml** for editing. 
+2. Open **testng.xml** for editing. 
 3. Add or uncomment any elements that should be tested.
 
 ## To change testing tier:

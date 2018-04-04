@@ -27,7 +27,10 @@ public class Analytics {
 	}
 
 	// Get inner text of element containing s_account
-	public String getSAccountText() {
+	public String getSAccountText() {		
+		System.out.println("== start debug ==");
+		System.out.println("s_account element: " + SAccount.getText());
+		System.out.println("== end debug ==");				
 		return SAccount.getText();
 	}
 	

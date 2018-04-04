@@ -38,8 +38,7 @@ public class Analytics_Test extends BaseClass {
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void veriFySAccount() {
 		String sAccountBlob = analytics.getSAccountText();
-		System.out.println("s_account element: " + sAccountBlob);
-
+		//System.out.println("s_account element: " + sAccountBlob);
 		Assert.assertTrue(sAccountBlob.contains(Analytics.S_ACCOUNT));
 		logger.log(LogStatus.INFO, "s_account element: " + sAccountBlob);
 		logger.log(LogStatus.PASS, "The page contains the s_account variable.");		
