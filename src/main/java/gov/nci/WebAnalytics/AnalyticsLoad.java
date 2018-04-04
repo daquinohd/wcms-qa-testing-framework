@@ -1,4 +1,4 @@
-package com.nci.clinicalTrial.pages;
+package gov.nci.WebAnalytics;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class Analytics {
+public class AnalyticsLoad {
 	
 	public static final String S_CODE_NAME = "Find NCI-Supported Clinical Trials";
 	public static final String S_ACCOUNT = "s_account";
@@ -20,7 +20,7 @@ public class Analytics {
 	WebElement SAccount;
 	
 	// Constructor - Initializing the Page objects
-	public Analytics(WebDriver driver) {
+	public AnalyticsLoad(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		System.out.println("PageFactory initiated");
