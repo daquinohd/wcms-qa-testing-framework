@@ -75,6 +75,13 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.3</version>
 		</dependency>  
+<!-- https://github.com/lightbody/browsermob-proxy -->
+		<dependency>
+			<groupId>net.lightbody.bmp</groupId>
+			<artifactId>browsermob-core</artifactId>
+			<version>2.1.5</version>
+			<scope>test</scope>
+		</dependency>		
 	
   </dependencies>
   
