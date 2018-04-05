@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="QA Environment" parallel="none">
+	<test name="NCI - Chrome Testing" >
+		<parameter name="browser" value="Chrome" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 				
+			<class name="com.nci.testcases.Analytics_Test" />
+		</classes>
+	</test> 
+	
+	<!--<test name="NCI - Chrome Testing Headless" >
+		<parameter name="browser" value="ChromeHeadless" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+			<class name="com.nci.testcases.Analytics_Test" />
+		</classes>
+	</test>  -->
+	<!-- <test name="NCI - Firefox Testing" >
+		<parameter name="browser" value="Firefox" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 
+			<class name="com.nci.testcases.Analytics_Test" />
+		</classes>
+	</test>  -->
+	<!-- <test name="NCI - Firefox Testing Headless" >
+		<parameter name="browser" value="FirefoxHeadless" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.nci.testcases.Analytics_Test" />
+		</classes>
+	</test>  -->
+</suite>
+
