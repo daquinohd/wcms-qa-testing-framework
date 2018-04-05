@@ -53,3 +53,6 @@ Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 1. https://maven.apache.org/download.cgi
 2. Click on apache-maven-3.5.2-bin.zip
 3. Extract files in the appropriate folder
+### BrowserMob Proxy:
+1. Download source from https://github.com/lightbody/browsermob-proxy
+2. Build and place jar in the appropriate folder
