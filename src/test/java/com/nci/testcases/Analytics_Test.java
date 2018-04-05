@@ -39,7 +39,7 @@ public class Analytics_Test extends BaseClass {
 		driver = BrowserManager.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		analytics = new AnalyticsLoad(driver);
-		//setupProxy();
+		setupProxy(driver);
 		System.out.println("Analytics setup done");
 	}
 
@@ -47,7 +47,7 @@ public class Analytics_Test extends BaseClass {
 	 * Configure BrowserMob Proxy for Selenium
 	 * @throws RuntimeException
 	 */
-	public void setupProxy() throws RuntimeException {
+	public void setupProxy(WebDriver driver) throws RuntimeException {
 	    // start the proxy
 	    BrowserMobProxy proxy = new BrowserMobProxyServer();
 	    proxy.start(0);
@@ -60,7 +60,7 @@ public class Analytics_Test extends BaseClass {
 	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
 
 	    // start the browser up
-	    WebDriver driver = new FirefoxDriver(capabilities);
+	    //WebDriver driver = new FirefoxDriver(capabilities);
 
 	    // enable more detailed HAR capture, if desired (see CaptureType for the complete list)
 	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
@@ -68,8 +68,8 @@ public class Analytics_Test extends BaseClass {
 	    // create a new HAR with the label "yahoo.com"
 	    proxy.newHar("cancer.gov");
 
-	    // open yahoo.com
-	    driver.get("https://www.cancer.gov");
+	    // Open proxy page
+	    // driver.get("https://www.my-site-to-proxy.gov");
 
 	    // get the HAR data
 	    har = proxy.getHar();
