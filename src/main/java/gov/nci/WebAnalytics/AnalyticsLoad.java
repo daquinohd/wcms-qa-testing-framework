@@ -9,15 +9,15 @@ import org.openqa.selenium.support.PageFactory;
 
 public class AnalyticsLoad {
 	
-	public static final String S_CODE_NAME = "Find NCI-Supported Clinical Trials";
+	public static final String S_CODE_NAME = "s_code.js";
 	public static final String S_ACCOUNT = "s_account";
-	public static final String NCI_FUNCTIONS_NAME = "Clinical Trials Search Results";
+	public static final String NCI_FUNCTIONS_NAME = "NCIAnalytics";
 
 	WebDriver driver;
 
 	/*************** Basic Search Page WebElements **********************/
-	@FindBy(how = How.XPATH, using = "//*[contains(text(), 's_account')]")
-	WebElement SAccount;
+	@FindBy(how = How.ID_OR_NAME, using = "siteSearchForm")
+	WebElement siteWideSearch;
 	
 	// Constructor - Initializing the Page objects
 	public AnalyticsLoad(WebDriver driver) {
@@ -27,11 +27,12 @@ public class AnalyticsLoad {
 	}
 
 	// Get inner text of element containing s_account
-	public String getSAccountText() {		
+	public String getSitewideSearchWAFunction() {
+		String onSubmit = siteWideSearch.getAttribute("onsubmit");
 		System.out.println("== start debug ==");
-		System.out.println("s_account element: " + SAccount.getText());
-		System.out.println("== end debug ==");				
-		return SAccount.getText();
+		System.out.println("getSitewideSearchWAFunction() returns: " + onSubmit);
+		System.out.println("== end debug ==");
+		return onSubmit;
 	}
 	
 	// Click mega menu

@@ -78,11 +78,10 @@ public class Analytics_Test extends BaseClass {
 	
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void veriFySAccount() {
-		String sAccountBlob = analytics.getSAccountText();
-		//System.out.println("s_account element: " + sAccountBlob);
-		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.S_ACCOUNT));
-		logger.log(LogStatus.INFO, "s_account element: " + sAccountBlob);
-		logger.log(LogStatus.PASS, "The page contains the s_account variable.");		
+		String sAccountBlob = analytics.getSitewideSearchWAFunction();
+		//System.out.println("onsubmit attribute: " + sAccountBlob);
+		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.NCI_FUNCTIONS_NAME));
+		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
 	}
 
 }
