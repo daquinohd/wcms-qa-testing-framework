@@ -27,7 +27,11 @@ public class Analytics_Test extends BaseClass {
 	// WebDriver driver;
 	AnalyticsLoad analytics;
 
-	// HAR file containing exported performance data
+	// HAR data object
+	/** A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring 
+	 * tools to export collected data. 
+	 * BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture 
+	 * HTTP content, and export performance data as a HAR file. */
 	Har har;
 
 	@BeforeClass(groups = { "Smoke" })
