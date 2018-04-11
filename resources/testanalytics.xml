@@ -8,8 +8,9 @@
 				<include name="Smoke" />
 			</run>
 		</groups>
-		<classes> 				
+		<classes>
 			<class name="com.nci.testcases.Analytics_Test" />
+			<class name="com.nci.testcases.Sandbox" />			
 		</classes>
 	</test> 
 	
