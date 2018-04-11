@@ -2,6 +2,7 @@ package com.nci.testcases;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
+import net.lightbody.bmp.core.har.HarEntry;
 import net.lightbody.bmp.proxy.CaptureType;
 
 import com.nci.Utilities.BrowserManager;
@@ -73,9 +75,16 @@ public class Analytics_Test extends BaseClass {
 	    // Open proxy page
 	    driver.get(config.getPageURL("HomePage"));
 
-	    // get the HAR data
+	    // get the HAR data and print to console
+	    // TODO: fix har object - no data is being collected
 	    har = proxy.getHar();
-		System.out.println("BMP proxy setup done");	    
+	    List<HarEntry> entries = har.getLog().getEntries();
+    	System.out.println("Entry count (debug): " + entries.size());
+	    for (HarEntry entry : entries) {
+	    	System.out.println(entry.getRequest().getUrl());
+	    }	    
+	    
+		System.out.println("BMP proxy setup done");
 	}
 	
 	/// Check for NCIAnalytics in HTML
