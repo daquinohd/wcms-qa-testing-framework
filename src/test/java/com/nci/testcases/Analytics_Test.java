@@ -49,6 +49,7 @@ public class Analytics_Test extends BaseClass {
 
 	/**
 	 * Configure BrowserMob Proxy for Selenium
+	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 */
 	public void setupProxy(WebDriver driver) throws RuntimeException {
@@ -63,23 +64,21 @@ public class Analytics_Test extends BaseClass {
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
 	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
 
-	    // start the browser up
-	    //WebDriver driver = new FirefoxDriver(capabilities);
-
 	    // enable more detailed HAR capture, if desired (see CaptureType for the complete list)
 	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
-	    // create a new HAR with the label "yahoo.com"
+	    // create a new HAR with the label "cancer.gov"
 	    proxy.newHar("cancer.gov");
 
 	    // Open proxy page
-	    // driver.get("https://www.my-site-to-proxy.gov");
+	    driver.get(config.getPageURL("HomePage"));
 
 	    // get the HAR data
 	    har = proxy.getHar();
 		System.out.println("BMP proxy setup done");	    
 	}
 	
+	/// Check for NCIAnalytics in HTML
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void veriFySAccount() {
 		String sAccountBlob = analytics.getSitewideSearchWAFunction();
