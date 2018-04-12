@@ -50,7 +50,7 @@ public class Analytics_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("HomePage");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, pageURL, true);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		analytics = new AnalyticsLoad(driver);
 		// setupProxy(driver);		
@@ -59,7 +59,7 @@ public class Analytics_Test extends BaseClass {
 	}
 
 	/**
-	 * Configure BrowserMob Proxy for Selenium
+	 * Configure BrowserMob Proxy for Selenium.<br>
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 */
