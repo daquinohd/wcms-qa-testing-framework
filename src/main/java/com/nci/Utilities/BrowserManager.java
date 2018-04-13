@@ -121,35 +121,4 @@ public class BrowserManager {
 	}
 	
 
-	/**
-	 * Configure BrowserMob Proxy for Selenium.<br>
-	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
-	 * @throws RuntimeException
-	 */
-	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
-	public static BrowserMobProxy startProxyBrowser() throws RuntimeException {
-	    // start the proxy
-	    BrowserMobProxy proxy = new BrowserMobProxyServer();
-	    proxy.start();
-
-	    // get the Selenium proxy object
-	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-
-	    // configure it as a desired capability
-	    DesiredCapabilities capabilities = new DesiredCapabilities();
-	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-
-	    // New driver
-	    WebDriver driver = new ChromeDriver(capabilities);
-	    
-	    // enable more detailed HAR capture, if desired (see CaptureType for the complete list)
-	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
-
-	    // create a new HAR with the label "cancer.gov"
-	    proxy.newHar("cancer.gov");
-
-	    // Open proxy page
-	    driver.get("https://www.cancer.gov/");
-	    return proxy;
-	}
 }

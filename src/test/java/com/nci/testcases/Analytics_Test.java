@@ -39,6 +39,9 @@ public class Analytics_Test extends BaseClass {
 	// Analytics URL 
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
 	
+	// New instance of BrowserMob proxy
+    BrowserMobProxy proxy = new BrowserMobProxyServer();
+	
 	// HAR data object
 	/** A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring 
 	 * tools to export collected data. 
@@ -62,6 +65,8 @@ public class Analytics_Test extends BaseClass {
 		analyticsClick = new AnalyticsClickEvents(driver);
 				
 		// setupProxy(driver);
+		startProxyBrowser();
+		doDriver();
 		getHarObject();
 		System.out.println("Analytics setup done");
 	}
@@ -73,7 +78,8 @@ public class Analytics_Test extends BaseClass {
 	 */
 	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
 	public void getHarObject() throws RuntimeException {
-		BrowserMobProxy proxy = BrowserManager.startProxyBrowser();
+		//startProxyBrowser();
+		//BrowserMobProxy proxy = startProxyBrowser();
 		
 	    // get the HAR data and print to console
 	    // TODO: Create logic for different browsers. Either here or create a new method in BrowserManager()
@@ -98,6 +104,49 @@ public class Analytics_Test extends BaseClass {
 	    
 		System.out.println("BMP proxy setup done");
 	}
+	
+	
+	
+	
+
+	/**
+	 * Configure BrowserMob Proxy for Selenium.<br>
+	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * @throws RuntimeException
+	 */
+	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
+	public void startProxyBrowser() throws RuntimeException {
+	    // start the proxy
+	    proxy.start();
+
+	    // enable more detailed HAR capture, if desired (see CaptureType for the complete list)
+	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
+
+	    // create a new HAR with the label "cancer.gov"
+	    proxy.newHar("cancer.gov");
+	    
+	   
+	}	
+	
+	
+	public void doDriver() {
+	    // get the Selenium proxy object
+	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+
+	    // configure it as a desired capability
+	    DesiredCapabilities capabilities = new DesiredCapabilities();
+	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
+
+	    // New driver
+	    WebDriver driver = new ChromeDriver(capabilities);
+	    
+
+	    // Open proxy page
+	    driver.get("https://www.cancer.gov/");	
+	}
+	
+	
+	
 	
 	/// Check for NCIAnalytics in HTML
 	@Test(groups = { "Smoke" }, priority = 1)
