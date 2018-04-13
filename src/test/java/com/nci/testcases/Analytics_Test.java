@@ -1,106 +1,84 @@
 package com.nci.testcases;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
 
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
-import net.lightbody.bmp.client.ClientUtil;
 import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.core.har.HarEntry;
 import net.lightbody.bmp.proxy.CaptureType;
 
 import com.nci.Utilities.BrowserManager;
 import com.relevantcodes.extentreports.LogStatus;
+import gov.nci.WebAnalytics.AnalyticsBase;
 import gov.nci.WebAnalytics.AnalyticsClickEvents;
 import gov.nci.WebAnalytics.AnalyticsLoadEvents;
 
 public class Analytics_Test extends BaseClass {
 
-	// WebDriver driver;
 	AnalyticsLoadEvents analyticsLoad;
 	AnalyticsClickEvents analyticsClick;
-
-	// Analytics URL 
-	public static final String TRACKING_SERVER = "nci.122.2o7.net";
-	
-	// New instance of BrowserMob proxy
     BrowserMobProxy proxy = new BrowserMobProxyServer();
 	
-	// HAR data object
-	/** A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring 
-	 * tools to export collected data. 
-	 * BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture 
-	 * HTTP content, and export performance data as a HAR file. */
+	// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
+	// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
+    // and export performance data as a HAR file object.
 	Har har;
-
+	String clickHar = "";
+	String loadHar = "";
+	
 	@BeforeClass(groups = { "Smoke" })
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
+		
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("HomePage");
 		System.out.println("PageURL: " + pageURL);
+						
+		// setupProxy(driver);
+		initializeProxy(pageURL);
 		
 		// Initialize driver and open browser
-		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
+		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);		
+
 		// Create our load and click analytics objects
 		analyticsLoad = new AnalyticsLoadEvents(driver);
 		analyticsClick = new AnalyticsClickEvents(driver);
 				
-		// setupProxy(driver);
-		startProxyBrowser();
-		
-		// get a driver object here
-		BrowserManager.startProxyBrowser(browser, pageURL, proxy);
-		//analyticsLoad = new AnalyticsLoadEvents(driver);
-		//analyticsClick = new AnalyticsClickEvents(driver);
-		
-		
 		getHarObject();
 		System.out.println("Analytics setup done");
-	}
-
+	}	
+	
 	/**
 	 * Configure BrowserMob Proxy for Selenium.<br>
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 */
-	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
-	public void getHarObject() throws RuntimeException {
-		//startProxyBrowser();
-		//BrowserMobProxy proxy = startProxyBrowser();
+	private void getHarObject() throws RuntimeException {
 		
-	    // get the HAR data and print to console
-	    // TODO: Create logic for different browsers. Either here or create a new method in BrowserManager()
+	    // Get the HAR data and print to console for now
+	    // TODO: Break this out into actual tests
 	    // TODO: Start tracking click events
-	    // TODO: Get the driver to actually quit when done 
-	    // TODO: Smash stuff with hammer
 	    har = proxy.getHar();
 	    List<HarEntry> entries = har.getLog().getEntries();
     	System.out.println("Entry count (debug): " + entries.size());
 	    for (HarEntry entry : entries) {
-	    	if(entry.getRequest().getUrl().contains(TRACKING_SERVER))
+	    	if(entry.getRequest().getUrl().contains(AnalyticsBase.TRACKING_SERVER))
 			{
 	    		String result = entry.getRequest().getUrl();
 	    		try {
 					result = URLDecoder.decode(result, "UTF-8");
+					if(result.contains("=event1,")) {
+						loadHar = result;
+					}
 				} catch (Exception e) {
 					result = "bleah";
 				} 
@@ -109,58 +87,53 @@ public class Analytics_Test extends BaseClass {
 	    }  
 	    
 		System.out.println("BMP proxy setup done");
-	}
+	}	
 	
-	
-	
-	
-
 	/**
-	 * Configure BrowserMob Proxy for Selenium.<br>
+	 * Start and configure BrowserMob Proxy for Selenium.<br/>
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 */
-	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
-	public void startProxyBrowser() throws RuntimeException {
-	    // start the proxy
+	private void initializeProxy(String url) throws RuntimeException {
+	    // Start the proxy
 	    proxy.start();
 
-	    // enable more detailed HAR capture, if desired (see CaptureType for the complete list)
+	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
 	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
-	    // create a new HAR with the label "cancer.gov"
-	    proxy.newHar("cancer.gov");
-	    
-	   
+	    // Create a new HAR with a label matching the hostname
+	    proxy.newHar(url);	   
 	}	
-	
-	
-	public void doDriver(BrowserMobProxy myProxy) {
-	    // get the Selenium proxy object
-	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(myProxy);
 
-	    // configure it as a desired capability
-	    DesiredCapabilities capabilities = new DesiredCapabilities();
-	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-
-	    // New driver
-	    WebDriver driver = new ChromeDriver(capabilities);
-	    
-
-	    // Open proxy page
-	    driver.get("https://www.cancer.gov/");	
-	}
 	
-	
-	
+	/******** Begin testing section ********/		
+	// TODO: Set expected load values for different pages
+	// TODO: Work out what we need to fire off on click/resize/other events
+	// 		- Do we need to create a new HAR with each call? 
+	//		- How do we differentiate between load and click calls?	
+	// TODO: add "analytics" group
 	
 	/// Check for NCIAnalytics in HTML
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void veriFySAccount() {
 		String sAccountBlob = analyticsLoad.getSitewideSearchWAFunction();
-		//System.out.println("onsubmit attribute: " + sAccountBlob);
 		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoadEvents.NCI_FUNCTIONS_NAME));
 		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
 	}
+	
+	/// Load event fired off
+	@Test(groups = { "Smoke" })
+	public void verifyHar() {
+		Assert.assertTrue(loadHar.contains("event1,event47="));
+		logger.log(LogStatus.PASS, "Load events are captured.");
+	}
 
+	/// 1 == 1
+	@Test(groups = { "Smoke" })
+	public void onePlusOne() {
+		int h = 1;
+		Assert.assertTrue(h == 1);
+		logger.log(LogStatus.PASS, "One equals one");
+	}
+	
 }
