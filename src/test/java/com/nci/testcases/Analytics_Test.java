@@ -27,12 +27,14 @@ import net.lightbody.bmp.proxy.CaptureType;
 
 import com.nci.Utilities.BrowserManager;
 import com.relevantcodes.extentreports.LogStatus;
-import gov.nci.WebAnalytics.AnalyticsLoad;
+import gov.nci.WebAnalytics.AnalyticsClickEvents;
+import gov.nci.WebAnalytics.AnalyticsLoadEvents;
 
 public class Analytics_Test extends BaseClass {
 
 	// WebDriver driver;
-	AnalyticsLoad analytics;
+	AnalyticsLoadEvents analyticsLoad;
+	AnalyticsClickEvents analyticsClick;
 
 	// Analytics URL 
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
@@ -52,7 +54,7 @@ public class Analytics_Test extends BaseClass {
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL, true);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		analytics = new AnalyticsLoad(driver);
+		analyticsLoad = new AnalyticsLoadEvents(driver);
 		// setupProxy(driver);		
 		setupProxy();
 		System.out.println("Analytics setup done");
@@ -115,9 +117,9 @@ public class Analytics_Test extends BaseClass {
 	/// Check for NCIAnalytics in HTML
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void veriFySAccount() {
-		String sAccountBlob = analytics.getSitewideSearchWAFunction();
+		String sAccountBlob = analyticsLoad.getSitewideSearchWAFunction();
 		//System.out.println("onsubmit attribute: " + sAccountBlob);
-		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.NCI_FUNCTIONS_NAME));
+		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoadEvents.NCI_FUNCTIONS_NAME));
 		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
 	}
 

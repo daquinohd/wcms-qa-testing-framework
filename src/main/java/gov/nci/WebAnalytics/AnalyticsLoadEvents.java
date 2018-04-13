@@ -7,20 +7,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class AnalyticsLoad {
-	
-	public static final String S_CODE_NAME = "s_code.js";
-	public static final String S_ACCOUNT = "s_account";
-	public static final String NCI_FUNCTIONS_NAME = "NCIAnalytics";
-
-	WebDriver driver;
+public class AnalyticsLoadEvents extends AnalyticsBase {	
 
 	/*************** Basic Search Page WebElements **********************/
 	@FindBy(how = How.ID_OR_NAME, using = "siteSearchForm")
 	WebElement siteWideSearch;
 	
 	// Constructor - Initializing the Page objects
-	public AnalyticsLoad(WebDriver driver) {
+	public AnalyticsLoadEvents(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		System.out.println("PageFactory initiated");
@@ -33,11 +27,6 @@ public class AnalyticsLoad {
 		System.out.println("getSitewideSearchWAFunction() returns: " + onSubmit);
 		System.out.println("== end debug ==");
 		return onSubmit;
-	}
-	
-	// Click mega menu
-	public void clickMegaMenu() {
-		//megaMenuLink.click();
 	}
 
 }
