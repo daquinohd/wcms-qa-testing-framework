@@ -117,10 +117,26 @@ public class BrowserManager {
 	 * TODO: create headless drivers
 	 * TODO: create Firefox/IE drivers		
 	 */
-	public static WebDriver startProxyBrowser(String browserName, String url){
+	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy myProxy){
+		
+	    // get the Selenium proxy object
+	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(myProxy);
+
+	    // configure it as a desired capability
+	    DesiredCapabilities capabilities = new DesiredCapabilities();
+	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
+
+	    /**
+
+	    // New driver
+	    WebDriver driver = new ChromeDriver(capabilities);
+	    
+
+	    // Open proxy page
+	    driver.get("https://www.cancer.gov/");			
+		*/
 		
 		ConfigReader config = new ConfigReader();
-		ChromeOptions chromeOptions = new ChromeOptions();
 		
 		/* Chrome browser & settings */
 		if(browserName.equalsIgnoreCase("Chrome")){
@@ -129,7 +145,7 @@ public class BrowserManager {
 			System.setProperty("webdriver.chrome.driver", driverFullPath);
 			System.out.println("Chrome Driver Path: " + driverFullPath);
 			
-			driver = new ChromeDriver(chromeOptions);
+			driver = new ChromeDriver(capabilities);
 			driver.manage().window().maximize();
 			driver.get(url);
 		}

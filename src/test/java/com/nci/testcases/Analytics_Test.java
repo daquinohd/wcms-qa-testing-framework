@@ -68,7 +68,7 @@ public class Analytics_Test extends BaseClass {
 		startProxyBrowser();
 		
 		// get a driver object here
-		doDriver();
+		BrowserManager.startProxyBrowser(browser, pageURL, proxy);
 		//analyticsLoad = new AnalyticsLoadEvents(driver);
 		//analyticsClick = new AnalyticsClickEvents(driver);
 		
@@ -135,9 +135,9 @@ public class Analytics_Test extends BaseClass {
 	}	
 	
 	
-	public void doDriver() {
+	public void doDriver(BrowserMobProxy myProxy) {
 	    // get the Selenium proxy object
-	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(myProxy);
 
 	    // configure it as a desired capability
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
