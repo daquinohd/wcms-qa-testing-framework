@@ -67,29 +67,8 @@ public class Analytics_Test extends BaseClass {
 	 */
 	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
 	public void setupProxy() throws RuntimeException {
-	    // start the proxy
-	    BrowserMobProxy proxy = new BrowserMobProxyServer();
-	    proxy.start(0);
-
-	    // get the Selenium proxy object
-	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-
-	    // configure it as a desired capability
-	    DesiredCapabilities capabilities = new DesiredCapabilities();
-	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
-
-	    // New driver
-	    WebDriver driver = new ChromeDriver(capabilities);
-	    
-	    // enable more detailed HAR capture, if desired (see CaptureType for the complete list)
-	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
-
-	    // create a new HAR with the label "cancer.gov"
-	    proxy.newHar("cancer.gov");
-
-	    // Open proxy page
-	    driver.get(config.getPageURL("HomePage"));
-
+		BrowserMobProxy proxy = BrowserManager.startProxyBrowser();
+		
 	    // get the HAR data and print to console
 	    // TODO: Create logic for different browsers. Either here or create a new method in BrowserManager()
 	    // TODO: Start tracking click events
