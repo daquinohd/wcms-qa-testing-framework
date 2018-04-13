@@ -52,11 +52,17 @@ public class Analytics_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("HomePage");
 		System.out.println("PageURL: " + pageURL);
+		
+		// Initialize driver and open browser
 		driver = BrowserManager.startBrowser(browser, pageURL, true);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		// Create our load and click analytics objects
 		analyticsLoad = new AnalyticsLoadEvents(driver);
-		// setupProxy(driver);		
-		setupProxy();
+		analyticsClick = new AnalyticsClickEvents(driver);
+				
+		// setupProxy(driver);
+		getHarObject();
 		System.out.println("Analytics setup done");
 	}
 
@@ -66,7 +72,7 @@ public class Analytics_Test extends BaseClass {
 	 * @throws RuntimeException
 	 */
 	// public void setupProxy(WebDriver driver) throws RuntimeException {	 
-	public void setupProxy() throws RuntimeException {
+	public void getHarObject() throws RuntimeException {
 		BrowserMobProxy proxy = BrowserManager.startProxyBrowser();
 		
 	    // get the HAR data and print to console
