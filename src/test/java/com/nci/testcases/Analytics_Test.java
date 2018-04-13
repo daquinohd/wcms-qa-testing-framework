@@ -57,7 +57,7 @@ public class Analytics_Test extends BaseClass {
 		System.out.println("PageURL: " + pageURL);
 		
 		// Initialize driver and open browser
-		driver = BrowserManager.startBrowser(browser, pageURL, true);
+		driver = BrowserManager.startBrowser(browser, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		// Create our load and click analytics objects
@@ -66,7 +66,13 @@ public class Analytics_Test extends BaseClass {
 				
 		// setupProxy(driver);
 		startProxyBrowser();
+		
+		// get a driver object here
 		doDriver();
+		//analyticsLoad = new AnalyticsLoadEvents(driver);
+		//analyticsClick = new AnalyticsClickEvents(driver);
+		
+		
 		getHarObject();
 		System.out.println("Analytics setup done");
 	}

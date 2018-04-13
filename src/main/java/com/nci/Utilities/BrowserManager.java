@@ -41,25 +41,13 @@ public class BrowserManager {
 	}
 
 	/**
-	 * Overloaded startBrowser() method to handle existing calls
-	 * @param browserName name of the browser
-	 * @param url URL to open
-	 * @return WebDriver driver
-	 */
-	public static WebDriver startBrowser(String browserName, String url){
-		WebDriver webDriver = startBrowser(browserName, url, false);
-		return webDriver;
-	}
-	
-	/**
 	 * Create a new web driver for given browser and set that browser's options
 	 * @param browserName name of the browser
 	 * @param url URL to open
-	 * @param isUsingProxy are we using the 
 	 * @return WebDriver driver
 	 * TODO: set up drivers for IE/Edge and Safari?
 	 */
-	public static WebDriver startBrowser(String browserName, String url, Boolean isUsingProxy){
+	public static WebDriver startBrowser(String browserName, String url){
 		
 		ConfigReader config = new ConfigReader();
 		ChromeOptions chromeOptions = new ChromeOptions();
@@ -121,4 +109,34 @@ public class BrowserManager {
 	}
 	
 
+	/**
+	 * Create a new web driver for given browser and set that browser's options
+	 * @param browserName name of the browser
+	 * @param url URL to open
+	 * @return WebDriver driver
+	 * TODO: create headless drivers
+	 * TODO: create Firefox/IE drivers		
+	 */
+	public static WebDriver startProxyBrowser(String browserName, String url){
+		
+		ConfigReader config = new ConfigReader();
+		ChromeOptions chromeOptions = new ChromeOptions();
+		
+		/* Chrome browser & settings */
+		if(browserName.equalsIgnoreCase("Chrome")){
+			System.out.println("Chrome browser");
+			String driverFullPath = getDriverPath(config, "ChromeDriver");
+			System.setProperty("webdriver.chrome.driver", driverFullPath);
+			System.out.println("Chrome Driver Path: " + driverFullPath);
+			
+			driver = new ChromeDriver(chromeOptions);
+			driver.manage().window().maximize();
+			driver.get(url);
+		}
+		else {			
+			throw new IllegalArgumentException();
+		}
+		
+		return driver;
+	}	
 }
