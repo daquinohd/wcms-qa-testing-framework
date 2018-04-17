@@ -113,11 +113,10 @@ public class BrowserManager {
 	 * @param url URL to open
 	 * @return WebDriver driver
 	 * TODO: create headless drivers
-	 * TODO: create Firefox/IE drivers		
+	 * TODO: create Firefox/IE drivers
 	 */
-	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy myProxy)
-	{
-
+	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy myProxy) {
+		
 		ConfigReader config = new ConfigReader();
 		
 	    // Get the Selenium proxy object and configure it as a desired capability

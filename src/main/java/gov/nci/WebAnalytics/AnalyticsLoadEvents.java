@@ -23,9 +23,6 @@ public class AnalyticsLoadEvents extends AnalyticsBase {
 	// Get inner text of element containing s_account
 	public String getSitewideSearchWAFunction() {
 		String onSubmit = siteWideSearch.getAttribute("onsubmit");
-		System.out.println("== start debug ==");
-		System.out.println("getSitewideSearchWAFunction() returns: " + onSubmit);
-		System.out.println("== end debug ==");
 		return onSubmit;
 	}
 
