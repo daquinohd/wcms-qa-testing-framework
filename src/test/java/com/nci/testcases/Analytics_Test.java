@@ -59,6 +59,8 @@ public class Analytics_Test extends BaseClass {
 		
 		// Add entries to the HAR log
 		populateHar();
+		setHar();
+		
 		
 		System.out.println("Analytics setup done");
 	}	
@@ -154,10 +156,11 @@ public class Analytics_Test extends BaseClass {
 		Dimension large = new Dimension(1100, 800);
 		Dimension xlarge = new Dimension(1600, 800);
 				
-		driver.manage().window().setSize(small);
-		driver.manage().window().setSize(med);
-		driver.manage().window().setSize(large);		
 		driver.manage().window().setSize(xlarge);
+		driver.manage().window().setSize(large);		
+		driver.manage().window().setSize(med);
+		driver.manage().window().setSize(small);
+		driver.manage().window().maximize();
 	}
 
 	/*** END REGION ACTIONS TO POPULATE HAR ***/
@@ -173,7 +176,7 @@ public class Analytics_Test extends BaseClass {
 	// TODO: what are we writing to with "logger"? 
 	// TODO: make a new group (not 'Smoke')
 	
-	/// Check for NCIAnalytics in HTML
+	/// "NCIAnalytics" elements are present in HTML
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void veriFySAccount() {
 		String sAccountBlob = loadEvents.getSitewideSearchWAFunction();
@@ -181,17 +184,15 @@ public class Analytics_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
 	}	
 	
-	/// Load event fired off
+	/// The HAR list is populated 
 	@Test(groups = { "Smoke" })
 	public void verifyHarLoad() {
-
 		// Update the har object
-		setHar();
 		Assert.assertTrue(harList.size() > 0);
 		logger.log(LogStatus.PASS, "Load events are being captured.");
 	}	
 	
-	/// Check click events
+	/// Click event numbers match with their descriptors
 	@Test(groups = { "Smoke" })
 	public void testClickEvents() {
 
@@ -213,7 +214,17 @@ public class Analytics_Test extends BaseClass {
 			if(har.contains("pev2=MegaMenuClick")) {
 				Assert.assertTrue(har.contains("events=event26"));			
 			}
-					
+		}
+		System.out.println("=== End debug testEvents() ===");
+		
+	}	
+	
+	/// Resize events match with their descriptors
+	@Test(groups = { "Smoke" })
+	public void testResizeEvents() {
+		List<String> localHar = harList;
+		
+		for(String har : localHar) {
 			if(har.contains("pev2=ResizedToMobile")) {
 				Assert.assertTrue(har.contains("events=event7"));			
 			}
@@ -225,10 +236,8 @@ public class Analytics_Test extends BaseClass {
 			}
 			if(har.contains("pev2=ResizedToExtra wide")) {
 				Assert.assertTrue(har.contains("events=event7"));			
-			}
-			
+			}			
 		}
-		System.out.println("=== End debug testEvents() ===");
 		
 	}
 	
