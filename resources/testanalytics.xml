@@ -5,7 +5,7 @@
 		<parameter name="browser" value="Chrome" />
 		<groups>
 			<run>
-				<include name="Smoke" />
+				<include name="Analytics" />
 			</run>
 		</groups>
 		<classes>
@@ -17,7 +17,7 @@
 		<parameter name="browser" value="ChromeHeadless" />
 		<groups>
 			<run>
-				<include name="Smoke" />
+				<include name="Analytics" />
 			</run>
 		</groups>
 		<classes> 	
@@ -28,7 +28,7 @@
 		<parameter name="browser" value="Firefox" />
 		<groups>
 			<run>
-				<include name="Smoke" />
+				<include name="Analytics" />
 			</run>
 		</groups>
 		<classes> 
@@ -39,7 +39,7 @@
 		<parameter name="browser" value="FirefoxHeadless" />
 		<groups>
 			<run>
-				<include name="Smoke" />
+				<include name="Analytics" />
 			</run>
 		</groups>
 		<classes>

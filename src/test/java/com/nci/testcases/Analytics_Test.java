@@ -18,20 +18,19 @@ import net.lightbody.bmp.proxy.CaptureType;
 
 import com.nci.Utilities.BrowserManager;
 import com.relevantcodes.extentreports.LogStatus;
-import gov.nci.WebAnalytics.AnalyticsBase;
 import gov.nci.WebAnalytics.AnalyticsClickEvents;
 import gov.nci.WebAnalytics.AnalyticsLoadEvents;
-import gov.nci.WebAnalytics.Beacon;
+import gov.nci.WebAnalytics.AnalyticsBase;
 
-public class Analytics_Test extends BaseClass {
+public class Analytics_Test extends AnalyticsTestBase {
 
 	AnalyticsLoadEvents loadEvents;
 	AnalyticsClickEvents clickEvents;
     BrowserMobProxy proxy = new BrowserMobProxyServer();	
 	List<String> harList = new ArrayList<String>();
-	List<Beacon> beacons = new ArrayList<Beacon>();
+	List<AnalyticsBase> beacons = new ArrayList<AnalyticsBase>();
 	
-	@BeforeClass(groups = { "Smoke" })
+	@BeforeClass(groups = { "Analytics" })
 	@Parameters({ "browser" })
 	// TODO: tear down selenium proxy when done	
 	public void setup(String browser) throws MalformedURLException {
@@ -135,10 +134,9 @@ public class Analytics_Test extends BaseClass {
 	//		- How do we differentiate between load and click calls?	
 	// TODO: add "analytics" group
 	// TODO: what are we writing to with "logger"? 
-	// TODO: make a new group (not 'Smoke')
 	
 	/// "NCIAnalytics" elements are present in HTML
-	@Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Analytics" }, priority = 1)
 	public void veriFySAccount() {
 		String sAccountBlob = loadEvents.getSitewideSearchWAFunction();
 		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoadEvents.NCI_FUNCTIONS_NAME));
@@ -146,7 +144,7 @@ public class Analytics_Test extends BaseClass {
 	}	
 	
 	/// The HAR list is populated 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Analytics" })
 	public void verifyHarLoad() {
 		// Update the har object
 		Assert.assertTrue(harList.size() > 0);
@@ -154,7 +152,7 @@ public class Analytics_Test extends BaseClass {
 	}	
 	
 	/// Click event numbers match with their descriptors
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Analytics" })
 	public void testClickEvents() {
 
 		// Debug
@@ -162,7 +160,7 @@ public class Analytics_Test extends BaseClass {
 		System.out.println("Total requests to tracking server : " + harList.size());
 		
 		//TODO: build out requestBeacon(?) object and compare that way...
-		for(Beacon beacon : beacons) {
+		for(AnalyticsBase beacon : beacons) {
 			// do something
 		}		
 		
@@ -185,7 +183,7 @@ public class Analytics_Test extends BaseClass {
 	}	
 	
 	/// Resize events match with their descriptors
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Analytics" })
 	public void testResizeEvents() {
 		List<String> localHar = harList;
 		
@@ -207,14 +205,14 @@ public class Analytics_Test extends BaseClass {
 	}
 	
 	/// Temporary method to test beacon object
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Analytics" })
 	public void testObject() throws MalformedURLException {
 		List<String> localHars = harList;
-		List<Beacon> myBeacons = new ArrayList<>();
+		List<AnalyticsBase> myBeacons = new ArrayList<>();
 
 		for(String har : harList)
 		{
-			myBeacons.add(new Beacon(har));
+			myBeacons.add(new AnalyticsBase(har));
 		}
 
 		// Check that we have more than one beacon
@@ -222,7 +220,7 @@ public class Analytics_Test extends BaseClass {
 				
 		// For debugging purposes only...
 		String firstHar = localHars.get(0);
-		Beacon firstBeacon = new Beacon(firstHar);		
+		AnalyticsBase firstBeacon = new AnalyticsBase(firstHar);		
 
 		// for each beacon ... logic goes here
 		Assert.assertTrue(firstBeacon.channel.equals("NCI Homepage"));
@@ -230,8 +228,20 @@ public class Analytics_Test extends BaseClass {
 		Assert.assertTrue(firstBeacon.events[0].contains("1"));
 
 	}
-		
 	
+	/// Temporary method to verify that my new changes are picked up
+	@Test(groups = { "Analytics" })
+	public void trueFlag() {
+		int j = 1;
+		Assert.assertTrue(j + 1 == 2);
+	}	
+	
+
+	/// TODO: Add LinkXxx properties in AnalyticsClickEvents only
+	/// TODO: Build negative tests - also 
+	/// TODO: Build test for test	
+	/// TODO: Clean clean clean		
+
 	/*** END REGION TESTS ***/
 	
 }
