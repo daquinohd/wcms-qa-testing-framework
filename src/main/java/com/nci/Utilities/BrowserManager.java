@@ -120,6 +120,7 @@ public class BrowserManager {
 		ConfigReader config = new ConfigReader();
 		
 	    // Get the Selenium proxy object and configure it as a desired capability
+		System.out.println("=== Starting Driver ===");		
 	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(myProxy);
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
 	    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);

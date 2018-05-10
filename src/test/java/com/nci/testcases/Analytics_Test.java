@@ -1,38 +1,37 @@
 package com.nci.testcases;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.message.BasicNameValuePair;
+import com.nci.Utilities.BrowserManager;
+import gov.nci.WebAnalytics.AnalyticsClick;
+import gov.nci.WebAnalytics.AnalyticsLoad;
+import gov.nci.WebAnalytics.AnalyticsBase;
+
+import com.relevantcodes.extentreports.LogStatus;
+import net.lightbody.bmp.proxy.CaptureType;
+
+import org.apache.http.NameValuePair;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.BrowserMobProxyServer;
-import net.lightbody.bmp.proxy.CaptureType;
-
-import com.nci.Utilities.BrowserManager;
-import com.relevantcodes.extentreports.LogStatus;
-import gov.nci.WebAnalytics.AnalyticsClickEvents;
-import gov.nci.WebAnalytics.AnalyticsLoadEvents;
-import gov.nci.WebAnalytics.AnalyticsBase;
 
 public class Analytics_Test extends AnalyticsTestBase {
 
-	AnalyticsLoadEvents loadEvents;
-	AnalyticsClickEvents clickEvents;
-    BrowserMobProxy proxy = new BrowserMobProxyServer();	
+	AnalyticsLoad loadEvents;
+	AnalyticsClick clickEvents;
 	List<String> harList = new ArrayList<String>();
-	List<AnalyticsBase> beacons = new ArrayList<AnalyticsBase>();
+	List<AnalyticsLoad> loadBeacons = new ArrayList<AnalyticsLoad>();
+	List<AnalyticsClick> clickBeacons = new ArrayList<AnalyticsClick>();
 	
+		//region setup
 	@BeforeClass(groups = { "Analytics" })
 	@Parameters({ "browser" })
-	// TODO: tear down selenium proxy when done	
 	public void setup(String browser) throws MalformedURLException {
 		
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -47,25 +46,43 @@ public class Analytics_Test extends AnalyticsTestBase {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);		
 
 		// Create our load and click analytics objects
-		loadEvents = new AnalyticsLoadEvents(driver);
-		clickEvents = new AnalyticsClickEvents(driver);
+		loadEvents = new AnalyticsLoad(driver);
+		clickEvents = new AnalyticsClick(driver);
 		
 		// Add entries to the HAR log
-		populateHar();
-		AnalyticsBase.setHar(proxy, harList);
-		//setHar();
-		
-		
+		doBrowserActions();
+		AnalyticsBase.setHar(proxy, harList);		
 		System.out.println("Analytics setup done");
 	}	
 	
+	/**
+	 * Start and configure BrowserMob Proxy for Selenium.<br/>
+	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * @throws RuntimeException
+	 */
+	private void initializeProxy(String url) throws RuntimeException {
+
+		// Start the proxy
+		System.out.println("=== Starting BrowserMobProxy ===");		
+	    proxy.start();
+
+	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
+	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
+
+	    // Create a new HAR with a label matching the hostname
+	    proxy.newHar(url);	    
+		System.out.println("=== Started BrowserMobProxy successfully ===");
+	}
+	//endregion setup
+	
+	//region browseractions
 	/**
 	 * All the proxy browser 'actions' go in here. These are not tests, but things that we do 
 	 * to fire off analytics events. These actions will populate our list of har objects, which will
 	 * then be tested.
 	 * @throws RuntimeException
 	 */
-	private void populateHar() throws RuntimeException {
+	private void doBrowserActions() throws RuntimeException {
 		//TODO: refactor this
 		navigateSite();
 		resizeBrowser();
@@ -76,25 +93,6 @@ public class Analytics_Test extends AnalyticsTestBase {
 		//navigateError();
 		//navigateRATs();		
 	}
-	
-	/**
-	 * Start and configure BrowserMob Proxy for Selenium.<br/>
-	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
-	 * @throws RuntimeException
-	 */
-	private void initializeProxy(String url) throws RuntimeException {
-	    // Start the proxy
-	    proxy.start();
-
-	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
-	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
-
-	    // Create a new HAR with a label matching the hostname
-	    proxy.newHar(url);	   
-	}	
-
-
-	/*** REGION ACTIONS TO POPULATE HAR ***/
 	
 	/// Click around pages
 	public void navigateSite() {
@@ -122,24 +120,23 @@ public class Analytics_Test extends AnalyticsTestBase {
 		driver.manage().window().setSize(small);
 		driver.manage().window().maximize();
 	}
-
-	/*** END REGION ACTIONS TO POPULATE HAR ***/
-
+	//endregion browseractions
 	
-	/*** REGION TESTS ***/
-
 	// TODO: Set expected load values for different pages
 	// TODO: Work out what we need to fire off on click/resize/other events
 	// 		- Do we need to create a new HAR with each call? 
 	//		- How do we differentiate between load and click calls?	
-	// TODO: add "analytics" group
-	// TODO: what are we writing to with "logger"? 
-	
+	// TODO: get the logger to actually work
+	// TODO: Add LinkXxx properties in AnalyticsClickEvents only
+	// TODO: Build negative tests - also 
+	// TODO: Build test for test	
+	// TODO: Clean clean clean		
+	//region tests
 	/// "NCIAnalytics" elements are present in HTML
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void veriFySAccount() {
 		String sAccountBlob = loadEvents.getSitewideSearchWAFunction();
-		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoadEvents.NCI_FUNCTIONS_NAME));
+		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.NCI_FUNCTIONS_NAME));
 		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
 	}	
 	
@@ -156,13 +153,15 @@ public class Analytics_Test extends AnalyticsTestBase {
 	public void testClickEvents() {
 
 		// Debug
-		System.out.println("=== Start debug testEvents() ===");		
-		System.out.println("Total requests to tracking server : " + harList.size());
+		System.out.println("=== Start debug testEvents() ===");	
 		
-		//TODO: build out requestBeacon(?) object and compare that way...
-		for(AnalyticsBase beacon : beacons) {
-			// do something
+		for(AnalyticsLoad loadBeacon : loadBeacons) {
+			// TODO: do something with this
 		}		
+
+		for(AnalyticsClick clickBeacon : clickBeacons) {
+			// TODO: do something
+		}				
 		
 		for(String har : harList) {
 			System.out.println(har);
@@ -207,25 +206,35 @@ public class Analytics_Test extends AnalyticsTestBase {
 	/// Temporary method to test beacon object
 	@Test(groups = { "Analytics" })
 	public void testObject() throws MalformedURLException {
+		AnalyticsBase analytics = new AnalyticsBase();
 		List<String> localHars = harList;
-		List<AnalyticsBase> myBeacons = new ArrayList<>();
 
+		// har == url for our purposes
+		// TODO: rename
 		for(String har : harList)
 		{
-			myBeacons.add(new AnalyticsBase(har));
+			List<NameValuePair> params = analytics.buildParamsList(URI.create(har));
+			if(!analytics.hasParam(params, "pe")) {
+				loadBeacons.add(new AnalyticsLoad(har));
+			}
+			else {
+				clickBeacons.add(new AnalyticsClick(har));
+			}
+
 		}
 
+		System.out.println("our stuff should be built now");
 		// Check that we have more than one beacon
-		Assert.assertTrue(myBeacons.size() > 1);
+		Assert.assertTrue(loadBeacons.size() > 1);
 				
 		// For debugging purposes only...
 		String firstHar = localHars.get(0);
-		AnalyticsBase firstBeacon = new AnalyticsBase(firstHar);		
+		AnalyticsLoad firstLoadBeacon = new AnalyticsLoad(firstHar);		
 
 		// for each beacon ... logic goes here
-		Assert.assertTrue(firstBeacon.channel.equals("NCI Homepage"));
-		Assert.assertFalse(firstBeacon.channel.contains("some other string"));
-		Assert.assertTrue(firstBeacon.events[0].contains("1"));
+		Assert.assertTrue(firstLoadBeacon.channel.equals("NCI Homepage"));
+		Assert.assertFalse(firstLoadBeacon.channel.contains("some other string"));
+		Assert.assertTrue(firstLoadBeacon.events[0].contains("1"));
 
 	}
 	
@@ -234,14 +243,7 @@ public class Analytics_Test extends AnalyticsTestBase {
 	public void trueFlag() {
 		int j = 1;
 		Assert.assertTrue(j + 1 == 2);
-	}	
-	
-
-	/// TODO: Add LinkXxx properties in AnalyticsClickEvents only
-	/// TODO: Build negative tests - also 
-	/// TODO: Build test for test	
-	/// TODO: Clean clean clean		
-
-	/*** END REGION TESTS ***/
+	}
+	//endregion tests
 	
 }

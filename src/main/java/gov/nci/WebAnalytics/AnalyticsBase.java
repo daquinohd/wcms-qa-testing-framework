@@ -34,13 +34,10 @@ public class AnalyticsBase {
 	public String[] events;
 	public List<NameValuePair> props; 
 	public List<NameValuePair> eVars; 
-	public List<NameValuePair> hiers; 
-	public String linkType;
-	public String linkName;
-	public String linkUrl;	
+	public List<NameValuePair> hiers;
 	
 	/**
-	 * No-arg constructor
+	 * No-arg constructor - init all vars
 	 */
 	public AnalyticsBase() {
 		uri = null;
@@ -51,9 +48,6 @@ public class AnalyticsBase {
 		props = new ArrayList<>();
 		eVars = new ArrayList<>();
 		hiers = new ArrayList<>();
-		linkType = "";
-		linkName = "";
-		linkUrl = "";
 	}
 	
 	/**
@@ -70,9 +64,6 @@ public class AnalyticsBase {
 		props = getProps(params);
 		eVars = getEvars(params);
 		hiers = getHiers(params);
-		linkType = getLinkType(params);
-		linkName = getLinkName(params);
-		linkUrl = getLinkUrl(params);
 	}
 	
 	/**
@@ -93,7 +84,7 @@ public class AnalyticsBase {
 	 * @return retParams
 	 * TODO: replace deprecated parse() method
 	 */
-	protected List<NameValuePair> buildParamsList(URI uri) {
+	public List<NameValuePair> buildParamsList(URI uri) {
 		List<NameValuePair> rtnParams = new ArrayList<>();
 		rtnParams = URLEncodedUtils.parse(uri, "UTF-8");
 		return rtnParams;
@@ -184,66 +175,30 @@ public class AnalyticsBase {
 		}
 		return rtnHiers;
 	}
-	
+
 	/**
-	 * Get "Link Type" value (pe)(
+	 * Check query params to see if this is a link tracking event
 	 * @param parms
 	 * @return
 	 */
-	public String getLinkType(List<NameValuePair> parms) {
-		String rtn = "";		
-		for (NameValuePair param : parms) {
-			if (param.getName().toLowerCase().equals("pe")) {
-				rtn = param.getValue();
-				break;
+	public boolean hasParam(List<NameValuePair> paramList, String myParam) {
+		for (NameValuePair param : paramList) {
+			if (param.getName().toLowerCase().equals(myParam)) {
+				return true;
 			}
 		}
-		return rtn;
-	}	
-
-	/**
-	 * Get "Link Name" value (pev2)(
-	 * @param parms
-	 * @return
-	 */	
-	public String getLinkName(List<NameValuePair> parms) {
-		String rtn = "";		
-		for (NameValuePair param : parms) {
-			if (param.getName().toLowerCase().equals("pev2")) {
-				rtn = param.getValue();
-				break;
-			}
-		}
-		return rtn;
-	}	
-
-	/**
-	 * Get "Link URL" value (pev1)(
-	 * @param parms
-	 * @return
-	 */		
-	public String getLinkUrl(List<NameValuePair> parms) {
-		String rtn = "";		
-		for (NameValuePair param : parms) {
-			if (param.getName().toLowerCase().equals("pev1")) {
-				rtn = param.getValue();
-				break;
-			}
-		}
-		return rtn;
-	}	
-	
-	
-	
+		return false;
+	}
+		
 	/**
 	 * Configure BrowserMob Proxy for Selenium.<br>
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 */
-	// TODO: clean this up - also should this have a return value? 
 	// TODO: set up filters 
 	// TODO: remove duplicates
-	public static void setHar(BrowserMobProxy proxy, List<String> harList) throws RuntimeException {		
+	// TODO: trace our data type - don't need to be shuffling between String, URL, String...
+	public static void setHar(BrowserMobProxy proxy, List<String> harList) throws RuntimeException, IllegalArgumentException {		
 
 		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
 		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
@@ -254,23 +209,23 @@ public class AnalyticsBase {
     	System.out.println("Total HAR entries: " + entries.size());
     	
 	    for (HarEntry entry : entries) {
-	    	if(entry.getRequest().getUrl().contains(TRACKING_SERVER))
-			{
-	    		String result = entry.getRequest().getUrl();
-	    		try {
-					//result = URLDecoder.decode(result, "UTF-8");
-					if(result.contains("pageName=" + PAGE_NAME)) {
-						harList.add(result);
-					}
-				} catch (Exception e) {
-					result = "bleah";
-				} 
-				//System.out.println(result);
-			}
-	    }  
+	    	// Build a list of requests to the analytics tracking server from the HAR
+	    	String result = entry.getRequest().getUrl();
+	    	if(result.contains(TRACKING_SERVER))
+	    	{
+	    		harList.add(result);
+	    	}
+	    	/** TODO: do something with this
+	    	if(result.toLowerCase().contains("//static"))
+	    	{
+	    		harList.add(result);
+	    	}
+	    	*/
+	    }
 	    
-		System.out.println("BMP proxy setup done");
+	    // harList cleanup logic here
+		System.out.println("Total analytics entries: " + harList.size());
+
 	}
-	
 	
 }

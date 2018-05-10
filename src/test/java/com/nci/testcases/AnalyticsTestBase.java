@@ -18,7 +18,10 @@ import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class AnalyticsTestBase {
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+
+public class AnalyticsTestBase extends BaseClass {
 
 	// private static Logger log=
 	// LogManager.getLogger(BaseClass.class.getName());
@@ -27,6 +30,7 @@ public class AnalyticsTestBase {
 	public static WebDriver driver;
 	public String pageURL;
 	ConfigReader config = new ConfigReader();
+    BrowserMobProxy proxy = new BrowserMobProxyServer();	
 
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters	
@@ -64,9 +68,11 @@ public class AnalyticsTestBase {
 
 	@AfterClass(groups = { "Analytics" })
 	public void afterClass() {
-		System.out.println("***********Quiting Driver*********");
+		System.out.println("=== Quitting Driver ===");
 		driver.quit();
 		report.endTest(logger);
+		System.out.println("=== Stopping BrowserMobProxy ===");
+		proxy.stop();
 	}
 
 	@AfterTest(groups = { "Analytics" })
