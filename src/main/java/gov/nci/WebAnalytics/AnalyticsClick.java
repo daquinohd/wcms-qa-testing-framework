@@ -2,6 +2,7 @@ package gov.nci.WebAnalytics;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -101,6 +102,30 @@ public class AnalyticsClick extends AnalyticsBase {
 	// Click mega menu
 	public void clickMegaMenu() {
 		mega_menu_link.click();
+	}
+		
+	/**
+	 * Get a list of beacon URLs fired off for click events
+	 * @param urlList
+	 * @return
+	 * @throws MalformedURLException
+	 */
+	public static List<AnalyticsClick> getClickBeaons(List<String> urlList) throws MalformedURLException {
+				
+		List<AnalyticsClick> clickBeacons = new ArrayList<AnalyticsClick>();		
+		AnalyticsBase analytics = new AnalyticsBase();
+
+		for(String url : urlList)
+		{
+			// If this has the "Link Type" param ('pe'), add to list of click beacons
+			List<NameValuePair> params = analytics.buildParamsList(URI.create(url));
+			if(analytics.hasParam(params, "pe")) {
+				clickBeacons.add(new AnalyticsClick(url));
+			}
+		}
+		
+		System.out.println("Total click beacons: " + clickBeacons.size());
+		return clickBeacons;
 	}
 	
 }

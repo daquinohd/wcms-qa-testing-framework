@@ -1,7 +1,11 @@
 package gov.nci.WebAnalytics;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.NameValuePair;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,4 +39,28 @@ public class AnalyticsLoad extends AnalyticsBase {
 		return onSubmit;
 	}
 
+	
+	/**
+	 * Get a list of beacon URLs fired off for load events
+	 * @param urlList
+	 * @return
+	 * @throws MalformedURLException
+	 */
+	public static List<AnalyticsLoad> getLoadBeacons(List<String> urlList) throws MalformedURLException {
+				
+		List<AnalyticsLoad> loadBeacons = new ArrayList<AnalyticsLoad>();		
+		AnalyticsBase analytics = new AnalyticsBase();
+
+		for(String url : urlList)
+		{
+			// If this doesn't have the "Link Type" param ('pe'), add to list of load beacons
+			List<NameValuePair> params = analytics.buildParamsList(URI.create(url));
+			if(!analytics.hasParam(params, "pe")) {
+				loadBeacons.add(new AnalyticsLoad(url));
+			}
+		}
+
+		System.out.println("Total load beacons: " + loadBeacons.size());		
+		return loadBeacons;
+	}	
 }

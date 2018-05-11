@@ -195,15 +195,15 @@ public class AnalyticsBase {
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 */
-	// TODO: set up filters 
-	// TODO: remove duplicates
+	// TODO: remove duplicates (?)
 	// TODO: trace our data type - don't need to be shuffling between String, URL, String...
-	public static void setHar(BrowserMobProxy proxy, List<String> harList) throws RuntimeException, IllegalArgumentException {		
+	public static List<String> getHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {		
 
 		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
 		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
 	    // and export performance data as a HAR file object.
 	    Har har = proxy.getHar();
+	    List<String> harList = new ArrayList<String>();
 	    
 	    List<HarEntry> entries = har.getLog().getEntries();
     	System.out.println("Total HAR entries: " + entries.size());
@@ -215,17 +215,13 @@ public class AnalyticsBase {
 	    	{
 	    		harList.add(result);
 	    	}
-	    	/** TODO: do something with this
-	    	if(result.toLowerCase().contains("//static"))
-	    	{
-	    		harList.add(result);
-	    	}
-	    	*/
+	    	// TODO: check for calls to 'static' or 'satellite' 
 	    }
 	    
 	    // harList cleanup logic here
+	    
 		System.out.println("Total analytics entries: " + harList.size());
-
+		return harList;
 	}
 	
 }

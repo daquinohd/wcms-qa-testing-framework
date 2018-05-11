@@ -23,13 +23,23 @@ import org.testng.annotations.Test;
 
 public class Analytics_Test extends AnalyticsTestBase {
 
+	// TODO: clean up loadEvents / clickEvents objects
+	// TODO: build a 'beacon params' object or something like that
+	// TODO: refactor doBrowserActions()
+	// TODO: Work out what we need to fire off on click/resize/other events
+	// 		- Do we need to create a new HAR with each call? 
+	//		- How do we differentiate between load and click calls?	
+	// TODO: get the logger to actually work
+	// TODO: Add LinkXxx properties in AnalyticsClickEvents only
+	// TODO: Build negative tests - also 
+	// TODO: Build test for test	
 	AnalyticsLoad loadEvents;
 	AnalyticsClick clickEvents;
 	List<String> harList = new ArrayList<String>();
 	List<AnalyticsLoad> loadBeacons = new ArrayList<AnalyticsLoad>();
 	List<AnalyticsClick> clickBeacons = new ArrayList<AnalyticsClick>();
 	
-		//region setup
+	//region setup
 	@BeforeClass(groups = { "Analytics" })
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
@@ -51,9 +61,11 @@ public class Analytics_Test extends AnalyticsTestBase {
 		
 		// Add entries to the HAR log
 		doBrowserActions();
-		AnalyticsBase.setHar(proxy, harList);		
+		harList = AnalyticsBase.getHarUrlList(proxy);
+		loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
+		clickBeacons = AnalyticsClick.getClickBeaons(harList);		
 		System.out.println("Analytics setup done");
-	}	
+	}
 	
 	/**
 	 * Start and configure BrowserMob Proxy for Selenium.<br/>
@@ -83,7 +95,6 @@ public class Analytics_Test extends AnalyticsTestBase {
 	 * @throws RuntimeException
 	 */
 	private void doBrowserActions() throws RuntimeException {
-		//TODO: refactor this
 		navigateSite();
 		resizeBrowser();
 		//doSiteWideSearch();
@@ -122,15 +133,6 @@ public class Analytics_Test extends AnalyticsTestBase {
 	}
 	//endregion browseractions
 	
-	// TODO: Set expected load values for different pages
-	// TODO: Work out what we need to fire off on click/resize/other events
-	// 		- Do we need to create a new HAR with each call? 
-	//		- How do we differentiate between load and click calls?	
-	// TODO: get the logger to actually work
-	// TODO: Add LinkXxx properties in AnalyticsClickEvents only
-	// TODO: Build negative tests - also 
-	// TODO: Build test for test	
-	// TODO: Clean clean clean		
 	//region tests
 	/// "NCIAnalytics" elements are present in HTML
 	@Test(groups = { "Analytics" }, priority = 1)
@@ -138,47 +140,57 @@ public class Analytics_Test extends AnalyticsTestBase {
 		String sAccountBlob = loadEvents.getSitewideSearchWAFunction();
 		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.NCI_FUNCTIONS_NAME));
 		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
-	}	
+	}
 	
-	/// The HAR list is populated 
-	@Test(groups = { "Analytics" })
-	public void verifyHarLoad() {
-		// Update the har object
+	/// Load and click events have been captured
+	@Test(groups = { "Analytics" }, priority = 1)
+	public void verifyHar() {
 		Assert.assertTrue(harList.size() > 0);
-		logger.log(LogStatus.PASS, "Load events are being captured.");
+		Assert.assertTrue(loadBeacons.size() > 0);
+		Assert.assertTrue(clickBeacons.size() > 0);
+		logger.log(LogStatus.PASS, "Load and click events have been captured.");
 	}	
+
+	/// Debugging statement
+	@Test(groups = { "Analytics" })
+	public void debugHar() {
+		System.out.println("=== Start debug testEvents() ===");
+
+		for(String har : harList) {
+			System.out.println(har);
+		}
+
+		System.out.println("=== End debug testEvents() ===");		
+		Assert.assertTrue(1 == 1);
+	}
+		
+	/// Click event numbers match with their descriptors
+	@Test(groups = { "Analytics" })
+	public void testLoadEvents() {
+
+		for(AnalyticsLoad beacon : loadBeacons) {
+			Assert.assertTrue(beacon.events[0].contains("event1"));
+			Assert.assertTrue(beacon.events[1].contains("event47"));
+		}
+		
+		logger.log(LogStatus.PASS, "Load event values are correct.");				
+	}
+	
 	
 	/// Click event numbers match with their descriptors
 	@Test(groups = { "Analytics" })
 	public void testClickEvents() {
-
-		// Debug
-		System.out.println("=== Start debug testEvents() ===");	
 		
-		for(AnalyticsLoad loadBeacon : loadBeacons) {
-			// TODO: do something with this
-		}		
-
-		for(AnalyticsClick clickBeacon : clickBeacons) {
-			// TODO: do something
-		}				
-		
-		for(String har : harList) {
-			System.out.println(har);
-			
-			Assert.assertTrue(har.contains("nci"));
-			logger.log(LogStatus.PASS, "Pass => " + "Verify 'nci' value...");
-			
-			if(har.contains("pev2=FeatureCardClick")) {
-				Assert.assertTrue(har.contains("events=event27"));				
+		for(AnalyticsClick beacon : clickBeacons) {
+			if(beacon.linkName == "FeatureCardClick") {
+				Assert.assertTrue(beacon.events[0].contains("event27"));
 			}
-
-			if(har.contains("pev2=MegaMenuClick")) {
-				Assert.assertTrue(har.contains("events=event26"));			
+			if(beacon.linkName == "MegaMenuClick") {
+				Assert.assertTrue(beacon.events[0].contains("event27"));
 			}
 		}
-		System.out.println("=== End debug testEvents() ===");
 		
+		logger.log(LogStatus.PASS, "Click event values are correct.");		
 	}	
 	
 	/// Resize events match with their descriptors
@@ -186,50 +198,19 @@ public class Analytics_Test extends AnalyticsTestBase {
 	public void testResizeEvents() {
 		List<String> localHar = harList;
 		
-		for(String har : localHar) {
-			if(har.contains("pev2=ResizedToMobile")) {
-				Assert.assertTrue(har.contains("events=event7"));			
+		for(AnalyticsClick beacon : clickBeacons) {
+			if(beacon.linkName.toLowerCase().contains("resize")) {
+				Assert.assertTrue(beacon.events[0].contains("event6"));
 			}
-			if(har.contains("pev2=ResizedToTablet")) {
-				Assert.assertTrue(har.contains("events=event7"));			
-			}
-			if(har.contains("pev2=ResizedToDesktop")) {
-				Assert.assertTrue(har.contains("events=event7"));			
-			}
-			if(har.contains("pev2=ResizedToExtra wide")) {
-				Assert.assertTrue(har.contains("events=event7"));			
-			}			
 		}
-		
+		logger.log(LogStatus.PASS, "Resize values are correct.");
 	}
 	
 	/// Temporary method to test beacon object
 	@Test(groups = { "Analytics" })
 	public void testObject() throws MalformedURLException {
-		AnalyticsBase analytics = new AnalyticsBase();
-		List<String> localHars = harList;
-
-		// har == url for our purposes
-		// TODO: rename
-		for(String har : harList)
-		{
-			List<NameValuePair> params = analytics.buildParamsList(URI.create(har));
-			if(!analytics.hasParam(params, "pe")) {
-				loadBeacons.add(new AnalyticsLoad(har));
-			}
-			else {
-				clickBeacons.add(new AnalyticsClick(har));
-			}
-
-		}
-
-		System.out.println("our stuff should be built now");
-		// Check that we have more than one beacon
-		Assert.assertTrue(loadBeacons.size() > 1);
-				
 		// For debugging purposes only...
-		String firstHar = localHars.get(0);
-		AnalyticsLoad firstLoadBeacon = new AnalyticsLoad(firstHar);		
+		AnalyticsLoad firstLoadBeacon = loadBeacons.get(0);
 
 		// for each beacon ... logic goes here
 		Assert.assertTrue(firstLoadBeacon.channel.equals("NCI Homepage"));
@@ -240,10 +221,18 @@ public class Analytics_Test extends AnalyticsTestBase {
 	
 	/// Temporary method to verify that my new changes are picked up
 	@Test(groups = { "Analytics" })
-	public void trueFlag() {
+	public void testInt() {
 		int j = 1;
 		Assert.assertTrue(j + 1 == 2);
 	}
+
+	/// Temporary method to verify that my new changes are picked up
+	@Test(groups = { "Analytics" })
+	public void testString() {
+		String K = "potassium";
+		Assert.assertEquals(K, "potassium");
+	}
+	
 	//endregion tests
 	
 }
