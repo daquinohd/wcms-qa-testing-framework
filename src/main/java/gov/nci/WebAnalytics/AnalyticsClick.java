@@ -110,7 +110,7 @@ public class AnalyticsClick extends AnalyticsBase {
 	 * @return
 	 * @throws MalformedURLException
 	 */
-	public static List<AnalyticsClick> getClickBeaons(List<String> urlList) {
+	public static List<AnalyticsClick> getClickBeacons(List<String> urlList) {
 				
 		List<AnalyticsClick> clickBeacons = new ArrayList<AnalyticsClick>();		
 		AnalyticsBase analytics = new AnalyticsBase();

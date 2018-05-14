@@ -35,10 +35,7 @@ public class Analytics_Test extends AnalyticsTestBase {
 	// TODO: Build test for test	
 	AnalyticsLoad loadEvents;
 	AnalyticsClick clickEvents;
-	List<String> harList = new ArrayList<String>();
-	List<AnalyticsLoad> loadBeacons = new ArrayList<AnalyticsLoad>();
-	List<AnalyticsClick> clickBeacons = new ArrayList<AnalyticsClick>();
-	
+
 	//region setup
 	@BeforeClass(groups = { "Analytics" })
 	@Parameters({ "browser" })
@@ -116,52 +113,35 @@ public class Analytics_Test extends AnalyticsTestBase {
 	//endregion browseractions
 	
 	//region tests
-	/// "NCIAnalytics" elements are present in HTML
-	@Test(groups = { "Analytics" }, priority = 2)
-	public void veriFySAccount() {
-		String sAccountBlob = loadEvents.getSitewideSearchWAFunction();
-		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.NCI_FUNCTIONS_NAME));
-		logger.log(LogStatus.PASS, "NCIAnalytics attribute is present on search form.");
-	}
-	
+
 	/// Load and click events have been captured
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void verifyHar() {
 		doBrowserActions();
-		harList = AnalyticsBase.getHarUrlList(proxy);
-		loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
-		clickBeacons = AnalyticsClick.getClickBeaons(harList);		
-		
-		
+		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
+		List<AnalyticsLoad> loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
+		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);		
+				
 		Assert.assertTrue(harList.size() > 0);
 		Assert.assertTrue(loadBeacons.size() > 0);
 		Assert.assertTrue(clickBeacons.size() > 0);
-		logger.log(LogStatus.PASS, "Load and click events have been captured.");
-	}	
-
-	/// Debugging statement
-	@Test(groups = { "Analytics" })
-	public void debugHar() {
+		
 		System.out.println("=== Start debug testEvents() ===");
-
-		doBrowserActions();
-		harList = AnalyticsBase.getHarUrlList(proxy);
-		loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
-		clickBeacons = AnalyticsClick.getClickBeaons(harList);		
-		
-		
 		for(String har : harList) {
 			System.out.println(har);
 		}
-
-		System.out.println("=== End debug testEvents() ===");		
-		Assert.assertTrue(1 == 1);
-	}
+		System.out.println("=== End debug testEvents() ===");				
 		
+		logger.log(LogStatus.PASS, "Load and click events have been captured.");				
+	}	
+
 	/// Click event numbers match with their descriptors
 	@Test(groups = { "Analytics" })
 	public void testLoadEvents() {
-
+		doBrowserActions();
+		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
+		List<AnalyticsLoad> loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
+			
 		for(AnalyticsLoad beacon : loadBeacons) {
 			Assert.assertTrue(beacon.events[0].contains("event1"));
 			Assert.assertTrue(beacon.events[1].contains("event47"));
@@ -174,6 +154,9 @@ public class Analytics_Test extends AnalyticsTestBase {
 	/// Click event numbers match with their descriptors
 	@Test(groups = { "Analytics" })
 	public void testClickEvents() {
+		navigateSite();
+		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
+		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);
 		
 		for(AnalyticsClick beacon : clickBeacons) {
 			if(beacon.linkName == "FeatureCardClick") {
@@ -190,7 +173,9 @@ public class Analytics_Test extends AnalyticsTestBase {
 	/// Resize events match with their descriptors
 	@Test(groups = { "Analytics" })
 	public void testResizeEvents() {
-		List<String> localHar = harList;
+		resizeBrowser();
+		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
+		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);
 		
 		for(AnalyticsClick beacon : clickBeacons) {
 			if(beacon.linkName.toLowerCase().contains("resize")) {
@@ -204,6 +189,10 @@ public class Analytics_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" })
 	public void testObject() throws MalformedURLException {
 		// For debugging purposes only...
+		navigateSite();
+		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
+		List<AnalyticsLoad> loadBeacons = AnalyticsLoad.getLoadBeacons(harList);		
+		
 		AnalyticsLoad firstLoadBeacon = loadBeacons.get(0);
 
 		// for each beacon ... logic goes here
