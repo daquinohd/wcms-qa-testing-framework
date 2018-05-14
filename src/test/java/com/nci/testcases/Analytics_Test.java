@@ -49,7 +49,7 @@ public class Analytics_Test extends AnalyticsTestBase {
 		System.out.println("PageURL: " + pageURL);
 						
 		// setupProxy(driver);
-		initializeProxy(pageURL);
+		AnalyticsTestBase.initializeProxy(pageURL);
 		
 		// Initialize driver and open browser
 		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
@@ -60,31 +60,11 @@ public class Analytics_Test extends AnalyticsTestBase {
 		clickEvents = new AnalyticsClick(driver);
 		
 		// Add entries to the HAR log
-		doBrowserActions();
-		harList = AnalyticsBase.getHarUrlList(proxy);
-		loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
-		clickBeacons = AnalyticsClick.getClickBeaons(harList);		
+		
 		System.out.println("Analytics setup done");
 	}
 	
-	/**
-	 * Start and configure BrowserMob Proxy for Selenium.<br/>
-	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
-	 * @throws RuntimeException
-	 */
-	private void initializeProxy(String url) throws RuntimeException {
 
-		// Start the proxy
-		System.out.println("=== Starting BrowserMobProxy ===");		
-	    proxy.start();
-
-	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
-	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
-
-	    // Create a new HAR with a label matching the hostname
-	    proxy.newHar(url);	    
-		System.out.println("=== Started BrowserMobProxy successfully ===");
-	}
 	//endregion setup
 	
 	//region browseractions
@@ -103,6 +83,8 @@ public class Analytics_Test extends AnalyticsTestBase {
 		//useDictionary();
 		//navigateError();
 		//navigateRATs();		
+		
+		
 	}
 	
 	/// Click around pages
@@ -135,7 +117,7 @@ public class Analytics_Test extends AnalyticsTestBase {
 	
 	//region tests
 	/// "NCIAnalytics" elements are present in HTML
-	@Test(groups = { "Analytics" }, priority = 1)
+	@Test(groups = { "Analytics" }, priority = 2)
 	public void veriFySAccount() {
 		String sAccountBlob = loadEvents.getSitewideSearchWAFunction();
 		Assert.assertTrue(sAccountBlob.contains(AnalyticsLoad.NCI_FUNCTIONS_NAME));
@@ -145,6 +127,12 @@ public class Analytics_Test extends AnalyticsTestBase {
 	/// Load and click events have been captured
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void verifyHar() {
+		doBrowserActions();
+		harList = AnalyticsBase.getHarUrlList(proxy);
+		loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
+		clickBeacons = AnalyticsClick.getClickBeaons(harList);		
+		
+		
 		Assert.assertTrue(harList.size() > 0);
 		Assert.assertTrue(loadBeacons.size() > 0);
 		Assert.assertTrue(clickBeacons.size() > 0);
@@ -156,6 +144,12 @@ public class Analytics_Test extends AnalyticsTestBase {
 	public void debugHar() {
 		System.out.println("=== Start debug testEvents() ===");
 
+		doBrowserActions();
+		harList = AnalyticsBase.getHarUrlList(proxy);
+		loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
+		clickBeacons = AnalyticsClick.getClickBeaons(harList);		
+		
+		
 		for(String har : harList) {
 			System.out.println(har);
 		}
@@ -200,7 +194,7 @@ public class Analytics_Test extends AnalyticsTestBase {
 		
 		for(AnalyticsClick beacon : clickBeacons) {
 			if(beacon.linkName.toLowerCase().contains("resize")) {
-				Assert.assertTrue(beacon.events[0].contains("event6"));
+				Assert.assertTrue(beacon.events[0].contains("event7"));
 			}
 		}
 		logger.log(LogStatus.PASS, "Resize values are correct.");

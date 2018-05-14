@@ -20,6 +20,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.proxy.CaptureType;
 
 public class AnalyticsTestBase extends BaseClass {
 
@@ -30,7 +31,7 @@ public class AnalyticsTestBase extends BaseClass {
 	public static WebDriver driver;
 	public String pageURL;
 	ConfigReader config = new ConfigReader();
-    BrowserMobProxy proxy = new BrowserMobProxyServer();	
+    public static BrowserMobProxy proxy = new BrowserMobProxyServer();	
 
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters	
@@ -82,4 +83,28 @@ public class AnalyticsTestBase extends BaseClass {
 		// log.info("Test ends here");
 	}
 
+	
+	/**
+	 * Start and configure BrowserMob Proxy for Selenium.<br/>
+	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * @throws RuntimeException
+	 */
+	protected static void initializeProxy(String url) throws RuntimeException {
+
+		if(proxy.isStarted()) {
+			proxy.stop();
+		}
+		
+		// Start the proxy
+		System.out.println("=== Starting BrowserMobProxy ===");		
+	    proxy.start();
+
+	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
+	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
+
+	    // Create a new HAR with a label matching the hostname
+	    proxy.newHar(url);	    
+		System.out.println("=== Started BrowserMobProxy successfully ===");
+	}
+	
 }

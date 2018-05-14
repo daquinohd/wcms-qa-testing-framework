@@ -22,7 +22,7 @@ public class AnalyticsLoad extends AnalyticsBase {
 	public AnalyticsLoad() {}
 	
 	// Constructor to extend AnalyticsBase
-	public AnalyticsLoad(String beaconUrl) throws MalformedURLException {
+	public AnalyticsLoad(String beaconUrl) {
 		super(beaconUrl);
 	}	
 	
@@ -46,7 +46,7 @@ public class AnalyticsLoad extends AnalyticsBase {
 	 * @return
 	 * @throws MalformedURLException
 	 */
-	public static List<AnalyticsLoad> getLoadBeacons(List<String> urlList) throws MalformedURLException {
+	public static List<AnalyticsLoad> getLoadBeacons(List<String> urlList) {
 				
 		List<AnalyticsLoad> loadBeacons = new ArrayList<AnalyticsLoad>();		
 		AnalyticsBase analytics = new AnalyticsBase();

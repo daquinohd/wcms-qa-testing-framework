@@ -55,7 +55,7 @@ public class AnalyticsBase {
 	 * @param beaconUrl
 	 * @throws MalformedURLException
 	 */
-	public AnalyticsBase(String beaconUrl) throws MalformedURLException {
+	public AnalyticsBase(String beaconUrl) {
 		uri = URI.create(beaconUrl);
 		suites = getSuites(uri);
 		params = buildParamsList(uri);
