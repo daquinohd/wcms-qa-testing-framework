@@ -24,7 +24,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 
 	@BeforeClass(groups = { "Smoke" })
 	@Parameters({ "browser" })
-	public void setup(String browser) {
+	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);

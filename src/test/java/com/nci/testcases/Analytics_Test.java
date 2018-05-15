@@ -196,7 +196,7 @@ public class Analytics_Test extends AnalyticsTestBase {
 		AnalyticsLoad firstLoadBeacon = loadBeacons.get(0);
 
 		// for each beacon ... logic goes here
-		Assert.assertTrue(firstLoadBeacon.channel.equals("NCI Homepage"));
+		Assert.assertTrue(firstLoadBeacon.channel.equals("NCI Homepage") || firstLoadBeacon.channel.contains("Research"));
 		Assert.assertFalse(firstLoadBeacon.channel.contains("some other string"));
 		Assert.assertTrue(firstLoadBeacon.events[0].contains("1"));
 
