@@ -218,9 +218,12 @@ public class AnalyticsBase {
 	    	// TODO: check for calls to 'static' or 'satellite' 
 	    }
 	    
-	    // harList cleanup logic here
-	    
+	    // Debug size of har list
 		System.out.println("Total analytics entries: " + harList.size());
+
+		// harList cleanup logic here		
+		har.getLog().getEntries().clear();
+		
 		return harList;
 	}
 	
