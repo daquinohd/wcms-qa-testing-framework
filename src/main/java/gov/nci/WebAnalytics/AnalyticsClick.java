@@ -33,7 +33,7 @@ public class AnalyticsClick extends AnalyticsBase {
 	}
 	
 	// Constructor to extend AnalyticsBase
-	public AnalyticsClick(String beaconUrl) throws MalformedURLException {
+	public AnalyticsClick(String beaconUrl) {
 		super(beaconUrl);
 		linkType = getLinkType(params);
 		linkName = getLinkName(params);
@@ -110,7 +110,7 @@ public class AnalyticsClick extends AnalyticsBase {
 	 * @return
 	 * @throws MalformedURLException
 	 */
-	public static List<AnalyticsClick> getClickBeaons(List<String> urlList) throws MalformedURLException {
+	public static List<AnalyticsClick> getClickBeacons(List<String> urlList) {
 				
 		List<AnalyticsClick> clickBeacons = new ArrayList<AnalyticsClick>();		
 		AnalyticsBase analytics = new AnalyticsBase();
