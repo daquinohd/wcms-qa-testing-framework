@@ -95,22 +95,6 @@ public class AnalyticsClick_Test extends AnalyticsTestBase {
 		
 		logger.log(LogStatus.PASS, "Load and click events have been captured.");				
 	}	
-
-	/// Click event numbers match with their descriptors
-	@Test(groups = { "Analytics" })
-	public void testLoadEvents() {
-		doBrowserActions();
-		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
-		List<AnalyticsLoad> loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
-			
-		for(AnalyticsLoad beacon : loadBeacons) {
-			Assert.assertTrue(beacon.events[0].contains("event1"));
-			Assert.assertTrue(beacon.events[1].contains("event47"));
-		}
-		
-		logger.log(LogStatus.PASS, "Load event values are correct.");				
-	}
-	
 	
 	/// Click event numbers match with their descriptors
 	@Test(groups = { "Analytics" })
@@ -146,42 +130,12 @@ public class AnalyticsClick_Test extends AnalyticsTestBase {
 		logger.log(LogStatus.PASS, "Resize values are correct.");
 	}
 	
-	/// Temporary method to test beacon object
-	@Test(groups = { "Analytics" })
-	public void testObject() throws MalformedURLException {
-		// For debugging purposes only...
-		navigateSite();
-		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
-		List<AnalyticsLoad> loadBeacons = AnalyticsLoad.getLoadBeacons(harList);		
-		
-		AnalyticsLoad firstLoadBeacon = loadBeacons.get(0);
-
-		// for each beacon ... logic goes here
-		Assert.assertTrue(firstLoadBeacon.channel.equals("NCI Homepage") || firstLoadBeacon.channel.contains("Research"));
-		Assert.assertFalse(firstLoadBeacon.channel.contains("some other string"));
-		Assert.assertTrue(firstLoadBeacon.events[0].contains("1"));
-
-	}
-	
-	/// Temporary method to verify that my new changes are picked up
-	@Test(groups = { "Analytics" })
-	public void testInt() {
-		int j = 1;
-		Assert.assertTrue(j + 1 == 2);
-	}
-
-	/// Temporary method to verify that my new changes are picked up
-	@Test(groups = { "Analytics" })
-	public void testString() {
-		String K = "potassium";
-		Assert.assertEquals(K, "potassium");
-	}
 	
 	/// Temporary method to verify that my new changes are picked up
 	@Test(groups = { "Analytics" })
 	public void asdftestString() {
-		String K = "potassium";
-		Assert.assertEquals(K, "potassium");
+		String str = "clickEvent";
+		Assert.assertEquals("clickEvent", str);
 	}
 	
 	//endregion tests

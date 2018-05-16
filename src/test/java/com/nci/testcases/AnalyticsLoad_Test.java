@@ -111,41 +111,6 @@ public class AnalyticsLoad_Test extends AnalyticsTestBase {
 		logger.log(LogStatus.PASS, "Load event values are correct.");				
 	}
 	
-	
-	/// Click event numbers match with their descriptors
-	@Test(groups = { "Analytics" })
-	public void testClickEvents() {
-		navigateSite();
-		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
-		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);
-		
-		for(AnalyticsClick beacon : clickBeacons) {
-			if(beacon.linkName == "FeatureCardClick") {
-				Assert.assertTrue(beacon.events[0].contains("event27"));
-			}
-			if(beacon.linkName == "MegaMenuClick") {
-				Assert.assertTrue(beacon.events[0].contains("event27"));
-			}
-		}
-		
-		logger.log(LogStatus.PASS, "Click event values are correct.");		
-	}	
-	
-	/// Resize events match with their descriptors
-	@Test(groups = { "Analytics" })
-	public void testResizeEvents() {
-		resizeBrowser();
-		List<String> harList = AnalyticsBase.getHarUrlList(proxy);
-		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);
-		
-		for(AnalyticsClick beacon : clickBeacons) {
-			if(beacon.linkName.toLowerCase().contains("resize")) {
-				Assert.assertTrue(beacon.events[0].contains("event7"));
-			}
-		}
-		logger.log(LogStatus.PASS, "Resize values are correct.");
-	}
-	
 	/// Temporary method to test beacon object
 	@Test(groups = { "Analytics" })
 	public void testObject() throws MalformedURLException {
@@ -168,13 +133,6 @@ public class AnalyticsLoad_Test extends AnalyticsTestBase {
 	public void testInt() {
 		int j = 1;
 		Assert.assertTrue(j + 1 == 2);
-	}
-
-	/// Temporary method to verify that my new changes are picked up
-	@Test(groups = { "Analytics" })
-	public void testString() {
-		String K = "potassium";
-		Assert.assertEquals(K, "potassium");
 	}
 	
 	//endregion tests
