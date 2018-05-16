@@ -21,48 +21,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class Analytics_Test extends AnalyticsTestBase {
+public class AnalyticsClick_Test extends AnalyticsTestBase {
 
-	// TODO: clean up loadEvents / clickEvents objects
-	// TODO: build a 'beacon params' object or something like that
-	// TODO: refactor doBrowserActions()
-	// TODO: Work out what we need to fire off on click/resize/other events
-	// 		- Do we need to create a new HAR with each call? 
-	//		- How do we differentiate between load and click calls?	
-	// TODO: get the logger to actually work
-	// TODO: Add LinkXxx properties in AnalyticsClickEvents only
-	// TODO: Build negative tests - also 
-	// TODO: Build test for test	
-	AnalyticsLoad loadEvents;
-	AnalyticsClick clickEvents;
 
-	//region setup
-	@BeforeClass(groups = { "Analytics" })
-	@Parameters({ "browser" })
-	public void setup(String browser) throws MalformedURLException {
-		
-		logger = report.startTest(this.getClass().getSimpleName());
-		pageURL = config.getPageURL("HomePage");
-		System.out.println("PageURL: " + pageURL);
-						
-		// setupProxy(driver);
-		AnalyticsTestBase.initializeProxy(pageURL);
-		
-		// Initialize driver and open browser
-		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);		
-
-		// Create our load and click analytics objects
-		loadEvents = new AnalyticsLoad(driver);
-		clickEvents = new AnalyticsClick(driver);
-		
-		// Add entries to the HAR log
-		
-		System.out.println("Analytics setup done");
-	}
-	
-
-	//endregion setup
 	
 	//region browseractions
 	/**
@@ -212,6 +173,13 @@ public class Analytics_Test extends AnalyticsTestBase {
 	/// Temporary method to verify that my new changes are picked up
 	@Test(groups = { "Analytics" })
 	public void testString() {
+		String K = "potassium";
+		Assert.assertEquals(K, "potassium");
+	}
+	
+	/// Temporary method to verify that my new changes are picked up
+	@Test(groups = { "Analytics" })
+	public void asdftestString() {
 		String K = "potassium";
 		Assert.assertEquals(K, "potassium");
 	}
