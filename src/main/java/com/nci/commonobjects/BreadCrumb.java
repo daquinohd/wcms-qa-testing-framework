@@ -19,12 +19,19 @@ public class BreadCrumb {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void getBreadCrumb(String crumb)
+	public String getBreadCrumb()
+	{
+		//Assert.assertTrue(breadCrumb.isDisplayed());
+		String Breadcrumb = breadCrumb.getText();
+		//Assert.assertEquals(breadCrumb.getText(), crumb);
+		return Breadcrumb;
+	}
+	/*public void getBreadCrumb(String crumb)
 	{
 		Assert.assertTrue(breadCrumb.isDisplayed());
 		System.out.println("Breadcrumb: "+breadCrumb.getText());
 		Assert.assertEquals(breadCrumb.getText(), crumb);
 		
-	}
+	}*/
 
 }

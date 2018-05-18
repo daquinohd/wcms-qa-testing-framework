@@ -21,3 +21,6 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= DTQAEnvironment
 
+
+***********************Test Data******************************************
+TestData= ./test-data/TestData.xlsx

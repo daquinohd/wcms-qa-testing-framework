@@ -16,13 +16,29 @@ public class AdvanceSearch {
 
 	public static final String ADVANCE_SEARCH_PAGE_TITLE = "Find NCI-Supported Clinical Trials";
 	public static final String SEARCH_RESULT_PAGE_TITLE = "Clinical Trials Search Results";
-	public static final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
+	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
 
 	WebDriver driver;
 
 	/*************** Advance Search Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
 	WebElement AdvanceSearchPageTitle;
+	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]")
+	WebElement text_AdvanceDefinition;
+	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]/p/a[2]")
+	WebElement lnk_Steps;
+	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div")
+	WebElement txt_SearchTipAdv;
+	@FindBy(how = How.LINK_TEXT, using = "basic search")
+	WebElement lnk_BasicSearch;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['CANCER TYPE/CONDITION']")
+	WebElement lgd_cancerType;
+	@FindBy(how = How.XPATH, using = "#fieldset--type > a")
+	WebElement lnk_CancerTypeHelp;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--type']/div[1]")
+	WebElement text_CancerTypeText;
+	@FindBy(how = How.CSS, using = "#ct-label")
+	WebElement lbl_PrimaryCancerType;
 	@FindBy(how = How.CSS, using = "#select2-ct-select-container")
 	WebElement box_primaryCancerType;
 	@FindBy(how = How.CSS, using = "#select2-ct-select-results")
@@ -34,23 +50,64 @@ public class AdvanceSearch {
 	@FindBy(how = How.CSS, using = "#ct-select option")
 	List<WebElement> dpd_cancerType;
 	@FindBy(how = How.CSS, using = "#st-multiselect")
-	WebElement dpd_subTypeBox;
+	WebElement box_subType;
+	@FindBy(how = How.CSS, using = "#st-label")
+	WebElement lbl_SubType;
 	@FindBy(how = How.CSS, using = "#st-multiselect")
 	List<WebElement> dpd_subType;
+	@FindBy(how = How.CSS, using = "#stg-label")
+	WebElement lbl_Stage;
 	@FindBy(how = How.XPATH, using = "//input[@id='a']")
 	WebElement txt_age;
 	@FindBy(how = How.XPATH, using = "//input[@id='q']")
 	WebElement txt_keywords;
 	@FindBy(how = How.XPATH, using = "//label[@id='fin-label']")
 	WebElement lbl_side_effects;
-	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['CANCER TYPE / CONDITION']")
-	WebElement lgd_cancerType;
+
 	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--location']/legend['LOCATION']")
 	WebElement lgd_location;
 	@FindBy(how = How.XPATH, using = "//label[@for='zip-code']")
 	WebElement rbtn_zipcode;
+	@FindBy(how = How.CSS, using = "#section--zip-code > div.radio > label")
+	WebElement lbl_zipcode;
 	@FindBy(how = How.XPATH, using = "//input[@id='z']")
 	WebElement txt_zipcode;
+	@FindBy(how = How.XPATH, using = "//*[@id='section--ccs']/div[1]/label")
+	WebElement rbtn_countryStateCity;
+	@FindBy(how = How.XPATH, using = "//*[@id='section--ccs']/div[3]/div[1]/span/span[1]/span/ul/li/input")
+	WebElement txt_state;
+	@FindBy(how = How.XPATH, using = "//*[@id='lcty']")
+	WebElement txt_city;
+	@FindBy(how = How.XPATH, using = "//*[@id='section--hospital']/div[1]/label")
+	WebElement rbtn_hospital;
+	@FindBy(how = How.XPATH, using = "//*[@id='hos']")
+	WebElement txt_hospital;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--nih']/div/label")
+	WebElement rbtn_atNIH;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtype']")
+	WebElement lgd_trialtype;
+	@FindBy(how = How.XPATH, using = "//*[@id='tt']/div[2]/label")
+	WebElement cb_trialtype_treatment;
+	@FindBy(how = How.XPATH, using = "//*[@id='tt']/div[3]/label")
+	WebElement cb_trialtype_supportivecare;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtype']")
+	WebElement lgd_drugtreatment;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[2]/span/span[1]/span/ul/li/input")
+	WebElement txt_drug;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[3]/span/span[1]/span/ul/li/input")
+	WebElement txt_treatment;
+	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_all']")
+	WebElement cb_trialphaseAll;
+	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_1']")
+	WebElement cb_trialphase1;
+	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_2']")
+	WebElement cb_trialphase2;
+	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_3']")
+	WebElement cb_trialphase3;
+	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_4']")
+	WebElement cb_trialphase4;
+	@FindBy(how = How.XPATH, using = "//*[@id='tid']")
+	WebElement txt_trialId;
 
 	/*************** Search Result Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
@@ -66,6 +123,14 @@ public class AdvanceSearch {
 		PageFactory.initElements(driver, this);
 	}
 
+	// UI components
+	// public WebElement[] verifyUI(){
+	// return new WebElement[] {text_AdvanceDefinition,
+	// lbl_CancerType,lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp, lbl_Zipcode,
+	// lnk_ZipcodeHelp, btn_Search, msg_CancerType, text_Age, text_Zipcode};
+
+	// }
+
 	public String getAdvanceSearchPageTitle() {
 		return AdvanceSearchPageTitle.getText();
 	}
@@ -75,7 +140,7 @@ public class AdvanceSearch {
 	}
 
 	public WebElement getCancerSubTypeBox() {
-		return dpd_subTypeBox;
+		return box_subType;
 	}
 
 	public WebElement getAgeBox() {
@@ -107,12 +172,6 @@ public class AdvanceSearch {
 		txt_CancerTypeBox.sendKeys(Keys.ENTER);
 		System.out.println("****Clicked on the CancerType drop down****");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// List<WebElement> cancerTypeList =
-		// lst_primaryCancerTypeResults.findElements(By.tagName("li"));
-		// System.out.println("****Total # of cancerTypes: ****" +
-		// cancerTypeList.size());
-		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// cancerTypeList.get(cancerTypeIndex).click();
 		Thread.sleep(200);
 	}
 
@@ -134,7 +193,7 @@ public class AdvanceSearch {
 		dpd_cancerStage.sendKeys(cancerStage);
 		dpd_cancerStage.sendKeys(Keys.ENTER);
 		System.out.println("Clicked on the cancer stage drop down");
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	public void getAge(int age) throws InterruptedException {
@@ -159,7 +218,7 @@ public class AdvanceSearch {
 		// Thread.sleep(500);
 	}
 
-	public void searchZipcode(String zip) throws InterruptedException {
+	public void advSearch_Zipcode(String zip) throws InterruptedException {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
 		rbtn_zipcode.click();
 		txt_zipcode.click();
@@ -170,6 +229,139 @@ public class AdvanceSearch {
 		defaultSearch();
 		Thread.sleep(500);
 	}
+
+	public void getState(String state) {
+		// Clicking on "Select a State" drop down
+		WebElement dpd_state = driver.findElement(By.xpath(
+				"//*[@id='section--ccs']/div[3]/div[1]/span/span[1]/span[@class='select2-selection select2-selection--multiple']"));
+		// dpd_state.click();
+		dpd_state.sendKeys(state);
+		dpd_state.sendKeys(Keys.ENTER);
+		System.out.println("Clicked on the state drop down");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
+	public void getHospital(String hospital) {
+		// Clicking on "Select a State" drop down
+		WebElement dpd_hospital = driver.findElement(By.cssSelector("#hos"));
+		// dpd_hospital.click();
+		dpd_hospital.sendKeys(hospital);
+		// dpd_hospital.sendKeys(Keys.ENTER);
+		System.out.println("Clicked on the hospital drop down");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
+	public void advSearch_CountryStateCity(String country, String state, String city) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
+		rbtn_countryStateCity.click();
+		getState(state);
+		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		txt_city.click();
+		txt_city.clear();
+		txt_city.sendKeys(city);
+		System.out.println("Typed the State and City");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(500);
+	}
+
+	public void advSearch_Hospital(String hospital) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
+		rbtn_hospital.click();
+		getHospital(hospital);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(500);
+	}
+
+	public void advSearch_AtNIH() throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", rbtn_countryStateCity);
+		rbtn_atNIH.click();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(500);
+	}
+
+	public void advSearch_TrialType() throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_trialtype);
+		System.out.println("trial type box is displayed");
+		cb_trialtype_treatment.click();
+		System.out.println("trial type Treatment checkbox is clicked");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(200);
+	}
+
+	public void getDrug(String drug) {
+		txt_drug.click();
+		txt_drug.sendKeys(drug);
+		txt_drug.sendKeys(Keys.ENTER);
+		System.out.println("Clicked on the drug drop down");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
+	public void getTreatment(String treatment) {
+
+		txt_treatment.click();
+		txt_treatment.sendKeys(treatment);
+		txt_treatment.sendKeys(Keys.ENTER);
+		System.out.println("Clicked on the treatment drop down");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
+	public void advSearch_Drug(String drug) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_drugtreatment);
+		System.out.println("Drug box is displayed");
+		getDrug(drug);
+		System.out.println("Drug is entered");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(200);
+	}
+
+	public void advSearch_Treatment(String treatment) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_drugtreatment);
+		System.out.println("Drug box is displayed");
+		getTreatment(treatment);
+		System.out.println("Treatment is entered");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(200);
+	}
+
+	public void advSearch_TrialPhase(String trialphase) throws InterruptedException {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_drugtreatment);
+		switch (trialphase) {
+		case ("Phase I"):
+			cb_trialphase1.click();
+
+		case ("Phase II"):
+			cb_trialphase2.click();
+
+		case ("Phase III"):
+			cb_trialphase3.click();
+
+		case ("Phase IV"):
+			cb_trialphase4.click();
+		default:
+			cb_trialphaseAll.click();
+		}
+
+		System.out.println("Trial phase is selected");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(500);
+	}
+
+	/*
+	 * public void advSearch_TrialID(String trialId) throws InterruptedException
+	 * { ((JavascriptExecutor)
+	 * driver).executeScript("arguments[0].scrollIntoView(true);",
+	 * lgd_drugtreatment); System.out.println("Drug box is displayed");
+	 * getTreatment(treatment); System.out.println("Treatment is entered");
+	 * driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	 * defaultSearch(); Thread.sleep(200); }
+	 */
 
 	/* Verify advance search for cancer type and cancer sub-type */
 	public void advSearch_CancerType_SubType(String cancerType, String cancerSubType) throws InterruptedException {
@@ -187,6 +379,7 @@ public class AdvanceSearch {
 		getCancerSubType(cancerSubType);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		getCancerStage(cancerStage);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		defaultSearch();
 	}
 

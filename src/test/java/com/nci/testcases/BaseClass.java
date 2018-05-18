@@ -3,12 +3,14 @@ package com.nci.testcases;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
@@ -45,6 +47,18 @@ public class BaseClass {
 	@BeforeClass(groups = { "Smoke" })
 	public void beforeClass() {
 		logger = report.startTest(this.getClass().getSimpleName());
+	}
+
+	// handles the CTS Chat popup and closes it for executing scripts
+	@BeforeMethod(groups = { "Smoke" })
+	public void beforeMethod() {
+		try {
+			driver.findElement(By.xpath("//*[@id='ProactiveLiveHelpForCTSPrompt']"));
+			driver.findElement(By.xpath("//*[@id='ProactiveLiveHelpForCTSPrompt']"))
+					.findElement(By.cssSelector("#ProactiveLiveHelpForCTSPrompt > a")).click();
+		} catch (Exception e) {
+
+		}
 	}
 
 	@AfterMethod(groups = { "Smoke" })
