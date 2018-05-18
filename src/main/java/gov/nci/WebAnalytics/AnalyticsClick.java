@@ -98,12 +98,7 @@ public class AnalyticsClick extends AnalyticsBase {
 	public void clickFeatureCard() {
 		feature_card.click();
 	}	
-	
-	// Click mega menu
-	public void clickMegaMenu() {
-		mega_menu_link.click();
-	}
-		
+			
 	/**
 	 * Get a list of beacon URLs fired off for click events
 	 * @param urlList
