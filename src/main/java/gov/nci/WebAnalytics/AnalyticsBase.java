@@ -1,18 +1,14 @@
 package gov.nci.WebAnalytics;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.net.URI;
 
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 import org.openqa.selenium.WebDriver;
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.core.har.Har;
-import net.lightbody.bmp.core.har.HarEntry;
-
 
 public class AnalyticsBase {
 	
@@ -188,43 +184,6 @@ public class AnalyticsBase {
 			}
 		}
 		return false;
-	}
-		
-	/**
-	 * Configure BrowserMob Proxy for Selenium.<br>
-	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
-	 * @throws RuntimeException
-	 */
-	// TODO: remove duplicates (?)
-	// TODO: trace our data type - don't need to be shuffling between String, URL, String...
-	public static List<String> getHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {		
-
-		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
-		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
-	    // and export performance data as a HAR file object.
-	    Har har = proxy.getHar();
-	    List<String> harList = new ArrayList<String>();
-	    
-	    List<HarEntry> entries = har.getLog().getEntries();
-    	System.out.println("Total HAR entries: " + entries.size());
-    	
-	    for (HarEntry entry : entries) {
-	    	// Build a list of requests to the analytics tracking server from the HAR
-	    	String result = entry.getRequest().getUrl();
-	    	if(result.contains(TRACKING_SERVER))
-	    	{
-	    		harList.add(result);
-	    	}
-	    	// TODO: check for calls to 'static' or 'satellite' 
-	    }
-	    
-	    // Debug size of har list
-		System.out.println("Total analytics entries: " + harList.size());
-
-		// harList cleanup logic here		
-		har.getLog().getEntries().clear();
-		
-		return harList;
 	}
 	
 }

@@ -9,7 +9,10 @@
 			</run>
 		</groups>
 		<classes>
-				<class name="com.nci.testcases.AnalyticsTest" />
+			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
 		</classes>
 	</test>	
 	<!--<test name="NCI - Chrome Testing Headless" >
@@ -20,7 +23,10 @@
 			</run>
 		</groups>
 		<classes>
-				<class name="com.nci.testcases.AnalyticsTest" />
+			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
 		</classes>
 	</test>  -->
 	<!-- <test name="NCI - Geckso Testing Headless" >
@@ -31,8 +37,10 @@
 			</run>
 		</groups>
 		<classes>
-				<class name="com.nci.testcases.AnalyticsTest" />
+			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
 		</classes>
 	</test>  -->
 </suite>
-
