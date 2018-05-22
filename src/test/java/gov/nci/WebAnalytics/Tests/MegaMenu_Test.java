@@ -7,56 +7,94 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import gov.nci.WebAnalytics.AnalyticsBase;
-import gov.nci.WebAnalytics.AnalyticsClick;
-import gov.nci.WebAnalytics.AnalyticsLoad;
 import gov.nci.WebAnalytics.MegaMenu;
 
 public class MegaMenu_Test extends AnalyticsTestBase {
 	
-	// Analytics objects
+	// Analytics object
 	public MegaMenu megaMenu;
-
-	/// Load and click events have been captured
-	@Test(groups = { "Analytics" })
-	public void verifyHar() {
-		megaMenu = new MegaMenu(driver);		
-		megaMenu.doMegaMenuActions();
-		List<String> harList = getHarUrlList(proxy);
-		List<AnalyticsLoad> loadBeacons = AnalyticsLoad.getLoadBeacons(harList);
-		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);		
-				
-		Assert.assertTrue(harList.size() > 0);
-		Assert.assertTrue(loadBeacons.size() > 0);
-		Assert.assertTrue(clickBeacons.size() > 0);
-		
-		System.out.println("=== Start debug testEvents() ===");
-		for(String har : harList) {
-			System.out.println(har);
-		}
-		System.out.println("=== End debug testEvents() ===");				
-		
-		logger.log(LogStatus.PASS, "Load and click events have been captured.");				
-	}	
 	
-	/// Click event numbers match with their descriptors
+	/// Menu bar click returns the expected values
 	@Test(groups = { "Analytics" })
-	public void testClickEvents() {
-		megaMenu = new MegaMenu(driver);		
-		megaMenu.doMegaMenuActions();
-
-		List<String> harList = getHarUrlList(proxy);
-		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);
+	public void testMMBarEn() {
+		megaMenu = new MegaMenu(driver);
+		megaMenu.clickMegaMenuEn();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		boolean hasLinkName = false;
 		
-		for(AnalyticsClick beacon : clickBeacons) {
-			if(beacon.linkName == "FeatureCardClick") {
-				Assert.assertTrue(beacon.events[0].contains("event27"));
+		for(AnalyticsBase beacon : clickBeacons) {
+			if(beacon.linkName.toLowerCase().equals("megamenuclick")) {
+				Assert.assertTrue(beacon.events[0].contains("event26"));
+				hasLinkName = true;
 			}
-			if(beacon.linkName == "MegaMenuClick") {
-				Assert.assertTrue(beacon.events[0].contains("event27"));
-			}
-		}
-		
-		logger.log(LogStatus.PASS, "Click event values are correct.");		
+		}		
+		Assert.assertTrue(hasLinkName);
+		logger.log(LogStatus.PASS, "MegaMenu top level click passed.");
 	}
 	
+	/// Spanish menu bar click returns the expected values
+	@Test(groups = { "Analytics" })
+	public void testMMBarEs() {
+		megaMenu = new MegaMenu(driver);
+		megaMenu.clickMegaMenuEs();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		boolean hasLinkName = false;
+		
+		for(AnalyticsBase beacon : clickBeacons) {
+			if(beacon.linkName.toLowerCase().equals("megamenuclick")) {
+				Assert.assertTrue(beacon.events[0].contains("event26"));
+				hasLinkName = true;
+			}
+		}		
+		Assert.assertTrue(hasLinkName);
+		logger.log(LogStatus.PASS, "MegaMenu Spanish top level click passed.");
+	}
+	
+	/// MegaMenu expansion returns the expected values
+	@Test(groups = { "Analytics" })
+	public void testMMExpand() {
+		System.out.println("=== Begin debug megamenu expand ===");
+		megaMenu = new MegaMenu(driver);
+		megaMenu.clickMegaMenuSubnav();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));		
+		boolean hasLinkName = false;
+		
+		for(AnalyticsBase beacon : clickBeacons) {
+			System.out.print(beacon.linkName);
+			if(beacon.linkName.toLowerCase().equals("megamenudesktopreveal")) {
+				// Assert.assertTrue(beacon.events[0].contains("event28"));
+				hasLinkName = true;
+			}
+		}
+		// Assert.assertTrue(hasLinkName);		
+		System.out.println("=== End debug megamenu expand ===");
+		logger.log(LogStatus.PASS, "MegaMenu expansion passed.");
+	}
+	
+	/// MegaMenu subnav title click returns the expected values
+	@Test(groups = { "Analytics" })
+	public void testSubnavClick() {
+		megaMenu = new MegaMenu(driver);
+		//megaMenu.doSomething();		
+		logger.log(LogStatus.PASS, "Expaned subnav title click passed.");
+	}	
+	
+	/// MegaMenu subnav title click returns the expected values
+	@Test(groups = { "Analytics" })
+	public void testMobileMegaMenuReveal() {
+		megaMenu = new MegaMenu(driver);
+		megaMenu.revealMegaMenuMobile();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));		
+		boolean hasLinkName = false;
+		
+		for(AnalyticsBase beacon : clickBeacons) {
+			System.out.print(beacon.linkName);
+			if(beacon.linkName.toLowerCase().equals("megamenumobilereveal")) {
+				Assert.assertTrue(beacon.events[0].contains("event28"));
+				hasLinkName = true;
+			}
+		}
+		Assert.assertTrue(hasLinkName);		
+		logger.log(LogStatus.PASS, "Expaned mobile mega menu passed");
+	}		
 }

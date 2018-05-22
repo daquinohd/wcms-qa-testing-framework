@@ -29,8 +29,6 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import gov.nci.WebAnalytics.AnalyticsBase;
-import gov.nci.WebAnalytics.AnalyticsClick;
-import gov.nci.WebAnalytics.AnalyticsLoad;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.core.har.Har;
@@ -46,16 +44,15 @@ public class AnalyticsTestBase extends BaseClass {
 	public ConfigReader config = new ConfigReader();
 	public String pageURL;
 
-    // TODO: clean up (or remove) loadEvents / clickEvents objects
 	// TODO: build a 'beacon params' object 
 	// TODO: Work out what we need to fire off on click/resize/other events
 	// 		- Do we need to create a new HAR with each call? 
 	//		- How do we differentiate between load and click calls?	
-	// TODO: get the logger to actually work
 	// TODO: Build negative tests
 	// TODO: Build test for test
-	public AnalyticsLoad loadEvents;
-	public AnalyticsClick clickEvents;
+	protected static List<String> harList;
+	protected static List<AnalyticsBase> loadBeacons;
+	protected static List<AnalyticsBase> clickBeacons;
 	    
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters	
@@ -66,7 +63,6 @@ public class AnalyticsTestBase extends BaseClass {
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath);
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		System.out.println("Report Path: ");
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
 	
@@ -91,10 +87,6 @@ public class AnalyticsTestBase extends BaseClass {
 		// Initialize driver and open browser
 		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);		
-
-		// Create our load and click analytics objects
-		loadEvents = new AnalyticsLoad(driver);
-		clickEvents = new AnalyticsClick(driver);
 		
 		// Add entries to the HAR log		
 		System.out.println("Analytics setup done");
@@ -141,6 +133,7 @@ public class AnalyticsTestBase extends BaseClass {
 	    
 	    List<HarEntry> entries = har.getLog().getEntries();
     	System.out.println("Total HAR entries: " + entries.size());
+    	System.out.println("List of requests to " + AnalyticsBase.TRACKING_SERVER + ":");
     	
 	    for (HarEntry entry : entries) {
 	    	// Build a list of requests to the analytics tracking server from the HAR
@@ -148,8 +141,8 @@ public class AnalyticsTestBase extends BaseClass {
 	    	if(result.contains(AnalyticsBase.TRACKING_SERVER))
 	    	{
 	    		harList.add(result);
+	    		System.out.println(result);
 	    	}
-	    	// TODO: check for calls to 'static' or 'satellite' 
 	    }
 	    
 	    // Debug size of har list

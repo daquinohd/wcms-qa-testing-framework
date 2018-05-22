@@ -6,8 +6,8 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
 import gov.nci.WebAnalytics.AnalyticsBase;
-import gov.nci.WebAnalytics.AnalyticsClick;
 import gov.nci.WebAnalytics.Resize;
 
 public class Resize_Test extends AnalyticsTestBase {
@@ -21,8 +21,9 @@ public class Resize_Test extends AnalyticsTestBase {
 		
 		resize = new Resize(driver);
 		resize.resizeBrowser();
-		List<String> harList = getHarUrlList(proxy);
-		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);		
+		
+		harList = getHarUrlList(proxy);
+		clickBeacons = AnalyticsBase.getClickBeacons(harList);		
 				
 		Assert.assertTrue(harList.size() > 0);
 		Assert.assertTrue(clickBeacons.size() > 0);
@@ -42,10 +43,10 @@ public class Resize_Test extends AnalyticsTestBase {
 		resize = new Resize(driver);
 		resize.resizeBrowser();
 
-		List<String> harList = getHarUrlList(proxy);
-		List<AnalyticsClick> clickBeacons = AnalyticsClick.getClickBeacons(harList);
+		harList = getHarUrlList(proxy);
+		clickBeacons = AnalyticsBase.getClickBeacons(harList);
 		
-		for(AnalyticsClick beacon : clickBeacons) {
+		for(AnalyticsBase beacon : clickBeacons) {
 			if(beacon.linkName.toLowerCase().contains("resize")) {
 				Assert.assertTrue(beacon.events[0].contains("event7"));
 			}

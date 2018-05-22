@@ -1,5 +1,4 @@
 ************************Environment URLs***********************************
-HomePage=https://www-blue-dev.cancer.gov
 BasicClinicalTrialSearchURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-blue-dev.cancer.gov/contact
@@ -22,3 +21,15 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= BLUEEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www-blue-dev.cancer.gov
+BlogPostPage=https://www-blue-dev.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-blue-dev.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-blue-dev.cancer.gov/types/bladder
+CTHPHP=https://www-blue-dev.cancer.gov/types/breast/hp
+InnerPage=https://www-blue-dev.cancer.gov/about-nci/visit
+LandingPage=https://www-blue-dev.cancer.gov/research
+PDQPage=https://www-blue-dev.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-blue-dev.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-blue-dev.cancer.gov/espanol
+AppModulePage=https://www-blue-dev.cancer.gov/publications/dictionaries/cancer-terms

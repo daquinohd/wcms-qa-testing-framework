@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class PageLoad extends AnalyticsLoad {
+public class PageLoad extends AnalyticsBase {
 
 	public PageLoad () {		
 	}
@@ -12,7 +12,7 @@ public class PageLoad extends AnalyticsLoad {
 	public PageLoad(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		System.out.println("pageload() PageFactory initiated.");
+		System.out.println("PageLoad object PageFactory initialized");
 	}
 	
 	/**
@@ -22,33 +22,28 @@ public class PageLoad extends AnalyticsLoad {
 	 * @throws RuntimeException
 	 */
 	private void loadPageTypes() {
-		// Home page
-		driver.navigate().to("https://www.cancer.gov");		
-		// Landing page
-		driver.navigate().to("https://www.cancer.gov/research");		
-		// CTHP Patient
-		driver.navigate().to("https://www.cancer.gov/types/bladder");
-		// CTHP HP
-		driver.navigate().to("https://www.cancer.gov/types/breast/hp");
-		// Appmodule
-		driver.navigate().to("https://www.cancer.gov/publications/dictionaries/cancer-terms");		
-		// Blog series
-		driver.navigate().to("https://www.cancer.gov/news-events/cancer-currents-blog");		
+		driver.navigate().to(homePage);		
+		driver.navigate().to(landingPage);
+		driver.navigate().to(cthpPatient);
+		driver.navigate().to(cthpHP);
+		driver.navigate().to(appModulePage);
+		driver.navigate().to(blogSeriesPage);
 	}
 
 	public void goHomeAndBack() {
 		// Home page
-		driver.navigate().to("https://www.cancer.gov");
-		driver.navigate().to("https://www.cancer.gov/about-nci");
+		driver.navigate().to(homePage);
+		driver.navigate().to(spanishPage);
 		driver.navigate().back();
 		driver.navigate().refresh();		
-	}
-	
+	}	
 	
 	/// Click around pages
 	public void doPageLoadActions() throws RuntimeException {
+		System.out.println("Begin PageLoad actions");
 		loadPageTypes();
 		goHomeAndBack();		
+		System.out.println("End PageLoad actions");
 	}
 	
 }

@@ -1,5 +1,4 @@
 ************************Environment URLs***********************************
-HomePage=https://www-dt-qa.cancer.gov
 BasicClinicalTrialSearchURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-dt-qa.cancer.gov/contact
@@ -22,3 +21,15 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= DTQAEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www-dt-qa.cancer.gov
+BlogPostPage=https://www-dt-qa.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-dt-qa.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-dt-qa.cancer.gov/types/bladder
+CTHPHP=https://www-dt-qa.cancer.gov/types/breast/hp
+InnerPage=https://www-dt-qa.cancer.gov/about-nci/visit
+LandingPage=https://www-dt-qa.cancer.gov/research
+PDQPage=https://www-dt-qa.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-dt-qa.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-dt-qa.cancer.gov/espanol
+AppModulePage=https://www-dt-qa.cancer.gov/publications/dictionaries/cancer-terms

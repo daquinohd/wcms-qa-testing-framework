@@ -1,5 +1,4 @@
 ************************Environment URLs***********************************
-HomePage=https://www-stage.cancer.gov
 BasicClinicalTrialSearchURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-stage.cancer.gov/contact
@@ -22,3 +21,15 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= STAGEEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www-stage.cancer.gov
+BlogPostPage=https://www-stage.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-stage.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-stage.cancer.gov/types/bladder
+CTHPHP=https://www-stage.cancer.gov/types/breast/hp
+InnerPage=https://www-stage.cancer.gov/about-nci/visit
+LandingPage=https://www-stage.cancer.gov/research
+PDQPage=https://www-stage.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-stage.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-stage.cancer.gov/espanol
+AppModulePage=https://www-stage.cancer.gov/publications/dictionaries/cancer-terms

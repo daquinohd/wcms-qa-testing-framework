@@ -42,7 +42,6 @@ public class BrowserManager {
 	 * @param browserName name of the browser
 	 * @param url URL to open
 	 * @return WebDriver driver
-	 * TODO: set up drivers for IE/Edge and Safari?
 	 */
 	public static WebDriver startBrowser(String browserName, String url){
 		

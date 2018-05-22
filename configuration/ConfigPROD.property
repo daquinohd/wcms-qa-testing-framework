@@ -1,5 +1,4 @@
 ************************Environment URLs***********************************
-HomePage=https://www.cancer.gov
 BasicClinicalTrialSearchURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 BasicSearchResultsURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
@@ -22,3 +21,16 @@ DriverName_FirefoxDriver=geckodriver
 ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= PRODEnvironment
+
+***********************Page Types******************************************
+HomePage=https://www.cancer.gov
+BlogPostPage=https://www.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www.cancer.gov/types/bladder
+CTHPHP=https://www.cancer.gov/types/breast/hp
+InnerPage=https://www.cancer.gov/about-nci/visit
+LandingPage=https://www.cancer.gov/research
+PDQPage=https://www.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www.cancer.gov/espanol
+AppModulePage=https://www.cancer.gov/publications/dictionaries/cancer-terms
