@@ -153,15 +153,13 @@ public class BrowserManager {
 		else if(browserName.equalsIgnoreCase("GeckoHeadless")){
 			// TODO: fix this
 			System.out.println("Gecko headless");
+			FirefoxBinary firefoxBinary = new FirefoxBinary();
+			firefoxBinary.addCommandLineOptions("--headless"); 
 			String driverFullPath = getDriverPath(config, "FirefoxDriver"); 
 			System.setProperty("webdriver.gecko.driver", driverFullPath);
 			System.out.println("Gecko driver path: " + driverFullPath);
-			
-			FirefoxBinary firefoxBinary = new FirefoxBinary();
-			firefoxBinary.addCommandLineOptions("--headless"); 
-			firefoxOptions.setBinary(firefoxBinary); 
+			firefoxOptions.setBinary(firefoxBinary); 			
 			driver = new FirefoxDriver(firefoxOptions); 						
-			driver.manage().window().maximize();
 			driver.get(url);
 		}
 		else {
