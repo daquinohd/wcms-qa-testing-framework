@@ -4,54 +4,77 @@ import java.util.List;
 
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 
 import gov.nci.WebAnalytics.AnalyticsBase;
 import gov.nci.WebAnalytics.Resize;
 
 public class Resize_Test extends AnalyticsTestBase {
 	
-	// Analytics objects
-	public Resize resize;
-
-	/// Load and click events have been captured
-	@Test(groups = { "Analytics" })
-	public void verifyResizeHar() {
-		
-		resize = new Resize(driver);
-		resize.resizeBrowser();
-		
-		harList = getHarUrlList(proxy);
-		clickBeacons = AnalyticsBase.getClickBeacons(harList);		
-				
-		Assert.assertTrue(harList.size() > 0);
-		Assert.assertTrue(clickBeacons.size() > 0);
-		
-		System.out.println("=== Start debug testEvents() ===");
-		for(String har : harList) {
-			System.out.println(har);
-		}
-		System.out.println("=== End debug testEvents() ===");				
-		
-		logger.log(LogStatus.PASS, "Load and click events have been captured.");				
-	}		
+	private Resize resize;
 	
-	/// Resize events match with their descriptors
-	@Test(groups = { "Analytics" })
-	public void testResizeEvents() {
+	@BeforeMethod(groups = { "Analytics" }) 
+	private void beforeMethod() {
 		resize = new Resize(driver);
-		resize.resizeBrowser();
+	}
 
+	// TODO: initialize & exit on resize.maximize()
+	
+	/// Correct click events have been captured on resize
+	@Test(groups = { "Analytics" }, priority = 1)
+	public void testResizeGeneral() {
+		resize.doAllResizes();
 		harList = getHarUrlList(proxy);
 		clickBeacons = AnalyticsBase.getClickBeacons(harList);
-		
-		for(AnalyticsBase beacon : clickBeacons) {
-			if(beacon.linkName.toLowerCase().contains("resize")) {
-				Assert.assertTrue(beacon.events[0].contains("event7"));
-			}
-		}
-		logger.log(LogStatus.PASS, "Resize values are correct.");
+		Assert.assertTrue(harList.size() >= 5);
+		Assert.assertTrue(clickBeacons.size() >= 5);
+		Assert.assertTrue(hasProp(clickBeacons, 4, "d=pev1"));
+		Assert.assertTrue(hasProp(clickBeacons, 67, "D=pageName"));
+		Assert.assertTrue(haseVar(clickBeacons, 2, "English"));
+		Assert.assertFalse(hasEvent(clickBeacons, "event1"));
+		logger.log(LogStatus.PASS, "Resize gen value test passed.");		
 	}
+	
+	/// Correct linkName captured on small resize
+	@Test(groups = { "Analytics" }, priority = 2)
+	public void testResizeToMobile() {
+		resize.toSmall();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
+		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToMobile"));
+		logger.log(LogStatus.PASS, "'Resize to mobile' values are correct.");
+	}
+
+	/// Correct linkName captured on medium resize
+	@Test(groups = { "Analytics" }, priority = 3)
+	public void testResizeToTablet() {
+		resize.toMed();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
+		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToTablet"));
+		logger.log(LogStatus.PASS, "'Resize to tablet' values are correct.");
+	}
+
+	/// Correct linkName captured on large resize
+	@Test(groups = { "Analytics" }, priority = 4)
+	public void testResizeToDesktop() {
+		resize.toLarge();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
+		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToDesktop"));
+		logger.log(LogStatus.PASS, "'Resize to desktop' values are correct.");
+	}
+
+	/// Correct linkName captured on XL resize
+	@Test(groups = { "Analytics" }, priority = 5)
+	public void testResizeToExtraWide() {
+		resize.toXlarge();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
+		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToExtra wide"));
+		logger.log(LogStatus.PASS, "'Resize to extra wide' values are correct.");
+	}
+
 	
 }

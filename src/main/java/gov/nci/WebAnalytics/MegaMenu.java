@@ -17,13 +17,16 @@ public class MegaMenu extends AnalyticsBase {
 	@FindBy(how = How.CSS, using = "#mega-nav .nav-item-title a")
 	WebElement mm_bar_link;
 	@FindBy(how = How.CSS, using = "#mega-nav .sub-nav-group a")
-	WebElement mm_subnav_title_link;	
+	WebElement mm_subnav_header;	
 	@FindBy(how = How.CSS, using = "#mega-nav .sub-nav-group ul li a")
-	WebElement mm_subnav_list_item;	
-	@FindBy(how = How.CSS, using = "#mega-nav .mega-menu-scroll.open")
-	WebElement mm_expanded_desktop;
+	WebElement mm_subnav_li;	
+	@FindBy(how = How.LINK_TEXT , using = "Cancer Disparities")
+	WebElement mm_subnav_li_text;
 	@FindBy(how = How.CSS, using = ".mobile-menu-bar button.menu-btn")
-	WebElement mm_mobile_expand_button;
+	WebElement mm_reveal_mobile;
+  //@FindBy(how = How.CSS, using = "#mega-nav a.open")
+	@FindBy(how = How.CSS, using = "#mega-nav .mega-menu-scroll.open")
+	WebElement mm_reveal_desktop;
 	
 	public MegaMenu(){		
 	}
@@ -40,37 +43,52 @@ public class MegaMenu extends AnalyticsBase {
 	* to fire off analytics events. These actions will populate our list of har objects, which will
 	* then be tested.
 	*/
-	public void clickMegaMenuEn() {
+	public void clickMMBarEn() {
 		driver.navigate().to(homePage);
 		mm_bar_link.click();
-		//mm_subnav_title_link.click();
-		//mm_subnav_list_item.click();
 	}
 
-	public void clickMegaMenuEs() {
+	public void clickMMBarEs() {
 		driver.navigate().to(spanishPage);
 		mm_bar_link.click();
-		//mm_subnav_title_link.click();
-		//mm_subnav_list_item.click();
 	}
 	
-	public void clickMegaMenuSubnav() {
-		System.out.println("debug hover");
+	public void clickMMSubnavHeader() {
+		driver.navigate().to(homePage);
 		Actions action = new Actions(driver);
 		WebDriverWait wait = new WebDriverWait(driver, 5);		
 		action.moveToElement(mm_bar_link);
 		action.perform();
-		wait.until(ExpectedConditions.visibilityOf(mm_expanded_desktop));
-		action.moveToElement(mm_subnav_title_link);
-		action.perform();		
-		mm_subnav_title_link.click();
+		wait.until(ExpectedConditions.visibilityOf(mm_reveal_desktop));
+		mm_subnav_header.click();
+	}
+	
+	public void clickMMSubnavLi() {
 		driver.navigate().to(homePage);
+		Actions action = new Actions(driver);
+		WebDriverWait wait = new WebDriverWait(driver, 5);		
+		action.moveToElement(mm_bar_link);
+		action.perform();
+		wait.until(ExpectedConditions.visibilityOf(mm_reveal_desktop));
+		mm_subnav_li_text.click();
+	}	
+
+	public void revealMegaMenuDesktop() {
+		System.out.println("-- Begin debugging hover/expand megamenu actions --");
+		driver.navigate().to(homePage);
+		Actions action = new Actions(driver);
+		WebDriverWait wait = new WebDriverWait(driver, 5);		
+		action.moveToElement(mm_bar_link);
+		action.perform();
+		AnalyticsBase.goSleepy(5);
+		driver.navigate().refresh();
+		System.out.println("-- End debugging hover/expand megamenu actions --");		
 	}
 	
 	public void revealMegaMenuMobile() {
 		Resize resize = new Resize(driver);
-		resize.resizeToSmall();
-		mm_mobile_expand_button.click();
+		resize.toSmall();
+		mm_reveal_mobile.click();
 		driver.manage().window().maximize();
 	}
 	

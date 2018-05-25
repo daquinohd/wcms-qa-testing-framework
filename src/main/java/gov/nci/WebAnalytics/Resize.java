@@ -5,7 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 public class Resize extends AnalyticsBase {
-	
+
+	/*** Browser view breakpoints ***/
 	public static Dimension small = new Dimension(300, 800);
 	public static Dimension med = new Dimension(700, 800);
 	public static Dimension large = new Dimension(1100, 800);
@@ -14,11 +15,12 @@ public class Resize extends AnalyticsBase {
 	public Resize() {		
 	}
 	
+	// Constructor to initialize the Page objects	
 	public Resize(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		System.out.println("Resize PageFactory initialized");
-	}	
+	}
 	
 	/**
 	 * All the proxy browser 'actions' go in here. These are not tests, but things that we do 
@@ -26,32 +28,32 @@ public class Resize extends AnalyticsBase {
 	 * then be tested.
 	 * @throws RuntimeException
 	 */	
-	/*** Resize browser ***/
-	public void resizeToSmall() throws RuntimeException {
+	public void toSmall() throws RuntimeException {
 		driver.manage().window().setSize(small);
 	}
 
-	public void resizeToMed() throws RuntimeException {
+	public void toMed() throws RuntimeException {
 		driver.manage().window().setSize(med);
 	}
 
-	public void resizeToLarge() throws RuntimeException {
-		driver.manage().window().setSize(large);		
+	public void toLarge() throws RuntimeException {
+		driver.manage().window().setSize(large);
 	}
 
-	public void resizeToXlarge() throws RuntimeException {
+	public void toXlarge() throws RuntimeException {
 		driver.manage().window().setSize(xlarge);
 	}
 
-	public void resizeBrowser() throws RuntimeException {
-		System.out.println("Begin Resize actions");		
-		driver.navigate().to(homePage);
-		resizeToXlarge();
-		resizeToLarge();
-		resizeToMed();
-		resizeToSmall();
+	public void maximize() throws RuntimeException {
 		driver.manage().window().maximize();
-		System.out.println("Done Resize actions");
+	}
+
+	public void doAllResizes() throws RuntimeException {
+		toXlarge();
+		toLarge();
+		toMed();
+		toSmall();
+		driver.manage().window().maximize();
 	}
 	
 }

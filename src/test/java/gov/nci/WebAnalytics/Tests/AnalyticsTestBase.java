@@ -3,10 +3,13 @@ package gov.nci.WebAnalytics.Tests;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.http.NameValuePair;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -45,11 +48,9 @@ public class AnalyticsTestBase extends BaseClass {
 	public String pageURL;
 
 	// TODO: build a 'beacon params' object 
-	// TODO: Work out what we need to fire off on click/resize/other events
-	// 		- Do we need to create a new HAR with each call? 
-	//		- How do we differentiate between load and click calls?	
 	// TODO: Build negative tests
 	// TODO: Build test for test
+	// TODO: Check false positives for events 	
 	protected static List<String> harList;
 	protected static List<AnalyticsBase> loadBeacons;
 	protected static List<AnalyticsBase> clickBeacons;
@@ -132,8 +133,7 @@ public class AnalyticsTestBase extends BaseClass {
 	    List<String> harList = new ArrayList<String>();
 	    
 	    List<HarEntry> entries = har.getLog().getEntries();
-    	System.out.println("Total HAR entries: " + entries.size());
-    	System.out.println("List of requests to " + AnalyticsBase.TRACKING_SERVER + ":");
+    	System.out.println("Requests to " + AnalyticsBase.TRACKING_SERVER + ":");
     	
 	    for (HarEntry entry : entries) {
 	    	// Build a list of requests to the analytics tracking server from the HAR
@@ -146,6 +146,7 @@ public class AnalyticsTestBase extends BaseClass {
 	    }
 	    
 	    // Debug size of har list
+    	System.out.println("Total HAR entries: " + entries.size());
 		System.out.println("Total analytics entries: " + harList.size());
 
 		// harList cleanup logic here		
@@ -183,5 +184,70 @@ public class AnalyticsTestBase extends BaseClass {
 			driver.get(pageURL);
 		}
 	}
+	
+	/**
+	 * Utility function to check for a link name value within a click beacon.
+	 * @param clickBeacons
+	 * @param name
+	 * @return
+	 */
+	public boolean hasLinkName(List<AnalyticsBase> clickBeacons, String name) {
+		for(AnalyticsBase beacon : clickBeacons) {
+			if(beacon.linkName.equalsIgnoreCase(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Utility function to check for an event value within a click beacon.
+	 * @param clickBeacons
+	 * @param evt
+	 * @return
+	 */
+	public boolean hasEvent(List<AnalyticsBase> clickBeacons, String evt) {
+		for(AnalyticsBase beacon : clickBeacons) {
+			String events = Arrays.toString(beacon.events);
+			if(events.toLowerCase().contains(evt)) {
+				return true;
+			}
+		}
+		return false;
+	}
+		
+	/**
+	 * Utility function to check for a given prop and value
+	 * @param clickBeacons
+	 * @param num
+	 * @param val
+	 * @return
+	 */
+	public boolean hasProp(List<AnalyticsBase> clickBeacons, int num, String val) {
+		for(AnalyticsBase beacon : clickBeacons) {
+			String blob = beacon.props.toString();
+			if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}	
+
+	/**
+	 * Utility function to check for a given eVar and value
+	 * @param clickBeacons
+	 * @param num
+	 * @param val
+	 * @return
+	 */
+	public boolean haseVar(List<AnalyticsBase> clickBeacons, int num, String val) {
+		for(AnalyticsBase beacon : clickBeacons) {
+			String blob = beacon.eVars.toString();
+			if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}	
 	
 }

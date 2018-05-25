@@ -51,10 +51,7 @@ public class AnalyticsBase {
 	public String linkName;
 	public String linkUrl;	
 	
-	
-	/**
-	 * No-arg constructor - init all vars
-	 */
+	/** No-arg constructor - init all variables */
 	public AnalyticsBase() {
 		uri = null;
 		suites = new String[0];		
@@ -72,7 +69,7 @@ public class AnalyticsBase {
 	/**
 	 * Constructor
 	 * @param beaconUrl
-	 * @throws MalformedURLException
+	 * TODO: Handle MalformedURLExceptions
 	 */
 	public AnalyticsBase(String beaconUrl) {
 		uri = URI.create(beaconUrl);
@@ -278,7 +275,6 @@ public class AnalyticsBase {
 	 * Get a list of beacon URLs fired off for load events
 	 * @param urlList
 	 * @return
-	 * @throws MalformedURLException
 	 */
 	public static List<AnalyticsBase> getLoadBeacons(List<String> urlList) {
 				
@@ -294,7 +290,8 @@ public class AnalyticsBase {
 			}
 		}
 
-		System.out.println("Total load beacons: " + loadBeacons.size());		
+		System.out.println("Total load beacons: " + loadBeacons.size());
+		System.out.println("Total click beacons: " + (urlList.size() - loadBeacons.size()));
 		return loadBeacons;
 	}		
 	
@@ -302,7 +299,6 @@ public class AnalyticsBase {
 	 * Get a list of beacon URLs fired off for click events
 	 * @param urlList
 	 * @return
-	 * @throws MalformedURLException
 	 */
 	public static List<AnalyticsBase> getClickBeacons(List<String> urlList) {
 				
@@ -319,7 +315,25 @@ public class AnalyticsBase {
 		}
 		
 		System.out.println("Total click beacons: " + clickBeacons.size());
+		System.out.println("Total load beacons: " + (urlList.size() - clickBeacons.size()));
 		return clickBeacons;
 	}	
 	
+	/**
+	 * Temporary util method for troubleshooting
+	 * TODO: remove this once explicit wait is working 
+	 * @param sec
+	 */
+	protected static void goSleepy(int sec) {
+		long ms = new Long(sec*1000);		
+		try { 
+			Thread.sleep(ms);
+		} catch (InterruptedException ex) {
+			System.out.println("goSleepy() failed");
+		}
+	}
+	protected static void goSleepy() {
+		goSleepy(10);
+	}
+
 }
