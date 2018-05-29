@@ -51,6 +51,7 @@ public class AnalyticsTestBase extends BaseClass {
 	// TODO: Build negative tests
 	// TODO: Build test for test
 	// TODO: Check false positives for events 	
+	// TODO: Create reusable utility methods
 	protected static List<String> harList;
 	protected static List<AnalyticsBase> loadBeacons;
 	protected static List<AnalyticsBase> clickBeacons;

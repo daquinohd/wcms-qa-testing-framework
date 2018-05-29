@@ -1,6 +1,7 @@
 package com.nci.Utilities;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -117,6 +118,8 @@ public class BrowserManager {
 	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy myProxy) {
 		
 		ConfigReader config = new ConfigReader();
+		ChromeOptions chromeOptions = new ChromeOptions();		
+		FirefoxOptions firefoxOptions = new FirefoxOptions();
 		
 	    // Get the Selenium proxy object and configure it as a desired capability
 		System.out.println("=== Starting Driver ===");		
@@ -134,6 +137,30 @@ public class BrowserManager {
 			driver = new ChromeDriver(capabilities);
 			driver.manage().window().maximize();
 			driver.get(url); // open proxy page
+		}
+		else if(browserName.equalsIgnoreCase("ChromeHeadless")) {
+			System.out.println("chrome headless");			
+			String driverFullPath = getDriverPath(config, "ChromeDriver");
+			System.setProperty("webdriver.chrome.driver", driverFullPath);
+			System.out.println("Chrome Driver Path: " + driverFullPath);
+			
+			chromeOptions.addArguments("headless");			
+			capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+			driver = new ChromeDriver(capabilities);
+			driver.manage().window().maximize();
+			driver.get(url); // open proxy page
+		}
+		else if(browserName.equalsIgnoreCase("GeckoHeadless")){
+			// TODO: fix this
+			System.out.println("Gecko headless");
+			FirefoxBinary firefoxBinary = new FirefoxBinary();
+			firefoxBinary.addCommandLineOptions("--headless"); 
+			String driverFullPath = getDriverPath(config, "FirefoxDriver"); 
+			System.setProperty("webdriver.gecko.driver", driverFullPath);
+			System.out.println("Gecko driver path: " + driverFullPath);
+			firefoxOptions.setBinary(firefoxBinary); 			
+			driver = new FirefoxDriver(firefoxOptions); 						
+			driver.get(url);
 		}
 		else {
 			throw new IllegalArgumentException("Invalid browser type; check configuration settings.");
