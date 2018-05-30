@@ -25,10 +25,8 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void testResizeGeneral() {
 		resize.doAllResizes();
-		harList = getHarUrlList(proxy);
-		clickBeacons = AnalyticsBase.getClickBeacons(harList);
-		Assert.assertTrue(harList.size() >= 5);
-		Assert.assertTrue(clickBeacons.size() >= 5);
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		Assert.assertTrue(clickBeacons.size() > 1);
 		Assert.assertTrue(hasProp(clickBeacons, 4, "d=pev1"));
 		Assert.assertTrue(hasProp(clickBeacons, 67, "D=pageName"));
 		Assert.assertTrue(haseVar(clickBeacons, 2, "English"));
@@ -76,5 +74,14 @@ public class Resize_Test extends AnalyticsTestBase {
 		logger.log(LogStatus.PASS, "'Resize to extra wide' values are correct.");
 	}
 
+	/// Correct event on maximize
+	@Test(groups = { "Analytics" }, priority = 6)
+	public void testMaximize() {
+		resize.toSmall();
+		resize.maximize();
+		clickBeacons = AnalyticsBase.getClickBeacons(getHarUrlList(proxy));
+		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
+		logger.log(LogStatus.PASS, "Maximize values are correct.");
+	}	
 	
 }

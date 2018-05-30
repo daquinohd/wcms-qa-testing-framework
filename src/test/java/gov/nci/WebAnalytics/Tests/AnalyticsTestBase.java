@@ -249,6 +249,16 @@ public class AnalyticsTestBase extends BaseClass {
 			}
 		}
 		return false;
-	}	
+	}
+	
+	/**
+	 * Utility function to get the last element in a list of = beacons
+	 * @param clickBeacons
+	 * @return
+	 */
+	private AnalyticsBase getLast(List<AnalyticsBase> clickBeacons) {
+		AnalyticsBase beacon = clickBeacons.get(clickBeacons.size() - 1);
+		return beacon;
+	}		
 	
 }
