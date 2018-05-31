@@ -47,11 +47,14 @@ public class AnalyticsTestBase extends BaseClass {
 	public ConfigReader config = new ConfigReader();
 	public String pageURL;
 
-	// TODO: build a 'beacon params' object 
+	// TODO: Fix timeout logic 
+	// TODO: Verify that each assert is checking the _same_ beacon object (do the last one for now?)
+	// TODO: Clean up isClickEvent() 
 	// TODO: Build negative tests
 	// TODO: Build test for test
 	// TODO: Check false positives for events 	
 	// TODO: Create reusable utility methods
+	// TODO: build a 'beacon params' object 
 	protected static List<String> harList;
 	protected static List<AnalyticsBase> loadBeacons;
 	protected static List<AnalyticsBase> clickBeacons;

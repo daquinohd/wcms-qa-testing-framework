@@ -261,6 +261,7 @@ public class AnalyticsBase {
 	 * Check for parameters to verify that this is a link event
 	 * @param paramList
 	 * @return
+	 * TODO: Use or get rid of this 
 	 */
 	public boolean isLinkEvent(List<NameValuePair> paramList) {
 		for (NameValuePair param : paramList) {
