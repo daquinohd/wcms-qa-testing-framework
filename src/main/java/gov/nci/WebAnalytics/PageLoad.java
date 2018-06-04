@@ -6,9 +6,10 @@ import org.testng.Assert;
 
 public class PageLoad extends AnalyticsBase {
 
-	public PageLoad () {		
-	}
+	// Local driver object
+	public WebDriver driver;
 	
+	// Constructor to initialize the page object	
 	public PageLoad(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);

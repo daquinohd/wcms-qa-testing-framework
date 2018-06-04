@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="QA Environment" parallel="none">
+	<!--
 	<test name="NCI - Chrome Testing" >
 		<parameter name="browser" value="Chrome" />
 		<groups>
@@ -15,6 +16,7 @@
 			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
 		</classes>
 	</test>
+	-->
 	<!--
 	<test name="NCI - Chrome Testing Headless" >
 		<parameter name="browser" value="ChromeHeadless" />
@@ -47,7 +49,6 @@
 		</classes>
 	</test>
 	-->
-	<!--
 	<test name="NCI - Firefox Testing Headless" >
 		<parameter name="browser" value="FirefoxHeadless" />
 		<groups>
@@ -62,5 +63,4 @@
 			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
 		</classes>
 	</test>
-	-->
 </suite>

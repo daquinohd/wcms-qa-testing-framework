@@ -60,7 +60,6 @@ public class BrowserManager {
 			System.out.println("Chrome Driver Path: " + driverFullPath);
 			
 			driver = new ChromeDriver(chromeOptions);
-			driver.manage().window().maximize();
 			driver.get(url);
 		}
 		
@@ -72,7 +71,6 @@ public class BrowserManager {
 			System.out.println("Firefox Driver Path: " + driverFullPath);
 			
 			driver = new FirefoxDriver(firefoxOptions);
-			driver.manage().window().maximize();
 			driver.get(url);
 		}
 		
@@ -85,7 +83,6 @@ public class BrowserManager {
 			
 			chromeOptions.addArguments("headless");
 			driver = new ChromeDriver(chromeOptions);
-			driver.manage().window().maximize();
 			driver.get(url);
 		}
 	
@@ -99,8 +96,7 @@ public class BrowserManager {
 			FirefoxBinary firefoxBinary = new FirefoxBinary();
 			firefoxBinary.addCommandLineOptions("--headless"); 
 			firefoxOptions.setBinary(firefoxBinary); 
-			driver = new FirefoxDriver(firefoxOptions); 						
-			driver.manage().window().maximize();
+			driver = new FirefoxDriver(firefoxOptions);
 			driver.get(url);
 		}
 

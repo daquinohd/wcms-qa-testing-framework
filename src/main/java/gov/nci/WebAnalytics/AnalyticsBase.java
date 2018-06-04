@@ -21,9 +21,6 @@ public class AnalyticsBase {
 	public static final String PAGE_NAME = "www.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
 
-	// Driver object
-	public WebDriver driver;	
-
 	// Get our page navigation URLs
 	public ConfigReader config = new ConfigReader();
 	public String homePage = config.getPageURL("HomePage");
@@ -261,11 +258,10 @@ public class AnalyticsBase {
 	 * Check for parameters to verify that this is a link event
 	 * @param paramList
 	 * @return
-	 * TODO: Use or get rid of this 
 	 */
-	public boolean isLinkEvent(List<NameValuePair> paramList) {
+	public static boolean isLinkEvent(List<NameValuePair> paramList) {
 		for (NameValuePair param : paramList) {
-			if (param.getName().toLowerCase().equals("somevalue")) {
+			if (param.getName().equalsIgnoreCase("pe")) {
 				return true;
 			}
 		}
@@ -286,7 +282,7 @@ public class AnalyticsBase {
 		{
 			// If this doesn't have the "Link Type" param ('pe'), add to list of load beacons
 			List<NameValuePair> params = analytics.buildParamsList(URI.create(url));
-			if(!analytics.hasParam(params, "pe")) {
+			if(!isLinkEvent(params)) {
 				loadBeacons.add(new AnalyticsBase(url));
 			}
 		}
@@ -310,7 +306,7 @@ public class AnalyticsBase {
 		{
 			// If this has the "Link Type" param ('pe'), add to list of click beacons
 			List<NameValuePair> params = analytics.buildParamsList(URI.create(url));
-			if(analytics.hasParam(params, "pe")) {
+			if(isLinkEvent(params)) {
 				clickBeacons.add(new AnalyticsBase(url));
 			}
 		}
@@ -325,7 +321,7 @@ public class AnalyticsBase {
 	 * TODO: remove this once explicit wait is working 
 	 * @param sec
 	 */
-	protected static void goSleepy(int sec) {
+	protected static void nap(int sec) {
 		long ms = new Long(sec*1000);		
 		try { 
 			Thread.sleep(ms);
@@ -333,8 +329,8 @@ public class AnalyticsBase {
 			System.out.println("goSleepy() failed");
 		}
 	}
-	protected static void goSleepy() {
-		goSleepy(10);
+	protected static void nap() {
+		nap(10);
 	}
 
 }

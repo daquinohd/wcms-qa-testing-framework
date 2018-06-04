@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="QA Environment" parallel="none">
+	<test name="NCI - Firefox Testing" >
+		<parameter name="browser" value="Firefox" />
+		<groups>
+			<run>
+				<include name="Analytics" />
+			</run>
+		</groups>
+		<classes>
+			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
+		</classes>
+	</test>
+</suite>

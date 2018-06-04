@@ -13,30 +13,37 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MegaMenu extends AnalyticsBase {
-	/*** MegaMenu web elements ***/
-	@FindBy(how = How.CSS, using = "#mega-nav .nav-item-title a")
-	WebElement mm_bar_link;
-	@FindBy(how = How.CSS, using = "#mega-nav .sub-nav-group a")
-	WebElement mm_subnav_header;	
-	@FindBy(how = How.CSS, using = "#mega-nav .sub-nav-group ul li a")
-	WebElement mm_subnav_li;	
-	@FindBy(how = How.LINK_TEXT , using = "Cancer Disparities")
-	WebElement mm_subnav_li_text;
-	@FindBy(how = How.CSS, using = ".mobile-menu-bar button.menu-btn")
-	WebElement mm_reveal_mobile;
-  //@FindBy(how = How.CSS, using = "#mega-nav a.open")
-	@FindBy(how = How.CSS, using = "#mega-nav .mega-menu-scroll.open")
-	WebElement mm_reveal_desktop;
 	
-	public MegaMenu(){		
-	}
+	// Local driver object and actions
+	private WebDriver driver;	
+	private Actions action;
+	private WebDriverWait wait;
 	
-	// Constructor to initialize the Page objects
+	// Constructor to initialize the page object
 	public MegaMenu(WebDriver driver) {
 		this.driver = driver;
+		action = new Actions(driver);
+		wait = new WebDriverWait(driver, 5);		
 		PageFactory.initElements(driver, this);
-		System.out.println("MegaMenu PageFactory initialized");
+		System.out.print("MegaMenu PageFactory initialized: ");
 	}
+
+	/** Web elements
+	* These are the elements that make up our page object
+	*/
+	// TODO: Figure out why FindBy(linkText) is so finnicky in Firefox
+	@FindBy(css = "#mega-nav .nav-item-title a")
+	WebElement mm_bar_link;
+	@FindBy(css = "#mega-nav .sub-nav-group a")
+	WebElement mm_subnav_header;	
+	@FindBy(css = "#mega-nav .sub-nav-group ul li a")
+	WebElement mm_subnav_li;
+	@FindBy(linkText = "What Is Cancer")
+	WebElement mm_subnav_li_text;
+	@FindBy(css = ".mobile-menu-bar button.menu-btn")
+	WebElement mm_reveal_mobile;
+	@FindBy(css = "#mega-nav .mega-menu-scroll.open")
+	WebElement mm_reveal_desktop;	
 	
 	/** Browser actions
 	* All the proxy browser 'actions' go in here. These are not tests, but things that we do 
@@ -44,19 +51,20 @@ public class MegaMenu extends AnalyticsBase {
 	* then be tested.
 	*/
 	public void clickMMBarEn() {
+		System.out.println("Click megamenu bar (English)");		
 		driver.navigate().to(homePage);
 		mm_bar_link.click();
 	}
 
 	public void clickMMBarEs() {
+		System.out.println("Click megamenu bar (Spanish)");
 		driver.navigate().to(spanishPage);
 		mm_bar_link.click();
 	}
 	
 	public void clickMMSubnavHeader() {
+		System.out.println("Click megamenu subnav header");
 		driver.navigate().to(homePage);
-		Actions action = new Actions(driver);
-		WebDriverWait wait = new WebDriverWait(driver, 5);		
 		action.moveToElement(mm_bar_link);
 		action.perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_reveal_desktop));
@@ -64,28 +72,25 @@ public class MegaMenu extends AnalyticsBase {
 	}
 	
 	public void clickMMSubnavLi() {
+		System.out.println("Click megamenu subnav list item");		
 		driver.navigate().to(homePage);
-		Actions action = new Actions(driver);
-		WebDriverWait wait = new WebDriverWait(driver, 5);		
 		action.moveToElement(mm_bar_link);
 		action.perform();
-		wait.until(ExpectedConditions.visibilityOf(mm_reveal_desktop));
+		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li_text));
 		mm_subnav_li_text.click();
-	}	
+	}
 
 	public void revealMegaMenuDesktop() {
-		System.out.println("-- Begin debugging hover/expand megamenu actions --");
+		System.out.println("Expand megamenu on desktop");		
 		driver.navigate().to(homePage);
-		Actions action = new Actions(driver);
-		WebDriverWait wait = new WebDriverWait(driver, 5);		
 		action.moveToElement(mm_bar_link);
 		action.perform();
-		AnalyticsBase.goSleepy(5);
+		AnalyticsBase.nap(5);
 		driver.navigate().refresh();
-		System.out.println("-- End debugging hover/expand megamenu actions --");		
 	}
 	
 	public void revealMegaMenuMobile() {
+		System.out.println("Expand megamenu on mobile");
 		Resize resize = new Resize(driver);
 		resize.toSmall();
 		mm_reveal_mobile.click();
