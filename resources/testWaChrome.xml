@@ -9,7 +9,10 @@
 			</run>
 		</groups>
 		<classes>
+			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
 			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
 		</classes>
 	</test>
 </suite>

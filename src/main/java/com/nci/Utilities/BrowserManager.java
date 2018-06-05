@@ -110,8 +110,7 @@ public class BrowserManager {
 	 * @param browserName name of the browser
 	 * @param url URL to open
 	 * @return WebDriver driver
-	 * TODO: create headless drivers
-	 * TODO: create Firefox/IE drivers
+	 * TODO: create headless Chrome driver
 	 */
 	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy bmp) {
 		
@@ -135,18 +134,6 @@ public class BrowserManager {
 			driver.manage().window().maximize();
 			driver.get(url); // open proxy page
 		}
-		else if(browserName.equalsIgnoreCase("ChromeHeadless")) {
-			System.out.println("chrome headless");
-			String driverFullPath = getDriverPath(config, "ChromeDriver");
-			System.setProperty("webdriver.chrome.driver", driverFullPath);
-			System.out.println("Chrome Driver Path: " + driverFullPath);
-
-			chromeOptions.addArguments("headless");			
-			chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
-			driver = new ChromeDriver(chromeOptions);
-			driver.manage().window().maximize();
-			driver.get(url);
-		}
 		else if(browserName.equalsIgnoreCase("Firefox")) {
 			System.out.println("Firefox browser");
 			String driverFullPath = getDriverPath(config, "FirefoxDriver");
@@ -158,11 +145,12 @@ public class BrowserManager {
 			driver.manage().window().maximize();
 			driver.get(url);
 		}
-		else if(browserName.equalsIgnoreCase("FirefoxHeadless")) {
-			System.out.println("Firefox headless");
+		else if(browserName.equalsIgnoreCase("GeckoHeadless")) {
+			System.out.println("Gecko headless");
+			// Firefox/Geckdo driver are the same
 			String driverFullPath = getDriverPath(config, "FirefoxDriver");
 			System.setProperty("webdriver.gecko.driver", driverFullPath);
-			System.out.println("Firefox Driver Path: " + driverFullPath);
+			System.out.println("Gecko Driver Path: " + driverFullPath);
 			
 			FirefoxBinary firefoxBinary = new FirefoxBinary();
 			firefoxBinary.addCommandLineOptions("--headless");

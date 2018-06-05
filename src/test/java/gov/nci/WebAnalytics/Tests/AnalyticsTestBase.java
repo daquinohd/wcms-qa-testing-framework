@@ -49,7 +49,6 @@ public class AnalyticsTestBase extends BaseClass {
 	public String pageURL;
 
 	// TODO: Fix timeout logic 
-	// TODO: Verify that each assert is checking the _same_ beacon object (do the last one for now?)
 	// TODO: Build negative tests
 	// TODO: Build test for test
 	// TODO: Check false positives for events 	
@@ -214,10 +213,9 @@ public class AnalyticsTestBase extends BaseClass {
 	 * @return
 	 */
 	public boolean hasLinkName(List<AnalyticsBase> clickBeacons, String name) {
-		for(AnalyticsBase beacon : clickBeacons) {
-			if(beacon.linkName.equalsIgnoreCase(name)) {
-				return true;
-			}
+		AnalyticsBase beacon = getLast(clickBeacons);
+		if(beacon.linkName.equalsIgnoreCase(name)) {
+			return true;
 		}
 		return false;
 	}
@@ -228,12 +226,22 @@ public class AnalyticsTestBase extends BaseClass {
 	 * @param evt
 	 * @return
 	 */
+	// TODO: split events && add logic for loadtime
 	public boolean hasEvent(List<AnalyticsBase> clickBeacons, String evt) {
-		for(AnalyticsBase beacon : clickBeacons) {
-			String events = Arrays.toString(beacon.events);
-			if(events.toLowerCase().contains(evt)) {
+		AnalyticsBase beacon = getLast(clickBeacons);
+		for(String event : beacon.events) {
+			if(evt.equalsIgnoreCase("event47")) {
+				if(event.matches("^event47=\\d+")) {
+					return true;
+				}
+			} 
+			else if(event.equalsIgnoreCase(evt)) {
 				return true;
 			}
+		}
+		String events = Arrays.toString(beacon.events);
+		if(events.toLowerCase().contains(evt)) {
+			return true;
 		}
 		return false;
 	}
@@ -246,11 +254,10 @@ public class AnalyticsTestBase extends BaseClass {
 	 * @return
 	 */
 	public boolean hasProp(List<AnalyticsBase> clickBeacons, int num, String val) {
-		for(AnalyticsBase beacon : clickBeacons) {
-			String blob = beacon.props.toString();
-			if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
-				return true;
-			}
+		AnalyticsBase beacon = getLast(clickBeacons);
+		String blob = beacon.props.toString();
+		if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
+			return true;
 		}
 		return false;
 	}	
@@ -263,11 +270,10 @@ public class AnalyticsTestBase extends BaseClass {
 	 * @return
 	 */
 	public boolean haseVar(List<AnalyticsBase> clickBeacons, int num, String val) {
-		for(AnalyticsBase beacon : clickBeacons) {
-			String blob = beacon.eVars.toString();
-			if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
-				return true;
-			}
+		AnalyticsBase beacon = getLast(clickBeacons);
+		String blob = beacon.eVars.toString();
+		if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
+			return true;
 		}
 		return false;
 	}

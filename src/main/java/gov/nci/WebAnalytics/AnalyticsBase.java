@@ -48,28 +48,22 @@ public class AnalyticsBase {
 	public String linkName;
 	public String linkUrl;	
 	
-	/** No-arg constructor - init all variables */
+	/**
+	 * No arg constructor
+	 */
 	public AnalyticsBase() {
 		uri = null;
 		suites = new String[0];		
 		params = new ArrayList<>();
 		channel = "";
-		events = new String[0];
-		props = new ArrayList<>();
-		eVars = new ArrayList<>();
-		hiers = new ArrayList<>();
-		linkType = "";
-		linkName = "";
-		linkUrl = "";
 	}
 	
 	/**
 	 * Constructor
 	 * @param beaconUrl
-	 * TODO: Handle MalformedURLExceptions
 	 */
 	public AnalyticsBase(String beaconUrl) {
-		uri = URI.create(beaconUrl);
+		uri = createURI(beaconUrl);
 		suites = getSuites(uri);
 		params = buildParamsList(uri);
 		channel = getChannel(params);
@@ -80,6 +74,21 @@ public class AnalyticsBase {
 		linkType = getLinkType(params);
 		linkName = getLinkName(params);
 		linkUrl = getLinkUrl(params);
+	}
+	
+	/**
+	 * Create URI object from a given URL string
+	 * @param url
+	 * @return
+	 */
+	private URI createURI(String url) {
+		try {
+			URI rtnUri = URI.create(url);
+			return rtnUri;
+		} catch (IllegalArgumentException ex) {
+			System.out.println("Invalid beacon URL \"" + url + "\\\" at AnalyticsBase:createURI()");
+			return null;
+		}
 	}
 	
 	/**

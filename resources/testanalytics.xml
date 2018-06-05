@@ -18,22 +18,6 @@
 	</test>
 	-->
 	<!--
-	<test name="NCI - Chrome Testing Headless" >
-		<parameter name="browser" value="ChromeHeadless" />
-		<groups>
-			<run>
-				<include name="Analytics" />
-			</run>
-		</groups>
-		<classes>
-			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
-		</classes>
-	</test>
-	-->
-	<!--
 	<test name="NCI - Firefox Testing" >
 		<parameter name="browser" value="Firefox" />
 		<groups>
@@ -49,8 +33,8 @@
 		</classes>
 	</test>
 	-->
-	<test name="NCI - Firefox Testing Headless" >
-		<parameter name="browser" value="FirefoxHeadless" />
+	<test name="NCI - Gecko Testing Headless" >
+		<parameter name="browser" value="GeckoHeadless" />
 		<groups>
 			<run>
 				<include name="Analytics" />

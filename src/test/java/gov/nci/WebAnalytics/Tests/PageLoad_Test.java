@@ -37,7 +37,9 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		
 		harList = getHarUrlList(proxy);
 		loadBeacons = PageLoad.getLoadBeacons(harList);
-			
+		
+		Assert.assertTrue(hasEvent(loadBeacons, "event47"));
+		
 		for(AnalyticsBase beacon : loadBeacons) {
 			Assert.assertTrue(beacon.events[0].contains("event1"));
 			Assert.assertTrue(beacon.events[1].contains("event47"));

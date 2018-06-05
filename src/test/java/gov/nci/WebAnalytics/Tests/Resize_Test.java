@@ -18,8 +18,7 @@ public class Resize_Test extends AnalyticsTestBase {
 		resize = new Resize(driver);
 	}
 
-	// TODO: initialize & exit on resize.maximize()
-	
+	// TODO: Fix random failure errors (this may be doing the resizes too quickly - set timeout if needed)
 	/// Correct click events have been captured on resize
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void testResizeGeneral() {
