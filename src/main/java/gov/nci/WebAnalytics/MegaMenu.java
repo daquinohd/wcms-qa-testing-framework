@@ -2,12 +2,10 @@ package gov.nci.WebAnalytics;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -52,19 +50,19 @@ public class MegaMenu extends AnalyticsBase {
 	*/
 	public void clickMMBarEn() {
 		System.out.println("Click megamenu bar (English)");
-		driver.navigate().to(homePage);
+		driver.navigate().to(WANav.homePage);
 		mm_bar_link.click();
 	}
 
 	public void clickMMBarEs() {
 		System.out.println("Click megamenu bar (Spanish)");
-		driver.navigate().to(spanishPage);
+		driver.navigate().to(WANav.spanishPage);
 		mm_bar_link.click();
 	}
 	
 	public void clickMMSubnavHeader() {
 		System.out.println("Click megamenu subnav header");
-		driver.navigate().to(homePage);
+		driver.navigate().to(WANav.homePage);
 		action.moveToElement(mm_bar_link);
 		action.perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_header));
@@ -73,7 +71,7 @@ public class MegaMenu extends AnalyticsBase {
 	
 	public void clickMMSubnavLi() {
 		System.out.println("Click megamenu subnav list item");		
-		driver.navigate().to(homePage);
+		driver.navigate().to(WANav.homePage);
 		action.moveToElement(mm_bar_link);
 		action.perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li_text));
@@ -82,7 +80,7 @@ public class MegaMenu extends AnalyticsBase {
 
 	public void revealMegaMenuDesktop() {
 		System.out.println("Expand megamenu on desktop");		
-		driver.navigate().to(homePage);
+		driver.navigate().to(WANav.homePage);
 		action.moveToElement(mm_bar_link);
 		action.perform();
 		AnalyticsBase.nap(5);

@@ -2,7 +2,6 @@ package gov.nci.WebAnalytics;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 public class PageLoad extends AnalyticsBase {
 
@@ -13,7 +12,7 @@ public class PageLoad extends AnalyticsBase {
 	public PageLoad(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
-		System.out.println("PageLoad object PageFactory initialized");
+		System.out.print("PageFactory initialized for load events: ");
 	}
 	
 	/**
@@ -22,27 +21,84 @@ public class PageLoad extends AnalyticsBase {
 	 * then be tested.
 	 * @throws RuntimeException
 	 */
-	private void loadPageTypes() {
-		driver.navigate().to(homePage);		
-		driver.navigate().to(landingPage);
-		driver.navigate().to(cthpPatient);
-		driver.navigate().to(cthpHP);
-		driver.navigate().to(appModulePage);
-		driver.navigate().to(blogSeriesPage);
+	public void gotoPageTypes() {
+		System.out.print("Navigate to several page types");		
+		driver.navigate().to(WANav.homePage);
+		driver.navigate().to(WANav.landingPage);
+		driver.navigate().to(WANav.cthpPatient);
+		driver.navigate().to(WANav.cthpHP);
+		driver.navigate().to(WANav.appModulePage);
+		driver.navigate().to(WANav.blogSeriesPage);
 	}
 
+	public void gotoHomePage() {
+		driver.navigate().to(WANav.homePage	);
+	}
+	
+	public void gotoBlogPostPage() {
+		driver.navigate().to(WANav.blogPostPage);
+	}
+	
+	public void gotoBlogSeriesPage() {
+		driver.navigate().to(WANav.blogSeriesPage);
+	}
+	
+	public void gotoCTHPPatient() {
+		driver.navigate().to(WANav.cthpPatient);
+	}
+	
+	public void gotoCTHPHP() {
+		driver.navigate().to(WANav.cthpHP);	
+	}
+	
+	public void gotoInnerPage() {
+		driver.navigate().to(WANav.innerPage);
+	}
+	
+	public void gotoLandingPage() {
+		driver.navigate().to(WANav.landingPage);
+	}
+	
+	public void gotoPDQPage() {
+		driver.navigate().to(WANav.pdqPage);
+	}
+	
+	public void gotoTopicPage() {
+		driver.navigate().to(WANav.topicPage);
+	}
+	
+	public void gotoSpanishPage() {
+		driver.navigate().to(WANav.spanishPage);
+	}
+	
+	public void gotoAppModulePage() {
+		driver.navigate().to(WANav.appModulePage);
+	}
+	
+	public void gotoBasicSearchPage() {
+		driver.navigate().to(WANav.basicSearchPage);
+	}
+	
+	public void gotoAdvSearchPage() {
+		driver.navigate().to(WANav.advSearchPage);
+	}
+	
+	public void gotoResultsPage() {	
+		driver.navigate().to(WANav.resultsPage);
+	}
+	
 	public void goHomeAndBack() {
 		// Home page
-		driver.navigate().to(homePage);
-		driver.navigate().to(spanishPage);
+		driver.navigate().to(WANav.homePage);
+		driver.navigate().to(WANav.spanishPage);
 		driver.navigate().back();
-		driver.navigate().refresh();		
+		driver.navigate().refresh();
 	}	
 	
 	/// Click around pages
 	public void doPageLoadActions() throws RuntimeException {
 		System.out.println("Begin PageLoad actions");
-		loadPageTypes();
+		gotoPageTypes();
 		goHomeAndBack();		
 		System.out.println("End PageLoad actions");
 	}

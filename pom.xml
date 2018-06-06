@@ -33,6 +33,7 @@
 		<artifactId>testng</artifactId>
 		<version>6.8</version>
 		<scope>test</scope>
+		<!--  scope>compile</scope>-->
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-firefox-driver -->
 	<dependency>

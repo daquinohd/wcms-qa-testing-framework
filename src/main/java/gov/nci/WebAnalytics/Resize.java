@@ -19,10 +19,10 @@ public class Resize extends AnalyticsBase {
 	/**
 	* Browser view breakpoints
 	*/
-	public static Dimension small = new Dimension(300, 800);
+	public static Dimension small = new Dimension(600, 800);
 	public static Dimension med = new Dimension(700, 800);
 	public static Dimension large = new Dimension(1100, 800);
-	public static Dimension xlarge = new Dimension(1600, 800);	
+	public static Dimension xlarge = new Dimension(1450, 800);	
 	
 	/**
 	 * All the proxy browser 'actions' go in here. These are not tests, but things that we do 
@@ -32,26 +32,31 @@ public class Resize extends AnalyticsBase {
 	 */	
 	public void toSmall() throws RuntimeException {
 		System.out.println("Resize browser to mobile");
+		driver.manage().window().setSize(xlarge);
 		driver.manage().window().setSize(small);
 	}
 
 	public void toMed() throws RuntimeException {
 		System.out.println("Resize browser to tablet");
+		driver.manage().window().setSize(xlarge);
 		driver.manage().window().setSize(med);
 	}
 
 	public void toLarge() throws RuntimeException {
 		System.out.println("Resize browser to desktop/large");
+		driver.manage().window().setSize(small);
 		driver.manage().window().setSize(large);
 	}
 
 	public void toXlarge() throws RuntimeException {
 		System.out.println("Resize browser to extra large");
+		driver.manage().window().setSize(small);
 		driver.manage().window().setSize(xlarge);
 	}
 
 	public void maximize() throws RuntimeException {
 		System.out.println("Maximize browser window");		
+		driver.manage().window().setSize(small);
 		driver.manage().window().maximize();
 	}
 

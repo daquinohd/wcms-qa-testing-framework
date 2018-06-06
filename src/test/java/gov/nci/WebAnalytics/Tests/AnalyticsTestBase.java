@@ -3,15 +3,11 @@ package gov.nci.WebAnalytics.Tests;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.http.NameValuePair;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
@@ -22,7 +18,6 @@ import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
 
 import com.nci.Utilities.BrowserManager;
 import com.nci.Utilities.ConfigReader;
@@ -48,12 +43,9 @@ public class AnalyticsTestBase extends BaseClass {
 	public ConfigReader config = new ConfigReader();
 	public String pageURL;
 
-	// TODO: Fix timeout logic 
-	// TODO: Build negative tests
 	// TODO: Build test for test
 	// TODO: Check false positives for events 	
-	// TODO: Create reusable utility methods
-	// TODO: build a 'beacon params' object 
+	// TODO: Clean up
 	protected static List<String> harList;
 	protected static List<AnalyticsBase> loadBeacons;
 	protected static List<AnalyticsBase> clickBeacons;
@@ -207,6 +199,26 @@ public class AnalyticsTestBase extends BaseClass {
 	}
 	
 	/**
+	 * Utility function to check for a given suite name
+	 * @param clickBeacons
+	 * @return
+	 */
+	public boolean hasSuite(List<AnalyticsBase> beacons) {
+		// TODO: fill this out
+		return false;
+	}
+
+	/**
+	 * Utility function to check for a given channel name
+	 * @param clickBeacons
+	 * @return
+	 */
+	public boolean hasChannel(List<AnalyticsBase> beacons) {
+		// TODO: fill this out
+		return false;
+	}
+	
+	/**
 	 * Utility function to check for a link name value within a click beacon.
 	 * @param clickBeacons
 	 * @param name
@@ -222,13 +234,12 @@ public class AnalyticsTestBase extends BaseClass {
 	
 	/**
 	 * Utility function to check for an event value within a click beacon.
-	 * @param clickBeacons
+	 * @param beacons
 	 * @param evt
 	 * @return
 	 */
-	// TODO: split events && add logic for loadtime
-	public boolean hasEvent(List<AnalyticsBase> clickBeacons, String evt) {
-		AnalyticsBase beacon = getLast(clickBeacons);
+	public boolean hasEvent(List<AnalyticsBase> beacons, String evt) {
+		AnalyticsBase beacon = getLast(beacons);
 		for(String event : beacon.events) {
 			if(evt.equalsIgnoreCase("event47")) {
 				if(event.matches("^event47=\\d+")) {
@@ -239,53 +250,61 @@ public class AnalyticsTestBase extends BaseClass {
 				return true;
 			}
 		}
-		String events = Arrays.toString(beacon.events);
-		if(events.toLowerCase().contains(evt)) {
-			return true;
-		}
 		return false;
 	}
 		
 	/**
 	 * Utility function to check for a given prop and value
-	 * @param clickBeacons
+	 * @param beacons
 	 * @param num
 	 * @param val
 	 * @return
 	 */
-	public boolean hasProp(List<AnalyticsBase> clickBeacons, int num, String val) {
-		AnalyticsBase beacon = getLast(clickBeacons);
+	public boolean hasProp(List<AnalyticsBase> beacons, int num, String val) {
+		AnalyticsBase beacon = getLast(beacons);
 		String blob = beacon.props.toString();
 		if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
 			return true;
 		}
 		return false;
 	}	
-
+	
 	/**
 	 * Utility function to check for a given eVar and value
-	 * @param clickBeacons
+	 * @param beacons
 	 * @param num
 	 * @param val
 	 * @return
 	 */
-	public boolean haseVar(List<AnalyticsBase> clickBeacons, int num, String val) {
-		AnalyticsBase beacon = getLast(clickBeacons);
+	public boolean haseVar(List<AnalyticsBase> beacons, int num, String val) {
+		AnalyticsBase beacon = getLast(beacons);
 		String blob = beacon.eVars.toString();
 		if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
 			return true;
 		}
 		return false;
-	}
-	
+	}	
+
 	/**
-	 * Utility function to get the last element in a list of = beacons
-	 * @param clickBeacons
+	 * Utility function to check for a given heirarchy and value
+	 * @param beacons
+	 * @param num
+	 * @param val
 	 * @return
 	 */
-	private AnalyticsBase getLast(List<AnalyticsBase> clickBeacons) {
-		AnalyticsBase beacon = clickBeacons.get(clickBeacons.size() - 1);
+	public boolean hasHier(List<AnalyticsBase> beacons, int num, String val) {
+		// TODO: fill this out
+		return false;
+	}
+		
+	/**
+	 * Utility function to get the last element in a list of = beacons
+	 * @param beacons
+	 * @return
+	 */
+	private AnalyticsBase getLast(List<AnalyticsBase> beacons) {
+		AnalyticsBase beacon = beacons.get(beacons.size() - 1);
 		return beacon;
-	}		
+	}
 	
 }
