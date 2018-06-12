@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import com.nci.Utilities.FunctionLibrary;
+
 public class BasicSearch {
 
 	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
@@ -16,7 +18,7 @@ public class BasicSearch {
 	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div")
 	WebElement txt_SearchTip;
 	//@FindBy(how = How.LINK_TEXT, using = "advanced search")
-	@FindBy(how = How.XPATH, using=".//*[@id='cgvBody']/div[1]/div/div/a")
+	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div/div/a")
 	WebElement lnk_AdvSearch;
 	@FindBy(how = How.XPATH, using = ".//input[@id='q']")
 	WebElement txt_CancerType;
@@ -36,11 +38,11 @@ public class BasicSearch {
 	WebElement txt_Zipcode;
 	@FindBy(how = How.XPATH, using = ".//input[@id='a']")
 	WebElement txt_Age;
-	@FindBy(how=How.XPATH, using=".//*[@id='q']")
+	@FindBy(how = How.XPATH, using = ".//*[@id='q']")
 	WebElement msg_CancerType;
-	@FindBy(how=How.XPATH, using=".//*[@id='fieldset--age']/div") 
+	@FindBy(how = How.XPATH, using = ".//*[@id='fieldset--age']/div")
 	WebElement text_Age;
-	@FindBy(how=How.XPATH, using=".//*[@id='fieldset--zip']/div") 
+	@FindBy(how = How.XPATH, using = ".//*[@id='fieldset--zip']/div")
 	WebElement text_Zipcode;
 	//@FindBy(how = How.XPATH, using = ".//input[@type='submit'][@class='submit button'] [@value='Search']")
 	//WebElement btn_Search;
@@ -57,12 +59,14 @@ public class BasicSearch {
 	WebElement delighter_FeedbackPopupCancel;
 	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[2]/div/div[2]")
 	WebElement module_CTSApi;
-	@FindBy(how=How.XPATH, using="//*[@id='cgvBody']/div[1]") 
+	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]")
 	WebElement text_BasicDefinition;
-	@FindBy(how=How.XPATH, using="//*[@id='cgvBody']/div[1]/p/a[2]") 
+	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]/p/a[2]")
 	WebElement lnk_Steps;
 	@FindBy(how = How.CSS, using = ".api-reference-content > p:nth-child(1) > a:nth-child(1)")
 	WebElement lnk_CTSApi;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['Cancer Type/Keyword']")
+	WebElement lgd_cancerType;
 
 	// Constructor - Initializing the Page objects
 	public BasicSearch(WebDriver driver) {
@@ -72,17 +76,19 @@ public class BasicSearch {
 	}
 
 	//UI components
-	public WebElement[] verifyUI(){
-		return new WebElement[] {text_BasicDefinition, lbl_CancerType,lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp, lbl_Zipcode, lnk_ZipcodeHelp, btn_Search, msg_CancerType, text_Age, text_Zipcode, txt_SearchTip};
-		
+	public WebElement[] verifyUI() {
+		return new WebElement[] { text_BasicDefinition, lbl_CancerType, lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp,
+				lbl_Zipcode, lnk_ZipcodeHelp, btn_Search, msg_CancerType, text_Age, text_Zipcode, txt_SearchTip };
+
 	}
-	
-	public void clickSteps(){
+
+	public void clickSteps() {
 		lnk_Steps.click();
 	}
-	
+
 	// Default Search
 	public void searchDefault() {
+		FunctionLibrary.scrollIntoview(driver, lgd_cancerType);
 		btn_Search.click();
 	}
 
@@ -140,18 +146,18 @@ public class BasicSearch {
 	 * public WebElement getDelighterWhich() { return delighter_Which; }
 	 
 	public void clickDelighterFeedback() {
-
+	
 		delighter_Feedback.click();
 	}
-
+	
 	public WebElement getDelighterFeedback() {
 		return delighter_Feedback;
 	}
-
+	
 	public WebElement delighterFeedbackPopup() {
 		return delighter_FeedbackPopup;
 	}
-
+	
 	public void clickDelighterFeedbackPopupCancel() {
 		delighter_FeedbackPopupCancel.click();
 	} */
