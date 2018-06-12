@@ -35,7 +35,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	ApiReference api;
 	String testDataFilePath;
 
-	@BeforeClass(groups = { "Smoke" })
+	@BeforeClass(groups = { "Smoke", "current" })
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -53,7 +53,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	}
 
 	@Test(groups = { "Smoke" }, priority = 1)
-	public void verifyPageTitle() {
+	public void verifyAdvanceSearchPageTitle() {
 		Assert.assertEquals(advanceSearch.getAdvanceSearchPageTitle(), AdvanceSearch.ADVANCE_SEARCH_PAGE_TITLE);
 		logger.log(LogStatus.PASS,
 				"Verifying the Title of the page is *Find NCI-Supported Clinical Trials* | Actual Result: "
@@ -66,12 +66,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
-	/*
-	 * @Test(groups = { "Smoke" }, priority = 1) public void
-	 * verify_bread_crumb() { crumb.getBreadCrumb(AdvanceSearch.BREAD_CRUMB);
-	 * logger.log(LogStatus.PASS, "Verifying the Breadcrumb of the page"); }
-	 */
-	// @Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Smoke" }, priority = 1)
 	public void verify_bread_crumb() {
 		crumb.getBreadCrumb();
 		Assert.assertEquals(crumb.getBreadCrumb(), advanceSearch.BREAD_CRUMB);
@@ -149,14 +144,9 @@ public class AdvanceSearch_Test extends BaseClass {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("defaultSearchTest: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"));
+		verifyAdvanceSearchResultsPageTitle();
 
-		/*
-		 * Verify that search result summary text contains the "all trials" Ex-
-		 * Results 1-10 of 5384 for your search for: "all trials"
-		 */
+		//Verify that search result summary text contains the "all trials"
 
 		String searchStatus = driver.findElement(By.xpath(".//*[@class='cts-results-label']/strong")).getText();
 		System.out.println("defaultSearchTest: SR Status Body Text: " + searchStatus);
@@ -170,14 +160,10 @@ public class AdvanceSearch_Test extends BaseClass {
 	public void advancesearch_CancerType_SubType(String cancerTypeId, String cancerType, String cancerSubTypeId,
 			String cancerSubType) throws InterruptedException {
 		Object[][] data;
-		// Thread.sleep(500);
 		advanceSearch.advSearch_CancerType_SubType(cancerType, cancerSubType);
-		// Thread.sleep(500);
 
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_CancerType_SubType: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -186,8 +172,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println(
 				"advancesearch_CancerType_SubType: Cancer Type ID: t=" + cancerTypeId + "&st=" + cancerSubTypeId);
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
+		// Verify that show search criteria table contains the selected search criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
@@ -201,7 +186,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		// driver.navigate().to(pageURL);
 		driver.findElement(By.linkText("Start Over")).click();
 		// driver.navigate().back();
-		logger.log(LogStatus.PASS, "Verify Search by Cancer Type and SubType on Advanced CTS");
+		logger.log(LogStatus.PASS, "Verify Search by Cancer Type and SubType on Advanced CTS. CancerType = "
+				+ cancerType + " , CancerSubType = " + cancerSubType);
 	}
 
 	@Test(dataProvider = "CancerType_SubType_Stage", groups = { "Smoke" }, priority = 2)
@@ -211,13 +197,9 @@ public class AdvanceSearch_Test extends BaseClass {
 		Thread.sleep(50);
 
 		advanceSearch.advSearch_CancerType_SubType_Stage(cancerType, cancerSubType, cancerStage);
-		// Thread.sleep(200);
-		// advanceSearch.defaultSearch();
 
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_CancerType_SubType_Stage: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -226,8 +208,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("advancesearch_CancerType_SubType_Stage: Cancer Type ID: t=" + cancerTypeId + "&st="
 				+ cancerSubTypeId + "&stg=" + cancerStageId);
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
+		// Verify that show search criteria table contains the selected search criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
@@ -235,7 +216,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertEquals(data[3][1], cancerStage, "CancerStage not matched");
 
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Cancer Type, SubType and Stage on Advanced CTS");
+		logger.log(LogStatus.PASS, "Verify Search by Cancer Type, SubType and Stage on Advanced CTS. CancerType = "
+				+ cancerType + " , CancerSubType = " + cancerSubType + " , CancerStage = " + cancerStage);
 
 	}
 
@@ -243,7 +225,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	public void advancesearch_AgeTest(int age) throws InterruptedException {
 		System.out.println("Age from Data Provider: " + age);
 		Object[][] data;
-		// Thread.sleep(300);
+
 		advanceSearch.getAge(age);
 
 		if (age < 1 || age > 120) {
@@ -256,9 +238,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 		else {
 			// Verify page title
-			String pageTitle = driver.getTitle();
-			System.out.println("advancesearch_CancerType_SubType: Advance Search Results Page Title: " + pageTitle);
-			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+			verifyAdvanceSearchResultsPageTitle();
 
 			// Verify search criteria in URL
 			String pageURL = driver.getCurrentUrl();
@@ -266,8 +246,7 @@ public class AdvanceSearch_Test extends BaseClass {
 			Assert.assertTrue(pageURL.contains("a=" + age));
 			System.out.println("advancesearch_Age: Age: a=" + age);
 
-			// Verify that show search criteria table contains the selected
-			// search criteria
+			// Verify that show search criteria table contains the selected search criteria
 			data = verifySearchCriteriaTable();
 
 			Assert.assertEquals(data[1][1], String.valueOf(age), "Age not matched");
@@ -282,13 +261,11 @@ public class AdvanceSearch_Test extends BaseClass {
 	@Test(dataProvider = "Keyword", groups = { "Smoke" }, priority = 3)
 	public void advancesearch_Keywords_PhraseTest(String keyword) throws InterruptedException {
 		System.out.println("Keyword from Data Provider: " + keyword);
-		// Thread.sleep(300);
+
 		advanceSearch.getKeywordPhrase(keyword);
 
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("Page title for keyword search :" + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		if (keyword.contains("\"")) {
@@ -300,7 +277,7 @@ public class AdvanceSearch_Test extends BaseClass {
 			System.out.println("Phrase without space and double quote replaced by %22 :" + phraseWithoutSpace);
 			Assert.assertTrue(pageURL.contains("q=" + phraseWithoutSpace), "Phrase not found " + phraseWithoutSpace);
 			driver.findElement(By.linkText("Start Over")).click();
-			logger.log(LogStatus.PASS, "Verify Search by Keyword on Advanced CTS. Keyword = " + phraseWithoutSpace);
+			logger.log(LogStatus.PASS, "Verify Search by Keyword on Advanced CTS. Keyword = " + keyword);
 
 		} else {
 			// Replace space with +
@@ -310,7 +287,7 @@ public class AdvanceSearch_Test extends BaseClass {
 			Assert.assertTrue(pageURL.contains("q=" + phraseWithoutSpace),
 					"Keyword/Phrase not found " + phraseWithoutSpace);
 			driver.findElement(By.linkText("Start Over")).click();
-			logger.log(LogStatus.PASS, "Verify Search by Keyword on Advanced CTS. Keyword = " + phraseWithoutSpace);
+			logger.log(LogStatus.PASS, "Verify Search by Keyword on Advanced CTS. Keyword = " + keyword);
 
 		}
 	}
@@ -324,8 +301,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		Thread.sleep(300);
 		advanceSearch.advSearch_Zipcode(zip);
 
-		// Verify that show search criteria table contains the selected
-		// search criteria
+		// Verify that show search criteria table contains the selected search criteria
 		if (zip.equals("99999")) {
 			System.out.println("**********zip=99999***********");
 			Assert.assertTrue(driver.getPageSource().contains(
@@ -345,9 +321,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 		else {
 			// Verify page title
-			String pageTitle = driver.getTitle();
-			System.out.println("Page title for zipcode search :" + pageTitle);
-			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
+			verifyAdvanceSearchResultsPageTitle();
 
 			// Verify search criteria in URL
 			String pageURL = driver.getCurrentUrl();
@@ -376,10 +350,9 @@ public class AdvanceSearch_Test extends BaseClass {
 		Object[][] data;
 		Thread.sleep(300);
 		advanceSearch.advSearch_CountryStateCity(country, state, city);
+
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_CountryStateCity: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -393,8 +366,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("advancesearch_CountryStateCity: Country: lcnty=" + country + " and State: &lst=" + state
 				+ "and City:&lcty=" + city);
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
+		// Verify that show search criteria table contains the selected search criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], country, "Country not matched");
@@ -402,7 +374,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertEquals(data[3][1], city, "City not matched");
 
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Country, State and City on Advanced CTS");
+		logger.log(LogStatus.PASS, "Verify Search by Country, State and City on Advanced CTS. Country = " + country
+				+ " , State = " + state + " , City = " + city);
 
 	}
 
@@ -413,10 +386,9 @@ public class AdvanceSearch_Test extends BaseClass {
 		Object[][] data;
 		Thread.sleep(300);
 		advanceSearch.advSearch_Hospital(hospital);
+
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_Hospital: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -426,15 +398,13 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertTrue(pageURL.contains("hos=" + hospitalwithoutspace));
 		System.out.println("advancesearch_Hospital: Hospital: hos=" + hospital);
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
+		// Verify that show search criteria table contains the selected search criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], hospital, "Hospital not matched");
 
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Hospital on Advanced CTS");
-
+		logger.log(LogStatus.PASS, "Verify Search by Hospital on Advanced CTS. Hospital = " + hospital);
 	}
 
 	@Test(groups = { "Smoke" }, priority = 4)
@@ -443,10 +413,9 @@ public class AdvanceSearch_Test extends BaseClass {
 		Object[][] data;
 		Thread.sleep(300);
 		advanceSearch.advSearch_AtNIH();
+
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_atNIH: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -454,40 +423,40 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertTrue(pageURL.contains("loc=4"));
 		System.out.println("advancesearch_AtNIH: loc=4");
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
+		// Verify that show search criteria table contains the selected search criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], "Only show trials at the NIH Clinical Center (Bethesda, MD)",
 				"NIH not matched");
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by NIH location on Advanced CTS");
+		logger.log(LogStatus.PASS,
+				"Verify Search to only show trials at the NIH Clinical Center (Bethesda, MD) location on Advanced CTS.");
 
 	}
 
-	@Test(groups = { "Smoke" }, priority = 4)
-	public void advancesearch_TrialType() throws InterruptedException {
+	@Test(dataProvider = "TrialType", groups = { "Smoke" }, priority = 4)
+	public void advancesearch_TrialType(String trialType) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(200);
-		advanceSearch.advSearch_TrialType();
+		advanceSearch.advSearch_TrialType(trialType);
+
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advSearch_TrialType: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
 		System.out.println("advancesearch_TrialType: Current Page URL: " + pageURL);
-		Assert.assertTrue(pageURL.contains("tt=treatment"));
-		System.out.println("advancesearch_TrialType: tt= treatment");
+		String trialTypewithoutspace = trialType.replace(" ", "_");
+		trialTypewithoutspace = trialTypewithoutspace.toLowerCase();
+		System.out.println("advancesearch_TrialType: tt= " + trialTypewithoutspace);
+		Assert.assertTrue(pageURL.contains("tt=" + trialTypewithoutspace));
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
+		// Verify that show search criteria table contains the selected search criteria
 		data = verifySearchCriteriaTable();
 
-		Assert.assertEquals(data[1][1], "Treatment", "TrialType not matched");
+		Assert.assertEquals(data[1][1], trialType, "TrialType not matched");
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Trial Type on Advanced CTS");
+		logger.log(LogStatus.PASS, "Verify Search by Trial Type on Advanced CTS. Trial Type = " + trialType);
 
 	}
 
@@ -499,9 +468,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advSearch_Drug: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
@@ -554,17 +521,15 @@ public class AdvanceSearch_Test extends BaseClass {
 		advanceSearch.advSearch_TrialPhase(trialphase);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advancesearch_TrialPhase: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
 		String pageURL = driver.getCurrentUrl();
 		int phaselength = trialphase.length();
-		String phaseno = trialphase.substring(5, phaselength);
+		String phaseno = trialphase.substring(6, phaselength);
 		System.out.println("advancesearch_TrialPhase: Current Page URL: " + pageURL);
-		Assert.assertTrue(pageURL.contains("tp=" + phaseno));
 		System.out.println("advancesearch_TrialPhase: tp=" + phaseno);
+		Assert.assertTrue(pageURL.contains("tp=" + phaseno));
 
 		// Verify that show search criteria table contains the selected search
 		// criteria
@@ -572,37 +537,111 @@ public class AdvanceSearch_Test extends BaseClass {
 
 		Assert.assertEquals(data[1][1], trialphase, "TrialPhase not matched");
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by TrialPhase on Advanced CTS");
+		logger.log(LogStatus.PASS, "Verify Search by TrialPhase on Advanced CTS. Trial Phase = " + trialphase);
 
 	}
 
-	// @Test(dataProvider = "TrialID", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "TrialID", groups = { "Smoke" }, priority = 4)
 	public void advancesearch_TrialID(String trialId) throws InterruptedException {
 		Object[][] data;
-		Thread.sleep(200);
+		// Thread.sleep(200);
 		advanceSearch.advSearch_TrialID(trialId);
+		String pageURL = driver.getCurrentUrl();
+		System.out.println("advancesearch_TrialID: Current Page URL: " + pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		// Verify page title
-		String pageTitle = driver.getTitle();
-		System.out.println("advSearch_Drug: Advance Search Results Page Title: " + pageTitle);
-		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+		verifyAdvanceSearchResultsPageTitle();
 
 		// Verify search criteria in URL
-		String pageURL = driver.getCurrentUrl();
-		System.out.println("advancesearch_Drug: Current Page URL: " + pageURL);
-		Assert.assertTrue(pageURL.contains("d=" + trialId));
-		System.out.println("advancesearch_Drug: d= " + trialId);
+		if (trialId.contains(";")) {
+			// Replace ; with %3B
+			String trialIdWithSemicolon = trialId.replace(";", "%3B");
+			System.out.println("Trial Id with semicolon replaced by %3B :" + trialIdWithSemicolon);
+			Assert.assertTrue(pageURL.contains("tid=" + trialIdWithSemicolon),
+					"Phrase not found " + trialIdWithSemicolon);
 
-		// Verify that show search criteria table contains the selected search
-		// criteria
-		data = verifySearchCriteriaTable();
+			// Verify that show search criteria table contains the selected
+			// search criteria
+			data = verifySearchCriteriaTable();
+			String trialIds = trialId.replace(";", ", ");
+			Assert.assertEquals(data[1][1], trialIds, "Drug not matched");
 
-		Assert.assertEquals(data[1][1], trialId, "Drug not matched");
+		} else if (trialId.contains(",")) {
+			// Replace , with %2C
+			String trialIdWithComma = trialId.replace(",", "%2C");
+			System.out.println("Trial Id with comma replaced by %2C :" + trialIdWithComma);
+			Assert.assertTrue(pageURL.contains("tid=" + trialIdWithComma), "Phrase not found " + trialIdWithComma);
+
+			// Verify that show search criteria table contains the selected
+			// search criteria
+			data = verifySearchCriteriaTable();
+			String trialIds = trialId.replace(",", ", ");
+			Assert.assertEquals(data[1][1], trialIds, "Drug not matched");
+
+		} else {
+			Assert.assertTrue(pageURL.contains("tid=" + trialId));
+			System.out.println("advancesearch_TrialId: tid= " + trialId);
+
+			// Verify that show search criteria table contains the selected
+			// search criteria
+			data = verifySearchCriteriaTable();
+			Assert.assertEquals(data[1][1], trialId, "Drug not matched");
+		}
 
 		driver.findElement(By.linkText("Start Over")).click();
-		logger.log(LogStatus.PASS, "Verify Search by Drug on Advanced CTS");
+		logger.log(LogStatus.PASS,
+				"Verify Search by TrialId or Trial Ids (separated by ; or ,) on Advanced CTS. Trial Id = " + trialId);
+	}
 
+	@Test(dataProvider = "TrialInvestigator", groups = { "Smoke", "current" }, priority = 4)
+	public void advancesearch_TrialInvestigator(String trialInvestigator) throws InterruptedException {
+		Object[][] data;
+		advanceSearch.advSearch_TrialInvestigator(trialInvestigator);
+		String pageURL = driver.getCurrentUrl();
+		System.out.println("advancesearch_TrialInvestigator: Current Page URL: " + pageURL);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		// Verify page title
+		verifyAdvanceSearchResultsPageTitle();
+		// Verify search criteria in URL
+		Assert.assertTrue(pageURL.contains("in=" + trialInvestigator));
+		System.out.println("advancesearch_TrialInvestigator: in= " + trialInvestigator);
+
+		// Verify that show search criteria table contains the selected
+		// search criteria
+		data = verifySearchCriteriaTable();
+		Assert.assertEquals(data[1][1], trialInvestigator, "Investigator not matched");
+
+		driver.findElement(By.linkText("Start Over")).click();
+		logger.log(LogStatus.PASS,
+				"Verify Search by Trial Investigator on Advanced CTS. Trial Id = " + trialInvestigator);
+	}
+
+	@Test(dataProvider = "LeadOrganization", groups = { "Smoke", "current" }, priority = 4)
+	public void advancesearch_LeadOrganization(String leadOrganization) throws InterruptedException {
+		Object[][] data;
+		advanceSearch.advSearch_LeadOrganization(leadOrganization);
+		String pageURL = driver.getCurrentUrl();
+		System.out.println("advancesearch_LeadOrganization: Current Page URL: " + pageURL);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		// Verify page title
+		verifyAdvanceSearchResultsPageTitle();
+
+		// Verify search criteria in URL
+		String leadOrganizationWithoutSpace = leadOrganization.replace(" ", "+");
+		Assert.assertTrue(pageURL.contains("lo=" + leadOrganizationWithoutSpace));
+		System.out.println("advancesearch_TrialInvestigator: in= " + leadOrganizationWithoutSpace);
+
+		// Verify that show search criteria table contains the selected
+		// search criteria
+		data = verifySearchCriteriaTable();
+		Assert.assertEquals(data[1][1], leadOrganization, "Lead Organization not matched");
+
+		driver.findElement(By.linkText("Start Over")).click();
+		logger.log(LogStatus.PASS,
+				"Verify Search by Lead Organization on Advanced CTS. Lead Organization = " + leadOrganization);
 	}
 
 	/********************** Data Providers **********************/
@@ -799,14 +838,72 @@ public class AdvanceSearch_Test extends BaseClass {
 				{ "20105" }, { "99999" }, { "abc" } };
 	}
 
+	@DataProvider(name = "TrialType")
+	public Iterator<Object[]> readTrialType_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String trialType = excelReader.getCellData(TESTDATA_SHEET_NAME, "TrialType", rowNum);
+			System.out.println("Trial Type in data provider ======= " + trialType);
+			Object ob[] = { trialType };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "TrialID")
+	public Iterator<Object[]> readTrialId_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String trialId = excelReader.getCellData(TESTDATA_SHEET_NAME, "TrialId", rowNum);
+			System.out.println("Trial Id in data provider ======= " + trialId);
+			Object ob[] = { trialId };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "TrialInvestigator")
+	public Iterator<Object[]> readTrialInvestigator_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String TrialInvestigator = excelReader.getCellData(TESTDATA_SHEET_NAME, "TrialInvestigator", rowNum);
+			System.out.println("Trial Investigator in data provider ======= " + TrialInvestigator);
+			Object ob[] = { TrialInvestigator };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "LeadOrganization")
+	public Iterator<Object[]> readLeadOrganization_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String leadOrganization = excelReader.getCellData(TESTDATA_SHEET_NAME, "LeadOrganization", rowNum);
+			System.out.println("Lead Organization in data provider ======= " + leadOrganization);
+			Object ob[] = { leadOrganization };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
 	/********************** Common Functions **********************/
+	// Verify page title
+	public void verifyAdvanceSearchResultsPageTitle() {
+		String pageTitle = driver.getTitle();
+		System.out.println("Advance Search Results Page Title: " + pageTitle);
+		Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
+	}
+
 	// Verify that show search criteria table contains the selected search
 	// criteria
 	public Object[][] verifySearchCriteriaTable() {
 		Object[][] data;
 
 		driver.findElement(By.xpath(".//*[@class='ctscb']")).click();
-		// Thread.sleep(300);
 
 		WebElement table_element = driver.findElement(By.xpath(".//table[@class='table no-auto-enlarge']"));
 

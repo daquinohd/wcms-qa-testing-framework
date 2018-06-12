@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
+import com.nci.Utilities.FunctionLibrary;
 
 public class AdvanceSearch {
 
@@ -86,12 +87,30 @@ public class AdvanceSearch {
 	WebElement rbtn_atNIH;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtype']")
 	WebElement lgd_trialtype;
-	@FindBy(how = How.XPATH, using = "//*[@id='tt']/div[2]/label")
+	@FindBy(how = How.XPATH, using = "//input[@id='hv']")
+	WebElement cb_healthy_volunteers;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_all']")
+	WebElement cb_trialtype_all;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_prevention']")
+	WebElement cb_trialtype_prevention;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_treatment']")
 	WebElement cb_trialtype_treatment;
-	@FindBy(how = How.XPATH, using = "//*[@id='tt']/div[3]/label")
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_health_services_research']")
+	WebElement cb_trialtype_health_services_research;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_supportive_care']")
 	WebElement cb_trialtype_supportivecare;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_screening']")
+	WebElement cb_trialtype_screening;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_diagnostic']")
+	WebElement cb_trialtype_diagnostic;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_other']")
+	WebElement cb_trialtype_other;
+	@FindBy(how = How.XPATH, using = "//label[@for='tt_basic_science']")
+	WebElement cb_trialtype_basic_science;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']")
 	WebElement lgd_drugtreatment;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--trialtreatment']/legend['DRUG/TREATMENT']")
+	WebElement lgd_drugtreatment1;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[2]/span/span[1]/span/ul/li/input")
 	WebElement txt_drug;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[3]/span/span[1]/span/ul/li/input")
@@ -108,8 +127,18 @@ public class AdvanceSearch {
 	WebElement cb_trialphase3;
 	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_4']")
 	WebElement cb_trialphase4;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--trialstatus']/legend['TRIAL PHASE']")
+	WebElement lgd_trialPhase;
 	@FindBy(how = How.XPATH, using = "//*[@id='tid']")
 	WebElement txt_trialId;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--trialid']/legend['TRIAL ID']")
+	WebElement lgd_trialId;
+	@FindBy(how = How.XPATH, using = "//*[@id='in']")
+	WebElement txt_trialInvestigator;
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--investigator']/legend['TRIAL INVESTIGATORS']")
+	WebElement lgd_trialInvestigator;
+	@FindBy(how = How.XPATH, using = "//input[@id='lo']")
+	WebElement txt_leadOrganization;
 
 	/*************** Search Result Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
@@ -158,13 +187,13 @@ public class AdvanceSearch {
 	}
 
 	public void defaultSearch() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", box_LeadOrganization);
+		FunctionLibrary.scrollIntoview(driver, box_LeadOrganization);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		btn_Search.click();
 	}
 
 	public void getCancerType(String cancerType) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", AdvanceSearchPageTitle);
+		FunctionLibrary.scrollIntoview(driver, AdvanceSearchPageTitle);
 		getCancerTypeBox().click();
 		WebElement txt_CancerTypeBox = driver.findElement(By.xpath(
 				"//span[@class='select2-search select2-search--dropdown']/input[@class='select2-search__field']"));
@@ -199,7 +228,7 @@ public class AdvanceSearch {
 	}
 
 	public void getAge(int age) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lbl_side_effects);
+		FunctionLibrary.scrollIntoview(driver, lbl_side_effects);
 		txt_age.click();
 		txt_age.clear();
 		txt_age.sendKeys(String.valueOf(age));
@@ -210,7 +239,7 @@ public class AdvanceSearch {
 	}
 
 	public void getKeywordPhrase(String keyword) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lbl_side_effects);
+		FunctionLibrary.scrollIntoview(driver, lbl_side_effects);
 		txt_keywords.click();
 		txt_keywords.clear();
 		txt_keywords.sendKeys(keyword);
@@ -221,7 +250,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Zipcode(String zip) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
+		FunctionLibrary.scrollIntoview(driver, lgd_location);
 		rbtn_zipcode.click();
 		txt_zipcode.click();
 		txt_zipcode.clear();
@@ -254,7 +283,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_CountryStateCity(String country, String state, String city) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
+		FunctionLibrary.scrollIntoview(driver, lgd_location);
 		rbtn_countryStateCity.click();
 		getState(state);
 		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -268,7 +297,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Hospital(String hospital) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_location);
+		FunctionLibrary.scrollIntoview(driver, rbtn_countryStateCity);
 		rbtn_hospital.click();
 		getHospital(hospital);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -277,21 +306,46 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_AtNIH() throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", rbtn_countryStateCity);
+		FunctionLibrary.scrollIntoview(driver, rbtn_countryStateCity);
 		rbtn_atNIH.click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		defaultSearch();
 		Thread.sleep(500);
 	}
 
-	public void advSearch_TrialType() throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_trialtype);
-		System.out.println("trial type box is displayed");
-		cb_trialtype_treatment.click();
-		System.out.println("trial type Treatment checkbox is clicked");
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	public void advSearch_TrialType(String trialType) throws InterruptedException {
+		FunctionLibrary.scrollIntoview(driver, lgd_trialtype);
+		switch (trialType) {
+		case ("Prevention"):
+			cb_trialtype_prevention.click();
+			break;
+		case ("Treatment"):
+			cb_trialtype_treatment.click();
+			break;
+		case ("Health Services Research"):
+			cb_trialtype_health_services_research.click();
+			break;
+		case ("Supportive Care"):
+			cb_trialtype_supportivecare.click();
+			break;
+		case ("Screening"):
+			cb_trialtype_screening.click();
+			break;
+		case ("Diagnostic"):
+			cb_trialtype_diagnostic.click();
+			break;
+		case ("Other"):
+			cb_trialtype_other.click();
+			break;
+		case ("Basic Science"):
+			cb_trialtype_basic_science.click();
+			break;
+		default:
+			cb_trialtype_all.click();
+		}
+		System.out.println("Trial Type is selected");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		defaultSearch();
-		Thread.sleep(200);
 	}
 
 	public void getDrug(String drug) {
@@ -311,8 +365,32 @@ public class AdvanceSearch {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 
+	public void getTrialId(String trialId) {
+		txt_trialId.click();
+		txt_trialId.sendKeys(trialId);
+		// txt_trialId.sendKeys(Keys.ENTER);
+		System.out.println("Trial Id entered");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
+	public void getTrialInvestigators(String investigator) {
+		txt_trialInvestigator.click();
+		txt_trialInvestigator.sendKeys(investigator);
+		// txt_trialId.sendKeys(Keys.ENTER);
+		System.out.println("Trial Investigator entered");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
+	public void getLeadOrganization(String leadOrganization) {
+		txt_leadOrganization.click();
+		txt_leadOrganization.sendKeys(leadOrganization);
+		// txt_trialId.sendKeys(Keys.ENTER);
+		System.out.println("Lead Organization entered");
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	}
+
 	public void advSearch_Drug(String drug) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_drugtreatment);
+		FunctionLibrary.scrollIntoview(driver, lgd_drugtreatment1);
 		System.out.println("Drug box is displayed");
 		getDrug(drug);
 		System.out.println("Drug is entered");
@@ -322,7 +400,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Treatment(String treatment) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_drugtreatment);
+		FunctionLibrary.scrollIntoview(driver, lgd_drugtreatment1);
 		System.out.println("Drug box is displayed");
 		getTreatment(treatment);
 		System.out.println("Treatment is entered");
@@ -332,38 +410,62 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_TrialPhase(String trialphase) throws InterruptedException {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_drugtreatment);
+		FunctionLibrary.scrollIntoview(driver, lgd_drugtreatment1);
 		switch (trialphase) {
 		case ("Phase I"):
 			cb_trialphase1.click();
-
+			break;
 		case ("Phase II"):
 			cb_trialphase2.click();
-
+			break;
 		case ("Phase III"):
 			cb_trialphase3.click();
-
+			break;
 		case ("Phase IV"):
 			cb_trialphase4.click();
+			break;
 		default:
 			cb_trialphaseAll.click();
 		}
-
 		System.out.println("Trial phase is selected");
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		defaultSearch();
 		Thread.sleep(500);
 	}
 
-	/*
-	 * public void advSearch_TrialID(String trialId) throws InterruptedException
-	 * { ((JavascriptExecutor)
-	 * driver).executeScript("arguments[0].scrollIntoView(true);",
-	 * lgd_drugtreatment); System.out.println("Drug box is displayed");
-	 * getTreatment(treatment); System.out.println("Treatment is entered");
-	 * driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	 * defaultSearch(); Thread.sleep(200); }
-	 */
+	/* Verify advance search for Trial Id */
+	public void advSearch_TrialID(String trialId) throws InterruptedException {
+		FunctionLibrary.scrollIntoview(driver, lgd_trialPhase);
+		System.out.println("Trial Phase box is displayed");
+		getTrialId(trialId);
+		System.out.println("Trial Id is entered");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(200);
+	}
+
+	/* Verify advance search for Trial Investigator */
+	public void advSearch_TrialInvestigator(String investigator) throws InterruptedException {
+		FunctionLibrary.scrollIntoview(driver, lgd_trialId);
+		System.out.println("Trial Investigator box is displayed");
+		getTrialInvestigators(investigator);
+		System.out.println("Trial Investigator is entered");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(200);
+	}
+
+	/* Verify advance search for Lead Organization */
+	public void advSearch_LeadOrganization(String leadOrganization) throws InterruptedException {
+		FunctionLibrary.scrollIntoview(driver, lgd_trialInvestigator);
+		//((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_trialInvestigator);
+		System.out.println("Lead Organization box is displayed");
+		getLeadOrganization(leadOrganization);
+		System.out.println("Lead Organization is entered");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		defaultSearch();
+		Thread.sleep(200);
+	}
 
 	/* Verify advance search for cancer type and cancer sub-type */
 	public void advSearch_CancerType_SubType(String cancerType, String cancerSubType) throws InterruptedException {

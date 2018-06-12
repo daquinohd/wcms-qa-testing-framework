@@ -58,7 +58,6 @@ public class BasicSearch_Test extends BaseClass {
 		api = new ApiReference(driver);
 		System.out.println("Basic search setup done");
 		testDataFilePath = config.getProperty("TestData");
-
 	}
 
 	// Verifying the UI components of Basic Search
@@ -219,7 +218,7 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
-	// @Test(dataProvider= "ZipCode", groups = { "Smoke" })
+	@Test(dataProvider = "ZipCode", groups = { "Smoke" })
 	public void searchZip(String zip) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(300);
@@ -267,7 +266,7 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
-	// @Test(dataProvider= "Age_ZipCode", groups = { "Smoke" })
+	@Test(dataProvider = "Age_ZipCode", groups = { "Smoke" })
 	public void searchAgeZip(int age, String zip) {
 
 		// Performing the search using Age and Zipcode parameter
@@ -408,7 +407,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type, Age and ZipCode on Basic CTS");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterLiveHelp() {
 		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
@@ -424,7 +423,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhat() {
 		Assert.assertTrue(delighter.getDelighterWhat().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterWhatURL");
@@ -440,7 +439,7 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhich() {
 		Assert.assertTrue(delighter.getDelighterWhich().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterWhichURL");
@@ -488,7 +487,8 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	/*****incorporated these tests with the SearchAge and SearchZip methods**********/
+	//@Test(groups = { "Smoke" })
 	public void verifyApiReference() {
 		api.getApiReference();
 		Assert.assertTrue(api.getApiReference().isDisplayed());
@@ -517,7 +517,7 @@ public class BasicSearch_Test extends BaseClass {
 		driver.findElement(By.xpath(".//input[@id='a']")).clear();
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void SearchInvalidZip() {
 		//// div[@class='error-msg']
 		driver.findElement(By.xpath(".//input[@id='z']")).sendKeys("abc");
