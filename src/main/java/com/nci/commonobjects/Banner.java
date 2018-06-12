@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 public class Banner {
 	WebDriver driver;
@@ -19,17 +18,18 @@ public class Banner {
 		PageFactory.initElements(driver, this);
 	}
 
-	
 	public WebElement getBanner() {
-		
+
 		return banner;
 
 	}
-	/*public void getBanner() {
-		Assert.assertTrue(banner.isDisplayed());
-		System.out.println("Banner: " + banner.getAttribute("alt"));
-		Assert.assertEquals(banner.getAttribute("alt"), "National Cancer Institute");
-
-	}*/
+	/*
+	 * public void getBanner() { Assert.assertTrue(banner.isDisplayed());
+	 * System.out.println("Banner: " + banner.getAttribute("alt"));
+	 * Assert.assertEquals(banner.getAttribute("alt"),
+	 * "National Cancer Institute");
+	 * 
+	 * }
+	 */
 
 }
