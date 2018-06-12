@@ -90,12 +90,14 @@ public class AdvanceSearch {
 	WebElement cb_trialtype_treatment;
 	@FindBy(how = How.XPATH, using = "//*[@id='tt']/div[3]/label")
 	WebElement cb_trialtype_supportivecare;
-	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtype']")
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']")
 	WebElement lgd_drugtreatment;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[2]/span/span[1]/span/ul/li/input")
 	WebElement txt_drug;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[3]/span/span[1]/span/ul/li/input")
 	WebElement txt_treatment;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialstatus']")
+	WebElement lgd_trialphase;
 	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_all']")
 	WebElement cb_trialphaseAll;
 	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_1']")

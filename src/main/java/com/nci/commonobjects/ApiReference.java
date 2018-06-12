@@ -6,11 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 public class ApiReference {
 
-	public static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
+	// public static final String API_REFERENCE_H3 = "The Clinical Trials API:
+	// Use our data to power your own clinical trial search";
 
 	WebDriver driver;
 
@@ -28,18 +28,26 @@ public class ApiReference {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void getApiReference() {
+	public WebElement getApiReference() {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", btn_Search);
-		Assert.assertTrue(apiReferenceH3.isDisplayed());
-		Assert.assertEquals(apiReferenceH3.getText(), API_REFERENCE_H3);
-		Assert.assertTrue(apiReferenceContent.isDisplayed());
 
+		return apiReferenceH3;
+
+		// Assert.assertTrue(apiReferenceH3.isDisplayed());
+		// Assert.assertEquals(apiReferenceH3.getText(), API_REFERENCE_H3);
+		// Assert.assertTrue(apiReferenceContent.isDisplayed());
+
+	}
+
+	public WebElement getApiReferenceText() {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", btn_Search);
+
+		return apiReferenceContent;
 	}
 
 	public void verifyApiReferenceLink() {
 		apiReferenceLink.click();
-		Assert.assertTrue(driver.getCurrentUrl().contains("/syndication/api"));
-		driver.navigate().back();
+
 	}
 
 }

@@ -26,6 +26,7 @@ import com.relevantcodes.extentreports.LogStatus;
 public class AdvanceSearch_Test extends BaseClass {
 
 	public static final String TESTDATA_SHEET_NAME = "AdvanceSearch";
+	public static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
 
 	AdvanceSearch advanceSearch;
 	Delighters delighter;
@@ -70,7 +71,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	 * verify_bread_crumb() { crumb.getBreadCrumb(AdvanceSearch.BREAD_CRUMB);
 	 * logger.log(LogStatus.PASS, "Verifying the Breadcrumb of the page"); }
 	 */
-	@Test(groups = { "Smoke" }, priority = 1)
+	// @Test(groups = { "Smoke" }, priority = 1)
 	public void verify_bread_crumb() {
 		crumb.getBreadCrumb();
 		Assert.assertEquals(crumb.getBreadCrumb(), advanceSearch.BREAD_CRUMB);
@@ -82,15 +83,27 @@ public class AdvanceSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyApiReference() {
 		api.getApiReference();
+		Assert.assertTrue(api.getApiReference().isDisplayed());
+		Assert.assertEquals(api.getApiReference().getText(), API_REFERENCE_H3);
+		Assert.assertTrue(api.getApiReferenceText().isDisplayed());
 		api.verifyApiReferenceLink();
+		Assert.assertTrue(driver.getCurrentUrl().contains("/syndication/api"));
+		driver.navigate().back();
 		System.out.println("**********API function executed***********");
 		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterLiveHelp() {
+		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
+		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
+		// Checking the end page URL
+		String resultPageUrl = driver.getCurrentUrl();
+		System.out.println("Page URL of the delighter " + resultPageUrl);
+		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
+		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
@@ -98,8 +111,15 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhat() {
+		Assert.assertTrue(delighter.getDelighterWhat().isDisplayed());
+		String expectedPageUrl = config.getProperty("DelighterWhatURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
+		// Checking the end page URL
+		String resultPageUrl = driver.getCurrentUrl();
+		System.out.println("Page URL of the delighter " + resultPageUrl);
+		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
+		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
@@ -107,8 +127,15 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhich() {
+		Assert.assertTrue(delighter.getDelighterWhich().isDisplayed());
+		String expectedPageUrl = config.getProperty("DelighterWhichURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();
+		// Checking the end page URL
+		String resultPageUrl = driver.getCurrentUrl();
+		System.out.println("Page URL of the delighter " + resultPageUrl);
+		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
+		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Advance CTS");
