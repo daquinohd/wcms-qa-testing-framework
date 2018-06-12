@@ -107,7 +107,7 @@ public class AdvanceSearch {
 	WebElement cb_trialtype_other;
 	@FindBy(how = How.XPATH, using = "//label[@for='tt_basic_science']")
 	WebElement cb_trialtype_basic_science;
-	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtype']")
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']")
 	WebElement lgd_drugtreatment;
 	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--trialtreatment']/legend['DRUG/TREATMENT']")
 	WebElement lgd_drugtreatment1;
@@ -115,6 +115,8 @@ public class AdvanceSearch {
 	WebElement txt_drug;
 	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialtreatment']/div[3]/span/span[1]/span/ul/li/input")
 	WebElement txt_treatment;
+	@FindBy(how = How.XPATH, using = "//*[@id='fieldset--trialstatus']")
+	WebElement lgd_trialphase;
 	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_all']")
 	WebElement cb_trialphaseAll;
 	@FindBy(how = How.XPATH, using = "//div[@id='tp']//label[@for='tp_1']")

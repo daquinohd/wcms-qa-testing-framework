@@ -27,6 +27,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	// WebDriver driver;
 	public static final String TESTDATA_SHEET_NAME = "BasicSearch";
+	public static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
 
 	BasicSearch basicSearch;
 	Delighters delighter;
@@ -43,7 +44,8 @@ public class BasicSearch_Test extends BaseClass {
 	@Parameters({ "browser" })
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
-		// String url="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search";
+		// String
+		// url="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search";
 		pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
@@ -56,11 +58,10 @@ public class BasicSearch_Test extends BaseClass {
 		api = new ApiReference(driver);
 		System.out.println("Basic search setup done");
 		testDataFilePath = config.getProperty("TestData");
-
 	}
 
-	// Verifying the UI components of Basic Search 
-	//@Test(groups = { "Smoke" })
+	// Verifying the UI components of Basic Search
+	@Test(groups = { "Smoke" })
 	public void verifyUI() {
 		basicSearch.verifyUI();
 		Assert.assertTrue(basicSearch.verifyUI()[0].isDisplayed(), "Basic CTS definition text is displayed");
@@ -138,7 +139,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	@Test(dataProvider = "CancerType", groups = { "Smoke" })
 	public void searchCancerType(String cancerType) throws InterruptedException {
-		//String cancerType = "Breast Cancer";
+		// String cancerType = "Breast Cancer";
 
 		// Performing the search using Cancer type parameter
 		basicSearch.searchCancerType(cancerType);
@@ -274,7 +275,8 @@ public class BasicSearch_Test extends BaseClass {
 		// Checking the Results page URL for the parameters passed in order to
 		// validate correct search results are displayed
 		resultPageUrl = driver.getCurrentUrl();
-		//Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " + zip);
+		// Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " +
+		// zip);
 		Assert.assertTrue(resultPageUrl.contains(String.valueOf(age)), "Keyword not found " + age);
 		if (zip.equals("99999")) {
 			System.out.println("**********zip=99999***********");
@@ -290,7 +292,7 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
 
 			// Verify search criteria in URL
-			//String pageURL = driver.getCurrentUrl();
+			// String pageURL = driver.getCurrentUrl();
 			System.out.println("basicsearch_AgeZipcode: Current Page URL: " + resultPageUrl);
 			Assert.assertTrue(resultPageUrl.contains("z=" + zip));
 			System.out.println("basicsearch_AgeZipcode: Zipcode: z=" + zip);
@@ -304,8 +306,8 @@ public class BasicSearch_Test extends BaseClass {
 
 	@Test(dataProvider = "CancerType_Age", groups = { "Smoke" })
 	public void searchCancerTypeAge(String cancerType, int age) {
-		//int age = 65;
-		//String cancerType = "Breast Cancer";
+		// int age = 65;
+		// String cancerType = "Breast Cancer";
 
 		// Performing the search using Age and Zipcode parameter
 		basicSearch.searchCancerTypeAge(cancerType, age);
@@ -333,7 +335,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	@Test(dataProvider = "CancerType_ZipCode", groups = { "Smoke" })
 	public void searchCancerTypeZip(String cancerType, String zip) {
-		//String cancerType = "Breast Cancer";
+		// String cancerType = "Breast Cancer";
 
 		// Performing the search using Age and ZIP code parameter
 		basicSearch.searchCancerTypeZip(cancerType, zip);
@@ -352,7 +354,8 @@ public class BasicSearch_Test extends BaseClass {
 			System.out.println("Page title for zipcode search :" + pageTitle);
 			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
 
-			// Checking the Results page URL for the parameters passed in order to
+			// Checking the Results page URL for the parameters passed in order
+			// to
 			// validate correct search results are displayed
 			resultPageUrl = driver.getCurrentUrl();
 			System.out.println("basicsearch_CancerTypeZipcode: Current Page URL: " + resultPageUrl);
@@ -375,9 +378,9 @@ public class BasicSearch_Test extends BaseClass {
 
 	@Test(dataProvider = "CancerType_Age_ZipCode", groups = { "Smoke" })
 	public void searchCancerTypeAgeZip(String cancerType, int age, String zip) {
-		//int age = 65;
-		//int zip = 20105;
-		//String cancerType = "Breast Cancer";
+		// int age = 65;
+		// int zip = 20105;
+		// String cancerType = "Breast Cancer";
 
 		// Performing the search using Age and Zipcode parameter
 		basicSearch.searchCancerTypeAgeZip(cancerType, age, zip);
@@ -406,29 +409,50 @@ public class BasicSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" })
 	public void verifyDelighterLiveHelp() {
+		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
+		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
+		// Checking the end page URL
+		String resultPageUrl = driver.getCurrentUrl();
+		System.out.println("Page URL of the delighter " + resultPageUrl);
+		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
+		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Basic CTS");
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhat() {
+		Assert.assertTrue(delighter.getDelighterWhat().isDisplayed());
+		String expectedPageUrl = config.getProperty("DelighterWhatURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
+		// Checking the end page URL
+		String resultPageUrl = driver.getCurrentUrl();
+		System.out.println("Page URL of the delighter " + resultPageUrl);
+		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
+		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Basic CTS");
+		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhich() {
+		Assert.assertTrue(delighter.getDelighterWhich().isDisplayed());
+		String expectedPageUrl = config.getProperty("DelighterWhichURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();
+		// Checking the end page URL
+		String resultPageUrl = driver.getCurrentUrl();
+		System.out.println("Page URL of the delighter " + resultPageUrl);
+		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
+		driver.navigate().back();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Basic CTS");
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Advance CTS");
 	}
 
 	@Test(groups = { "Smoke" })
@@ -465,6 +489,22 @@ public class BasicSearch_Test extends BaseClass {
 
 	/*****incorporated these tests with the SearchAge and SearchZip methods**********/
 	//@Test(groups = { "Smoke" })
+	public void verifyApiReference() {
+		api.getApiReference();
+		Assert.assertTrue(api.getApiReference().isDisplayed());
+		Assert.assertEquals(api.getApiReference().getText(), API_REFERENCE_H3);
+		Assert.assertTrue(api.getApiReferenceText().isDisplayed());
+		api.verifyApiReferenceLink();
+		Assert.assertTrue(driver.getCurrentUrl().contains("/syndication/api"));
+		driver.navigate().back();
+		System.out.println("**********API function executed***********");
+		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
+	}
+
+	/*****
+	 * incorporated these tests with the SearchAge and SearchZip methods
+	 **********/
+	// @Test(groups = { "Smoke" })
 	public void SearchInvalidAge() {
 		driver.findElement(By.xpath(".//input[@id='a']")).sendKeys("abc");
 		basicSearch.searchDefault();
@@ -491,7 +531,7 @@ public class BasicSearch_Test extends BaseClass {
 		driver.findElement(By.xpath(".//input[@id='z']")).clear();
 	}
 
-	/********************Data Providers****************/
+	/******************** Data Providers ****************/
 
 	@DataProvider(name = "CancerType")
 	public Iterator<Object[]> readCancerType() {
