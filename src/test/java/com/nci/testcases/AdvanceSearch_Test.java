@@ -618,7 +618,7 @@ public class AdvanceSearch_Test extends BaseClass {
 				"Verify Search by Trial Investigator on Advanced CTS. Trial Id = " + trialInvestigator);
 	}
 
-	@Test(dataProvider = "LeadOrganization", groups = { "Smoke", "current" }, priority = 4)
+	@Test(dataProvider = "LeadOrganization", groups = { "Smoke" }, priority = 4)
 	public void advancesearch_LeadOrganization(String leadOrganization) throws InterruptedException {
 		Object[][] data;
 		advanceSearch.advSearch_LeadOrganization(leadOrganization);

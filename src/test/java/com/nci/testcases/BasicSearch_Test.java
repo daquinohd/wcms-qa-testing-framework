@@ -40,7 +40,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	// ConfigReader config = new ConfigReader();
 
-	@BeforeClass(groups = { "Smoke" })
+	@BeforeClass(groups = { "Smoke", "current" })
 	@Parameters({ "browser" })
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -115,7 +115,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke", "current" })
 	public void searchDefault() {
 		basicSearch.searchDefault();
 		if (driver.findElement(By.name("printButton")).isDisplayed()) {

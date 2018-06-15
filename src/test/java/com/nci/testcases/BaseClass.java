@@ -47,6 +47,7 @@ public class BaseClass {
 
 	@BeforeClass(groups = { "Smoke", "current" })
 	public void beforeClass() {
+		System.out.println("************BEFORE CLASS EXECUTED************** ");
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
 
@@ -94,7 +95,7 @@ public class BaseClass {
 	@AfterTest(groups = { "Smoke", "current" })
 	public void afterTest() {
 		report.flush();
-		report.close();
+		//report.close();
 		//log.info("Test ends here");
 	}
 

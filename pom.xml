@@ -85,9 +85,15 @@
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>2.20</version>
 		<configuration>
+		
 		<suiteXmlFiles>
-			<file>resources\testng.xml</file>
+			<!--	
+			<file>resources/testng-CTS.xml</file>
+			<file>resources/testng-R4R.xml</file>
+			 -->
+			<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
 		</suiteXmlFiles>
+		
 		</configuration>
 	</plugin>
 <!-- Needed to solve 'package doesn't exist' error. -->

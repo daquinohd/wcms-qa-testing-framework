@@ -22,7 +22,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 	BreadCrumb crumb;
 	Banner banner;
 
-	@BeforeClass(groups = { "Smoke" })
+	@BeforeClass(groups = { "Smoke", "current" })
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -37,13 +37,13 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		banner = new Banner(driver);
 	}
 
-	@Test(groups = { "Smoke", "AdvSearchResult" })
+	@Test(groups = { "Smoke", "current" })
 	public void verifyBanner() {
 		banner.getBanner();
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
-	@Test(groups = { "Smoke", "AdvSearchResult" })
+	@Test(groups = { "Smoke", "current" })
 	public void verify_bread_crumb() {
 		crumb.getBreadCrumb();
 		Assert.assertEquals(crumb.getBreadCrumb(), AdvanceSearchResults.BREAD_CRUMB);
@@ -51,7 +51,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verifying the Breadcrumb of the page");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verify_PrintWithoutTrialSelection() {
 		advanceSearchResults.clickPrintButton();
 		// To see if the warning pop up presents
@@ -69,7 +69,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 				"Verifying the warning popup which is displayed when Print Button is clicked without selecting any trial");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verify_PrintWithTrialSelection() throws InterruptedException {
 		System.out.println("**************Executing Print with Trial Selection");
 		Thread.sleep(500);
@@ -87,7 +87,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 				"Verifying that Print page is displayed when Print Selected button is clicked after selecting all trials");
 	}
 
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verify_PrintWithOneTrialSelection() throws InterruptedException {
 		System.out.println("**************Executing Print with One Trial Selection");
 		driver.get(pageURL);
