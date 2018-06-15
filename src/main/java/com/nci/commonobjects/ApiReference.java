@@ -33,10 +33,6 @@ public class ApiReference {
 
 		return apiReferenceH3;
 
-		// Assert.assertTrue(apiReferenceH3.isDisplayed());
-		// Assert.assertEquals(apiReferenceH3.getText(), API_REFERENCE_H3);
-		// Assert.assertTrue(apiReferenceContent.isDisplayed());
-
 	}
 
 	public WebElement getApiReferenceText() {

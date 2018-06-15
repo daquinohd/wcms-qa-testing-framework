@@ -23,13 +23,5 @@ public class Banner {
 		return banner;
 
 	}
-	/*
-	 * public void getBanner() { Assert.assertTrue(banner.isDisplayed());
-	 * System.out.println("Banner: " + banner.getAttribute("alt"));
-	 * Assert.assertEquals(banner.getAttribute("alt"),
-	 * "National Cancer Institute");
-	 * 
-	 * }
-	 */
 
 }

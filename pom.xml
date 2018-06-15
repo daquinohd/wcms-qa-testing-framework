@@ -86,7 +86,7 @@
 			<version>2.20</version>
 		<configuration>
 		<suiteXmlFiles>
-			<file>resources\testng.xml</file>
+			<file>resources/testng.xml</file>
 		</suiteXmlFiles>
 		</configuration>
 	</plugin>

@@ -18,9 +18,8 @@ public class BreadCrumb {
 	}
 
 	public String getBreadCrumb() {
-		// Assert.assertTrue(breadCrumb.isDisplayed());
 		String Breadcrumb = breadCrumb.getText();
-		// Assert.assertEquals(breadCrumb.getText(), crumb);
+
 		return Breadcrumb;
 	}
 
