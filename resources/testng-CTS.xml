@@ -5,17 +5,14 @@
 		<parameter name="browser" value="Chrome" />
 		<groups>
 			<run>
-				<include name="current" />
+				<include name="Smoke" />
 			</run>
 		</groups>
 		<classes> 	
-			 <!--  <class name="com.nci.testcases.BasicSearch_Test" />
-			  		<class name="com.nci.testcases.AdvanceSearchResults_Test" /> --> 
-			  <class name="com.nci.testcases.AdvanceSearch_Test" />   
-			     		
-			
-			 
-
+			  <class name="com.nci.testcases.BasicSearch_Test" />  
+			    <class name="com.nci.testcases.AdvanceSearch_Test" />  		
+			<!-- <class name="com.nci.testcases.BasicSearchResults_Test" />
+			    <class name="com.nci.testcases.AdvanceSearchResults_Test" />  -->
 		</classes>
 	</test> 
 	

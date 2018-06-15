@@ -62,28 +62,3 @@ public class Delighters {
 	}
 
 }
-/*
- * public void verifyDelighterLiveHelp() { String expectedPageUrl =
- * config.getProperty("DelighterLiveHelpURL"); // Clicking the LiveHelp
- * Delighter delighter_LiveHelp.click(); // Checking the end page URL
- * //resultPageUrl = driver.getCurrentUrl();
- * //Assert.assertTrue(resultPageUrl.equals(expectedPageUrl),
- * "Actual URL is not as expected " + resultPageUrl);
- * //driver.navigate().back(); }
- * 
- * public void verifyDelighterWhat() { String expectedPageUrl =
- * config.getProperty("DelighterWhatURL"); // Clicking What Delighter
- * delighter_What.click(); // Checking the end page URL resultPageUrl =
- * driver.getCurrentUrl();
- * Assert.assertTrue(resultPageUrl.equals(expectedPageUrl),
- * "Actual URL is not as expected " + resultPageUrl); driver.navigate().back();
- * }
- * 
- * public void verifyDelighterWhich() { String expectedPageUrl =
- * config.getProperty("DelighterWhichURL"); // Clicking Which Delighter
- * delighter_Which.click(); // Checking the end page URL resultPageUrl =
- * driver.getCurrentUrl();
- * Assert.assertTrue(resultPageUrl.equals(expectedPageUrl),
- * "Actual URL is not as expected " + resultPageUrl); driver.navigate().back();
- * }
- */

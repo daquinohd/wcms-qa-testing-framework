@@ -62,7 +62,8 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void verifyBanner() {
-		banner.getBanner();
+		Assert.assertTrue(banner.getBanner().isDisplayed());
+		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
@@ -146,7 +147,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		// Verify page title
 		verifyAdvanceSearchResultsPageTitle();
 
-		//Verify that search result summary text contains the "all trials"
+		// Verify that search result summary text contains the "all trials"
 
 		String searchStatus = driver.findElement(By.xpath(".//*[@class='cts-results-label']/strong")).getText();
 		System.out.println("defaultSearchTest: SR Status Body Text: " + searchStatus);
@@ -172,7 +173,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println(
 				"advancesearch_CancerType_SubType: Cancer Type ID: t=" + cancerTypeId + "&st=" + cancerSubTypeId);
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
@@ -208,7 +210,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("advancesearch_CancerType_SubType_Stage: Cancer Type ID: t=" + cancerTypeId + "&st="
 				+ cancerSubTypeId + "&stg=" + cancerStageId);
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
@@ -246,7 +249,8 @@ public class AdvanceSearch_Test extends BaseClass {
 			Assert.assertTrue(pageURL.contains("a=" + age));
 			System.out.println("advancesearch_Age: Age: a=" + age);
 
-			// Verify that show search criteria table contains the selected search criteria
+			// Verify that show search criteria table contains the selected
+			// search criteria
 			data = verifySearchCriteriaTable();
 
 			Assert.assertEquals(data[1][1], String.valueOf(age), "Age not matched");
@@ -301,7 +305,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		Thread.sleep(300);
 		advanceSearch.advSearch_Zipcode(zip);
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		if (zip.equals("99999")) {
 			System.out.println("**********zip=99999***********");
 			Assert.assertTrue(driver.getPageSource().contains(
@@ -366,7 +371,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("advancesearch_CountryStateCity: Country: lcnty=" + country + " and State: &lst=" + state
 				+ "and City:&lcty=" + city);
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], country, "Country not matched");
@@ -398,7 +404,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertTrue(pageURL.contains("hos=" + hospitalwithoutspace));
 		System.out.println("advancesearch_Hospital: Hospital: hos=" + hospital);
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], hospital, "Hospital not matched");
@@ -423,7 +430,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		Assert.assertTrue(pageURL.contains("loc=4"));
 		System.out.println("advancesearch_AtNIH: loc=4");
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], "Only show trials at the NIH Clinical Center (Bethesda, MD)",
@@ -451,7 +459,8 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("advancesearch_TrialType: tt= " + trialTypewithoutspace);
 		Assert.assertTrue(pageURL.contains("tt=" + trialTypewithoutspace));
 
-		// Verify that show search criteria table contains the selected search criteria
+		// Verify that show search criteria table contains the selected search
+		// criteria
 		data = verifySearchCriteriaTable();
 
 		Assert.assertEquals(data[1][1], trialType, "TrialType not matched");
