@@ -40,8 +40,9 @@ public class BaseClass {
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath);
+		// report = new ExtentReports(extentReportPath + ".html");
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		System.out.println("Report Path: ");
+		System.out.println("Report Path: " + report);
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
 
@@ -95,8 +96,8 @@ public class BaseClass {
 	@AfterTest(groups = { "Smoke", "current" })
 	public void afterTest() {
 		report.flush();
-		//report.close();
-		//log.info("Test ends here");
+		// report.close();
+		// log.info("Test ends here");
 	}
 
 }
