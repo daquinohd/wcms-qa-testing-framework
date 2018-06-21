@@ -12,6 +12,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Specifying Default suite files if not being specified from mvn command line -->
+    <smokeSuiteFile>resources/testng-CTS.xml</smokeSuiteFile>
+    <!-- Default suite files if not being specified from mvn command line -->
+    <defaultSuiteFiles>${smokeSuiteFile}</defaultSuiteFiles>
+    <suiteFile>${defaultSuiteFiles}</suiteFile>
+    
   </properties>
 
   <dependencies>
@@ -98,7 +104,7 @@
 			<!--<file>resources/testng-CTS.xml</file>
 			<file>resources/testng-R4R.xml</file>-->
 			 
-			<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+			<suiteXmlFile>${suiteFile}</suiteXmlFile>
 		</suiteXmlFiles>
 		
 		</configuration>
