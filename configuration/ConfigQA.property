@@ -1,6 +1,8 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+BasicSearchResultsURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
+ResultsPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www-qa.cancer.gov/contact
 DelighterWhatURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
@@ -20,4 +22,7 @@ DriverName_FirefoxDriver=geckodriver
 ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= QAEnvironment
+
+***********************Test Data******************************************
+TestData= ./test-data/TestData.xlsx
 

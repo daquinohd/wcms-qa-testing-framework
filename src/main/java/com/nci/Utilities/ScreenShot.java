@@ -8,30 +8,31 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class ScreenShot {
-	ConfigReader config= new ConfigReader();
-	
-		public static String captureScreenshot(WebDriver driver, String screenShotName)
-			{
-				try
-				{
-					TakesScreenshot ts = (TakesScreenshot)driver;
-					
-					File source = ts.getScreenshotAs(OutputType.FILE);
+	ConfigReader config = new ConfigReader();
 
-					String dest = "C:\\nci_workspace\\nci\\test-output\\Screenshots\\" + screenShotName + ".png";
-					
-					File destination = new File (dest);
+	public static String captureScreenshot(WebDriver driver, String screenShotName) {
+		try {
+			TakesScreenshot ts = (TakesScreenshot) driver;
 
-					FileUtils.copyFile(source, destination);
+			File source = ts.getScreenshotAs(OutputType.FILE);
 
-					return dest;
+			String dest = "./test-output/ScreenShotFailure/" + screenShotName + ".png";
 
-				}catch(Exception e)
-				{
-					System.out.println("Exception while taking a screen shot " + e.getMessage());
+			File destination = new File(dest);
 
-					return e.getMessage();
-				}
-			} 
+			FileUtils.copyFile(source, destination);
+
+			return dest;
+
+		} catch (Exception e) {
+			System.out.println("Exception while taking a screen shot " + e.getMessage());
+
+			return e.getMessage();
+		}
+	}
 
 }
+
+// String dest =
+// "C:\\nci_workspace\\nci\\test-output\\Screenshots\\" +
+// screenShotName + ".png";

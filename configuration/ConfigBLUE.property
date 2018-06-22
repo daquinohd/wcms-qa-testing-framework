@@ -21,3 +21,5 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= BLUEEnvironment
 
+***********************Test Data******************************************
+TestData= ./test-data/TestData.xlsx

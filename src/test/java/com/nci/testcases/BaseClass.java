@@ -2,13 +2,17 @@ package com.nci.testcases;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
@@ -28,26 +32,45 @@ public class BaseClass {
 	public String pageURL;
 	ConfigReader config = new ConfigReader();
 
-	@BeforeTest(groups = { "Smoke" })
+	@BeforeTest(groups = { "Smoke", "current" })
 	@Parameters
-
 	public void beforeTest() {
 		// log.info("Starting a new test");
 		System.out.println(this.getClass().getSimpleName());
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath);
+		// report = new ExtentReports(extentReportPath + ".html");
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		System.out.println("Report Path: ");
+		System.out.println("Report Path: " + report);
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
 
-	@BeforeClass(groups = { "Smoke" })
+	@BeforeClass(groups = { "Smoke", "current" })
 	public void beforeClass() {
+		System.out.println("************BEFORE CLASS EXECUTED************** ");
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
 
-	@AfterMethod(groups = { "Smoke" })
+	// handles the CTS Chat popup and closes it for executing scripts
+	@BeforeMethod(groups = { "Smoke", "current" })
+	public void beforeMethod() {
+
+		try {
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+			// To see if the pop up presents
+			driver.findElement(By.xpath("//*[@id='ProactiveLiveHelpForCTSPrompt']"));
+			Thread.sleep(500);
+			driver.findElement(By.cssSelector("#ProactiveLiveHelpForCTSPrompt > a")).click();
+			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		}
+
+		((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
+	}
+
+	@AfterMethod(groups = { "Smoke", "current" })
 	public void tearDown(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
@@ -63,14 +86,14 @@ public class BaseClass {
 		}
 	}
 
-	@AfterClass(groups = { "Smoke" })
+	@AfterClass(groups = { "Smoke", "current" })
 	public void afterClass() {
 		System.out.println("***********Quiting Driver*********");
 		driver.quit();
 		report.endTest(logger);
 	}
 
-	@AfterTest(groups = { "Smoke" })
+	@AfterTest(groups = { "Smoke", "current" })
 	public void afterTest() {
 		report.flush();
 		// report.close();
