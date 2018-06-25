@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="QA Environment2" parallel="none">
+	  <test name="NCI - Chrome Testing" preserve-order="true">
+		<parameter name="browser" value="Chrome" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+			  <class name="com.nci.testcases.BasicSearch_Test" />  
+			   <!-- <class name="com.nci.testcases.AdvanceSearch_Test" /> 
+			    <class name="com.nci.testcases.AdvanceSearchResults_Test" />    		
+			<class name="com.nci.testcases.BasicSearchResults_Test" />-->
+			    
+		</classes>
+	</test> 
+	
+	<!--  <test name="NCI - iPhone Testing" >
+		<parameter name="browser" value="iPhone6" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+			 <class name="com.nci.testcases.BasicSearch_Test" /> 
+			<class name="com.nci.testcases.AdvanceSearch_Test" />
+			
+			 
+			  <class name="com.nci.testcases.AdvanceSearchResults_Test" />  
+			
+		</classes>
+	</test>  -->
+	
+	<!--  <test name="NCI - iPad Testing" >
+		<parameter name="browser" value="iPad" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+		 <class name="com.nci.testcases.BasicSearch_Test" /> 
+		<class name="com.nci.testcases.AdvanceSearch_Test" />
+			
+		 <class name="com.nci.testcases.AdvanceSearchResults_Test" /> 
+			
+		</classes>
+	</test> -->
+	<!--<test name="NCI - Chrome Testing Headless" >
+		<parameter name="browser" value="ChromeHeadless" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+			<class name="com.nci.testcases.BasicSearch_Test" />
+		<class name="com.nci.testcases.AdvanceSearch_Test" />
+		</classes>
+	</test>  -->
+	<!--   <test name="NCI - Firefox Testing" >
+		<parameter name="browser" value="Firefox" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+			 <class name="com.nci.testcases.BasicSearch_Test" /> 
+			   <class name="com.nci.testcases.AdvanceSearch_Test" />
+		</classes>
+	</test>  --> 
+	<!-- <test name="NCI - Firefox Testing Headless" >
+		<parameter name="browser" value="FirefoxHeadless" />
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+		<classes> 	
+			<class name="com.nci.testcases.BasicSearch_Test" />
+			  <class name="com.nci.testcases.AdvanceSearch_Test" /> 
+		</classes>
+	</test>   -->
+</suite>
+

@@ -12,7 +12,7 @@ public class Resize_Test extends AnalyticsTestBase {
 	private Resize resize;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
-	private void beforeMethod() {
+	public void beforeMethod() {
 		resize = new Resize(driver);
 	}
 

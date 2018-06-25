@@ -15,7 +15,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	private PageLoad pageLoad;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
-	private void beforeMethod() {
+	public void beforeMethod() {
 		pageLoad = new PageLoad(driver);
 	}	
 

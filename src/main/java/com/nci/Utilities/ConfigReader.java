@@ -6,36 +6,36 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.SystemUtils;
 
-
 /*To read the Property file*/
 public class ConfigReader {
 	Properties properties;
-	
-	public ConfigReader(){
-		try{
-			File file= new File ("./configuration/ConfigPROD.property");
-			FileInputStream fis= new FileInputStream(file);
-			properties= new Properties();
-    		properties.load(fis);				
+
+	public ConfigReader() {
+		try {
+			File file = new File("./configuration/ConfigQA.property");
+			FileInputStream fis = new FileInputStream(file);
+			properties = new Properties();
+			properties.load(fis);
 		} catch (Exception e) {
-			System.out.println("Exception:" +e.getMessage());
+			System.out.println("Exception:" + e.getMessage());
 		}
-		
+
 	}
 
-	public String getPageURL(String pageURL){
+	public String getPageURL(String pageURL) {
 		return properties.getProperty(pageURL);
 	}
-	
-	public String getDriverPath(String driverPath){
+
+	public String getDriverPath(String driverPath) {
 		return properties.getProperty(driverPath);
 	}
-	
+
 	/**
 	 * Gets the base driver path from the configuration properties file
+	 * 
 	 * @return The base path for the drivers
 	 */
-	public String getDriverBasePath(){
+	public String getDriverBasePath() {
 		if (SystemUtils.IS_OS_WINDOWS) {
 			return properties.getProperty("DriverPath_Win");
 		} else if (SystemUtils.IS_OS_MAC_OSX) {
@@ -46,26 +46,28 @@ public class ConfigReader {
 			throw new RuntimeException("Could not get base driver path, unknown OS");
 		}
 	}
-	
+
 	/**
-	 * Gets the driver name (geckodriver) based on the selected driver (FirefoxDriver)
+	 * Gets the driver name (geckodriver) based on the selected driver
+	 * (FirefoxDriver)
+	 * 
 	 * @param driver
 	 * @return
 	 */
 	public String getDriverName(String driver) {
 		return properties.getProperty("DriverName_" + driver);
 	}
-	
+
 	public String getExtentReportPath() {
 		return properties.getProperty("ExtentReports");
 	}
-	
+
 	public String getScreenShotsPath() {
 		return properties.getProperty("ScreenShots");
 	}
-	
+
 	public String getProperty(String property) {
 		return properties.getProperty(property);
 	}
-	
+
 }
