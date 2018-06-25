@@ -23,6 +23,18 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= QAEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www-qa.cancer.gov
+BlogPostPage=https://www-qa.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-qa.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-qa.cancer.gov/types/bladder
+CTHPHP=https://www-qa.cancer.gov/types/breast/hp
+InnerPage=https://www-qa.cancer.gov/about-nci/visit
+LandingPage=https://www-qa.cancer.gov/research
+PDQPage=https://www-qa.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-qa.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-qa.cancer.gov/espanol
+AppModulePage=https://www-qa.cancer.gov/publications/dictionaries/cancer-terms
+
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
-

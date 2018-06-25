@@ -21,6 +21,18 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= REDEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www-red-dev.cancer.gov
+BlogPostPage=https://www-red-dev.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-red-dev.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-red-dev.cancer.gov/types/bladder
+CTHPHP=https://www-red-dev.cancer.gov/types/breast/hp
+InnerPage=https://www-red-dev.cancer.gov/about-nci/visit
+LandingPage=https://www-red-dev.cancer.gov/research
+PDQPage=https://www-red-dev.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-red-dev.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-red-dev.cancer.gov/espanol
+AppModulePage=https://www-red-dev.cancer.gov/publications/dictionaries/cancer-terms
+
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
-
