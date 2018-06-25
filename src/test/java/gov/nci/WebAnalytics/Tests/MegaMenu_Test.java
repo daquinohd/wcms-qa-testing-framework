@@ -12,7 +12,7 @@ public class MegaMenu_Test extends AnalyticsTestBase {
 	private MegaMenu megaMenu;
 
 	@BeforeMethod(groups = { "Analytics" }) 
-	private void beforeMethod() {
+	public void beforeMethod() {
 		megaMenu = new MegaMenu(driver);
 	}
 	
