@@ -12,6 +12,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Specifying Default suite files if not being specified from mvn command line -->
+    <smokeSuiteFile>resources/testng-CTS.xml</smokeSuiteFile>
+    <!-- Default suite files if not being specified from mvn command line -->
+    <defaultSuiteFiles>${smokeSuiteFile}</defaultSuiteFiles>
+    <suiteFile>${defaultSuiteFiles}</suiteFile>
+    
   </properties>
 
   <dependencies>
@@ -87,7 +93,28 @@
 		<groupId>net.lightbody.bmp</groupId>
 		<artifactId>browsermob-core</artifactId>
 		<version>2.1.5</version>
-	</dependency>	
+	</dependency>
+	<dependency>	
+		<groupId>com.relevantcodes</groupId>
+		<artifactId>extentreports</artifactId>
+		<version>2.41.2</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+	<dependency>
+	<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-api</artifactId>
+		<version>2.3</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-core</artifactId>
+		<version>2.3</version>
+	</dependency>
+	<dependency>
+		<groupId>org.freemarker</groupId>
+		<artifactId>freemarker</artifactId>
+		<version>2.3.23</version>
+	</dependency>
   </dependencies>
   
   <build>
@@ -97,9 +124,16 @@
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>2.20</version>
 		<configuration>
+		<reuseForks>false</reuseForks>
+        <forkCount>1</forkCount>
 		<suiteXmlFiles>
-			<file>resources\testng.xml</file>
+				
+			<!--<file>resources/testng-CTS.xml</file>
+			<file>resources/testng-R4R.xml</file>-->
+			 
+			<suiteXmlFile>${suiteFile}</suiteXmlFile>
 		</suiteXmlFiles>
+		
 		</configuration>
 	</plugin>
 <!-- Needed to solve 'package doesn't exist' error. -->
