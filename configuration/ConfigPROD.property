@@ -22,5 +22,18 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= PRODEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www.cancer.gov
+BlogPostPage=https://www.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www.cancer.gov/types/bladder
+CTHPHP=https://www.cancer.gov/types/breast/hp
+InnerPage=https://www.cancer.gov/about-nci/visit
+LandingPage=https://www.cancer.gov/research
+PDQPage=https://www.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www.cancer.gov/espanol
+AppModulePage=https://www.cancer.gov/publications/dictionaries/cancer-terms
+
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx

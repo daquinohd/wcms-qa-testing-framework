@@ -1,0 +1,35 @@
+************************Environment URLs***********************************
+BasicClinicalTrialSearchURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
+AdvanceSearchPageURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+DelighterLiveHelpURL=https://www-pink-dev.cancer.gov/contact
+DelighterWhatURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+DelighterWhichURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
+DelighterFeedbackURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+
+************************Drivers Path***************************************
+ChromeDriver=./resources/drivers/chromedriver.exe
+FirefoxDriver=./resources/drivers/geckodriver.exe
+DriverPath_Mac=./resources/drivers/macos
+DriverPath_Win=./resources/drivers/win
+DriverPath_Linux=./resources/drivers/linux
+DriverName_ChromeDriver=chromedriver
+DriverName_FirefoxDriver=geckodriver
+
+
+***********************Reporting******************************************
+ExtentReports= ./test-output/ExtentReport/
+ScreenShots= ./test-output/Screenshots/
+Environment= PINKEnvironment
+
+***********************Page Types******************************************
+HomePage=https://www-pink-dev.cancer.gov
+BlogPostPage=https://www-pink-dev.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-pink-dev.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-pink-dev.cancer.gov/types/bladder
+CTHPHP=https://www-pink-dev.cancer.gov/types/breast/hp
+InnerPage=https://www-pink-dev.cancer.gov/about-nci/visit
+LandingPage=https://www-pink-dev.cancer.gov/research
+PDQPage=https://www-pink-dev.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-pink-dev.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-pink-dev.cancer.gov/espanol
+AppModulePage=https://www-pink-dev.cancer.gov/publications/dictionaries/cancer-terms

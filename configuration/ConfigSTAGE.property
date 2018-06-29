@@ -21,5 +21,18 @@ ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
 Environment= STAGEEnvironment
 
+***********************Page Types******************************************
+HomePage=https://www-stage.cancer.gov
+BlogPostPage=https://www-stage.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage=https://www-stage.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient=https://www-stage.cancer.gov/types/bladder
+CTHPHP=https://www-stage.cancer.gov/types/breast/hp
+InnerPage=https://www-stage.cancer.gov/about-nci/visit
+LandingPage=https://www-stage.cancer.gov/research
+PDQPage=https://www-stage.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage=https://www-stage.cancer.gov/grants-training/apply-grant
+SpanishPage=https://www-stage.cancer.gov/espanol
+AppModulePage=https://www-stage.cancer.gov/publications/dictionaries/cancer-terms
+
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
