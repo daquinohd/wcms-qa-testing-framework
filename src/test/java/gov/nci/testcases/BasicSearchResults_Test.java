@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.testcases;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,8 +10,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.clinicalTrial.pages.BasicSearchResults;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class BasicSearchResults_Test extends BaseClass {

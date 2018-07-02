@@ -1,4 +1,4 @@
-package com.nci.commonobjects;
+package gov.nci.commonobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import com.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ConfigReader;
 
 public class Delighters {
 	WebDriver driver;

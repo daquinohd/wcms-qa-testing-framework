@@ -1,4 +1,4 @@
-package com.nci.clinicalTrial.pages;
+package gov.nci.clinicalTrial.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

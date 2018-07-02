@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.testcases;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
@@ -10,10 +10,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.clinicalTrial.pages.AdvanceSearchResults;
-import com.nci.commonobjects.Banner;
-import com.nci.commonobjects.BreadCrumb;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.clinicalTrial.pages.AdvanceSearchResults;
+import gov.nci.commonobjects.Banner;
+import gov.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearchResults_Test extends BaseClass {

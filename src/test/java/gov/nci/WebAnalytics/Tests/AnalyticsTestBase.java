@@ -19,10 +19,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.Utilities.ConfigReader;
-import com.nci.Utilities.ScreenShot;
-import com.nci.testcases.BaseClass;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ScreenShot;
+import gov.nci.testcases.BaseClass;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;

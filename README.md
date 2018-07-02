@@ -26,7 +26,7 @@ Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 3. Add or uncomment any elements that should be tested.
 
 ## To change testing tier:
-1. In Eclipse navigator, expand src/main/java/com.nci.Utilities.
+1. In Eclipse navigator, expand src/main/java/gov.nci.Utilities.
 2. Open **ConfigReader.java** for editing.
 3. Change the "/configuration/ConfigXXXX.property" string to match the desired tier.
 4. Save and run tests.
