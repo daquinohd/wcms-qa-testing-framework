@@ -95,7 +95,6 @@ public class AnalyticsTestBase extends BaseClass {
 		
 		// Initialize driver and open browser
 		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);		
 		
 		// Add entries to the HAR log		
 		System.out.println("Analytics setup done");

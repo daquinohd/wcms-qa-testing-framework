@@ -29,8 +29,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// basicSearch = PageFactory.initElements(driver, BasicSearch.class);
+
 		advanceSearchResults = new AdvanceSearchResults(driver);
 		System.out.println("Advance Search Results setup done");
 		crumb = new BreadCrumb(driver);

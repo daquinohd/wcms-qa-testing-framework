@@ -42,7 +42,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		pageURL = config.getPageURL("AdvanceSearchPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 		advanceSearch = new AdvanceSearch(driver);
 		System.out.println("Advance Search setup done");
 		delighter = new Delighters(driver);

@@ -24,7 +24,7 @@ public class BasicSearchResults_Test extends BaseClass {
 		pageURL = config.getPageURL("BasicSearchResultsURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 		basicSearchResults = new BasicSearchResults(driver);
 		System.out.println("Basic search results setup done");
 	}

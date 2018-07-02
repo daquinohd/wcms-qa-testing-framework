@@ -49,7 +49,6 @@ public class BasicSearch_Test extends BaseClass {
 		pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		basicSearch = new BasicSearch(driver);
 		delighter = new Delighters(driver);
