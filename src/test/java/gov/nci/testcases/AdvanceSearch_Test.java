@@ -17,10 +17,10 @@ import org.testng.annotations.Test;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.clinicalTrial.pages.AdvanceSearch;
-import gov.nci.commonobjects.ApiReference;
+import gov.nci.clinicalTrial.common.ApiReference;
+import gov.nci.clinicalTrial.common.Delighters;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.commonobjects.Delighters;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
