@@ -4,7 +4,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class Resize extends AnalyticsBase {
+public class Resize {
 	
 	// Local driver object
 	public WebDriver driver;

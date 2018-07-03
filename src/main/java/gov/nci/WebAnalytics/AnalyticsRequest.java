@@ -1,21 +1,36 @@
 package gov.nci.WebAnalytics;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
 
-public class AnalyticsBase {
-	
+public class AnalyticsRequest {
+
 	// Constants
 	public static final String STATIC_SERVER = "static.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
 	
-	// Analytics base fields
-	public URI uri;
+	
+	// URI for tracking beacon
+	private URI uri;	
+	public URI getUri() {
+		return uri;				
+	}	
+	public void setUri(URI uri) {
+		this.uri = uri;
+	}	
+	
+	// Channel
+	private String channel;
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+	
 	public String[] suites;	
-	public WAParams params; 
-	public String channel;
+	public AnalyticsParams params; 
 	public String[] events;
 	public List<NameValuePair> props; 
 	public List<NameValuePair> eVars; 
@@ -24,31 +39,25 @@ public class AnalyticsBase {
 	public String linkName;
 	public String linkUrl;	
 	
-	/**
-	 * No arg constructor
-	 */
-	public AnalyticsBase() {
-		uri = null;
-		suites = new String[0];		
-		params = null;
-	}
+	public AnalyticsRequest() {}
 	
 	/**
 	 * Constructor
 	 * @param beaconUrl
 	 */
-	public AnalyticsBase(String beaconUrl) {
-		uri = createURI(beaconUrl);
-		params = new WAParams(uri);
+	public AnalyticsRequest(String beaconUrl) {
+		setUri(createURI(beaconUrl));
+		params = new AnalyticsParams(uri);
 		suites = getSuites(uri);
-		channel = getChannel(params.all);
-		events = getEvents(params.all);
-		props = getProps(params.all);
-		eVars = getEvars(params.all);
-		hiers = getHiers(params.all);
-		linkType = getLinkType(params.all);
-		linkName = getLinkName(params.all);
-		linkUrl = getLinkUrl(params.all);
+		setChannel(getChannel(params.getAll()));
+		channel = getChannel(params.getAll());
+		events = getEvents(params.getAll());
+		props = getProps(params.getAll());
+		eVars = getEvars(params.getAll());
+		hiers = getHiers(params.getAll());
+		linkType = getLinkType(params.getAll());
+		linkName = getLinkName(params.getAll());
+		linkUrl = getLinkUrl(params.getAll());
 	}
 	
 	/**
@@ -56,7 +65,7 @@ public class AnalyticsBase {
 	 * @param url
 	 * @return
 	 */
-	private URI createURI(String url) {
+	public URI createURI(String url) {
 		try {
 			URI rtnUri = URI.create(url);
 			return rtnUri;
@@ -91,7 +100,7 @@ public class AnalyticsBase {
 	 */
 	public String getChannel(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(WAParams.CHANNEL)) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.CHANNEL)) {
 				return param.getValue().trim();
 			}
 		}
@@ -106,7 +115,7 @@ public class AnalyticsBase {
 	public String[] getEvents(List<NameValuePair> parms) {
 		String rtnEvents = "";
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(WAParams.EVENTS)) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.EVENTS)) {
 				rtnEvents = param.getValue();
 				break;
 			}
@@ -120,7 +129,7 @@ public class AnalyticsBase {
 	 * @return
 	 */
 	public List<NameValuePair> getProps(List<NameValuePair> parms) {
-		return WAParams.getNumberedParams(parms, WAParams.PROP_PARTIAL, "prop");
+		return AnalyticsParams.getNumberedParams(parms, AnalyticsParams.PROP_PARTIAL, "prop");
 	}
 	
 	/**
@@ -129,7 +138,7 @@ public class AnalyticsBase {
 	 * @return
 	 */
 	public List<NameValuePair> getEvars(List<NameValuePair> parms) {
-		return WAParams.getNumberedParams(parms, WAParams.EVAR_PARTIAL, "eVar");
+		return AnalyticsParams.getNumberedParams(parms, AnalyticsParams.EVAR_PARTIAL, "eVar");
 	}
 	
 	/**
@@ -138,7 +147,7 @@ public class AnalyticsBase {
 	 * @return
 	 */
 	public List<NameValuePair> getHiers(List<NameValuePair> parms) {
-		return WAParams.getNumberedParams(parms, WAParams.HIER_PARTIAL, "hier");
+		return AnalyticsParams.getNumberedParams(parms, AnalyticsParams.HIER_PARTIAL, "hier");
 	}
 
 	/**
@@ -148,7 +157,7 @@ public class AnalyticsBase {
 	 */
 	public String getLinkType(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(WAParams.LINKTYPE)) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKTYPE)) {
 				return param.getValue().trim();
 			}
 		}
@@ -162,7 +171,7 @@ public class AnalyticsBase {
 	 */	
 	public String getLinkName(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(WAParams.LINKNAME)) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKNAME)) {
 				return param.getValue().trim();
 			}
 		}
@@ -176,7 +185,7 @@ public class AnalyticsBase {
 	 */		
 	public String getLinkUrl(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(WAParams.LINKURL)) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKURL)) {
 				return param.getValue().trim();
 			}
 		}
@@ -188,59 +197,15 @@ public class AnalyticsBase {
 	 * @param paramList
 	 * @return
 	 */
-	public boolean isClickEvent(List<NameValuePair> paramList) {
+	public boolean hasLinkType(List<NameValuePair> paramList) {
 		for (NameValuePair param : paramList) {
-			if (param.getName().equalsIgnoreCase(WAParams.LINKTYPE)) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKTYPE)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	/**
-	 * Get a list of beacon URLs fired off for load events
-	 * @param urlList
-	 * @return
-	 */
-	public List<AnalyticsBase> getLoadBeacons(List<String> urlList) {
-				
-		List<AnalyticsBase> loadBeacons = new ArrayList<AnalyticsBase>();
-		for(String url : urlList)
-		{
-			// If this doesn't have the "Link Type" param ('pe'), add to list of load beacons
-			List<NameValuePair> params = new WAParams(createURI(url)).all;
-			if(!isClickEvent(params)) {
-				loadBeacons.add(new AnalyticsBase(url));
-			}
-		}
-
-		System.out.println("Total load beacons: " + loadBeacons.size());
-		System.out.println("Total click beacons: " + (urlList.size() - loadBeacons.size()));
-		return loadBeacons;
-	}
-	
-	/**
-	 * Get a list of beacon URLs fired off for click events
-	 * @param urlList
-	 * @return
-	 */
-	public List<AnalyticsBase> getClickBeacons(List<String> urlList) {
-				
-		List<AnalyticsBase> clickBeacons = new ArrayList<AnalyticsBase>();
-		for(String url : urlList)
-		{
-			// If this has the "Link Type" param ('pe'), add to list of click beacons
-			List<NameValuePair> params = new WAParams(createURI(url)).all;
-			if(isClickEvent(params)) {
-				clickBeacons.add(new AnalyticsBase(url));
-			}
-		}
 		
-		System.out.println("Total click beacons: " + clickBeacons.size());
-		System.out.println("Total load beacons: " + (urlList.size() - clickBeacons.size()));
-		return clickBeacons;
-	}	
-	
 	/**
 	 * Temporary util method for troubleshooting
 	 * TODO: remove this once explicit wait is working 

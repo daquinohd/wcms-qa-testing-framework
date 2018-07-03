@@ -92,11 +92,15 @@ public class BasicSearch {
 		btn_Search.click();
 	}
 
+	// Enter value into cancer type search field
+	public void enterCancerType(String cancerType) {
+		txt_CancerType.sendKeys(cancerType);
+	}
+
 	// Search based on cancer type
 	public void searchCancerType(String cancerType) {
-		txt_CancerType.sendKeys(cancerType);
+		enterCancerType(cancerType);
 		txt_CancerType.sendKeys(Keys.RETURN);
-
 	}
 
 	// Search based on Age
