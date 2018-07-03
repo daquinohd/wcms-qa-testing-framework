@@ -176,7 +176,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasProp(loadBeacons, 3, "/types/breast"));
 		Assert.assertTrue(hasProp(loadBeacons, 6, "Breast Cancer Prevention"));
 		Assert.assertTrue(hasProp(loadBeacons, 7, "patient"));
-		Assert.assertTrue(hasProp(loadBeacons, 10, "Breast Cancer Prevention (PDQ�)�Patient Version - National Cancer Institute"));
+		Assert.assertTrue(hasProp(loadBeacons, 10, "Breast Cancer Prevention (PDQ®)—Patient Version - National Cancer Institute"));
 		Assert.assertTrue(hasProp(loadBeacons, 44, "Cancer Types Landing Page"));
 		//Assert.assertTrue(hasProp(loadBeacons, 65, "2"));
 		Assert.assertTrue(haseVar(loadBeacons, 1, "www.cancer.gov/types/breast/patient/breast-prevention-pdq"));
@@ -205,7 +205,6 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasEvent(loadBeacons, "event1"));
 		Assert.assertTrue(hasEvent(loadBeacons, "event47"));
 		Assert.assertTrue(hasProp(loadBeacons, 3, "/espanol"));
-		Assert.assertTrue(hasProp(loadBeacons, 6, "C�ncer en espa�ol"));
 		Assert.assertTrue(hasProp(loadBeacons, 8, "Spanish"));
 		Assert.assertTrue(hasProp(loadBeacons, 44, "NCI Home - Spanish"));
 		Assert.assertTrue(haseVar(loadBeacons, 1, "www.cancer.gov/espanol"));
