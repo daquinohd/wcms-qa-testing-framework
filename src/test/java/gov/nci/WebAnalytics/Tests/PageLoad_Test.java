@@ -112,7 +112,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasEvent(47));
 		Assert.assertTrue(hasProp(8, "english"));
 		Assert.assertTrue(hasProp(6, "Bladder cancer"));
-		Assert.assertTrue(hasProp(10, "Bladder Cancer—Patient Version - National Cancer Institute"));
+		Assert.assertTrue(hasProp(10, "Bladder Cancerâ€”Patient Version - National Cancer Institute"));
 		Assert.assertTrue(hasProp(44, "Cancer Types Landing Page"));
 		Assert.assertTrue(haseVar(1, "www.cancer.gov/types/bladder"));
 		Assert.assertTrue(haseVar(44, "Cancer Types Landing Page"));
@@ -127,7 +127,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasEvent(1));
 		Assert.assertTrue(hasEvent(47));
 		Assert.assertTrue(hasProp(6, "Breast cancer"));
-		Assert.assertTrue(hasProp(10, "Breast Cancer—Health Professional Version - National Cancer Institute"));
+		Assert.assertTrue(hasProp(10, "Breast Cancerâ€”Health Professional Version - National Cancer Institute"));
 		Assert.assertTrue(hasProp(44, "Cancer Types Landing Page"));
 		Assert.assertTrue(haseVar(1, "www.cancer.gov/types/breast/hp"));
 		logger.log(LogStatus.PASS, "CTHP HP pageload values are correct.");
@@ -176,7 +176,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasProp(3, "/types/breast"));
 		Assert.assertTrue(hasProp(6, "Breast Cancer Prevention"));
 		Assert.assertTrue(hasProp(7, "patient"));
-		Assert.assertTrue(hasProp(10, "Breast Cancer Prevention (PDQ®)—Patient Version - National Cancer Institute"));
+		Assert.assertTrue(hasProp(10, "Breast Cancer Prevention (PDQÂ®)â€”Patient Version - National Cancer Institute"));
 		Assert.assertTrue(hasProp(44, "Cancer Types Landing Page"));
 		//Assert.assertTrue(hasProp(65, "2"));
 		Assert.assertTrue(haseVar(1, "www.cancer.gov/types/breast/patient/breast-prevention-pdq"));
@@ -205,7 +205,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasEvent(1));
 		Assert.assertTrue(hasEvent(47));
 		Assert.assertTrue(hasProp(3, "/espanol"));
-		Assert.assertTrue(hasProp(6, "Cáncer en español"));
+		Assert.assertTrue(hasProp(6, "CÃ¡ncer en espaÃ±ol"));
 		Assert.assertTrue(hasProp(8, "Spanish"));
 		Assert.assertTrue(hasProp(44, "NCI Home - Spanish"));
 		Assert.assertTrue(haseVar(1, "www.cancer.gov/espanol"));
