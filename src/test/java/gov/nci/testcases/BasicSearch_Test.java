@@ -37,14 +37,12 @@ public class BasicSearch_Test extends BaseClass {
 	String advSearchPageUrl;
 	String testDataFilePath;
 
-	// ConfigReader config = new ConfigReader();
 
 	@BeforeClass(groups = { "Smoke", "current" })
 	@Parameters({ "browser" })
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
-		// String
-		// url="https://www.cancer.gov/about-cancer/treatment/clinical-trials/search";
+
 		pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
@@ -61,56 +59,64 @@ public class BasicSearch_Test extends BaseClass {
 	// Verifying the UI components of Basic Search
 	@Test(groups = { "Smoke" })
 	public void verifyUI() {
-		basicSearch.verifyUI();
-		Assert.assertTrue(basicSearch.verifyUI()[0].isDisplayed(), "Basic CTS definition text is displayed");
-		Assert.assertTrue(basicSearch.verifyUI()[0].getText().contains("Steps to Find a Clinical Trial"));
-		Assert.assertTrue(driver.findElement(By.linkText("Steps to Find a Clinical Trial")).isDisplayed());
-		System.out.println("Basic CTS definition text displayed is " + basicSearch.verifyUI()[0].getText());
+
+		WebElement basicDefinition = basicSearch.getBasicDefinitionElement();
+		Assert.assertTrue(basicDefinition.isDisplayed(), "Basic CTS definition text not displayed");
+		Assert.assertTrue(basicDefinition.getText().contains("Steps to Find a Clinical Trial"), "Basic CTS definition text mismatch");
+		System.out.println("Basic CTS definition text displayed is " + basicDefinition.getText());
+
+		// What does this do? It needs to be its own test method.
 		basicSearch.clickSteps();
 		Assert.assertTrue(driver.getCurrentUrl().contains("search/trial-guide"));
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Steps to Find a Clinical Trial link on Basic CTS");
 		driver.navigate().back();
 
-		Assert.assertTrue(basicSearch.verifyUI()[11].isDisplayed(), "Search Tip is displayed");
-		Assert.assertTrue(
-				basicSearch.verifyUI()[11].findElement(By.xpath("//*[@id='cgvBody']/div[1]/div/i")).isDisplayed());
-		Assert.assertTrue(basicSearch.verifyUI()[11].getText()
-				.contains("Search Tip: For more search options, use our advanced search"));
-		System.out.println("Search Tip is displayed: " + basicSearch.verifyUI()[11].getText());
+		WebElement searchTipElememt = basicSearch.getSearchTipElement();
+		Assert.assertTrue(searchTipElememt.isDisplayed(), "Search Tip not displayed");
+		Assert.assertTrue(searchTipElememt.getText().contains("Search Tip: For more search options, use our advanced search"), "Search Tip text mismatched");
+		System.out.println("Search Tip is displayed: " + searchTipElememt.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[1].isDisplayed(), "Cancer Type label is displayed");
-		System.out.println("Cancer Type label is displayed: " + basicSearch.verifyUI()[1].getText());
+		WebElement cancerTypeLabel = basicSearch.getCancerTypeLabel();
+		Assert.assertTrue(cancerTypeLabel.isDisplayed(), "Cancer Type label not displayed");
+		System.out.println("Cancer Type label is displayed: " + cancerTypeLabel.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[2].isDisplayed(), "Cancer Type help icon is displayed");
+		WebElement cancerTypeHelpLink = basicSearch.getCancerTypeHelpLink();
+		Assert.assertTrue(cancerTypeHelpLink.isDisplayed(), "Cancer Type help icon not displayed");
 
-		Assert.assertTrue(basicSearch.verifyUI()[8].isDisplayed(), "Cancer Type Placeholder msg is displayed");
-		Assert.assertTrue(
-				basicSearch.verifyUI()[8].getAttribute("placeholder").contains("Start typing to select a cancer type"));
-		System.out.println("Cancer Type placeholder message is displayed: " + basicSearch.verifyUI()[8].getText());
+		WebElement cancerTypeMessageElement = basicSearch.getCancerTypeMessageElement();
+		Assert.assertTrue(cancerTypeMessageElement.isDisplayed(), "Cancer Type Placeholder message not displayed");
+		Assert.assertTrue(cancerTypeMessageElement.getAttribute("placeholder").contains("Start typing to select a cancer type"), "Cancer type message text mismatch");
+		System.out.println("Cancer Type placeholder message is displayed: " + cancerTypeMessageElement.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[3].isDisplayed(), "Age label is displayed");
-		System.out.println("Age label is displayed: " + basicSearch.verifyUI()[3].getText());
+		WebElement ageLabel = basicSearch.getAgeLabel();
+		Assert.assertTrue(ageLabel.isDisplayed(), "Age label not displayed");
+		System.out.println("Age label is displayed: " + ageLabel.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[4].isDisplayed(), "Age help icon is displayed");
+		WebElement ageHelpLink = basicSearch.getAgeHelpLink();
+		Assert.assertTrue(ageHelpLink.isDisplayed(), "Age help icon is displayed");
 
-		Assert.assertTrue(basicSearch.verifyUI()[9].isDisplayed(), "Age help text is displayed");
-		Assert.assertTrue(basicSearch.verifyUI()[9].getText()
-				.contains("Your age helps determine which trials are right for you."));
-		System.out.println("Age help text is displayed: " + basicSearch.verifyUI()[9].getText());
+		WebElement ageHelpText = basicSearch.getTextAgeElement();
+		Assert.assertTrue(ageHelpText.isDisplayed(), "Age help text not displayed");
+		Assert.assertTrue(ageHelpText.getText().contains("Your age helps determine which trials are right for you."), "Age text mismatch");
+		System.out.println("Age help text is displayed: " + ageHelpText.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[5].isDisplayed(), "ZipCode label is displayed");
-		System.out.println("ZipCode label is displayed: " + basicSearch.verifyUI()[5].getText());
+		WebElement zipCodeLabel = basicSearch.getZipCodeLabel();
+		Assert.assertTrue(zipCodeLabel.isDisplayed(), "ZipCode label not displayed");
+		System.out.println("ZipCode label is displayed: " + zipCodeLabel.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[6].isDisplayed(), "ZipCode help icon is displayed");
+		WebElement zipCodeHelpLink = basicSearch.getZipCodeHelpLink();
+		Assert.assertTrue(zipCodeHelpLink.isDisplayed(), "ZipCode help icon not displayed");
 
-		Assert.assertTrue(basicSearch.verifyUI()[10].isDisplayed(), "ZipCode help text is displayed");
-		Assert.assertTrue(basicSearch.verifyUI()[10].getText().contains("Show trials near this U.S. ZIP code."));
-		System.out.println("ZipCode help text is displayed: " + basicSearch.verifyUI()[10].getText());
+		WebElement zipCodeTextElement = basicSearch.getZipCodeTextElement();
+		Assert.assertTrue(zipCodeTextElement.isDisplayed(), "ZipCode help text not displayed");
+		Assert.assertTrue(zipCodeTextElement.getText().contains("Show trials near this U.S. ZIP code."), "Zip code help text mismatch");
+		System.out.println("ZipCode help text is displayed: " + zipCodeTextElement.getText());
 
-		Assert.assertTrue(basicSearch.verifyUI()[7].isDisplayed(), "Find Results button is displayed");
-		System.out.println("Find Results button is displayed: " + basicSearch.verifyUI()[7].getAttribute("value"));
+		WebElement searchButton = basicSearch.getSearchButton();
+		Assert.assertTrue(searchButton.isDisplayed(), "Find Results button not displayed");
+		System.out.println("Find Results button is displayed: " + searchButton.getAttribute("value"));
+
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 	}
 
 	@Test(groups = { "Smoke", "current" })

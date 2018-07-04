@@ -76,10 +76,60 @@ public class BasicSearch {
 	}
 
 	//UI components
+	// TODO: Get rid of this method!
 	public WebElement[] verifyUI() {
-		return new WebElement[] { text_BasicDefinition, lbl_CancerType, lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp,
+		return new WebElement[] { 
+			text_BasicDefinition, lbl_CancerType, lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp,
 				lbl_Zipcode, lnk_ZipcodeHelp, btn_Search, msg_CancerType, text_Age, text_Zipcode, txt_SearchTip };
 
+	}
+
+	public WebElement getBasicDefinitionElement() {
+		return text_BasicDefinition;
+	}
+
+	public WebElement getCancerTypeLabel() {
+		return lbl_CancerType;
+	}
+
+	public WebElement getCancerTypeMessageElement() {
+		return msg_CancerType;
+	}
+
+	public WebElement getCancerTypeHelpLink() {
+		return lnk_CancerTypeHelp;
+	}
+
+	public WebElement getAgeLabel() {
+		return lbl_Age;
+	}
+
+	public WebElement getAgeHelpLink() {
+		return lnk_AgeHelp;
+	}
+
+	public WebElement getTextAgeElement() {
+		return text_Age;
+	}
+
+	public WebElement getZipCodeLabel() {
+		return lbl_Zipcode;
+	}
+
+	public WebElement getZipCodeHelpLink() {
+		return lnk_ZipcodeHelp;
+	}
+
+	public WebElement getZipCodeTextElement() {
+		return text_Zipcode;
+	}
+
+	public WebElement getSearchTipElement() {
+		return txt_SearchTip;
+	}
+
+	public WebElement getSearchButton() {
+		return btn_Search;
 	}
 
 	public void clickSteps() {

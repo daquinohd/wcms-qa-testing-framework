@@ -27,11 +27,11 @@ public class BaseClass {
 
 	// private static Logger log=
 	// LogManager.getLogger(BaseClass.class.getName());
-	public static ExtentReports report;
-	public static ExtentTest logger;
-	public static WebDriver driver;
-	public String pageURL;
-	ConfigReader config = new ConfigReader();
+	protected static ExtentReports report;
+	protected static ExtentTest logger;
+	protected static WebDriver driver;
+	protected String pageURL;
+	protected ConfigReader config = new ConfigReader();
 
 	@BeforeTest(groups = { "Smoke", "current" })
 	@Parameters
