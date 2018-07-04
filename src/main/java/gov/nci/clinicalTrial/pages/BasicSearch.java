@@ -75,14 +75,6 @@ public class BasicSearch {
 		System.out.println("PageFactory initiated");
 	}
 
-	//UI components
-	// TODO: Get rid of this method!
-	public WebElement[] verifyUI() {
-		return new WebElement[] { 
-			text_BasicDefinition, lbl_CancerType, lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp,
-				lbl_Zipcode, lnk_ZipcodeHelp, btn_Search, msg_CancerType, text_Age, text_Zipcode, txt_SearchTip };
-
-	}
 
 	public WebElement getBasicDefinitionElement() {
 		return text_BasicDefinition;

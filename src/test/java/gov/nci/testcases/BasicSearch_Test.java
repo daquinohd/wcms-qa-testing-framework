@@ -525,7 +525,7 @@ public class BasicSearch_Test extends BaseClass {
 	public void SearchInvalidZip() {
 		//// div[@class='error-msg']
 		driver.findElement(By.xpath(".//input[@id='z']")).sendKeys("abc");
-		basicSearch.verifyUI()[10].click();
+		basicSearch.getZipCodeTextElement().click();
 		System.out.println("********Error Message of Zipcode: "
 				+ driver.findElement(By.xpath("//div[@class='error-msg']")).getText());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText()
