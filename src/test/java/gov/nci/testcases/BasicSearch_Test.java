@@ -57,24 +57,27 @@ public class BasicSearch_Test extends BaseClass {
 	}
 
 	// Verifying the UI components of Basic Search
+
 	@Test(groups = { "Smoke" })
-	public void verifyUI() {
+	public void uiVerificationBasicDefinition() {
 
 		WebElement basicDefinition = basicSearch.getBasicDefinitionElement();
 		Assert.assertTrue(basicDefinition.isDisplayed(), "Basic CTS definition text not displayed");
 		Assert.assertTrue(basicDefinition.getText().contains("Steps to Find a Clinical Trial"), "Basic CTS definition text mismatch");
 		System.out.println("Basic CTS definition text displayed is " + basicDefinition.getText());
+	}
 
-		// What does this do? It needs to be its own test method.
-		basicSearch.clickSteps();
-		Assert.assertTrue(driver.getCurrentUrl().contains("search/trial-guide"));
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Steps to Find a Clinical Trial link on Basic CTS");
-		driver.navigate().back();
+	@Test(groups = { "Smoke" })
+	public void uiVerificationSearchTip () {
 
 		WebElement searchTipElememt = basicSearch.getSearchTipElement();
 		Assert.assertTrue(searchTipElememt.isDisplayed(), "Search Tip not displayed");
 		Assert.assertTrue(searchTipElememt.getText().contains("Search Tip: For more search options, use our advanced search"), "Search Tip text mismatched");
 		System.out.println("Search Tip is displayed: " + searchTipElememt.getText());
+	}
+
+	@Test(groups = { "Smoke" })
+	public void uiVerificationCancerType () {
 
 		WebElement cancerTypeLabel = basicSearch.getCancerTypeLabel();
 		Assert.assertTrue(cancerTypeLabel.isDisplayed(), "Cancer Type label not displayed");
@@ -87,6 +90,10 @@ public class BasicSearch_Test extends BaseClass {
 		Assert.assertTrue(cancerTypeMessageElement.isDisplayed(), "Cancer Type Placeholder message not displayed");
 		Assert.assertTrue(cancerTypeMessageElement.getAttribute("placeholder").contains("Start typing to select a cancer type"), "Cancer type message text mismatch");
 		System.out.println("Cancer Type placeholder message is displayed: " + cancerTypeMessageElement.getText());
+	}
+
+	@Test(groups = { "Smoke" })
+	public void uiVerificationAgeField() {
 
 		WebElement ageLabel = basicSearch.getAgeLabel();
 		Assert.assertTrue(ageLabel.isDisplayed(), "Age label not displayed");
@@ -99,6 +106,10 @@ public class BasicSearch_Test extends BaseClass {
 		Assert.assertTrue(ageHelpText.isDisplayed(), "Age help text not displayed");
 		Assert.assertTrue(ageHelpText.getText().contains("Your age helps determine which trials are right for you."), "Age text mismatch");
 		System.out.println("Age help text is displayed: " + ageHelpText.getText());
+	}
+
+	@Test(groups = { "Smoke" })
+	public void uiVerificationZipCodeField () {
 
 		WebElement zipCodeLabel = basicSearch.getZipCodeLabel();
 		Assert.assertTrue(zipCodeLabel.isDisplayed(), "ZipCode label not displayed");
@@ -111,10 +122,26 @@ public class BasicSearch_Test extends BaseClass {
 		Assert.assertTrue(zipCodeTextElement.isDisplayed(), "ZipCode help text not displayed");
 		Assert.assertTrue(zipCodeTextElement.getText().contains("Show trials near this U.S. ZIP code."), "Zip code help text mismatch");
 		System.out.println("ZipCode help text is displayed: " + zipCodeTextElement.getText());
+	}
+
+	@Test(groups = { "Smoke" })
+	public void uiVerificationSearchButton () {
 
 		WebElement searchButton = basicSearch.getSearchButton();
 		Assert.assertTrue(searchButton.isDisplayed(), "Find Results button not displayed");
 		System.out.println("Find Results button is displayed: " + searchButton.getAttribute("value"));
+	}
+
+
+
+	@Test(groups = { "Smoke" })
+	public void verifyUI() {
+
+		// What does this do?
+		basicSearch.clickSteps();
+		Assert.assertTrue(driver.getCurrentUrl().contains("search/trial-guide"));
+		logger.log(LogStatus.PASS, "Pass => " + "Verify Steps to Find a Clinical Trial link on Basic CTS");
+		driver.navigate().back();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
