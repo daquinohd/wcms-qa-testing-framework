@@ -6,8 +6,8 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.NameValuePair;
 
 public class AnalyticsParams {
 	
@@ -23,83 +23,61 @@ public class AnalyticsParams {
 	// to each of these query parameter
 	static final String PROP_PARTIAL = "c";
 	static final String EVAR_PARTIAL = "v";
-	static final String HIER_PARTIAL = "h";
-	
-	// Beacon properties
-	private List<NameValuePair> all;
-	
-	public List<NameValuePair> getAll() {
-		return all;
-	}
-	public void setAll(List<NameValuePair> all) {
-		this.all = all;
-	}
-
-	public AnalyticsParams() 
-	{
-		// No arg constructor
-	}
-	
-	/**
-	 * Constructor
-	 * @param beaconUrl
-	 */
-	public AnalyticsParams(URI uri) {
-		setAll(buildParamsList(uri));
-	}
+	static final String HIER_PARTIAL = "h";	
 	
 	/**
 	 * Split URI into list of encoded elements
 	 * @param uri
 	 * @return retParams
 	 */
-	public List<NameValuePair> buildParamsList(URI uri) {		
+	public static List<NameValuePair> getParamList(URI uri) {
 		List<NameValuePair> rtnParams = new ArrayList<NameValuePair>();
 		
 		try {
 			String queries = getRawQueryString(uri);
 			for(String parm : queries.split("&")) {
 				String[] pair = parm.split("=");
-				String key = URLDecoder.decode(pair[0], "UTF-8");
+				String Name = URLDecoder.decode(pair[0], "UTF-8");
 				String value = "";
 				if(pair.length > 1) {
 					value = URLDecoder.decode(pair[1], "UTF-8"); 
 				}
-				rtnParams.add(new BasicNameValuePair(key, value));				
+				rtnParams.add(new BasicNameValuePair(Name, value));				
 			}
 		} 
 		catch (UnsupportedEncodingException ex) {
 			System.out.println("Error decoding URI in WaParams:buildParamsList()");
 		}		
 		return rtnParams;
-	}
-	
-	/**
-	 * Get an encoded query string from a given URI.
-	 * @param uri
-	 * @return
-	 */	
-	public static String getRawQueryString(URI uri) {
-		return uri.getRawQuery();
-	}
+	}	
 	
 	/**
 	 * Get the clean query string from a given URI.
 	 * @param uri
-	 * @return
-	 */
+	 * @return URL String
+	 */	
+	public static String getRawQueryString(URI uri) {
+		return uri.getRawQuery();
+	}	
+	 
+	/**
+	 * Get an encoded query string from a given URI.
+	 * @param uri
+	 * @return URL String
+	 */	
 	public static String getQueryString(URI uri) {
 		return uri.getQuery();
 	}
 	
 	/**
-	 * Check query params to see if this is a link tracking event
-	 * @param parms
-	 * @return
+	 * Check that a given query parameter (name) exists within a list of params
+	 * @param paramList
+	 * @param name
+	 * @return bool
 	 */
-	public static boolean hasParam(List<NameValuePair> paramList, String myParam) {
+	public static boolean containsName(List<NameValuePair> paramList, String name) {
 		for (NameValuePair param : paramList) {
-			if (param.getName().toLowerCase().equals(myParam)) {
+			if (param.getName().equalsIgnoreCase(name)) {
 				return true;
 			}
 		}
@@ -107,33 +85,18 @@ public class AnalyticsParams {
 	}
 	
 	/**
-	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
+	 * Check that a given parameter value exists within a list of params
 	 * @param paramList
-	 * @param parm
-	 * @param replacement
-	 * @return
+	 * @param value
+	 * @return bool
 	 */
-	public static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm, String replacement) {
-		List<NameValuePair> rtnList = new ArrayList<>();
+	public static boolean containsValue(List<NameValuePair> paramList, String value) {
 		for (NameValuePair param : paramList) {
-			// Regex: parameter name followed by 1 or more digits, starting with 1-9 only
-			if(param.getName().matches("^" + parm + "[1-9]\\d*$")) {
-				String rtnName = param.getName().replace(parm, replacement);
-				String rtnValue = param.getValue();
-				rtnList.add(new BasicNameValuePair(rtnName, rtnValue));
+			if (param.getValue().equalsIgnoreCase(value)) {
+				return true;
 			}
 		}
-		return rtnList;
+		return false;
 	}
-	
-	/**
-	 * Overload for getNumberedParams
-	 * @param paramList
-	 * @param parm
-	 * @return
-	 */
-	public static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm) {
-		return getNumberedParams(paramList, parm, parm);
-	}	
 	
 }

@@ -1,63 +1,48 @@
 package gov.nci.WebAnalytics;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 public class AnalyticsRequest {
 
 	// Constants
 	public static final String STATIC_SERVER = "static.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
+
+	// Temporary Params object
+	AnalyticsParams waParams;
+
 	
-	
-	// URI for tracking beacon
-	private URI uri;	
+	private static URI uri;	
 	public URI getUri() {
-		return uri;				
-	}	
-	public void setUri(URI uri) {
+		return uri;
+	}
+	public void setUrl(URI uri) {
 		this.uri = uri;
-	}	
-	
-	// Channel
-	private String channel;
-	public String getChannel() {
-		return channel;
-	}
-	public void setChannel(String channel) {
-		this.channel = channel;
 	}
 	
-	public String[] suites;	
-	public AnalyticsParams params; 
-	public String[] events;
-	public List<NameValuePair> props; 
-	public List<NameValuePair> eVars; 
-	public List<NameValuePair> hiers;
-	public String linkType;
-	public String linkName;
-	public String linkUrl;	
+	private List<NameValuePair> paramsList;
+	public List<NameValuePair> getParamsList() {
+		return paramsList;
+	}
+	public void setParamsList(List<NameValuePair> paramsList) {
+		this.paramsList = paramsList;
+	}
+		
+	public String channel;
 	
 	public AnalyticsRequest() {}
-	
-	/**
-	 * Constructor
-	 * @param beaconUrl
-	 */
-	public AnalyticsRequest(String beaconUrl) {
-		setUri(createURI(beaconUrl));
-		params = new AnalyticsParams(uri);
-		suites = getSuites(uri);
-		setChannel(getChannel(params.getAll()));
-		channel = getChannel(params.getAll());
-		events = getEvents(params.getAll());
-		props = getProps(params.getAll());
-		eVars = getEvars(params.getAll());
-		hiers = getHiers(params.getAll());
-		linkType = getLinkType(params.getAll());
-		linkName = getLinkName(params.getAll());
-		linkUrl = getLinkUrl(params.getAll());
+		
+	public static AnalyticsRequest getBeacon(String beaconUrl) {
+		AnalyticsRequest rtnBeacon = new AnalyticsRequest();
+		rtnBeacon.setUrl(createURI(beaconUrl));
+		rtnBeacon.setParamsList(AnalyticsParams.getParamList(uri));
+		return rtnBeacon;
 	}
 	
 	/**
@@ -65,7 +50,7 @@ public class AnalyticsRequest {
 	 * @param url
 	 * @return
 	 */
-	public URI createURI(String url) {
+	public static URI createURI(String url) {
 		try {
 			URI rtnUri = URI.create(url);
 			return rtnUri;
@@ -100,7 +85,7 @@ public class AnalyticsRequest {
 	 */
 	public String getChannel(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.CHANNEL)) {
+			if (param.getName().equalsIgnoreCase(waParams.CHANNEL.toString())) {
 				return param.getValue().trim();
 			}
 		}
@@ -112,9 +97,9 @@ public class AnalyticsRequest {
 	 * @param parms
 	 * @return
 	 */
-	public String[] getEvents(List<NameValuePair> parms) {
+	public String[] getEvents() {
 		String rtnEvents = "";
-		for (NameValuePair param : parms) {
+		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(AnalyticsParams.EVENTS)) {
 				rtnEvents = param.getValue();
 				break;
@@ -128,8 +113,8 @@ public class AnalyticsRequest {
 	 * @param parms
 	 * @return
 	 */
-	public List<NameValuePair> getProps(List<NameValuePair> parms) {
-		return AnalyticsParams.getNumberedParams(parms, AnalyticsParams.PROP_PARTIAL, "prop");
+	public List<NameValuePair> getProps() {
+		return getNumberedParams(paramsList, AnalyticsParams.PROP_PARTIAL, "prop");
 	}
 	
 	/**
@@ -137,8 +122,8 @@ public class AnalyticsRequest {
 	 * @param parms
 	 * @return
 	 */
-	public List<NameValuePair> getEvars(List<NameValuePair> parms) {
-		return AnalyticsParams.getNumberedParams(parms, AnalyticsParams.EVAR_PARTIAL, "eVar");
+	public List<NameValuePair> getEvars() {
+		return getNumberedParams(paramsList, AnalyticsParams.EVAR_PARTIAL, "eVar");
 	}
 	
 	/**
@@ -147,7 +132,7 @@ public class AnalyticsRequest {
 	 * @return
 	 */
 	public List<NameValuePair> getHiers(List<NameValuePair> parms) {
-		return AnalyticsParams.getNumberedParams(parms, AnalyticsParams.HIER_PARTIAL, "hier");
+		return getNumberedParams(parms, AnalyticsParams.HIER_PARTIAL, "hier");
 	}
 
 	/**
@@ -169,8 +154,8 @@ public class AnalyticsRequest {
 	 * @param parms
 	 * @return
 	 */	
-	public String getLinkName(List<NameValuePair> parms) {
-		for (NameValuePair param : parms) {
+	public String getLinkName() {
+		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKNAME)) {
 				return param.getValue().trim();
 			}
@@ -222,5 +207,41 @@ public class AnalyticsRequest {
 	protected static void nap() {
 		nap(10);
 	}
+	
+
+	
+	
+	
+
+	/**
+	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
+	 * @param paramList
+	 * @param parm
+	 * @param replacement
+	 * @return
+	 */
+	private static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm, String replacement) {
+		List<NameValuePair> rtnList = new ArrayList<>();
+		for (NameValuePair param : paramList) {
+			// Regex: parameter name followed by 1 or more digits, starting with 1-9 only
+			if(param.getName().matches("^" + parm + "[1-9]\\d*$")) {
+				String rtnName = param.getName().replace(parm, replacement);
+				String rtnValue = param.getValue();
+				rtnList.add(new BasicNameValuePair(rtnName, rtnValue));
+			}
+		}
+		return rtnList;
+	}
+	
+	/**
+	 * Overload for getNumberedParams
+	 * Can be used for cases where the parameter name and analytics variable name match 
+	 * @param paramList
+	 * @param parm
+	 * @return
+	 */
+	private static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm) {
+		return getNumberedParams(paramList, parm, parm);
+	}	
 
 }
