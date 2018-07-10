@@ -30,7 +30,7 @@ public class BaseClass {
 	public static ExtentTest logger;
 	public static WebDriver driver;
 	public String pageURL;
-	ConfigReader config = new ConfigReader();
+	public ConfigReader config = new ConfigReader();
 
 	@BeforeTest(groups = { "Smoke", "current" })
 	@Parameters
