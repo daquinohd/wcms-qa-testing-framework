@@ -1,4 +1,4 @@
-package com.nci.commonobjects;
+package gov.nci.clinicalTrial.common;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

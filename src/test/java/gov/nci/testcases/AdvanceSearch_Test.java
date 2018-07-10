@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.testcases;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.Utilities.ExcelManager;
-import com.nci.clinicalTrial.pages.AdvanceSearch;
-import com.nci.commonobjects.ApiReference;
-import com.nci.commonobjects.Banner;
-import com.nci.commonobjects.BreadCrumb;
-import com.nci.commonobjects.Delighters;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.Utilities.ExcelManager;
+import gov.nci.clinicalTrial.pages.AdvanceSearch;
+import gov.nci.clinicalTrial.common.ApiReference;
+import gov.nci.clinicalTrial.common.Delighters;
+import gov.nci.commonobjects.Banner;
+import gov.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
@@ -42,7 +42,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		pageURL = config.getPageURL("AdvanceSearchPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 		advanceSearch = new AdvanceSearch(driver);
 		System.out.println("Advance Search setup done");
 		delighter = new Delighters(driver);

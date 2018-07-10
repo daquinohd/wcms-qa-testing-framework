@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.testcases;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,14 +13,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.Utilities.ExcelManager;
-//import com.nci.clinicalTrial.pages.AdvanceSearch;
-import com.nci.clinicalTrial.pages.BasicSearch;
-import com.nci.commonobjects.ApiReference;
-import com.nci.commonobjects.Banner;
-import com.nci.commonobjects.BreadCrumb;
-import com.nci.commonobjects.Delighters;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.Utilities.ExcelManager;
+import gov.nci.clinicalTrial.pages.BasicSearch;
+import gov.nci.clinicalTrial.common.ApiReference;
+import gov.nci.clinicalTrial.common.Delighters;
+import gov.nci.commonobjects.Banner;
+import gov.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class BasicSearch_Test extends BaseClass {
@@ -49,7 +48,6 @@ public class BasicSearch_Test extends BaseClass {
 		pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		basicSearch = new BasicSearch(driver);
 		delighter = new Delighters(driver);

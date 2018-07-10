@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.testcases;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
@@ -10,10 +10,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.clinicalTrial.pages.AdvanceSearchResults;
-import com.nci.commonobjects.Banner;
-import com.nci.commonobjects.BreadCrumb;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.clinicalTrial.pages.AdvanceSearchResults;
+import gov.nci.commonobjects.Banner;
+import gov.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearchResults_Test extends BaseClass {
@@ -29,8 +29,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// basicSearch = PageFactory.initElements(driver, BasicSearch.class);
+
 		advanceSearchResults = new AdvanceSearchResults(driver);
 		System.out.println("Advance Search Results setup done");
 		crumb = new BreadCrumb(driver);

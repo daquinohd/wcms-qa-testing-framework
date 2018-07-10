@@ -1,4 +1,4 @@
-package com.nci.clinicalTrial.pages;
+package gov.nci.clinicalTrial.pages;
 
 import java.util.List;
 

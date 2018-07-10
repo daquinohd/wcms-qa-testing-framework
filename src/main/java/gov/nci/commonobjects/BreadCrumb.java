@@ -1,4 +1,4 @@
-package com.nci.commonobjects;
+package gov.nci.commonobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,21 +6,21 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class Banner {
+public class BreadCrumb {
 	WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//img[@src='/publishedcontent/images/images/design-elements/logos/nci-logo-full.__v1.svg']")
+	@FindBy(how = How.XPATH, using = ".//div[@id='cgvSlBreadcrumb']")
+	WebElement breadCrumb;
 
-	WebElement banner;
-
-	public Banner(WebDriver driver) {
+	public BreadCrumb(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	public WebElement getBanner() {
+	public String getBreadCrumb() {
+		String Breadcrumb = breadCrumb.getText();
 
-		return banner;
-
+		return Breadcrumb;
 	}
+
 }

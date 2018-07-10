@@ -1,4 +1,4 @@
-package com.nci.Utilities;
+package gov.nci.Utilities;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

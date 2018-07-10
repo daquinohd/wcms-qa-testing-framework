@@ -1,6 +1,6 @@
 package gov.nci.WebAnalytics;
 
-import com.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ConfigReader;
 
 public class WANav {
 
