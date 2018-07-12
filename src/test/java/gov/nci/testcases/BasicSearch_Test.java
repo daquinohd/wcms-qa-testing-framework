@@ -142,8 +142,6 @@ public class BasicSearch_Test extends BaseClass {
 		Assert.assertTrue(driver.getCurrentUrl().contains("search/trial-guide"));
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Steps to Find a Clinical Trial link on Basic CTS");
 		driver.navigate().back();
-
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@Test(groups = { "Smoke", "current" })
@@ -153,15 +151,13 @@ public class BasicSearch_Test extends BaseClass {
 			System.out.println("All search results page should be displayed");
 			resultPageUrl = driver.getCurrentUrl();
 			System.out.println("Result page url: " + resultPageUrl);
-		} else
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
 
 		// Checking the Page Title
 		String pageTitle = driver.getTitle();
 		System.out.println("Actual Page Title:" + pageTitle);
 		Assert.assertTrue(driver.findElement(By.className("cts-results-label")).getText().contains("all trials"));
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the default search " + driver.getCurrentUrl());
 
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Default Search on Basic CTS");
@@ -174,15 +170,12 @@ public class BasicSearch_Test extends BaseClass {
 
 		// Performing the search using Cancer type parameter
 		basicSearch.searchCancerType(cancerType);
-		// driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
-		// System.out.println("driver wait done");
 
 		if (driver.findElement(By.name("printButton")).isDisplayed()) {
 			System.out.println("search results page should be displayed");
 			resultPageUrl = driver.getCurrentUrl();
 			System.out.println("Result page url: " + resultPageUrl);
-		} else
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
 
 		// Checking the Page Title
 		String pageTitle = driver.getTitle();
@@ -200,9 +193,7 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("New String: " + cancerTypeWithoutSpace);
 		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
 				"Keyword not found " + cancerTypeWithoutSpace);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the cancer type search " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type on Basic CTS");
 
@@ -243,7 +234,6 @@ public class BasicSearch_Test extends BaseClass {
 
 			driver.findElement(By.linkText("Start Over")).click();
 
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			System.out.println("Page URL after the age search " + driver.getCurrentUrl());
 			logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age on Basic CTS");
 		}
@@ -330,7 +320,6 @@ public class BasicSearch_Test extends BaseClass {
 		}
 
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the search " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age and ZipCode on Basic CTS");
 	}
@@ -347,8 +336,7 @@ public class BasicSearch_Test extends BaseClass {
 			System.out.println("search results page should be displayed");
 			resultPageUrl = driver.getCurrentUrl();
 			System.out.println("Result page url: " + resultPageUrl);
-		} else
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
 
 		// Checking the Results page URL for the parameters passed in order to
 		// validate correct search results are displayed
@@ -359,7 +347,6 @@ public class BasicSearch_Test extends BaseClass {
 				"Keyword not found " + cancerTypeWithoutSpace);
 		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found " + age);
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the search " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and Age on Basic CTS");
 	}
@@ -398,12 +385,10 @@ public class BasicSearch_Test extends BaseClass {
 					"Keyword not found " + cancerTypeWithoutSpace);
 			Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " + zip);
 			driver.navigate().back();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			System.out.println("Page URL after the search " + driver.getCurrentUrl());
 			logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
 
-		} else
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
 
 	}
 
@@ -420,8 +405,7 @@ public class BasicSearch_Test extends BaseClass {
 			System.out.println("search results page should be displayed");
 			resultPageUrl = driver.getCurrentUrl();
 			System.out.println("Result page url: " + resultPageUrl);
-		} else
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		}
 
 		// Checking the Results page URL for the parameters passed in order to
 		// validate correct search results are displayed
@@ -433,7 +417,6 @@ public class BasicSearch_Test extends BaseClass {
 		Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " + zip);
 		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found " + age);
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the search " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type, Age and ZipCode on Basic CTS");
 	}
@@ -449,7 +432,6 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Page URL of the delighter " + resultPageUrl);
 		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
 	}
@@ -465,7 +447,6 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Page URL of the delighter " + resultPageUrl);
 		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
 	}
@@ -481,7 +462,6 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Page URL of the delighter " + resultPageUrl);
 		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Advance CTS");
 	}
@@ -490,14 +470,12 @@ public class BasicSearch_Test extends BaseClass {
 	public void clickAdvSearch() {
 		// Click on Advance Search link
 		basicSearch.clickAdvSearch();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// Checking the Results page URL for the parameters passed in order to
 		// validate correct search results are displayed
 		advSearchPageUrl = driver.getCurrentUrl();
 		System.out.println("Advanced Search " + advSearchPageUrl);
 		Assert.assertTrue(advSearchPageUrl.contains("advanced"));
 		driver.navigate().back();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		System.out.println("Page URL after the coming back to basic search " + driver.getCurrentUrl());
 		logger.log(LogStatus.PASS, "Pass => " + "Verify navigation to Advanced CTS on Basic CTS");
 	}
@@ -543,7 +521,6 @@ public class BasicSearch_Test extends BaseClass {
 				"********Error Message of Age: " + driver.findElement(By.xpath("//div[@class='error-msg']")).getText());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText()
 				.contains("Please enter a number between 1 and 120."));
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Age on Basic CTS");
 		driver.findElement(By.xpath(".//input[@id='a']")).clear();
 	}
@@ -557,7 +534,6 @@ public class BasicSearch_Test extends BaseClass {
 				+ driver.findElement(By.xpath("//div[@class='error-msg']")).getText());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText()
 				.contains("Please enter a valid 5 digit ZIP code."));
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Zip on Basic CTS");
 		driver.findElement(By.xpath(".//input[@id='z']")).clear();
 	}

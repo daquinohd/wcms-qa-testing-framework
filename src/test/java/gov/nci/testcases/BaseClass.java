@@ -58,14 +58,12 @@ public class BaseClass {
 	public void beforeMethod() {
 
 		try {
-			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 			// To see if the pop up presents
 			driver.findElement(By.xpath("//*[@id='ProactiveLiveHelpForCTSPrompt']"));
 			Thread.sleep(500);
 			driver.findElement(By.cssSelector("#ProactiveLiveHelpForCTSPrompt > a")).click();
-			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		} catch (Exception e) {
-			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
 		}
 
 		((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
