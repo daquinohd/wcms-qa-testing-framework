@@ -60,7 +60,7 @@ public class BasicSearch {
 	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[2]/div/div[2]")
 	WebElement module_CTSApi;
 	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]")
-	WebElement text_BasicDefinition;
+	WebElement text_HeaderText;
 	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]/p/a[2]")
 	WebElement lnk_Steps;
 	@FindBy(how = How.CSS, using = ".api-reference-content > p:nth-child(1) > a:nth-child(1)")
@@ -76,8 +76,8 @@ public class BasicSearch {
 	}
 
 
-	public WebElement getBasicDefinitionElement() {
-		return text_BasicDefinition;
+	public WebElement getHeaderText() {
+		return text_HeaderText;
 	}
 
 	public WebElement getCancerTypeLabel() {

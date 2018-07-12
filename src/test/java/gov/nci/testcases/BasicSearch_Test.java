@@ -58,15 +58,21 @@ public class BasicSearch_Test extends BaseClass {
 
 	// Verifying the UI components of Basic Search
 
+	/**
+	 * Verifies presence, visibility, and content of the search header text
+	 */
 	@Test(groups = { "Smoke" })
-	public void uiVerificationBasicDefinition() {
+	public void uiVerificationHeaderText() {
 
-		WebElement basicDefinition = basicSearch.getBasicDefinitionElement();
-		Assert.assertTrue(basicDefinition.isDisplayed(), "Basic CTS definition text not displayed");
-		Assert.assertTrue(basicDefinition.getText().contains("Steps to Find a Clinical Trial"), "Basic CTS definition text mismatch");
-		System.out.println("Basic CTS definition text displayed is " + basicDefinition.getText());
+		WebElement headerTextElement = basicSearch.getHeaderText();
+		Assert.assertTrue(headerTextElement.isDisplayed(), "Basic CTS header text not displayed");
+		Assert.assertTrue(headerTextElement.getText().contains("Steps to Find a Clinical Trial"), "header text mismatch");
+		System.out.println("Basic CTS header text displayed is " + headerTextElement.getText());
 	}
 
+	/**
+	 * Verifies presence, visibility, and content of the search help icon
+	 */
 	@Test(groups = { "Smoke" })
 	public void uiVerificationSearchTip () {
 
@@ -76,6 +82,9 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Search Tip is displayed: " + searchTipElememt.getText());
 	}
 
+	/**
+	 * Verifies presence, visibility, and content of the cancer type input field.
+	 */
 	@Test(groups = { "Smoke" })
 	public void uiVerificationCancerType () {
 
@@ -92,6 +101,9 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Cancer Type placeholder message is displayed: " + cancerTypeMessageElement.getText());
 	}
 
+	/**
+	 * Verifies presence, visibility, and content of the age input field.
+	 */
 	@Test(groups = { "Smoke" })
 	public void uiVerificationAgeField() {
 
@@ -108,6 +120,9 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Age help text is displayed: " + ageHelpText.getText());
 	}
 
+	/**
+	 * Verifies presence, visibility, and content of the ZIP code input field.
+	 */
 	@Test(groups = { "Smoke" })
 	public void uiVerificationZipCodeField () {
 
@@ -124,6 +139,9 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("ZipCode help text is displayed: " + zipCodeTextElement.getText());
 	}
 
+	/**
+	 * Verifies presence, visibility, and content of the search button
+	 */
 	@Test(groups = { "Smoke" })
 	public void uiVerificationSearchButton () {
 
