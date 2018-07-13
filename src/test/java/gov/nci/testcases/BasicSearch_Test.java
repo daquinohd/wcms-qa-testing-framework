@@ -1,5 +1,7 @@
 package gov.nci.testcases;
 
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -150,16 +152,26 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("Find Results button is displayed: " + searchButton.getAttribute("value"));
 	}
 
-
-
+	/**
+	 * Verify link to the clinical trials "Next Steps" page.
+	 */
 	@Test(groups = { "Smoke" })
-	public void verifyUI() {
+	public void uiVerificationNextSteps() {
 
-		// What does this do?
-		basicSearch.clickSteps();
-		Assert.assertTrue(driver.getCurrentUrl().contains("search/trial-guide"));
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Steps to Find a Clinical Trial link on Basic CTS");
-		driver.navigate().back();
+		WebElement nextStepsLink = basicSearch.getNextStepsLink();
+		Assert.assertTrue(nextStepsLink.isDisplayed(), "Next steps link not displayed");
+		Assert.assertEquals(nextStepsLink.getTagName(), "a", "Next steps link not an 'a' tag.");
+
+		String link = nextStepsLink.getAttribute("href");
+		Assert.assertNotEquals(link, null, "Next steps link is missing");
+		
+		try{
+			URL url = new URL(link);
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/trial-guide", "Next steps link path is mismatched.");
+		}
+		catch (MalformedURLException ex) {
+			Assert.fail("Error parsing Next steps URL");
+		}
 	}
 
 	@Test(groups = { "Smoke", "current" })

@@ -62,7 +62,7 @@ public class BasicSearch {
 	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]")
 	WebElement text_HeaderText;
 	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]/p/a[2]")
-	WebElement lnk_Steps;
+	WebElement lnk_NextSteps;
 	@FindBy(how = How.CSS, using = ".api-reference-content > p:nth-child(1) > a:nth-child(1)")
 	WebElement lnk_CTSApi;
 	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['Cancer Type/Keyword']")
@@ -124,8 +124,8 @@ public class BasicSearch {
 		return btn_Search;
 	}
 
-	public void clickSteps() {
-		lnk_Steps.click();
+	public WebElement getNextStepsLink() {
+		return lnk_NextSteps;
 	}
 
 	// Default Search
