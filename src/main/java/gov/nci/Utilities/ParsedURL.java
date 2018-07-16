@@ -24,16 +24,19 @@ public class ParsedURL {
      */
     public ParsedURL (String url )
         throws MalformedURLException, UnsupportedEncodingException {
-        innerUrl = new URL(url);
+
+            innerUrl = new URL(url);
 
         String query = innerUrl.getQuery();
-        String[] pairs = query.split("&");
-        for(String pair : pairs ) {
-            int idx = pair.indexOf("=");
+        if( query != null ) {
+            String[] pairs = query.split("&");
+            for(String pair : pairs ) {
+                int idx = pair.indexOf("=");
 
-            String parameter = URLDecoder.decode(pair.substring(0, idx), "UTF-8");
-            String value = URLDecoder.decode(pair.substring(idx + 1), "UTF-8");
-            queryPairs.put(parameter, value);
+                String parameter = URLDecoder.decode(pair.substring(0, idx), "UTF-8");
+                String value = URLDecoder.decode(pair.substring(idx + 1), "UTF-8");
+                queryPairs.put(parameter, value);
+            }
         }
     }
 
