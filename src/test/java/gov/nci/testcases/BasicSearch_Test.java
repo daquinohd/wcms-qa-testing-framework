@@ -1,6 +1,7 @@
 package gov.nci.testcases;
 
 import java.net.URL;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +18,9 @@ import org.testng.annotations.Test;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
+import gov.nci.Utilities.ParsedURL;
 import gov.nci.clinicalTrial.pages.BasicSearch;
+import gov.nci.clinicalTrial.pages.BasicSearchResults;
 import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.clinicalTrial.common.Delighters;
 import gov.nci.commonobjects.Banner;
@@ -174,29 +177,33 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
+	/**
+	 * Test search with all default vaules.
+	 */
 	@Test(groups = { "Smoke", "current" })
 	public void searchDefault() {
-		basicSearch.searchDefault();
-		if (driver.findElement(By.name("printButton")).isDisplayed()) {
-			System.out.println("All search results page should be displayed");
-			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("Result page url: " + resultPageUrl);
+		BasicSearchResults result = basicSearch.submitSearchForm();
+
+		// Verify the search parameters were set correctly.
+		try {
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam("q"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("t"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("a"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("z"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("rl"), "1", "Unexpected parameter value");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
-
-		// Checking the Page Title
-		String pageTitle = driver.getTitle();
-		System.out.println("Actual Page Title:" + pageTitle);
-		Assert.assertTrue(driver.findElement(By.className("cts-results-label")).getText().contains("all trials"));
-		driver.navigate().back();
-		System.out.println("Page URL after the default search " + driver.getCurrentUrl());
-
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Default Search on Basic CTS");
-
 	}
 
 	@Test(dataProvider = "CancerType", groups = { "Smoke" })
 	public void searchCancerType(String cancerType) throws InterruptedException {
-		// String cancerType = "Breast Cancer";
 
 		// Performing the search using Cancer type parameter
 		basicSearch.searchCancerType(cancerType);
@@ -546,7 +553,7 @@ public class BasicSearch_Test extends BaseClass {
 	// @Test(groups = { "Smoke" })
 	public void SearchInvalidAge() {
 		driver.findElement(By.xpath(".//input[@id='a']")).sendKeys("abc");
-		basicSearch.searchDefault();
+		basicSearch.clickSearchButton();
 		System.out.println(
 				"********Error Message of Age: " + driver.findElement(By.xpath("//div[@class='error-msg']")).getText());
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText()

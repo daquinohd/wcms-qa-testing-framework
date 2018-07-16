@@ -14,10 +14,13 @@ public class BasicSearch {
 	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
 	WebDriver driver;
 
+	/**************** Basic Search Form *********************************/
+	@FindBy(how = How.XPATH, using = "//*[@id='form--cts-basic']")
+	WebElement form_Search;
+
 	/*************** Basic Search Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div")
 	WebElement txt_SearchTip;
-	//@FindBy(how = How.LINK_TEXT, using = "advanced search")
 	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div/div/a")
 	WebElement lnk_AdvSearch;
 	@FindBy(how = How.XPATH, using = ".//input[@id='q']")
@@ -44,8 +47,6 @@ public class BasicSearch {
 	WebElement text_Age;
 	@FindBy(how = How.XPATH, using = ".//*[@id='fieldset--zip']/div")
 	WebElement text_Zipcode;
-	//@FindBy(how = How.XPATH, using = ".//input[@type='submit'][@class='submit button'] [@value='Search']")
-	//WebElement btn_Search;
 	@FindBy(how = How.XPATH, using = ".//input[@type='submit'][@class='submit button'] [@value='Find Trials']")
 	WebElement btn_Search;
 
@@ -128,17 +129,52 @@ public class BasicSearch {
 		return lnk_NextSteps;
 	}
 
-	// Default Search
-	public void searchDefault() {
-		FunctionLibrary.scrollIntoview(driver, lgd_cancerType);
+	/**
+	 * Clicks the form's search button.
+	 * This is logically equivalent to submitting the form, but doesn't block
+	 * for the form to load.
+	 * 
+	 * TODO: Need to figure out what to do about the lack of blocking.
+	 */
+	public void clickSearchButton() {
 		btn_Search.click();
 	}
 
+	/**
+	 * Submit's the search form. This is logically equivalent to clicking on the
+	 * search button, except that it blocks until the new page is loaded.
+	 * 
+	 * @return A BasicSearchResults object containing the results of the
+	 * form submission.
+	 */
+	public BasicSearchResults submitSearchForm() {
+		form_Search.submit();
+
+		BasicSearchResults result = new BasicSearchResults(this.driver);
+
+		return result;
+	}
+
+
+
 	// Search based on cancer type
 	public void searchCancerType(String cancerType) {
+		// TODO: This can't just do sendKeys. It needs to select the search term from a list.
 		txt_CancerType.sendKeys(cancerType);
 		txt_CancerType.sendKeys(Keys.RETURN);
+		//throw new UnsupportedOperationException("Not implemented.");
+	}
 
+	/**
+	 * 
+	 */
+	public void setSearchKeyword(String searchText) {
+		txt_CancerType.sendKeys(searchText);
+	}
+
+	public void pressEnterOnKeywordField() {
+		// Needs to call txt_CancerType.sendKeys(Keys.RETURN) and then return a page object.
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 
 	// Search based on Age

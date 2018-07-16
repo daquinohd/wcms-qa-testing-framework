@@ -76,13 +76,15 @@ public class BaseClass {
 			String image = logger.addScreenCapture(screenshotPath);
 			// logger.addScreenCapture("./test-output/ExtentReport/");
 			logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
-			driver.get(pageURL);
-		}
-
-		if (result.getStatus() == ITestResult.SKIP) {
+		} else if (result.getStatus() == ITestResult.SKIP) {
 			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
 			driver.get(pageURL);
 		}
+		else {
+			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
+		}
+
+		driver.get(pageURL);
 	}
 
 	@AfterClass(groups = { "Smoke", "current" })
