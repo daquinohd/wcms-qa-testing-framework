@@ -7,6 +7,7 @@ DelighterLiveHelpURL=https://www.cancer.gov/contact
 DelighterWhatURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
 DelighterFeedbackURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+Resources4ResearchersHomeURL=https://www-blue-dev.cancer.gov/research/r4r
 
 ************************Drivers Path***************************************
 ChromeDriver=./resources/drivers/chromedriver.exe
