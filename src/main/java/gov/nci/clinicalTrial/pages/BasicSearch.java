@@ -1,5 +1,8 @@
 package gov.nci.clinicalTrial.pages;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,9 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import gov.nci.Utilities.FunctionLibrary;
+import gov.nci.framework.PageObjectBase;
 
-public class BasicSearch {
+public class BasicSearch extends PageObjectBase {
 
 	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
 	WebDriver driver;
@@ -70,7 +73,8 @@ public class BasicSearch {
 	WebElement lgd_cancerType;
 
 	// Constructor - Initializing the Page objects
-	public BasicSearch(WebDriver driver) {
+	public BasicSearch(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		System.out.println("PageFactory initiated");
@@ -133,36 +137,41 @@ public class BasicSearch {
 	 * Clicks the form's search button.
 	 * This is logically equivalent to submitting the form, but doesn't block
 	 * for the form to load.
-	 * 
-	 * TODO: Need to figure out what to do about the lack of blocking.
 	 */
 	public void clickSearchButton() {
-		btn_Search.click();
+
+		expectUrlChange(() ->{
+			btn_Search.click();
+		});
 	}
 
 	/**
-	 * Submit's the search form. This is logically equivalent to clicking on the
+	 * Submits the search form. This is logically equivalent to clicking on the
 	 * search button, except that it blocks until the new page is loaded.
 	 * 
 	 * @return A BasicSearchResults object containing the results of the
 	 * form submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
 	 */
-	public BasicSearchResults submitSearchForm() {
-		form_Search.submit();
+	public BasicSearchResults submitSearchForm() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange( () -> {
+			form_Search.submit();
+		} );
 
 		BasicSearchResults result = new BasicSearchResults(this.driver);
-
 		return result;
 	}
-
 
 
 	// Search based on cancer type
 	public void searchCancerType(String cancerType) {
 		// TODO: This can't just do sendKeys. It needs to select the search term from a list.
 		txt_CancerType.sendKeys(cancerType);
-		txt_CancerType.sendKeys(Keys.RETURN);
-		//throw new UnsupportedOperationException("Not implemented.");
+		expectUrlChange(() -> {
+			txt_CancerType.sendKeys(Keys.RETURN);
+		});
 	}
 
 	/**

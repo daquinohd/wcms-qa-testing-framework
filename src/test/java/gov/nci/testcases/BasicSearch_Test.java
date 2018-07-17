@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -16,9 +15,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import gov.nci.framework.ParsedURL;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.Utilities.ParsedURL;
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.BasicSearchResults;
 import gov.nci.clinicalTrial.common.ApiReference;
@@ -52,7 +51,12 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
 
-		basicSearch = new BasicSearch(driver);
+		try {
+			basicSearch = new BasicSearch(driver);
+		} catch (Exception e) {
+			basicSearch = null;
+			logger.log(LogStatus.ERROR, "Error creating Basic Search page.");
+		}
 		delighter = new Delighters(driver);
 		crumb = new BreadCrumb(driver);
 		banner = new Banner(driver);
@@ -182,15 +186,43 @@ public class BasicSearch_Test extends BaseClass {
 	 */
 	@Test(groups = { "Smoke", "current" })
 	public void searchDefault() {
-		BasicSearchResults result = basicSearch.submitSearchForm();
-
-		// Verify the search parameters were set correctly.
 		try {
+			BasicSearchResults result = basicSearch.submitSearchForm();
+
+			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
 			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
 					"Unexpected URL path.");
 
 			Assert.assertEquals(url.getQueryParam("q"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("t"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("a"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("z"), "", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam("rl"), "1", "Unexpected parameter value");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error loading result page.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Performs a series of keyword searches (using cancer type test data)
+	 * and verifies that the search URL is created correctly.
+	 */
+	@Test(dataProvider = "CancerType", groups = { "Smoke" })
+	public void searchByKeyword(String cancerType) {
+
+		try {
+			basicSearch.setSearchKeyword(cancerType);
+			BasicSearchResults result = basicSearch.submitSearchForm();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam("q"), cancerType, "Unexpected parameter value");
 			Assert.assertEquals(url.getQueryParam("t"), "", "Unexpected parameter value");
 			Assert.assertEquals(url.getQueryParam("a"), "", "Unexpected parameter value");
 			Assert.assertEquals(url.getQueryParam("z"), "", "Unexpected parameter value");

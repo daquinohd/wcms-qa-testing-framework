@@ -132,7 +132,7 @@ public class BrowserManager {
 		}
 
 		// Allow a one second delay for the page to "settle" when looking for elements.
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
 
 		return driver;
 	}

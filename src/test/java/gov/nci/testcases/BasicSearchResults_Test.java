@@ -25,7 +25,12 @@ public class BasicSearchResults_Test extends BaseClass {
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
 
-		basicSearchResults = new BasicSearchResults(driver);
+		try {
+			basicSearchResults = new BasicSearchResults(driver);
+		} catch (Exception e) {
+			basicSearchResults = null;
+			logger.log(LogStatus.ERROR, "Error creating Basic Search results page.");
+		}
 		System.out.println("Basic search results setup done");
 	}
 
