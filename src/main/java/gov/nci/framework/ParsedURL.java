@@ -1,4 +1,4 @@
-package gov.nci.Utilities;
+package gov.nci.framework;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -20,6 +20,7 @@ public class ParsedURL {
      * Creates a ParsedURL object from its String representation.
      * 
      * @param url - the String to parse as a URL.
+     * @throws MalformedURLException
      * @throws UnsupportedEncodingException
      */
     public ParsedURL (String url )
