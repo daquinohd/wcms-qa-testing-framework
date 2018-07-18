@@ -72,6 +72,10 @@ public class BasicSearch extends PageObjectBase {
 	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['Cancer Type/Keyword']")
 	WebElement lgd_cancerType;
 
+	// Error messages
+	@FindBy(how = How.XPATH, using  = "//*[@id='fieldset--age']/div[@class='error-msg']")
+	WebElement errAgeInputDisplay;
+
 	// Constructor - Initializing the Page objects
 	public BasicSearch(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
@@ -132,6 +136,14 @@ public class BasicSearch extends PageObjectBase {
 	public WebElement getNextStepsLink() {
 		return lnk_NextSteps;
 	}
+
+	/**
+	 * Error Displays
+	 */
+	public WebElement getAgeInputError() {
+		return errAgeInputDisplay;
+	}
+
 
 	/**
 	 * Clicks the form's search button.

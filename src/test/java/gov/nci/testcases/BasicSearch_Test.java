@@ -299,7 +299,20 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.fail("Error parsing page URL.");
 			e.printStackTrace();
 		}
+	}
 
+	/**
+	 * Verifies that invalid age criteria are handled correctly.
+	 */
+	@Test(dataProvider = "InvalidAges", groups = { "Smoke" })
+	public void searchByAgeInvalid(String age)	{
+
+		basicSearch.setSearchAge(age);
+		basicSearch.setSearchKeyword(""); // Send focus to another field
+
+		WebElement errMessage = basicSearch.getAgeInputError();
+		Assert.assertTrue(errMessage.isDisplayed(), "Age input message not visible.");
+		Assert.assertEquals(errMessage.getText(), "Please enter a number between 1 and 120.", "Age input message not set correctly.");
 	}
 
 	@Test(dataProvider = "ZipCode", groups = { "Smoke" })
@@ -627,6 +640,18 @@ public class BasicSearch_Test extends BaseClass {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
 			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
+			Object ob[] = { age };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "InvalidAges")
+	public Iterator<Object[]> readInvalidAge() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "InvalidAges", rowNum);
 			Object ob[] = { age };
 			myObjects.add(ob);
 		}
