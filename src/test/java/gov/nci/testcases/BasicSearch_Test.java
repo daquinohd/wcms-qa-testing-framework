@@ -29,8 +29,14 @@ import com.relevantcodes.extentreports.LogStatus;
 public class BasicSearch_Test extends BaseClass {
 
 	// WebDriver driver;
-	public static final String TESTDATA_SHEET_NAME = "BasicSearch";
-	public static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
+	private static final String TESTDATA_SHEET_NAME = "BasicSearch";
+	private static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
+
+	private static final String KEYWORD_PARAM = "q";
+	private static final String CANCERTYPE_PARAM = "t";
+	private static final String AGE_PARAM = "a";
+	private static final String ZIPCODE_PARAM = "z";
+	private static final String RESULTS_LINK = "rl";
 
 	BasicSearch basicSearch;
 	Delighters delighter;
@@ -194,11 +200,11 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
 					"Unexpected URL path.");
 
-			Assert.assertEquals(url.getQueryParam("q"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("t"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("a"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("z"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("rl"), "1", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("Error loading result page.");
@@ -222,11 +228,11 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
 					"Unexpected URL path.");
 
-			Assert.assertEquals(url.getQueryParam("q"), cancerType, "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("t"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("a"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("z"), "", "Unexpected parameter value");
-			Assert.assertEquals(url.getQueryParam("rl"), "1", "Unexpected parameter value");
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), cancerType, "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("Error parsing page URL.");
@@ -268,49 +274,37 @@ public class BasicSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "Age", groups = { "Smoke" })
-	public void searchAge(int age) {
-		Object[][] data;
-		// Thread.sleep(300);
-		basicSearch.searchAge(age);
+	/**
+	 * Verifies handling of search by age for valid inputs.
+	 */
+	@Test(dataProvider = "ValidAges", groups = { "Smoke" })
+	public void searchByAge(String age) {
 
-		if (age < 1 || age > 120) {
-			WebElement error_Msg = driver.findElement(By.xpath("//div[@class='error-msg']"));
-			error_Msg.getText();
-			Assert.assertTrue(error_Msg.getText().contains("Please enter a number between 1 and 120."));
-			System.out.println("Error message for age: " + error_Msg.getText());
-			logger.log(LogStatus.PASS, "Verify Search by Age on basic CTS. Age = " + age);
+		try{
+			basicSearch.setSearchAge(age);
+			BasicSearchResults result = basicSearch.submitSearchForm();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), age, "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
 
-		else {
-			// Verify page title
-			String pageTitle = driver.getTitle();
-			System.out.println("basicSearch_searchAge: Basic Search Results Page Title: " + pageTitle);
-			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Result"));
-
-			// Verify search criteria in URL
-			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("basicsearch_Age: Current Page URL: " + resultPageUrl);
-			Assert.assertTrue(resultPageUrl.contains("a=" + age));
-			System.out.println("basicsearch_Age: Age: a=" + age);
-
-			// Verify that show search criteria table contains the selected
-			// search criteria
-			data = verifySearchCriteriaTable();
-
-			Assert.assertEquals(data[1][1], String.valueOf(age), "Age not matched");
-			System.out.println("data[1][1]==== " + data[1][1]);
-
-			driver.findElement(By.linkText("Start Over")).click();
-
-			System.out.println("Page URL after the age search " + driver.getCurrentUrl());
-			logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Age on Basic CTS");
-		}
 	}
 
 	@Test(dataProvider = "ZipCode", groups = { "Smoke" })
 	public void searchZip(String zip) throws InterruptedException {
-		Object[][] data;
+		//Object[][] data;
 		Thread.sleep(300);
 		basicSearch.searchZip(zip);
 
@@ -345,13 +339,14 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.assertTrue(resultPageUrl.contains("z=" + zip));
 			System.out.println("basicsearch_Zipcode: Zipcode: z=" + zip);
 
-			data = verifySearchCriteriaTable();
-
-			Assert.assertTrue(data[1][1].toString().contains(zip), "zip not matched" + zip);
-			System.out.println("data[1][1]==== " + data[1][1]);
-
-			driver.findElement(By.linkText("Start Over")).click();
-			logger.log(LogStatus.PASS, "Verify Search by zipcode on Basic CTS. Zipcode = " + zip);
+			// TODO: Move criteria table validation to results page tests.
+			//data = verifySearchCriteriaTable();
+			//
+			//Assert.assertTrue(data[1][1].toString().contains(zip), "zip not matched" + zip);
+			//System.out.println("data[1][1]==== " + data[1][1]);
+			//
+			//driver.findElement(By.linkText("Start Over")).click();
+			//logger.log(LogStatus.PASS, "Verify Search by zipcode on Basic CTS. Zipcode = " + zip);
 
 		}
 	}
@@ -626,14 +621,13 @@ public class BasicSearch_Test extends BaseClass {
 		return myObjects.iterator();
 	}
 
-	@DataProvider(name = "Age")
+	@DataProvider(name = "ValidAges")
 	public Iterator<Object[]> readAge() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "Age", rowNum);
-			int age1 = Integer.valueOf(age);
-			Object ob[] = { age1 };
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
+			Object ob[] = { age };
 			myObjects.add(ob);
 		}
 		return myObjects.iterator();
@@ -659,7 +653,7 @@ public class BasicSearch_Test extends BaseClass {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "Age", rowNum);
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
 			int age1 = Integer.valueOf(age);
 			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ZipCode", rowNum);
 			String zipcode1 = String.valueOf(zipcode);
@@ -678,7 +672,7 @@ public class BasicSearch_Test extends BaseClass {
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
 
 			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
-			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "Age", rowNum);
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
 			int age1 = Integer.valueOf(age);
 
 			Object ob[] = { cancerType, age1 };

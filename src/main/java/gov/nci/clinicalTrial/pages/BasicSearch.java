@@ -175,10 +175,23 @@ public class BasicSearch extends PageObjectBase {
 	}
 
 	/**
+	 * Places text in the "Cancer type or keyword" field, but doesn't select anything
+	 * from autocmplete.
 	 * 
+	 * @param searchText the value to insert in the keyword field.
 	 */
 	public void setSearchKeyword(String searchText) {
 		txt_CancerType.sendKeys(searchText);
+	}
+
+	/**
+	 * Places a value in the search form's "Age" field.
+	 * Allows non-integer values in order to allow tests of error handling.
+	 * 
+	 * @param age the value to place in the 
+	 */
+	public void setSearchAge(String age){
+		txt_Age.sendKeys(age);
 	}
 
 	public void pressEnterOnKeywordField() {
@@ -186,11 +199,7 @@ public class BasicSearch extends PageObjectBase {
 		throw new UnsupportedOperationException("Not implemented.");
 	}
 
-	// Search based on Age
-	public void searchAge(int age) {
-		txt_Age.sendKeys(String.valueOf(age));
-		btn_Search.click();
-	}
+
 
 	public void searchZip(String zipCode) {
 		txt_Zipcode.sendKeys(zipCode);
