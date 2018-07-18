@@ -35,3 +35,4 @@ SpanishPage=https://www-blue-dev.cancer.gov/espanol
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx

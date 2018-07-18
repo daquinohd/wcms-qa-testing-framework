@@ -49,7 +49,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		crumb = new BreadCrumb(driver);
 		banner = new Banner(driver);
 		api = new ApiReference(driver);
-		testDataFilePath = config.getProperty("TestData");
+		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 1)

@@ -68,7 +68,7 @@ public class BasicSearch_Test extends BaseClass {
 		banner = new Banner(driver);
 		api = new ApiReference(driver);
 		System.out.println("Basic search setup done");
-		testDataFilePath = config.getProperty("TestData");
+		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
 
 	// Verifying the UI components of Basic Search
