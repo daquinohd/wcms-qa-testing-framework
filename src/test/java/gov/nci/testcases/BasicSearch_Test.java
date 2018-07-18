@@ -141,17 +141,18 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void uiVerificationZipCodeField () {
 
+		WebElement zipCodeField = basicSearch.getZipCodeField();
+		Assert.assertTrue(zipCodeField.isDisplayed(), "ZipCode Input field not displayed.");
+
 		WebElement zipCodeLabel = basicSearch.getZipCodeLabel();
-		Assert.assertTrue(zipCodeLabel.isDisplayed(), "ZipCode label not displayed");
-		System.out.println("ZipCode label is displayed: " + zipCodeLabel.getText());
+		Assert.assertTrue(zipCodeLabel.isDisplayed(), "ZipCode label not displayed.");
 
 		WebElement zipCodeHelpLink = basicSearch.getZipCodeHelpLink();
-		Assert.assertTrue(zipCodeHelpLink.isDisplayed(), "ZipCode help icon not displayed");
+		Assert.assertTrue(zipCodeHelpLink.isDisplayed(), "ZipCode help icon not displayed.");
 
 		WebElement zipCodeTextElement = basicSearch.getZipCodeTextElement();
-		Assert.assertTrue(zipCodeTextElement.isDisplayed(), "ZipCode help text not displayed");
-		Assert.assertTrue(zipCodeTextElement.getText().contains("Show trials near this U.S. ZIP code."), "Zip code help text mismatch");
-		System.out.println("ZipCode help text is displayed: " + zipCodeTextElement.getText());
+		Assert.assertTrue(zipCodeTextElement.isDisplayed(), "ZipCode help text not displayed.");
+		Assert.assertTrue(zipCodeTextElement.getText().contains("Show trials near this U.S. ZIP code."), "Zip code help text mismatch.");
 	}
 
 	/**
@@ -315,53 +316,58 @@ public class BasicSearch_Test extends BaseClass {
 		Assert.assertEquals(errMessage.getText(), "Please enter a number between 1 and 120.", "Age input message not set correctly.");
 	}
 
-	@Test(dataProvider = "ZipCode", groups = { "Smoke" })
-	public void searchZip(String zip) throws InterruptedException {
-		//Object[][] data;
-		Thread.sleep(300);
-		basicSearch.searchZip(zip);
+	/**
+	 * Verifies handling of search by ZIP code for valid inputs.
+	 */
+	@Test(dataProvider = "ValidZipCode", groups = { "Smoke" })
+	public void searchByZip(String zipCode) {
 
-		// Verify that show search criteria table contains the selected
-		// search criteria
-		if (zip.equals("99999")) {
-			System.out.println("**********zip=99999***********");
-			// System.out.println(driver.getPageSource());
-			Assert.assertTrue(driver.getPageSource().contains(
-					"Sorry, you seem to have entered invalid criteria.  Please check the following, and try your search again:"));
+		try{
+			basicSearch.setSearchZip(zipCode);
+			BasicSearchResults result = basicSearch.submitSearchForm();
 
-			driver.findElement(By.linkText("Try a new search")).click();
-			logger.log(LogStatus.PASS, "Verify Search by invalid zipcode on Basic CTS. Zipcode = " + zip);
-		} else if (zip.equals("abc")) {
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
 
-			WebElement error_Msg = driver.findElement(By.xpath("//div[@class='error-msg']"));
-			error_Msg.getText();
-			Assert.assertTrue(error_Msg.getText().contains("Please enter a valid 5 digit ZIP code."));
-			System.out.println("Error message for zip: " + error_Msg.getText());
-			logger.log(LogStatus.PASS, "Verify Search by Age on Basic CTS. Zip = " + zip);
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), zipCode, "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
+	}
 
-		else {
-			// Verify page title
-			String pageTitle = driver.getTitle();
-			System.out.println("Page title for zipcode search :" + pageTitle);
-			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
+	/**
+	 * Verifies handling of search by ZIP code for invalid inputs.
+	 */
+	@Test(dataProvider = "InvalidZipCode", groups = { "Smoke" })
+	public void searchByZipInvalid(String zipCode) {
 
-			// Verify search criteria in URL
-			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("basicsearch_Zipcode: Current Page URL: " + resultPageUrl);
-			Assert.assertTrue(resultPageUrl.contains("z=" + zip));
-			System.out.println("basicsearch_Zipcode: Zipcode: z=" + zip);
+		basicSearch.setSearchZip(zipCode);
+		basicSearch.setSearchKeyword(""); // Send focus to another field
 
-			// TODO: Move criteria table validation to results page tests.
-			//data = verifySearchCriteriaTable();
-			//
-			//Assert.assertTrue(data[1][1].toString().contains(zip), "zip not matched" + zip);
-			//System.out.println("data[1][1]==== " + data[1][1]);
-			//
-			//driver.findElement(By.linkText("Start Over")).click();
-			//logger.log(LogStatus.PASS, "Verify Search by zipcode on Basic CTS. Zipcode = " + zip);
+		WebElement errMessage = basicSearch.getZipCodeInputError();
+		Assert.assertTrue(errMessage.isDisplayed(), "Age input message not visible.");
+		Assert.assertEquals(errMessage.getText(), "Please enter a valid 5 digit ZIP code.",
+				"ZIP Code input message not set correctly.");
+	}
 
-		}
+	/**
+	 * Verifies ZIP code only allows 5 digits.
+	 */
+	public void enterLongZipCode() {
+
+		String invalidZIPCode = "123456";
+		basicSearch.setSearchZip(invalidZIPCode);
+
+		String actualZip = basicSearch.getZipCodeField().getText();
+		Assert.assertNotEquals(actualZip, invalidZIPCode, "Zip code field allowed more than 5 digits.");
 	}
 
 	@Test(dataProvider = "Age_ZipCode", groups = { "Smoke" })
@@ -453,18 +459,13 @@ public class BasicSearch_Test extends BaseClass {
 			// to
 			// validate correct search results are displayed
 			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("basicsearch_CancerTypeZipcode: Current Page URL: " + resultPageUrl);
 			Assert.assertTrue(resultPageUrl.contains("z=" + zip));
-			System.out.println("basicsearch_CancerTypeZipcode: Zipcode: z=" + zip);
 			String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
-			System.out.println("New String: " + cancerTypeWithoutSpace);
 			Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
 					"Keyword not found " + cancerTypeWithoutSpace);
 			Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " + zip);
 			driver.navigate().back();
-			System.out.println("Page URL after the search " + driver.getCurrentUrl());
 			logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
-
 		}
 
 	}
@@ -658,15 +659,32 @@ public class BasicSearch_Test extends BaseClass {
 		return myObjects.iterator();
 	}
 
-	@DataProvider(name = "ZipCode")
+	@DataProvider(name = "ValidZipCode")
 	public Iterator<Object[]> readZipCode() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ZipCode", rowNum);
-			String zipcode1 = String.valueOf(zipcode);
-			Object ob[] = { zipcode1 };
-			myObjects.add(ob);
+			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidZipCode", rowNum);
+			// skip empty rows
+			if(!zipcode.trim().isEmpty()) {
+				Object ob[] = { zipcode.trim() };
+				myObjects.add(ob);
+			}
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "InvalidZipCode")
+	public Iterator<Object[]> readInvalidZipCode() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "InvalidZipCode", rowNum);
+			// skip empty rows
+			if (!zipcode.trim().isEmpty()) {
+				Object ob[] = { zipcode.trim() };
+				myObjects.add(ob);
+			}
 		}
 		return myObjects.iterator();
 	}
@@ -678,7 +696,7 @@ public class BasicSearch_Test extends BaseClass {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidZipCode", rowNum);
 			int age1 = Integer.valueOf(age);
 			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ZipCode", rowNum);
 			String zipcode1 = String.valueOf(zipcode);

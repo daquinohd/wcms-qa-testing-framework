@@ -73,8 +73,11 @@ public class BasicSearch extends PageObjectBase {
 	WebElement lgd_cancerType;
 
 	// Error messages
-	@FindBy(how = How.XPATH, using  = "//*[@id='fieldset--age']/div[@class='error-msg']")
-	WebElement errAgeInputDisplay;
+	@FindBy(how = How.XPATH, using  = "//fieldset[@id='fieldset--age']/div[@class='error-msg']")
+	WebElement err_AgeInputDisplay;
+
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--zip']/div[@class='error-msg']")
+	WebElement err_ZipCodeInputDisplay;
 
 	// Constructor - Initializing the Page objects
 	public BasicSearch(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
@@ -125,6 +128,10 @@ public class BasicSearch extends PageObjectBase {
 		return text_Zipcode;
 	}
 
+	public WebElement getZipCodeField() {
+		return txt_Zipcode;
+	}
+
 	public WebElement getSearchTipElement() {
 		return txt_SearchTip;
 	}
@@ -141,9 +148,12 @@ public class BasicSearch extends PageObjectBase {
 	 * Error Displays
 	 */
 	public WebElement getAgeInputError() {
-		return errAgeInputDisplay;
+		return err_AgeInputDisplay;
 	}
 
+	public WebElement getZipCodeInputError() {
+		return err_ZipCodeInputDisplay;
+	}
 
 	/**
 	 * Clicks the form's search button.
@@ -206,17 +216,17 @@ public class BasicSearch extends PageObjectBase {
 		txt_Age.sendKeys(age);
 	}
 
+	public void setSearchZip(String zipCode){
+		txt_Zipcode.sendKeys(zipCode);
+	}
+
+
 	public void pressEnterOnKeywordField() {
 		// Needs to call txt_CancerType.sendKeys(Keys.RETURN) and then return a page object.
 		throw new UnsupportedOperationException("Not implemented.");
 	}
 
 
-
-	public void searchZip(String zipCode) {
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-	}
 
 	public void searchCancerTypeAge(String cancerType, int age) {
 		txt_CancerType.sendKeys(cancerType);
