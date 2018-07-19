@@ -490,6 +490,7 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
+
 	@Test(groups = { "Smoke" })
 	public void verifyDelighterLiveHelp() {
 		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
@@ -579,33 +580,6 @@ public class BasicSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
 	}
 
-	/*****
-	 * incorporated these tests with the SearchAge and SearchZip methods
-	 **********/
-	// @Test(groups = { "Smoke" })
-	public void SearchInvalidAge() {
-		driver.findElement(By.xpath(".//input[@id='a']")).sendKeys("abc");
-		basicSearch.clickSearchButton();
-		System.out.println(
-				"********Error Message of Age: " + driver.findElement(By.xpath("//div[@class='error-msg']")).getText());
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText()
-				.contains("Please enter a number between 1 and 120."));
-		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Age on Basic CTS");
-		driver.findElement(By.xpath(".//input[@id='a']")).clear();
-	}
-
-	//@Test(groups = { "Smoke" })
-	public void SearchInvalidZip() {
-		//// div[@class='error-msg']
-		driver.findElement(By.xpath(".//input[@id='z']")).sendKeys("abc");
-		basicSearch.getZipCodeTextElement().click();
-		System.out.println("********Error Message of Zipcode: "
-				+ driver.findElement(By.xpath("//div[@class='error-msg']")).getText());
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='error-msg']")).getText()
-				.contains("Please enter a valid 5 digit ZIP code."));
-		logger.log(LogStatus.PASS, "Pass => " + "Verify error message for invalid Zip on Basic CTS");
-		driver.findElement(By.xpath(".//input[@id='z']")).clear();
-	}
 
 	/******************** Data Providers ****************/
 
