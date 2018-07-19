@@ -214,6 +214,110 @@ public class BasicSearch_Test extends BaseClass {
 	}
 
 	/**
+	 * Verify that clicking the search button submits the form. (Most tests use
+	 * BasicSearchResults::submitSearchForm.)
+	 */
+	@Test(groups = { "Smoke", "current" })
+	public void searchDefaultWithSearchButton() {
+		try {
+			BasicSearchResults result = basicSearch.clickSearchButton();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error loading result page.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Verify that pressing Enter while the Keyword field has focus will
+	 * submit the form.
+	 */
+	@Test(groups = { "Smoke", "current" })
+	public void pressEnterOnKeywordField() {
+		try {
+			BasicSearchResults result = basicSearch.pressEnterOnKeywordField();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error loading result page.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Verify that pressing Enter while the Age field has focus will submit the
+	 * form.
+	 */
+	@Test(groups = { "Smoke", "current" })
+	public void pressEnterOnAgeField() {
+		try {
+			BasicSearchResults result = basicSearch.pressEnterOnAgeField();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error loading result page.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Verify that pressing Enter while the ZIP Code field has focus will submit the
+	 * form.
+	 */
+	@Test(groups = { "Smoke", "current" })
+	public void pressEnterOnZipCodeField() {
+		try {
+			BasicSearchResults result = basicSearch.pressEnterOnZipCodeField();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error loading result page.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Performs a series of keyword searches (using cancer type test data)
 	 * and verifies that the search URL is created correctly.
 	 */

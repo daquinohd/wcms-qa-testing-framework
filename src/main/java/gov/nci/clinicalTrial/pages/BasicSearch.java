@@ -15,7 +15,7 @@ import gov.nci.framework.PageObjectBase;
 public class BasicSearch extends PageObjectBase {
 
 	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
-	WebDriver driver;
+	WebDriver browser;
 
 	/**************** Basic Search Form *********************************/
 	@FindBy(how = How.XPATH, using = "//*[@id='form--cts-basic']")
@@ -80,10 +80,10 @@ public class BasicSearch extends PageObjectBase {
 	WebElement err_ZipCodeInputDisplay;
 
 	// Constructor - Initializing the Page objects
-	public BasicSearch(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
-		super(driver);
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
+	public BasicSearch(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
+		super(browser);
+		this.browser = browser;
+		PageFactory.initElements(browser, this);
 		System.out.println("PageFactory initiated");
 	}
 
@@ -157,19 +157,21 @@ public class BasicSearch extends PageObjectBase {
 
 	/**
 	 * Clicks the form's search button.
-	 * This is logically equivalent to submitting the form, but doesn't block
-	 * for the form to load.
+	 * This is logically equivalent to submitting the form.
 	 */
-	public void clickSearchButton() {
+	public BasicSearchResults clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
 
 		expectUrlChange(() ->{
 			btn_Search.click();
 		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
 	}
 
 	/**
 	 * Submits the search form. This is logically equivalent to clicking on the
-	 * search button, except that it blocks until the new page is loaded.
+	 * search button.
 	 * 
 	 * @return A BasicSearchResults object containing the results of the
 	 * form submission.
@@ -182,12 +184,51 @@ public class BasicSearch extends PageObjectBase {
 			form_Search.submit();
 		} );
 
-		BasicSearchResults result = new BasicSearchResults(this.driver);
+		BasicSearchResults result = new BasicSearchResults(this.browser);
 		return result;
 	}
 
+	/**
+	 * Simulates pressing "Enter" while the Keyword field has focus.
+	 */
+	public BasicSearchResults pressEnterOnKeywordField() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() -> {
+			txt_CancerType.sendKeys(Keys.RETURN);
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
+
+	/**
+	 * Simulates pressing "Enter" while the Age field has focus.
+	 */
+	public BasicSearchResults pressEnterOnAgeField() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() -> {
+			txt_Age.sendKeys(Keys.RETURN);
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
+
+	/**
+	 * Simulates pressing "Enter" while the ZIP code field has focus.
+	 */
+	public BasicSearchResults pressEnterOnZipCodeField() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() -> {
+			txt_Zipcode.sendKeys(Keys.RETURN);
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
 
 	// Search based on cancer type
+	@Deprecated
 	public void searchCancerType(String cancerType) {
 		// TODO: This can't just do sendKeys. It needs to select the search term from a list.
 		txt_CancerType.sendKeys(cancerType);
@@ -210,21 +251,22 @@ public class BasicSearch extends PageObjectBase {
 	 * Places a value in the search form's "Age" field.
 	 * Allows non-integer values in order to allow tests of error handling.
 	 * 
-	 * @param age the value to place in the 
+	 * @param age the value to place in the age field.
 	 */
 	public void setSearchAge(String age){
 		txt_Age.sendKeys(age);
 	}
 
+	/**
+	 * Places a value in the search form's "ZIP code" field. Allows non-integer
+	 * values in order to allow tests of error handling.
+	 * 
+	 * @param zipCode the value to place in the ZIP code field
+	 */
 	public void setSearchZip(String zipCode){
 		txt_Zipcode.sendKeys(zipCode);
 	}
 
-
-	public void pressEnterOnKeywordField() {
-		// Needs to call txt_CancerType.sendKeys(Keys.RETURN) and then return a page object.
-		throw new UnsupportedOperationException("Not implemented.");
-	}
 
 
 

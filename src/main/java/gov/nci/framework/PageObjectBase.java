@@ -20,7 +20,7 @@ import org.openqa.selenium.WebDriver;
  */
 public class PageObjectBase {
 
-    WebDriver driver;
+    WebDriver browser;
 
     /**
      * Interface for passing actions which will cause the page to change. Used with
@@ -35,13 +35,13 @@ public class PageObjectBase {
     /**
      * Construtor
      * 
-     * @param driver An instance of WebDriver representing the browser at the time the
+     * @param browser An instance of WebDriver representing the browser at the time the
      * constructor is fired.
      */
-    public PageObjectBase(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
-        this.driver = driver;
-        pageUrl = new ParsedURL(driver.getCurrentUrl());
-        pageTitle = driver.getTitle().trim();
+    public PageObjectBase(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
+        this.browser = browser;
+        pageUrl = new ParsedURL(browser.getCurrentUrl());
+        pageTitle = browser.getTitle().trim();
     }
 
     private ParsedURL pageUrl;
@@ -88,19 +88,19 @@ public class PageObjectBase {
      */
     public void expectUrlChange(IPageChangeAction action) {
 
-        String oldURL = this.driver.getCurrentUrl();
+        String oldURL = this.browser.getCurrentUrl();
 
         // Perform the action which will cause a page change.
         action.operation();
 
         // Wait for the page URL to change.
-        new WebDriverWait(this.driver, 5).until(driver -> {
+        new WebDriverWait(this.browser, 5).until(driver -> {
             return !driver.getCurrentUrl().equals(oldURL);
         });
 
         // Wait for the page initialization to complete and the document.ready
         // event to fire.
-        new WebDriverWait(this.driver, 5).until(webDriver -> ((JavascriptExecutor) webDriver)
+        new WebDriverWait(this.browser, 5).until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
 }
