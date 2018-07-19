@@ -397,94 +397,97 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
+	/**
+	 * Test for the combination of keyword text and age.
+	 * The list of cancer types is used as sample text.
+	 */
 	@Test(dataProvider = "CancerType_Age", groups = { "Smoke" })
-	public void searchKeywordTextAndAge(String cancerType, int age) {
+	public void searchByKeywordAndAge(String keyword, String age) {
 
-		// Performing the search using Age and Zipcode parameter
-		basicSearch.searchCancerTypeAge(cancerType, age);
+		try {
+			// Performing the search using Age and keyword text
+			basicSearch.setSearchAge(age);
+			basicSearch.setSearchKeyword(keyword);
 
-		if (driver.findElement(By.name("printButton")).isDisplayed()) {
-			System.out.println("search results page should be displayed");
-			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("Result page url: " + resultPageUrl);
+			BasicSearchResults result = basicSearch.submitSearchForm();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r", "Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), keyword, "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), age, "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch(MalformedURLException| UnsupportedEncodingException e) 	{
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
-
-		// Checking the Results page URL for the parameters passed in order to
-		// validate correct search results are displayed
-		resultPageUrl = driver.getCurrentUrl();
-		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
-		System.out.println("New String: " + cancerTypeWithoutSpace);
-		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
-				"Keyword not found " + cancerTypeWithoutSpace);
-		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found " + age);
-		driver.navigate().back();
-		System.out.println("Page URL after the search " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and Age on Basic CTS");
 	}
 
+	/**
+	 * Test for the combination of keyword text and ZIP code. The list of cancer types is
+	 * used as sample text.
+	 */
 	@Test(dataProvider = "CancerType_ZipCode", groups = { "Smoke" })
-	public void searchCancerTypeZip(String cancerType, String zip) {
-		// String cancerType = "Breast Cancer";
+	public void searchByKeywordAndZip(String keyword, String zipCode) {
 
-		// Performing the search using Age and ZIP code parameter
-		basicSearch.searchCancerTypeZip(cancerType, zip);
+		try {
+			// Performing the search using Age and keyword text
+			basicSearch.setSearchZip(zipCode);
+			basicSearch.setSearchKeyword(keyword);
 
-		if (zip.equals("99999")) {
-			System.out.println("**********zip=99999***********");
-			Assert.assertTrue(driver.getPageSource().contains(
-					"Sorry, you seem to have entered invalid criteria.  Please check the following, and try your search again:"));
+			BasicSearchResults result = basicSearch.submitSearchForm();
 
-			driver.findElement(By.linkText("Try a new search")).click();
-			logger.log(LogStatus.PASS, "Verify Search by invalid zipcode on Basic CTS. Zipcode = " + zip);
-		} else if (driver.findElement(By.name("printButton")).isDisplayed()) {
-			System.out.println("search results page should be displayed");
-			// Verify page title
-			String pageTitle = driver.getTitle();
-			System.out.println("Page title for zipcode search :" + pageTitle);
-			Assert.assertTrue(pageTitle.contains("Clinical Trials Search Results"), "Page Title not matched");
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r", "Unexpected URL path.");
 
-			// Checking the Results page URL for the parameters passed in order
-			// to
-			// validate correct search results are displayed
-			resultPageUrl = driver.getCurrentUrl();
-			Assert.assertTrue(resultPageUrl.contains("z=" + zip));
-			String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
-			Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
-					"Keyword not found " + cancerTypeWithoutSpace);
-			Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " + zip);
-			driver.navigate().back();
-			logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type and ZipCode on Basic CTS");
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), keyword, "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), zipCode, "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
-
 	}
 
-	@Test(dataProvider = "CancerType_Age_ZipCode", groups = { "Smoke" })
-	public void searchCancerTypeAgeZip(String cancerType, int age, String zip) {
-		// int age = 65;
-		// int zip = 20105;
-		// String cancerType = "Breast Cancer";
+	/**
+	 * Test for the combination of keyword text, age and ZIP code. The list of cancer
+	 * types is used as keywords.
+	 */
 
-		// Performing the search using Age and Zipcode parameter
-		basicSearch.searchCancerTypeAgeZip(cancerType, age, zip);
+	 @Test(dataProvider = "CancerType_Age_ZipCode", groups = { "Smoke" })
+	public void searchCancerTypeAgeZip(String keyword, String age, String zipCode) {
 
-		if (driver.findElement(By.name("printButton")).isDisplayed()) {
-			System.out.println("search results page should be displayed");
-			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("Result page url: " + resultPageUrl);
+		try {
+			// Performing the search using Age and keyword text
+			basicSearch.setSearchAge(age);
+			basicSearch.setSearchZip(zipCode);
+			basicSearch.setSearchKeyword(keyword);
+
+			BasicSearchResults result = basicSearch.submitSearchForm();
+
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
+
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), keyword, "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), age, "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), zipCode, "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
-
-		// Checking the Results page URL for the parameters passed in order to
-		// validate correct search results are displayed
-		resultPageUrl = driver.getCurrentUrl();
-		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
-		System.out.println("New String: " + cancerTypeWithoutSpace);
-		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
-				"Keyword not found " + cancerTypeWithoutSpace);
-		Assert.assertTrue(resultPageUrl.contains(zip), "Keyword not found " + zip);
-		Assert.assertTrue(resultPageUrl.contains(Integer.toString(age)), "Keyword not found " + age);
-		driver.navigate().back();
-		System.out.println("Page URL after the search " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type, Age and ZipCode on Basic CTS");
 	}
 
 	@Test(groups = { "Smoke" })
@@ -710,9 +713,13 @@ public class BasicSearch_Test extends BaseClass {
 
 			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
 			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
-			int age1 = Integer.valueOf(age);
 
-			Object ob[] = { cancerType, age1 };
+			cancerType = cancerType.trim();
+			age = age.trim();
+			if( cancerType.isEmpty() || age.isEmpty() )
+				continue;
+
+			Object ob[] = { cancerType, age };
 			myObjects.add(ob);
 		}
 		return myObjects.iterator();
@@ -727,10 +734,14 @@ public class BasicSearch_Test extends BaseClass {
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
 
 			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
-			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ZipCode", rowNum);
-			String zipcode1 = String.valueOf(zipcode);
+			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidZipCode", rowNum);
 
-			Object ob[] = { cancerType, zipcode1 };
+			cancerType = cancerType.trim();
+			zipcode = zipcode.trim();
+			if(cancerType.isEmpty() || zipcode.isEmpty())
+				continue;
+
+			Object ob[] = { cancerType, zipcode };
 			myObjects.add(ob);
 		}
 		return myObjects.iterator();
@@ -745,12 +756,16 @@ public class BasicSearch_Test extends BaseClass {
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
 
 			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
-			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "Age", rowNum);
-			int age1 = Integer.valueOf(age);
-			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ZipCode", rowNum);
-			String zipcode1 = String.valueOf(zipcode);
+			String age = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidAges", rowNum);
+			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidZipCode", rowNum);
 
-			Object ob[] = { cancerType, age1, zipcode1 };
+			cancerType = cancerType.trim();
+			age = age.trim();
+			zipcode = zipcode.trim();
+			if( cancerType.isEmpty() || age.isEmpty() || zipcode.isEmpty() )
+				continue;
+
+			Object ob[] = { cancerType, age, zipcode };
 			myObjects.add(ob);
 		}
 		return myObjects.iterator();

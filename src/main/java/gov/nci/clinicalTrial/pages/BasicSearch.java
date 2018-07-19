@@ -228,58 +228,6 @@ public class BasicSearch extends PageObjectBase {
 
 
 
-	public void searchCancerTypeAge(String cancerType, int age) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_Age.sendKeys(String.valueOf(age));
-		btn_Search.click();
-		// txt_CancerType.sendKeys(Keys.RETURN);
-	}
-
-	public void searchCancerTypeZip(String cancerType, String zipCode) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-		// txt_CancerType.sendKeys(Keys.RETURN);
-	}
-
-	public void searchAgeZip(int age, String zipCode) {
-		txt_Age.sendKeys(String.valueOf(age));
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-	}
-
-	public void searchCancerTypeAgeZip(String cancerType, int age, String zipCode) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_Age.sendKeys(String.valueOf(age));
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-		// txt_CancerType.sendKeys(Keys.RETURN);
-	}
-
-	/*
-	 * public void clickDelighterWhat() { delighter_What.click(); }
-	 * 
-	 * public void clickDelighterWhich() { delighter_Which.click(); }
-	 * 
-	 * public WebElement getDelighterWhich() { return delighter_Which; }
-	 
-	public void clickDelighterFeedback() {
-	
-		delighter_Feedback.click();
-	}
-	
-	public WebElement getDelighterFeedback() {
-		return delighter_Feedback;
-	}
-	
-	public WebElement delighterFeedbackPopup() {
-		return delighter_FeedbackPopup;
-	}
-	
-	public void clickDelighterFeedbackPopupCancel() {
-		delighter_FeedbackPopupCancel.click();
-	} */
-
 	public void clickAdvSearch() {
 		lnk_AdvSearch.click();
 	}
