@@ -157,7 +157,11 @@ public class BasicSearch extends PageObjectBase {
 
 	/**
 	 * Clicks the form's search button.
-	 * This is logically equivalent to submitting the form.
+	 * 
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
 	 */
 	public BasicSearchResults clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
 
@@ -170,26 +174,12 @@ public class BasicSearch extends PageObjectBase {
 	}
 
 	/**
-	 * Submits the search form. This is logically equivalent to clicking on the
-	 * search button.
+	 * Simulates pressing "Enter" while the Keyword field has focus.
 	 * 
-	 * @return A BasicSearchResults object containing the results of the
-	 * form submission.
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
 	 * @throws UnsupportedEncodingException
 	 * @throws MalformedURLException
-	 */
-	public BasicSearchResults submitSearchForm() throws MalformedURLException, UnsupportedEncodingException {
-
-		expectUrlChange( () -> {
-			form_Search.submit();
-		} );
-
-		BasicSearchResults result = new BasicSearchResults(this.browser);
-		return result;
-	}
-
-	/**
-	 * Simulates pressing "Enter" while the Keyword field has focus.
 	 */
 	public BasicSearchResults pressEnterOnKeywordField() throws MalformedURLException, UnsupportedEncodingException {
 
@@ -203,6 +193,11 @@ public class BasicSearch extends PageObjectBase {
 
 	/**
 	 * Simulates pressing "Enter" while the Age field has focus.
+	 * 
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
 	 */
 	public BasicSearchResults pressEnterOnAgeField() throws MalformedURLException, UnsupportedEncodingException {
 
@@ -216,6 +211,11 @@ public class BasicSearch extends PageObjectBase {
 
 	/**
 	 * Simulates pressing "Enter" while the ZIP code field has focus.
+	 * 
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
 	 */
 	public BasicSearchResults pressEnterOnZipCodeField() throws MalformedURLException, UnsupportedEncodingException {
 

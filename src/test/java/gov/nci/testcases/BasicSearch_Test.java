@@ -194,32 +194,6 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke", "current" })
 	public void searchDefault() {
 		try {
-			BasicSearchResults result = basicSearch.submitSearchForm();
-
-			// Verify the search parameters were set correctly.
-			ParsedURL url = result.getPageUrl();
-			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
-					"Unexpected URL path.");
-
-			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
-			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
-			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
-			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
-			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
-
-		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("Error loading result page.");
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Verify that clicking the search button submits the form. (Most tests use
-	 * BasicSearchResults::submitSearchForm.)
-	 */
-	@Test(groups = { "Smoke", "current" })
-	public void searchDefaultWithSearchButton() {
-		try {
 			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
@@ -326,7 +300,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		try {
 			basicSearch.setSearchKeyword(cancerType);
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -387,7 +361,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		try{
 			basicSearch.setSearchAge(age);
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -428,7 +402,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		try{
 			basicSearch.setSearchZip(zipCode);
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -483,7 +457,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchAge(age);
 			basicSearch.setSearchZip(zipCode);
 
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -513,7 +487,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchAge(age);
 			basicSearch.setSearchKeyword(keyword);
 
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -543,7 +517,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchZip(zipCode);
 			basicSearch.setSearchKeyword(keyword);
 
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -575,7 +549,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchZip(zipCode);
 			basicSearch.setSearchKeyword(keyword);
 
-			BasicSearchResults result = basicSearch.submitSearchForm();
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
