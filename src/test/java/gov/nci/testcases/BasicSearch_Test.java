@@ -30,6 +30,7 @@ public class BasicSearch_Test extends BaseClass {
 
 	// WebDriver driver;
 	private static final String TESTDATA_SHEET_NAME = "BasicSearch";
+	private static final String BASIC_CANCERTYPE_SHEET_NAME = "Basic Cancer Types";
 	private static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
 
 	private static final String KEYWORD_PARAM = "q";
@@ -319,37 +320,59 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
-	@Test(dataProvider = "CancerType", groups = { "Smoke" })
-	public void searchCancerType(String cancerType) throws InterruptedException {
+	/**
+	 * Performs a series of tests, verifying that the selected cancer type is passed
+	 * as the expected concept ID.
+	 */
+	@Test(dataProvider = "CancerTypeExactText", groups = { "Smoke" })
+	public void searchCancerType(String cancerType, String ConceptID) throws InterruptedException {
+		
+		try {
+			// Search for the exact cancer type
+			basicSearch.setExactCancerType(cancerType);
+			BasicSearchResults result = basicSearch.clickSearchButton();
 
-		// Performing the search using Cancer type parameter
-		basicSearch.searchCancerType(cancerType);
+			// Verify the search parameters were set correctly.
+			ParsedURL url = result.getPageUrl();
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
 
-		if (driver.findElement(By.name("printButton")).isDisplayed()) {
-			System.out.println("search results page should be displayed");
-			resultPageUrl = driver.getCurrentUrl();
-			System.out.println("Result page url: " + resultPageUrl);
+			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), null, "Keyword parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), ConceptID, "Cancer Type parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(AGE_PARAM), "", "Age parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
+			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("Error parsing page URL.");
+			e.printStackTrace();
 		}
 
-		// Checking the Page Title
-		String pageTitle = driver.getTitle();
-		System.out.println("Actual Page Title:" + pageTitle);
-		Assert.assertEquals(pageTitle, "Clinical Trials Search Results - National Cancer Institute");
-
-		// Checking the Search Results form Title
-		String resultsTitle = driver.findElement(By.xpath(".//*[@id='main']/article/div[2]/h1/span")).getText();
-		System.out.println("Results Title:" + resultsTitle);
-		Assert.assertTrue(resultsTitle.contains("Clinical Trials Search Results"));
-
-		// Checking the Results page URL for the parameters passed in order to
-		// validate correct search results are displayed
-		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
-		System.out.println("New String: " + cancerTypeWithoutSpace);
-		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
-				"Keyword not found " + cancerTypeWithoutSpace);
-		driver.navigate().back();
-		System.out.println("Page URL after the cancer type search " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type on Basic CTS");
+//		if (driver.findElement(By.name("printButton")).isDisplayed()) {
+//			System.out.println("search results page should be displayed");
+//			resultPageUrl = driver.getCurrentUrl();
+//			System.out.println("Result page url: " + resultPageUrl);
+//		}
+//
+//		// Checking the Page Title
+//		String pageTitle = driver.getTitle();
+//		System.out.println("Actual Page Title:" + pageTitle);
+//		Assert.assertEquals(pageTitle, "Clinical Trials Search Results - National Cancer Institute");
+//
+//		// Checking the Search Results form Title
+//		String resultsTitle = driver.findElement(By.xpath(".//*[@id='main']/article/div[2]/h1/span")).getText();
+//		System.out.println("Results Title:" + resultsTitle);
+//		Assert.assertTrue(resultsTitle.contains("Clinical Trials Search Results"));
+//
+//		// Checking the Results page URL for the parameters passed in order to
+//		// validate correct search results are displayed
+//		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
+//		System.out.println("New String: " + cancerTypeWithoutSpace);
+//		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
+//				"Keyword not found " + cancerTypeWithoutSpace);
+//		driver.navigate().back();
+//		System.out.println("Page URL after the cancer type search " + driver.getCurrentUrl());
+//		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type on Basic CTS");
 
 	}
 
@@ -541,7 +564,7 @@ public class BasicSearch_Test extends BaseClass {
 	 */
 
 	 @Test(dataProvider = "CancerType_Age_ZipCode", groups = { "Smoke" })
-	public void searchCancerTypeAgeZip(String keyword, String age, String zipCode) {
+	public void searchKeywordAgeZip(String keyword, String age, String zipCode) {
 
 		try {
 			// Performing the search using Age and keyword text
@@ -662,7 +685,7 @@ public class BasicSearch_Test extends BaseClass {
 	/******************** Data Providers ****************/
 
 	@DataProvider(name = "CancerType")
-	public Iterator<Object[]> readCancerType() {
+	public Iterator<Object[]> readKeywordText() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
@@ -671,6 +694,24 @@ public class BasicSearch_Test extends BaseClass {
 
 			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
 			Object ob[] = { cancerType };
+
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "CancerTypeExactText")
+	public Iterator<Object[]> readCancerType() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(BASIC_CANCERTYPE_SHEET_NAME); rowNum++) {
+
+			String cancerTypeName = excelReader.getCellData(BASIC_CANCERTYPE_SHEET_NAME, "Cancer Type Name", rowNum);
+			String conceptID = excelReader.getCellData(BASIC_CANCERTYPE_SHEET_NAME, "Concept ID", rowNum);
+			Object ob[] = { cancerTypeName, conceptID };
 
 			myObjects.add(ob);
 

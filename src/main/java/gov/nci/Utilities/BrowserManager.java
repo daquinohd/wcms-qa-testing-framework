@@ -131,8 +131,8 @@ public class BrowserManager {
 
 		}
 
-		// Allow a one second delay for the page to "settle" when looking for elements.
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		// Allow up to a one second delay for elements to become available.
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
 		return driver;
 	}

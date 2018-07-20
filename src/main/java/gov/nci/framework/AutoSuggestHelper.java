@@ -17,7 +17,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class AutoSuggestHelper {
 
-    private static final int AUTO_SUGGEST_TIMEOUT = 5;
+    // Maximum number of seconds to wait for auto suggest list to appear.
+    private static final int AUTO_SUGGEST_TIMEOUT = 10;
 
     // WebDriver instance representing the browser.
     private WebDriver browser;
@@ -50,7 +51,7 @@ public class AutoSuggestHelper {
      *                      may not be present until the list has received entries.
      * 
      */
-    public WebElement SelectExact(String text, WebElement parentElement, String listSelector, String itemSelector ) {
+    public void SelectExact(String text, WebElement parentElement, String listSelector, String itemSelector ) {
 
         By autoSuggestionList = By.cssSelector(listSelector);
         By listEntry = By.cssSelector(itemSelector);
@@ -63,7 +64,5 @@ public class AutoSuggestHelper {
 
         parentElement.sendKeys(Keys.ARROW_DOWN);
         parentElement.sendKeys(Keys.ENTER);
-
-        return entry;
     }
 }

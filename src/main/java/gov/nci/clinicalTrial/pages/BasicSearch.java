@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-
+import gov.nci.framework.AutoSuggestHelper;
 import gov.nci.framework.PageObjectBase;
 
 public class BasicSearch extends PageObjectBase {
@@ -227,14 +227,22 @@ public class BasicSearch extends PageObjectBase {
 		return result;
 	}
 
-	// Search based on cancer type
-	@Deprecated
-	public void searchCancerType(String cancerType) {
-		// TODO: This can't just do sendKeys. It needs to select the search term from a list.
-		txt_CancerType.sendKeys(cancerType);
-		expectUrlChange(() -> {
-			txt_CancerType.sendKeys(Keys.RETURN);
-		});
+	/**
+	 * Selects the cancer type from the autosuggest list.
+	 * 
+	 * @param cancerType String containing the exact cancer type name to be selected. This must be the full name.
+	 */
+	public void setExactCancerType(String cancerType) throws MalformedURLException, UnsupportedEncodingException {
+
+		// CSS selector for the autosuggest. This appears in the DOM on page load.
+		String autoSuggestListSelector = "ul.ui-autocomplete.ui-front:not(.sitewide-search-menu)";
+
+		// CSS selector for the first list item, relative to the overall list. This appears in the DOM
+		// when the list is first rendered.
+		String autoSuggestListItemSelector = "li.ui-menu-item";
+
+		AutoSuggestHelper suggestHelper = new AutoSuggestHelper(browser);
+		suggestHelper.SelectExact(cancerType, txt_CancerType, autoSuggestListSelector, autoSuggestListItemSelector);
 	}
 
 	/**
