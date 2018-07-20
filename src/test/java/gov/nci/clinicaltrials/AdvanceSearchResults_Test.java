@@ -1,4 +1,4 @@
-package gov.nci.testcases;
+package gov.nci.clinicaltrials;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
