@@ -36,4 +36,8 @@ SpanishPage=https://www.cancer.gov/espanol
 AppModulePage=https://www.cancer.gov/publications/dictionaries/cancer-terms
 
 ***********************Test Data******************************************
-TestData= ./test-data/TestData.xlsx
+TestData=./test-data/TestData.xlsx
+
+***********************External Resources*********************************
+AnalyticsTrackingServer=nci.122.2o7.net
+StaticServer=static.cancer.gov

@@ -1,31 +1,42 @@
 package gov.nci.WebAnalytics;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.NameValuePair;
 
 public class AnalyticsRequest {
+	// TODO: move server strings into config	
+	// TODO: remove unused methods
+	// TODO: refactor param object
 
 	// Constants
 	public static final String STATIC_SERVER = "static.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
 
-	// Temporary Params object
-	AnalyticsParams waParams;
-
+	// TODO: do something with this
+	public String channel;	
 	
-	private static URI uri;	
+	// A request URL
+	private String url;
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	// A request URI
+	private URI uri;	
 	public URI getUri() {
 		return uri;
 	}
-	public void setUrl(URI uri) {
+	public void setUri(URI uri) {
 		this.uri = uri;
 	}
 	
+	// A list of query parameters
 	private List<NameValuePair> paramsList;
 	public List<NameValuePair> getParamsList() {
 		return paramsList;
@@ -33,16 +44,25 @@ public class AnalyticsRequest {
 	public void setParamsList(List<NameValuePair> paramsList) {
 		this.paramsList = paramsList;
 	}
-		
-	public String channel;
 	
-	public AnalyticsRequest() {}
-		
-	public static AnalyticsRequest getBeacon(String beaconUrl) {
-		AnalyticsRequest rtnBeacon = new AnalyticsRequest();
-		rtnBeacon.setUrl(createURI(beaconUrl));
-		rtnBeacon.setParamsList(AnalyticsParams.getParamList(uri));
-		return rtnBeacon;
+	
+	/**
+	 * Constructor with 'url' arg
+	 * @param url
+	 */
+	public AnalyticsRequest(String url) {
+		setUrl(url);
+		setUri(null);
+		setParamsList(new ArrayList<NameValuePair>());
+	}
+	
+	/**
+	 * Build the 
+	 * @throws NullPointerException
+	 */
+	public void buildParamsList() throws NullPointerException {
+		setUri(createUri(url));
+		setParamsList(AnalyticsParams.getList(uri));		
 	}
 	
 	/**
@@ -50,12 +70,13 @@ public class AnalyticsRequest {
 	 * @param url
 	 * @return
 	 */
-	public static URI createURI(String url) {
+	private static URI createUri(String url) {
 		try {
 			URI rtnUri = URI.create(url);
 			return rtnUri;
 		} catch (IllegalArgumentException ex) {
-			System.out.println("Invalid beacon URL \"" + url + "\\\" at AnalyticsBase:createURI()");
+			System.out.println("Invalid request URL \"" + url + 
+					"\\\" at AnalyticsRequest:createURI()");
 			return null;
 		}
 	}
@@ -85,7 +106,7 @@ public class AnalyticsRequest {
 	 */
 	public String getChannel(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(waParams.CHANNEL.toString())) {
+			if (param.getName().equalsIgnoreCase(AnalyticsParams.CHANNEL)) {
 				return param.getValue().trim();
 			}
 		}
@@ -109,7 +130,7 @@ public class AnalyticsRequest {
 	}
 	
 	/**
-	 * Get list of props ('c' values in beacon)
+	 * Get list of props ('c' values in request)
 	 * @param parms
 	 * @return
 	 */
@@ -118,7 +139,7 @@ public class AnalyticsRequest {
 	}
 	
 	/**
-	 * Get list of eVars ('v' values in beacon)
+	 * Get list of eVars ('v' values in request)
 	 * @param parms
 	 * @return
 	 */
@@ -127,7 +148,7 @@ public class AnalyticsRequest {
 	}
 	
 	/**
-	 * Get list of hierarchy values ("h" values in beacon)
+	 * Get list of hierarchy values ("h" values in request)
 	 * @param parms
 	 * @return
 	 */
@@ -137,11 +158,10 @@ public class AnalyticsRequest {
 
 	/**
 	 * Get "Link Type" value (pe)(
-	 * @param parms
 	 * @return
 	 */
-	public String getLinkType(List<NameValuePair> parms) {
-		for (NameValuePair param : parms) {
+	public String getLinkType() {
+		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKTYPE)) {
 				return param.getValue().trim();
 			}
@@ -151,7 +171,6 @@ public class AnalyticsRequest {
 
 	/**
 	 * Get "Link Name" value (pev2)(
-	 * @param parms
 	 * @return
 	 */	
 	public String getLinkName() {
@@ -165,11 +184,10 @@ public class AnalyticsRequest {
 
 	/**
 	 * Get "Link URL" value (pev1)(
-	 * @param parms
 	 * @return
 	 */		
-	public String getLinkUrl(List<NameValuePair> parms) {
-		for (NameValuePair param : parms) {
+	public String getLinkUrl() {
+		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKURL)) {
 				return param.getValue().trim();
 			}
@@ -182,15 +200,28 @@ public class AnalyticsRequest {
 	 * @param paramList
 	 * @return
 	 */
-	public boolean hasLinkType(List<NameValuePair> paramList) {
-		for (NameValuePair param : paramList) {
+	public boolean hasLinkType() {
+		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKTYPE)) {
 				return true;
 			}
 		}
 		return false;
 	}
-		
+
+	/**
+	 * Check for parameters to verify that this is a click-type/link event
+	 * @param paramList
+	 * @return
+	 */
+	public boolean isClickTypeEvent() {
+		if(getLinkType().isEmpty() && getLinkName().isEmpty() && getLinkUrl().isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	/**
 	 * Temporary util method for troubleshooting
 	 * TODO: remove this once explicit wait is working 

@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 
 public class AnalyticsParams {
+	// TODO: turn this into a real class
 	
 	// Parameter values from URL
 	static final String CHANNEL = "ch";
@@ -30,11 +31,11 @@ public class AnalyticsParams {
 	 * @param uri
 	 * @return retParams
 	 */
-	public static List<NameValuePair> getParamList(URI uri) {
+	public static List<NameValuePair> getList(URI uri) {
 		List<NameValuePair> rtnParams = new ArrayList<NameValuePair>();
 		
 		try {
-			String queries = getRawQueryString(uri);
+			String queries = uri.getRawQuery(); // get encoded query string
 			for(String parm : queries.split("&")) {
 				String[] pair = parm.split("=");
 				String Name = URLDecoder.decode(pair[0], "UTF-8");
@@ -49,26 +50,8 @@ public class AnalyticsParams {
 			System.out.println("Error decoding URI in WaParams:buildParamsList()");
 		}		
 		return rtnParams;
-	}	
-	
-	/**
-	 * Get the clean query string from a given URI.
-	 * @param uri
-	 * @return URL String
-	 */	
-	public static String getRawQueryString(URI uri) {
-		return uri.getRawQuery();
-	}	
-	 
-	/**
-	 * Get an encoded query string from a given URI.
-	 * @param uri
-	 * @return URL String
-	 */	
-	public static String getQueryString(URI uri) {
-		return uri.getQuery();
 	}
-	
+
 	/**
 	 * Check that a given query parameter (name) exists within a list of params
 	 * @param paramList

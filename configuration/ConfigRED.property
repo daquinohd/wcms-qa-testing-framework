@@ -1,6 +1,8 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+BasicSearchResultsURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
+ResultsPageURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www-red-dev.cancer.gov/contact
 DelighterWhatURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
@@ -35,4 +37,8 @@ SpanishPage=https://www-red-dev.cancer.gov/espanol
 AppModulePage=https://www-red-dev.cancer.gov/publications/dictionaries/cancer-terms
 
 ***********************Test Data******************************************
-TestData= ./test-data/TestData.xlsx
+TestData=./test-data/TestData.xlsx
+
+***********************External Resources*********************************
+AnalyticsTrackingServer=nci.122.2o7.net
+StaticServer=static.cancer.gov

@@ -1,6 +1,8 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+BasicSearchResultsURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
+ResultsPageURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www-dt-qa.cancer.gov/contact
 DelighterWhatURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
@@ -14,7 +16,6 @@ DriverPath_Win=./resources/drivers/win
 DriverPath_Linux=./resources/drivers/linux
 DriverName_ChromeDriver=chromedriver
 DriverName_FirefoxDriver=geckodriver
-
 
 ***********************Reporting******************************************
 ExtentReports= ./test-output/ExtentReport/
@@ -35,4 +36,8 @@ SpanishPage=https://www-dt-qa.cancer.gov/espanol
 AppModulePage=https://www-dt-qa.cancer.gov/publications/dictionaries/cancer-terms
 
 ***********************Test Data******************************************
-TestData= ./test-data/TestData.xlsx
+TestData=./test-data/TestData.xlsx
+
+***********************External Resources*********************************
+AnalyticsTrackingServer=nci.122.2o7.net
+StaticServer=static.cancer.gov
