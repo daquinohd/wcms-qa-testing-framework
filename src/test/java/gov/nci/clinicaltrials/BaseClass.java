@@ -2,9 +2,7 @@ package gov.nci.clinicaltrials;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
@@ -49,22 +47,15 @@ public class BaseClass {
 
 	@BeforeClass(groups = { "Smoke", "current" })
 	public void beforeClass() {
-		System.out.println("************BEFORE CLASS EXECUTED************** ");
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
 
-	// handles the CTS Chat popup and closes it for executing scripts
+
 	@BeforeMethod(groups = { "Smoke", "current" })
 	public void beforeMethod() {
 
-		try {
-			// To see if the pop up presents
-			driver.findElement(By.xpath("//*[@id='ProactiveLiveHelpForCTSPrompt']"));
-			Thread.sleep(500);
-			driver.findElement(By.cssSelector("#ProactiveLiveHelpForCTSPrompt > a")).click();
-		} catch (Exception e) {
-
-		}
+		// Force the page to load fresh before each test.
+		driver.get(pageURL);
 
 		((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
 	}
@@ -74,22 +65,18 @@ public class BaseClass {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
 			String image = logger.addScreenCapture(screenshotPath);
-			// logger.addScreenCapture("./test-output/ExtentReport/");
+
 			logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
 		} else if (result.getStatus() == ITestResult.SKIP) {
 			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
-			driver.get(pageURL);
 		}
 		else {
 			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
 		}
-
-		driver.get(pageURL);
 	}
 
 	@AfterClass(groups = { "Smoke", "current" })
 	public void afterClass() {
-		System.out.println("***********Quiting Driver*********");
 		driver.quit();
 		report.endTest(logger);
 	}

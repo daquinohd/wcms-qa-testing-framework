@@ -10,9 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import gov.nci.framework.AutoSuggestHelper;
-import gov.nci.framework.PageObjectBase;
 
-public class BasicSearch extends PageObjectBase {
+public class BasicSearch extends ClinicalTrialPageObjectBase {
 
 	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
 	WebDriver browser;
@@ -80,8 +79,8 @@ public class BasicSearch extends PageObjectBase {
 	WebElement err_ZipCodeInputDisplay;
 
 	// Constructor - Initializing the Page objects
-	public BasicSearch(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
-		super(browser);
+	public BasicSearch(WebDriver browser, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException {
+		super(browser, decorator);
 		this.browser = browser;
 		PageFactory.initElements(browser, this);
 		System.out.println("PageFactory initiated");

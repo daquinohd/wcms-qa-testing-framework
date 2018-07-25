@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -20,6 +21,7 @@ import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.clinicalTrial.common.Delighters;
 import gov.nci.commonobjects.Banner;
@@ -59,7 +61,9 @@ public class BasicSearch_Test extends BaseClass {
 		driver = BrowserManager.startBrowser(browser, pageURL);
 
 		try {
-			basicSearch = new BasicSearch(driver);
+			// Create search page with chat prompt suppressed.
+			SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
+			basicSearch = new BasicSearch(driver, chatPrompt);
 		} catch (Exception e) {
 			basicSearch = null;
 			logger.log(LogStatus.ERROR, "Error creating Basic Search page.");
