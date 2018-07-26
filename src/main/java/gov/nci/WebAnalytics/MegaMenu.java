@@ -35,6 +35,7 @@ public class MegaMenu extends PageObjectBase{
 	* These are the elements that make up our page object
 	*/
 	// TODO: Figure out why FindBy(linkText) is so finnicky in Firefox
+	// TODO: Helper function for wait.until(ExpectedConditions.visibilityOf())
 	@FindBy(css = "#mega-nav .nav-item-title a")
 	WebElement mm_bar_link;
 	@FindBy(css = "#mega-nav .sub-nav-group a")
@@ -82,12 +83,10 @@ public class MegaMenu extends PageObjectBase{
 	}
 
 	public void revealMegaMenuDesktop() {
-		System.out.println("Expand megamenu on desktop");		
+		System.out.println("Expand megamenu on desktop");
 		driver.navigate().to(Nav.homePage);
-		action.moveToElement(mm_bar_link).perform();
-		wait.until(ExpectedConditions.visibilityOf(mm_subnav_header));
-		action.moveToElement(mm_subnav_header).pause(5000).perform();
-		driver.navigate().refresh();
+		action.moveToElement(mm_bar_link).pause(2000).perform();
+		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li_text));
 	}
 	
 	public void revealMegaMenuMobile() {
