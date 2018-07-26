@@ -1,5 +1,6 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search
+BasicSearchResultsURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-dt-qa.cancer.gov/contact
 DelighterWhatURL=https://www-dt-qa.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials

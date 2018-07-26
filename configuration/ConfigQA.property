@@ -1,7 +1,7 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
-BasicSearchResultsURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
+BasicSearchResultsURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 ResultsPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www-qa.cancer.gov/contact
 DelighterWhatURL=https://www-qa.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
