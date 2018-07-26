@@ -1,6 +1,10 @@
 package gov.nci.WebAnalytics.Tests;
 
 import com.relevantcodes.extentreports.LogStatus;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -12,7 +16,7 @@ public class Resize_Test extends AnalyticsTestBase {
 	private Resize resize;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void beforeMethod() {
+	public void setupResize() throws MalformedURLException, UnsupportedEncodingException {
 		resize = new Resize(driver);
 	}
 

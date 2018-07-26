@@ -1,17 +1,23 @@
 package gov.nci.WebAnalytics;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.nci.Utilities.Nav;
 
-public class PageLoad {
+import gov.nci.framework.PageObjectBase;
+
+public class PageLoad extends PageObjectBase {
 
 	// Local driver object
 	public WebDriver driver;
 	
 	// Constructor to initialize the page object	
-	public PageLoad(WebDriver driver) {
+	public PageLoad(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		System.out.print("PageFactory initialized for load events: ");

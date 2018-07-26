@@ -1,5 +1,6 @@
 package gov.nci.WebAnalytics.Tests;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -15,7 +16,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	private PageLoad pageLoad;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void beforeMethod() {
+	public void setupPageLoad() throws MalformedURLException, UnsupportedEncodingException {
 		pageLoad = new PageLoad(driver);
 	}	
 

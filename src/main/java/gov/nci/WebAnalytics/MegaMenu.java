@@ -22,7 +22,7 @@ public class MegaMenu extends PageObjectBase{
 	private WebDriverWait wait;
 	
 	// Constructor to initialize the page object
-	public MegaMenu(WebDriver driver)  throws MalformedURLException, UnsupportedEncodingException {
+	public MegaMenu(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		this.driver = driver;
 		action = new Actions(driver);
