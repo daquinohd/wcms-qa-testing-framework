@@ -68,8 +68,7 @@ public class MegaMenu extends PageObjectBase{
 	public void clickMMSubnavHeader() {
 		System.out.println("Click megamenu subnav header");
 		driver.navigate().to(Nav.homePage);
-		action.moveToElement(mm_bar_link);
-		action.perform();
+		action.moveToElement(mm_bar_link).perform();;
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_header));
 		mm_subnav_header.click();
 	}
@@ -77,8 +76,7 @@ public class MegaMenu extends PageObjectBase{
 	public void clickMMSubnavLi() {
 		System.out.println("Click megamenu subnav list item");		
 		driver.navigate().to(Nav.homePage);
-		action.moveToElement(mm_bar_link);
-		action.perform();
+		action.moveToElement(mm_bar_link).perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li_text));
 		mm_subnav_li_text.click();
 	}
@@ -86,9 +84,9 @@ public class MegaMenu extends PageObjectBase{
 	public void revealMegaMenuDesktop() {
 		System.out.println("Expand megamenu on desktop");		
 		driver.navigate().to(Nav.homePage);
-		action.moveToElement(mm_bar_link);
-		action.perform();
-		AnalyticsRequest.nap(5);
+		action.moveToElement(mm_bar_link).perform();
+		wait.until(ExpectedConditions.visibilityOf(mm_subnav_header));
+		action.moveToElement(mm_subnav_header).pause(5000).perform();
 		driver.navigate().refresh();
 	}
 	
