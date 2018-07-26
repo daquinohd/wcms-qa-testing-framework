@@ -29,9 +29,11 @@ import gov.nci.commonobjects.BreadCrumb;
 public class BasicSearch_Test extends BaseClass {
 
 	// WebDriver driver;
-	private static final String TESTDATA_SHEET_NAME = "BasicSearch";
-	private static final String BASIC_CANCERTYPE_SHEET_NAME = "Basic Cancer Types";
-	private static final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
+	private final String TESTDATA_SHEET_NAME = "BasicSearch";
+	private final String BASIC_CANCERTYPE_SHEET_NAME = "Basic Cancer Types";
+	private final String API_REFERENCE_H3 = "The Clinical Trials API: Use our data to power your own clinical trial search";
+
+	private final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
 
 	private static final String KEYWORD_PARAM = "q";
 	private static final String CANCERTYPE_PARAM = "t";
@@ -40,9 +42,6 @@ public class BasicSearch_Test extends BaseClass {
 	private static final String RESULTS_LINK = "rl";
 
 	BasicSearch basicSearch;
-	BreadCrumb crumb;
-	Banner banner;
-	ApiReference api;
 	String resultPageUrl;
 	String advSearchPageUrl;
 	String testDataFilePath;
@@ -66,9 +65,6 @@ public class BasicSearch_Test extends BaseClass {
 			logger.log(LogStatus.ERROR, "Error creating Basic Search page.");
 		}
 
-		crumb = new BreadCrumb(driver);
-		banner = new Banner(driver);
-		api = new ApiReference(driver);
 		System.out.println("Basic search setup done");
 		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
@@ -84,7 +80,6 @@ public class BasicSearch_Test extends BaseClass {
 		WebElement headerTextElement = basicSearch.getHeaderText();
 		Assert.assertTrue(headerTextElement.isDisplayed(), "Basic CTS header text not displayed");
 		Assert.assertTrue(headerTextElement.getText().contains("Steps to Find a Clinical Trial"), "header text mismatch");
-		System.out.println("Basic CTS header text displayed is " + headerTextElement.getText());
 	}
 
 	/**
@@ -96,7 +91,6 @@ public class BasicSearch_Test extends BaseClass {
 		WebElement searchTipElememt = basicSearch.getSearchTipElement();
 		Assert.assertTrue(searchTipElememt.isDisplayed(), "Search Tip not displayed");
 		Assert.assertTrue(searchTipElememt.getText().contains("Search Tip: For more search options, use our advanced search"), "Search Tip text mismatched");
-		System.out.println("Search Tip is displayed: " + searchTipElememt.getText());
 	}
 
 	/**
@@ -107,7 +101,6 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement cancerTypeLabel = basicSearch.getCancerTypeLabel();
 		Assert.assertTrue(cancerTypeLabel.isDisplayed(), "Cancer Type label not displayed");
-		System.out.println("Cancer Type label is displayed: " + cancerTypeLabel.getText());
 
 		WebElement cancerTypeHelpLink = basicSearch.getCancerTypeHelpLink();
 		Assert.assertTrue(cancerTypeHelpLink.isDisplayed(), "Cancer Type help icon not displayed");
@@ -115,7 +108,6 @@ public class BasicSearch_Test extends BaseClass {
 		WebElement cancerTypeMessageElement = basicSearch.getCancerTypeMessageElement();
 		Assert.assertTrue(cancerTypeMessageElement.isDisplayed(), "Cancer Type Placeholder message not displayed");
 		Assert.assertTrue(cancerTypeMessageElement.getAttribute("placeholder").contains("Start typing to select a cancer type"), "Cancer type message text mismatch");
-		System.out.println("Cancer Type placeholder message is displayed: " + cancerTypeMessageElement.getText());
 	}
 
 	/**
@@ -126,7 +118,6 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement ageLabel = basicSearch.getAgeLabel();
 		Assert.assertTrue(ageLabel.isDisplayed(), "Age label not displayed");
-		System.out.println("Age label is displayed: " + ageLabel.getText());
 
 		WebElement ageHelpLink = basicSearch.getAgeHelpLink();
 		Assert.assertTrue(ageHelpLink.isDisplayed(), "Age help icon is displayed");
@@ -134,7 +125,6 @@ public class BasicSearch_Test extends BaseClass {
 		WebElement ageHelpText = basicSearch.getTextAgeElement();
 		Assert.assertTrue(ageHelpText.isDisplayed(), "Age help text not displayed");
 		Assert.assertTrue(ageHelpText.getText().contains("Your age helps determine which trials are right for you."), "Age text mismatch");
-		System.out.println("Age help text is displayed: " + ageHelpText.getText());
 	}
 
 	/**
@@ -165,7 +155,6 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement searchButton = basicSearch.getSearchButton();
 		Assert.assertTrue(searchButton.isDisplayed(), "Find Results button not displayed");
-		System.out.println("Find Results button is displayed: " + searchButton.getAttribute("value"));
 	}
 
 	/**
@@ -567,38 +556,41 @@ public class BasicSearch_Test extends BaseClass {
 
 
 	@Test(groups = { "Smoke" })
-	public void clickAdvSearch() {
-		// Click on Advance Search link
-		basicSearch.clickAdvSearch();
-		// Checking the Results page URL for the parameters passed in order to
-		// validate correct search results are displayed
-		advSearchPageUrl = driver.getCurrentUrl();
-		System.out.println("Advanced Search " + advSearchPageUrl);
-		Assert.assertTrue(advSearchPageUrl.contains("advanced"));
-		driver.navigate().back();
-		System.out.println("Page URL after the coming back to basic search " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify navigation to Advanced CTS on Basic CTS");
+	public void verifyAdvancedSearchLink() {
+
+		String link = basicSearch.getAdvancedSearchLinkUrl();
+		String expected = config.getPageURL("AdvanceSearchPageURL");
+
+		Assert.assertEquals(link, expected, "Link mismatch");
 	}
 
+	// TODO: Move all bread crumb verifications to a single test class.
 	@Test(groups = { "Smoke" }, priority = 1)
-	public void verify_bread_crumb() {
-		crumb.getBreadCrumb();
-		Assert.assertEquals(crumb.getBreadCrumb(), basicSearch.BREAD_CRUMB);
-		System.out.println("Breadcrumb is displaying correctly");
-		logger.log(LogStatus.PASS, "Pass => " + "Verifying the Breadcrumb of the page");
+	public void verifyBreadCrumb() {
 
+		BreadCrumb crumb = new BreadCrumb(driver);
+		String text = crumb.getBreadCrumbText();
+
+		// NOTE: getBreadCrumbText trims innerText whitespace.
+		Assert.assertEquals(text, BREAD_CRUMB, "Bread crumbs don't match.");
 	}
 
+	// TODO: Move all page banner verifications to a single test class.
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void verifyBanner() {
-		Assert.assertTrue(banner.getBanner().isDisplayed());
-		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
-		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
+
+		Banner banner = new Banner(driver);
+
+		Assert.assertTrue(banner.isDisplayed(), "Banner is not visible.");
+		Assert.assertEquals(banner.getAltText(), "National Cancer Institute", "Banner alt-text is mismatched.");
 	}
 
-	/*****incorporated these tests with the SearchAge and SearchZip methods**********/
+	// TODO: Reinstate test or delete it.
 	//@Test(groups = { "Smoke" })
 	public void verifyApiReference() {
+
+		ApiReference api = new ApiReference(driver);
+
 		api.getApiReference();
 		Assert.assertTrue(api.getApiReference().isDisplayed());
 		Assert.assertEquals(api.getApiReference().getText(), API_REFERENCE_H3);

@@ -17,8 +17,6 @@ public class SuppressChatPromptPageObject extends ClinicalTrialPageObjectBase {
             throws MalformedURLException, UnsupportedEncodingException {
         super(browser, decorator);
 
-System.out.print(browser.getCurrentUrl());
-
         // Block the proactive chat prompt
         Cookie optionCookie = new Cookie("ProactiveLiveHelpForCTSPrompt-opt", "true", null);
         Cookie timerCookie = new Cookie("ProactiveLiveHelpForCTSPrompt-timer", "0");

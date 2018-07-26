@@ -31,7 +31,6 @@ public class AdvanceSearch_Test extends BaseClass {
 	AdvanceSearch advanceSearch;
 	Delighters delighter;
 	BreadCrumb crumb;
-	Banner banner;
 	ApiReference api;
 	String testDataFilePath;
 
@@ -47,7 +46,6 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("Advance Search setup done");
 		delighter = new Delighters(driver);
 		crumb = new BreadCrumb(driver);
-		banner = new Banner(driver);
 		api = new ApiReference(driver);
 		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
@@ -60,17 +58,22 @@ public class AdvanceSearch_Test extends BaseClass {
 						+ advanceSearch.getAdvanceSearchPageTitle());
 	}
 
+	// TODO: Move all page banner verifications to a single test class.
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void verifyBanner() {
-		Assert.assertTrue(banner.getBanner().isDisplayed());
-		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
+
+		Banner banner = new Banner(driver);
+
+		Assert.assertTrue(banner.isDisplayed(), "Banner is not visible.");
+		Assert.assertEquals(banner.getAltText(), "National Cancer Institute", "Banner alt-text is mismatched.");
+
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void verify_bread_crumb() {
-		crumb.getBreadCrumb();
-		Assert.assertEquals(crumb.getBreadCrumb(), advanceSearch.BREAD_CRUMB);
+		crumb.getBreadCrumbText();
+		Assert.assertEquals(crumb.getBreadCrumbText(), advanceSearch.BREAD_CRUMB);
 		System.out.println("Breadcrumb is displaying correctly");
 		logger.log(LogStatus.PASS, "Pass => " + "Verifying the Breadcrumb of the page");
 

@@ -16,17 +16,16 @@ import gov.nci.framework.AutoSuggestHelper;
 
 public class BasicSearch extends ClinicalTrialPageObjectBase {
 
-	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
 	WebDriver browser;
 
 	/**************** Basic Search Form *********************************/
 	@FindBy(how = How.XPATH, using = "//*[@id='form--cts-basic']")
 	private WebElement form_Search;
 
-	/*************** Basic Search Page WebElements **********************/
-	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div")
+	/*************** Basic Search Page UI Elements **********************/
+	@FindBy(how = How.CSS, using = ".search-tip")
 	private WebElement txt_SearchTip;
-	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div/div/a")
+	@FindBy(how = How.CSS, using = ".search-tip a")
 	private WebElement lnk_AdvSearch;
 	@FindBy(how = How.XPATH, using = ".//input[@id='q']")
 	private WebElement txt_CancerType;
@@ -290,10 +289,11 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 		txt_Zipcode.sendKeys(zipCode);
 	}
 
-
-
-
-	public void clickAdvSearch() {
-		lnk_AdvSearch.click();
+	/**
+	 * Gets the URL associated with the Advanced Search link in the
+	 * "Search tips" box.
+	 */
+	public String getAdvancedSearchLinkUrl() {
+		return lnk_AdvSearch.getAttribute("href");
 	}
 }
