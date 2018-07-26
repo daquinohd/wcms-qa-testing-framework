@@ -435,6 +435,7 @@ public class BasicSearch_Test extends BaseClass {
 	/**
 	 * Verifies ZIP code only allows 5 digits.
 	 */
+	@Test(groups = { "Smoke" })
 	public void enterLongZipCode() {
 
 		String invalidZIPCode = "123456";
