@@ -27,8 +27,8 @@ public class BaseClass {
 	// LogManager.getLogger(BaseClass.class.getName());
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
-	protected static WebDriver driver;
-	protected String pageURL;
+	protected WebDriver driver;
+	protected String pageURL; // TODO: Get rid of pageURL from BaseClass.
 	protected ConfigReader config = new ConfigReader();
 
 	@BeforeTest(groups = { "Smoke", "current" })
@@ -55,6 +55,7 @@ public class BaseClass {
 	public void beforeMethod() {
 
 		// Force the page to load fresh before each test.
+		// TODO: explicitly load the page in each test.
 		driver.get(pageURL);
 
 		((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
@@ -84,8 +85,6 @@ public class BaseClass {
 	@AfterTest(groups = { "Smoke", "current" })
 	public void afterTest() {
 		report.flush();
-		// report.close();
-		// log.info("Test ends here");
 	}
 
 }

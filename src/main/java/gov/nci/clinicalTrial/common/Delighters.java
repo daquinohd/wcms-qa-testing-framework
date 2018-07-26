@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.Utilities.ConfigReader;
 
+@Deprecated
 public class Delighters {
 	WebDriver driver;
 	ConfigReader config = new ConfigReader();
@@ -26,19 +27,19 @@ public class Delighters {
 		PageFactory.initElements(driver, this);
 	}
 
-	public WebElement getDelighterLiveHelp() {
+	public WebElement getLiveHelpDelighter() {
 
 		return delighter_LiveHelp;
 
 	}
 
-	public WebElement getDelighterWhat() {
+	public WebElement getWhatAreDelighter() {
 
 		return delighter_What;
 
 	}
 
-	public WebElement getDelighterWhich() {
+	public WebElement getWhichTrialDelighter() {
 
 		return delighter_Which;
 

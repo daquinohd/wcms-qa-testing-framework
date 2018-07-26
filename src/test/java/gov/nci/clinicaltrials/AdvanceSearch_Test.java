@@ -91,7 +91,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterLiveHelp() {
-		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
+		Assert.assertTrue(delighter.getLiveHelpDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
@@ -107,7 +107,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhat() {
-		Assert.assertTrue(delighter.getDelighterWhat().isDisplayed());
+		Assert.assertTrue(delighter.getWhatAreDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterWhatURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
@@ -123,7 +123,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhich() {
-		Assert.assertTrue(delighter.getDelighterWhich().isDisplayed());
+		Assert.assertTrue(delighter.getWhichTrialDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterWhichURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();

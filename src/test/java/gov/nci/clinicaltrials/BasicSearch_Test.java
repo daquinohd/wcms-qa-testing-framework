@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -23,10 +23,8 @@ import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.BasicSearchResults;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.clinicalTrial.common.ApiReference;
-import gov.nci.clinicalTrial.common.Delighters;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import com.relevantcodes.extentreports.LogStatus;
 
 public class BasicSearch_Test extends BaseClass {
 
@@ -42,7 +40,6 @@ public class BasicSearch_Test extends BaseClass {
 	private static final String RESULTS_LINK = "rl";
 
 	BasicSearch basicSearch;
-	Delighters delighter;
 	BreadCrumb crumb;
 	Banner banner;
 	ApiReference api;
@@ -68,7 +65,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch = null;
 			logger.log(LogStatus.ERROR, "Error creating Basic Search page.");
 		}
-		delighter = new Delighters(driver);
+
 		crumb = new BreadCrumb(driver);
 		banner = new Banner(driver);
 		api = new ApiReference(driver);
@@ -183,7 +180,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		String link = nextStepsLink.getAttribute("href");
 		Assert.assertNotEquals(link, null, "Next steps link is missing");
-		
+
 		try{
 			URL url = new URL(link);
 			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/trial-guide", "Next steps link path is mismatched.");
@@ -330,7 +327,7 @@ public class BasicSearch_Test extends BaseClass {
 	 */
 	@Test(dataProvider = "CancerTypeExactText", groups = { "Smoke" })
 	public void searchCancerType(String cancerType, String ConceptID) throws InterruptedException {
-		
+
 		try {
 			// Search for the exact cancer type
 			basicSearch.setExactCancerType(cancerType);
@@ -351,33 +348,6 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.fail("Error parsing page URL.");
 			e.printStackTrace();
 		}
-
-//		if (driver.findElement(By.name("printButton")).isDisplayed()) {
-//			System.out.println("search results page should be displayed");
-//			resultPageUrl = driver.getCurrentUrl();
-//			System.out.println("Result page url: " + resultPageUrl);
-//		}
-//
-//		// Checking the Page Title
-//		String pageTitle = driver.getTitle();
-//		System.out.println("Actual Page Title:" + pageTitle);
-//		Assert.assertEquals(pageTitle, "Clinical Trials Search Results - National Cancer Institute");
-//
-//		// Checking the Search Results form Title
-//		String resultsTitle = driver.findElement(By.xpath(".//*[@id='main']/article/div[2]/h1/span")).getText();
-//		System.out.println("Results Title:" + resultsTitle);
-//		Assert.assertTrue(resultsTitle.contains("Clinical Trials Search Results"));
-//
-//		// Checking the Results page URL for the parameters passed in order to
-//		// validate correct search results are displayed
-//		String cancerTypeWithoutSpace = cancerType.replace(" ", "+");
-//		System.out.println("New String: " + cancerTypeWithoutSpace);
-//		Assert.assertTrue(resultPageUrl.contains(cancerTypeWithoutSpace),
-//				"Keyword not found " + cancerTypeWithoutSpace);
-//		driver.navigate().back();
-//		System.out.println("Page URL after the cancer type search " + driver.getCurrentUrl());
-//		logger.log(LogStatus.PASS, "Pass => " + "Verify Search for Cancer Type on Basic CTS");
-
 	}
 
 	/**
@@ -566,8 +536,7 @@ public class BasicSearch_Test extends BaseClass {
 	 * Test for the combination of keyword text, age and ZIP code. The list of cancer
 	 * types is used as keywords.
 	 */
-
-	 @Test(dataProvider = "CancerType_Age_ZipCode", groups = { "Smoke" })
+	@Test(dataProvider = "CancerType_Age_ZipCode", groups = { "Smoke" })
 	public void searchKeywordAgeZip(String keyword, String age, String zipCode) {
 
 		try {
@@ -595,51 +564,6 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
-
-	@Test(groups = { "Smoke" })
-	public void verifyDelighterLiveHelp() {
-		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
-		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
-		// Verifying the LiveHelp Delighter
-		delighter.verifyDelighterLiveHelp();
-		// Checking the end page URL
-		String resultPageUrl = driver.getCurrentUrl();
-		System.out.println("Page URL of the delighter " + resultPageUrl);
-		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
-		driver.navigate().back();
-		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
-	}
-
-	@Test(groups = { "Smoke" })
-	public void verifyDelighterWhat() {
-		Assert.assertTrue(delighter.getDelighterWhat().isDisplayed());
-		String expectedPageUrl = config.getProperty("DelighterWhatURL");
-		// Verifying the LiveHelp Delighter
-		delighter.verifyDelighterWhat();
-		// Checking the end page URL
-		String resultPageUrl = driver.getCurrentUrl();
-		System.out.println("Page URL of the delighter " + resultPageUrl);
-		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
-		driver.navigate().back();
-		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
-	}
-
-	@Test(groups = { "Smoke" })
-	public void verifyDelighterWhich() {
-		Assert.assertTrue(delighter.getDelighterWhich().isDisplayed());
-		String expectedPageUrl = config.getProperty("DelighterWhichURL");
-		// Verifying the LiveHelp Delighter
-		delighter.verifyDelighterWhich();
-		// Checking the end page URL
-		String resultPageUrl = driver.getCurrentUrl();
-		System.out.println("Page URL of the delighter " + resultPageUrl);
-		Assert.assertTrue(resultPageUrl.equals(expectedPageUrl), "Actual URL is not as expected " + resultPageUrl);
-		driver.navigate().back();
-		System.out.println("Page URL after the delighter check " + driver.getCurrentUrl());
-		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Advance CTS");
-	}
 
 	@Test(groups = { "Smoke" })
 	public void clickAdvSearch() {
