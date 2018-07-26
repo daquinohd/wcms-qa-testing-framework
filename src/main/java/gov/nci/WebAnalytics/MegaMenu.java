@@ -1,6 +1,7 @@
 package gov.nci.WebAnalytics;
 
-import java.util.concurrent.TimeUnit;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,8 +12,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.nci.Utilities.Nav;
+import gov.nci.framework.PageObjectBase;
 
-public class MegaMenu {
+public class MegaMenu extends PageObjectBase{
 	
 	// Local driver object and actions
 	private WebDriver driver;	
@@ -20,7 +22,8 @@ public class MegaMenu {
 	private WebDriverWait wait;
 	
 	// Constructor to initialize the page object
-	public MegaMenu(WebDriver driver) {
+	public MegaMenu(WebDriver driver)  throws MalformedURLException, UnsupportedEncodingException {
+		super(driver);
 		this.driver = driver;
 		action = new Actions(driver);
 		wait = new WebDriverWait(driver, 5);		

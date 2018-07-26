@@ -1,5 +1,8 @@
 package gov.nci.WebAnalytics.Tests;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -12,7 +15,7 @@ public class MegaMenu_Test extends AnalyticsTestBase {
 	private MegaMenu megaMenu;
 
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void beforeMethod() {
+	public void setupMegaMenu() throws UnsupportedEncodingException, MalformedURLException {
 		megaMenu = new MegaMenu(driver);
 	}
 	
