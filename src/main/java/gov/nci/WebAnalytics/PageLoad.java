@@ -2,11 +2,8 @@ package gov.nci.WebAnalytics;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-
-import com.nci.Utilities.Nav;
 
 import gov.nci.framework.PageObjectBase;
 
