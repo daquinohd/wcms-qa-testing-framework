@@ -1,13 +1,12 @@
 package gov.nci.WebAnalytics.Tests;
 
-import com.relevantcodes.extentreports.LogStatus;
-
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
-import org.testng.Assert;
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import gov.nci.WebAnalytics.Resize;
 

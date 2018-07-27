@@ -3,10 +3,12 @@ package gov.nci.WebAnalytics.Tests;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.Date;
 import java.util.List;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.core.har.Har;
@@ -27,9 +29,6 @@ import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ScreenShot;
 import gov.nci.clinicaltrials.BaseClass;
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
 import gov.nci.WebAnalytics.AnalyticsRequest;
 
 public class AnalyticsTestBase extends BaseClass {

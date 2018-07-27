@@ -1,12 +1,12 @@
 package gov.nci.WebAnalytics.Tests;
 
 import com.relevantcodes.extentreports.LogStatus;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
-import gov.nci.WebAnalytics.Nav;
 import gov.nci.clinicalTrial.pages.BasicSearch;
+import gov.nci.WebAnalytics.Nav;
 
 public class CTSBasicSearch_Test extends AnalyticsTestBase {
 	
