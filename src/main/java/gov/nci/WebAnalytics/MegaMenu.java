@@ -1,6 +1,7 @@
 package gov.nci.WebAnalytics;
 
-import java.util.concurrent.TimeUnit;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class MegaMenu extends AnalyticsBase {
+import com.nci.Utilities.Nav;
+import gov.nci.framework.PageObjectBase;
+
+public class MegaMenu extends PageObjectBase{
 	
 	// Local driver object and actions
 	private WebDriver driver;	
@@ -18,7 +22,8 @@ public class MegaMenu extends AnalyticsBase {
 	private WebDriverWait wait;
 	
 	// Constructor to initialize the page object
-	public MegaMenu(WebDriver driver) {
+	public MegaMenu(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+		super(driver);
 		this.driver = driver;
 		action = new Actions(driver);
 		wait = new WebDriverWait(driver, 5);		
@@ -30,6 +35,7 @@ public class MegaMenu extends AnalyticsBase {
 	* These are the elements that make up our page object
 	*/
 	// TODO: Figure out why FindBy(linkText) is so finnicky in Firefox
+	// TODO: Helper function for wait.until(ExpectedConditions.visibilityOf())
 	@FindBy(css = "#mega-nav .nav-item-title a")
 	WebElement mm_bar_link;
 	@FindBy(css = "#mega-nav .sub-nav-group a")
@@ -50,41 +56,37 @@ public class MegaMenu extends AnalyticsBase {
 	*/
 	public void clickMMBarEn() {
 		System.out.println("Click megamenu bar (English)");
-		driver.navigate().to(WANav.homePage);
+		driver.navigate().to(Nav.homePage);
 		mm_bar_link.click();
 	}
 
 	public void clickMMBarEs() {
 		System.out.println("Click megamenu bar (Spanish)");
-		driver.navigate().to(WANav.spanishPage);
+		driver.navigate().to(Nav.spanishPage);
 		mm_bar_link.click();
 	}
 	
 	public void clickMMSubnavHeader() {
 		System.out.println("Click megamenu subnav header");
-		driver.navigate().to(WANav.homePage);
-		action.moveToElement(mm_bar_link);
-		action.perform();
+		driver.navigate().to(Nav.homePage);
+		action.moveToElement(mm_bar_link).perform();;
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_header));
 		mm_subnav_header.click();
 	}
 	
 	public void clickMMSubnavLi() {
 		System.out.println("Click megamenu subnav list item");		
-		driver.navigate().to(WANav.homePage);
-		action.moveToElement(mm_bar_link);
-		action.perform();
+		driver.navigate().to(Nav.homePage);
+		action.moveToElement(mm_bar_link).perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li_text));
 		mm_subnav_li_text.click();
 	}
 
 	public void revealMegaMenuDesktop() {
-		System.out.println("Expand megamenu on desktop");		
-		driver.navigate().to(WANav.homePage);
-		action.moveToElement(mm_bar_link);
-		action.perform();
-		AnalyticsBase.nap(5);
-		driver.navigate().refresh();
+		System.out.println("Expand megamenu on desktop");
+		driver.navigate().to(Nav.homePage);
+		action.moveToElement(mm_bar_link).pause(2000).perform();
+		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li_text));
 	}
 	
 	public void revealMegaMenuMobile() {

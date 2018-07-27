@@ -1,4 +1,4 @@
-package gov.nci.WebAnalytics;
+package com.nci.Utilities;
 
 import gov.nci.Utilities.ConfigReader;
 

@@ -1,6 +1,10 @@
 package gov.nci.WebAnalytics.Tests;
 
 import com.relevantcodes.extentreports.LogStatus;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -12,7 +16,7 @@ public class Resize_Test extends AnalyticsTestBase {
 	private Resize resize;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void beforeMethod() {
+	public void setupResize() throws MalformedURLException, UnsupportedEncodingException {
 		resize = new Resize(driver);
 	}
 
@@ -21,12 +25,12 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void testResizeGeneral() {
 		resize.doAllResizes();
-		clickBeacons = resize.getClickBeacons(getHarUrlList(proxy));
-		Assert.assertTrue(clickBeacons.size() > 1);
-		Assert.assertTrue(hasProp(clickBeacons, 4, "d=pev1"));
-		Assert.assertTrue(hasProp(clickBeacons, 67, "D=pageName"));
-		Assert.assertTrue(haseVar(clickBeacons, 2, "English"));
-		Assert.assertFalse(hasEvent(clickBeacons, "event1"));
+		setClickBeacon();
+		Assert.assertTrue(getClickBeacons().size() > 1);
+		Assert.assertTrue(hasProp(4, "d=pev1"));
+		Assert.assertTrue(hasProp(67, "D=pageName"));
+		Assert.assertTrue(haseVar(2, "English"));
+		Assert.assertFalse(hasEvent(1));
 		logger.log(LogStatus.PASS, "Resize gen value test passed.");		
 	}
 	
@@ -34,9 +38,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 2)
 	public void testResizeToMobile() {
 		resize.toSmall();
-		clickBeacons = resize.getClickBeacons(getHarUrlList(proxy));
-		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
-		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToMobile"));
+		setClickBeacon();
+		Assert.assertTrue(hasEvent(7));
+		Assert.assertTrue(hasLinkName("ResizedToMobile"));
 		logger.log(LogStatus.PASS, "'Resize to mobile' values are correct.");
 	}
 
@@ -44,9 +48,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 3)
 	public void testResizeToTablet() {
 		resize.toMed();
-		clickBeacons = resize.getClickBeacons(getHarUrlList(proxy));
-		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
-		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToTablet"));
+		setClickBeacon();
+		Assert.assertTrue(hasEvent(7));
+		Assert.assertTrue(hasLinkName("ResizedToTablet"));
 		logger.log(LogStatus.PASS, "'Resize to tablet' values are correct.");
 	}
 
@@ -54,9 +58,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 4)
 	public void testResizeToDesktop() {
 		resize.toLarge();
-		clickBeacons = resize.getClickBeacons(getHarUrlList(proxy));
-		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
-		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToDesktop"));
+		setClickBeacon();
+		Assert.assertTrue(hasEvent(7));
+		Assert.assertTrue(hasLinkName("ResizedToDesktop"));
 		logger.log(LogStatus.PASS, "'Resize to desktop' values are correct.");
 	}
 
@@ -64,9 +68,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 5)
 	public void testResizeToExtraWide() {
 		resize.toXlarge();
-		clickBeacons = resize.getClickBeacons(getHarUrlList(proxy));
-		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
-		Assert.assertTrue(hasLinkName(clickBeacons, "ResizedToExtra wide"));
+		setClickBeacon();
+		Assert.assertTrue(hasEvent(7));
+		Assert.assertTrue(hasLinkName("ResizedToExtra wide"));
 		logger.log(LogStatus.PASS, "'Resize to extra wide' values are correct.");
 	}
 
@@ -74,8 +78,8 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 6)
 	public void testMaximize() {
 		resize.maximize();
-		clickBeacons = resize.getClickBeacons(getHarUrlList(proxy));
-		Assert.assertTrue(hasEvent(clickBeacons, "event7"));
+		setClickBeacon();
+		Assert.assertTrue(hasEvent(7));
 		logger.log(LogStatus.PASS, "Maximize values are correct.");
 	}	
 	

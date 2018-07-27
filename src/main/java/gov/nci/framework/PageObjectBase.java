@@ -1,11 +1,19 @@
+
+
+
+
+
+
 package gov.nci.framework;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * This is the root base class for all page objects. If a page object class
@@ -103,4 +111,11 @@ public class PageObjectBase {
         new WebDriverWait(this.browser, 5).until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
+    
+
+    // Debugging utility function
+    public void expectVisibility(WebElement element) {
+    	new WebDriverWait(this.browser, 5).until(ExpectedConditions.visibilityOf(element));
+    }
+    
 }

@@ -1,16 +1,22 @@
 package gov.nci.WebAnalytics;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class Resize extends AnalyticsBase {
+import gov.nci.framework.PageObjectBase;
+
+public class Resize extends PageObjectBase {
 	
 	// Local driver object
 	public WebDriver driver;
 	
 	// Constructor to initialize the page object
-	public Resize(WebDriver driver) {
+	public Resize(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		System.out.print("Resize pagefactory initialized: ");		
