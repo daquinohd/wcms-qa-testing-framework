@@ -9,14 +9,11 @@ import org.apache.http.NameValuePair;
 public class AnalyticsRequest {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods
-	// TODO: refactor param object
+	// TODO: build setter/getter for channel? 
 
 	// Constants
 	public static final String STATIC_SERVER = "static.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
-
-	// TODO: do something with this
-	public String channel;	
 	
 	// A request URL
 	private String url;
@@ -44,8 +41,7 @@ public class AnalyticsRequest {
 	public void setParamsList(List<NameValuePair> paramsList) {
 		this.paramsList = paramsList;
 	}
-	
-	
+		
 	/**
 	 * Constructor with 'url' arg
 	 * @param url
@@ -221,28 +217,6 @@ public class AnalyticsRequest {
 			return true;
 		}
 	}
-	
-	/**
-	 * Temporary util method for troubleshooting
-	 * TODO: remove this once explicit wait is working 
-	 * @param sec
-	 */
-	protected static void nap(int sec) {
-		long ms = new Long(sec*1000);		
-		try { 
-			Thread.sleep(ms);
-		} catch (InterruptedException ex) {
-			System.out.println("AnalyticsBase:nap() failed");
-		}
-	}
-	protected static void nap() {
-		nap(10);
-	}
-	
-
-	
-	
-	
 
 	/**
 	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])

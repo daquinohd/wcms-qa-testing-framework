@@ -35,8 +35,6 @@ import gov.nci.WebAnalytics.AnalyticsRequest;
 public class AnalyticsTestBase extends BaseClass {
 
 	// TODO: Create 'catch-all' Contains() method
-	// TODO: Build test for test
-	// TODO: Check false positives for events 	
 	// TODO: Clean up
 	public static ExtentReports report;
 	public static ExtentTest logger;
