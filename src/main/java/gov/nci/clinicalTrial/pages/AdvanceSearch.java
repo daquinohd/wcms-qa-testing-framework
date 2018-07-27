@@ -1,4 +1,4 @@
-package com.nci.clinicalTrial.pages;
+package gov.nci.clinicalTrial.pages;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import com.nci.Utilities.FunctionLibrary;
+import gov.nci.Utilities.FunctionLibrary;
 
 public class AdvanceSearch {
 

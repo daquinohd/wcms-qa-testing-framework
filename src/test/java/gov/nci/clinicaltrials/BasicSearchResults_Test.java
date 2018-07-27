@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.clinicaltrials;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,8 +10,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.clinicalTrial.pages.BasicSearchResults;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class BasicSearchResults_Test extends BaseClass {
@@ -24,8 +24,13 @@ public class BasicSearchResults_Test extends BaseClass {
 		pageURL = config.getPageURL("BasicSearchResultsURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		basicSearchResults = new BasicSearchResults(driver);
+
+		try {
+			basicSearchResults = new BasicSearchResults(driver);
+		} catch (Exception e) {
+			basicSearchResults = null;
+			logger.log(LogStatus.ERROR, "Error creating Basic Search results page.");
+		}
 		System.out.println("Basic search results setup done");
 	}
 

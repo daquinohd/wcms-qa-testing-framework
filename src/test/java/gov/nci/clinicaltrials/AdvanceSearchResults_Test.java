@@ -1,7 +1,6 @@
-package com.nci.testcases;
+package gov.nci.clinicaltrials;
 
 import java.net.MalformedURLException;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,17 +9,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.clinicalTrial.pages.AdvanceSearchResults;
-import com.nci.commonobjects.Banner;
-import com.nci.commonobjects.BreadCrumb;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.clinicalTrial.pages.AdvanceSearchResults;
+import gov.nci.commonobjects.Banner;
+import gov.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearchResults_Test extends BaseClass {
 
 	AdvanceSearchResults advanceSearchResults;
 	BreadCrumb crumb;
-	Banner banner;
+	
 
 	@BeforeClass(groups = { "Smoke", "current" })
 	@Parameters({ "browser" })
@@ -29,24 +28,29 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		// basicSearch = PageFactory.initElements(driver, BasicSearch.class);
+
 		advanceSearchResults = new AdvanceSearchResults(driver);
 		System.out.println("Advance Search Results setup done");
 		crumb = new BreadCrumb(driver);
-		banner = new Banner(driver);
+		
 	}
 
+	// TODO: Move all page banner verifications to a single test class.
 	@Test(groups = { "Smoke", "current" })
 	public void verifyBanner() {
-		banner.getBanner();
+
+		Banner banner = new Banner(driver);
+
+		Assert.assertTrue(banner.isDisplayed(), "Banner is not visible.");
+		Assert.assertEquals(banner.getAltText(), "National Cancer Institute", "Banner alt-text is mismatched.");
+
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
 	@Test(groups = { "Smoke", "current" })
 	public void verify_bread_crumb() {
-		crumb.getBreadCrumb();
-		Assert.assertEquals(crumb.getBreadCrumb(), AdvanceSearchResults.BREAD_CRUMB);
+		crumb.getBreadCrumbText();
+		Assert.assertEquals(crumb.getBreadCrumbText(), AdvanceSearchResults.BREAD_CRUMB);
 		System.out.println("Breadcrumb is displaying correctly");
 		logger.log(LogStatus.PASS, "Pass => " + "Verifying the Breadcrumb of the page");
 	}

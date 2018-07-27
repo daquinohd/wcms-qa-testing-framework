@@ -1,4 +1,4 @@
-package com.nci.Utilities;
+package gov.nci.Utilities;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -110,7 +110,6 @@ public class BrowserManager {
 			ChromeOptions chromeOptions = new ChromeOptions();
 			chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 			driver = new ChromeDriver(chromeOptions);
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			System.out.println("Chrome driver instance created");
 			System.out.println("==============================");
 			driver.get(url);
@@ -126,12 +125,15 @@ public class BrowserManager {
 			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 			capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 			driver = new ChromeDriver(capabilities);
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			System.out.println("Chrome driver instance created");
 			System.out.println("==============================");
 			driver.get(url);
 
 		}
+
+		// Allow up to a one second delay for elements to become available.
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+
 		return driver;
 	}
 	

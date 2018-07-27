@@ -1,5 +1,6 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/search
+BasicSearchResultsURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 BasicSearchResultsURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
 ResultsPageURL=https://www-stage.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
@@ -37,6 +38,8 @@ SpanishPage=https://www-stage.cancer.gov/espanol
 AppModulePage=https://www-stage.cancer.gov/publications/dictionaries/cancer-terms
 
 ***********************Test Data******************************************
+TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx
 TestData=./test-data/TestData.xlsx
 
 ***********************External Resources*********************************

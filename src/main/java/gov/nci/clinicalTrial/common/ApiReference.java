@@ -1,4 +1,4 @@
-package com.nci.commonobjects;
+package gov.nci.clinicalTrial.common;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+@Deprecated
 public class ApiReference {
 
 	// public static final String API_REFERENCE_H3 = "The Clinical Trials API:

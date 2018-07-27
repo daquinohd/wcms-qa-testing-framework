@@ -1,11 +1,27 @@
 # WCMS QA Testing Framework
 Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 
-## Prerequisites on testing machine:
+## Prerequisites:
 - JDK 1.8.0_144 or later
-- Eclipse Neon or later
+- [Apache maven](http://maven.apache.org/download.cgi) tool 
+- Eclipse Neon or later (optional)
 
-## Installation steps
+## Command line execution:
+
+To run the default test suite, execute the command 
+
+    mvn test
+
+To execute a specific test suite, execute the command
+
+    mvn test -Dsurefire.suiteXmlFiles=<testfile>
+
+Where `<testfile>` is the test suite file and path.  Multiple test suites may be specified by separating them
+with commas. e.g.
+
+    mvn test -Dsurefire.suiteXmlFiles=resources\testng-CTS.xml,resources\testng-R4R.xml 
+
+## Setup For Eclipse
 1. Open Eclipse and workspace.
 2. Install TestNG
    1. Launch the Eclipse IDE and from Help menu, click **Install New Software**.
@@ -26,7 +42,7 @@ Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 3. Add or uncomment any elements that should be tested.
 
 ## To change testing tier:
-1. In Eclipse navigator, expand src/main/java/com.nci.Utilities.
+1. In Eclipse navigator, expand src/main/java/gov.nci.Utilities.
 2. Open **ConfigReader.java** for editing.
 3. Change the "/configuration/ConfigXXXX.property" string to match the desired tier.
 4. Save and run tests.

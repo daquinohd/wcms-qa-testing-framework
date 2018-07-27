@@ -5,16 +5,18 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.Nav;
-import com.nci.clinicalTrial.pages.BasicSearch;
+import gov.nci.WebAnalytics.Nav;
+import gov.nci.clinicalTrial.pages.BasicSearch;
 
-public class CTSBasicSearch_Test extends AnalyticsTestBase{
+public class CTSBasicSearch_Test extends AnalyticsTestBase {
 	
 	private BasicSearch basicSearch;
 
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void beforeMethod() {
-		basicSearch = new BasicSearch(driver);
+		// TODO: verify 'form start' event
+		//basicSearch = new BasicSearch();
+		//basicSearch = new BasicSearch(driver);
 	}
 
 	/// ??? returns the expected general/shared values
@@ -28,7 +30,7 @@ public class CTSBasicSearch_Test extends AnalyticsTestBase{
 	public void testBasicBegin() {
 		/* Do browser actions  **/ 
 		driver.navigate().to(Nav.basicSearchPage);
-		basicSearch.enterCancerType("stomatitis");		
+		basicSearch.setSearchKeyword("stomatitis");
 		
 		/* Get our beacon object **/ 
 		setClickBeacon();
@@ -45,7 +47,7 @@ public class CTSBasicSearch_Test extends AnalyticsTestBase{
 	public void testBasicAbandon() {
 		/* Do browser actions  **/ 
 		driver.navigate().to(Nav.basicSearchPage);
-		basicSearch.enterCancerType("liver");
+		basicSearch.setSearchKeyword("liver");
 		driver.navigate().to(Nav.homePage);
 
 		/* Get our beacon object **/ 

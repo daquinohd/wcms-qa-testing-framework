@@ -23,10 +23,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.ITestResult;
 
-import com.nci.testcases.BaseClass;
-import com.nci.Utilities.BrowserManager;
-import com.nci.Utilities.ConfigReader;
-import com.nci.Utilities.ScreenShot;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ScreenShot;
+import gov.nci.clinicaltrials.BaseClass;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -123,7 +123,6 @@ public class AnalyticsTestBase extends BaseClass {
 		
 		// Initialize driver and open browser
 		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);		
 		
 		// Add entries to the HAR log		
 		System.out.println("Analytics setup done");

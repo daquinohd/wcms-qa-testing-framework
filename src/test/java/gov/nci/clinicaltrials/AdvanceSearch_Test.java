@@ -1,4 +1,4 @@
-package com.nci.testcases;
+package gov.nci.clinicaltrials;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.nci.Utilities.BrowserManager;
-import com.nci.Utilities.ExcelManager;
-import com.nci.clinicalTrial.pages.AdvanceSearch;
-import com.nci.commonobjects.ApiReference;
-import com.nci.commonobjects.Banner;
-import com.nci.commonobjects.BreadCrumb;
-import com.nci.commonobjects.Delighters;
+import gov.nci.Utilities.BrowserManager;
+import gov.nci.Utilities.ExcelManager;
+import gov.nci.clinicalTrial.pages.AdvanceSearch;
+import gov.nci.clinicalTrial.common.ApiReference;
+import gov.nci.clinicalTrial.common.Delighters;
+import gov.nci.commonobjects.Banner;
+import gov.nci.commonobjects.BreadCrumb;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
@@ -31,7 +31,6 @@ public class AdvanceSearch_Test extends BaseClass {
 	AdvanceSearch advanceSearch;
 	Delighters delighter;
 	BreadCrumb crumb;
-	Banner banner;
 	ApiReference api;
 	String testDataFilePath;
 
@@ -42,14 +41,13 @@ public class AdvanceSearch_Test extends BaseClass {
 		pageURL = config.getPageURL("AdvanceSearchPageURL");
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 		advanceSearch = new AdvanceSearch(driver);
 		System.out.println("Advance Search setup done");
 		delighter = new Delighters(driver);
 		crumb = new BreadCrumb(driver);
-		banner = new Banner(driver);
 		api = new ApiReference(driver);
-		testDataFilePath = config.getProperty("TestData");
+		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 1)
@@ -60,17 +58,22 @@ public class AdvanceSearch_Test extends BaseClass {
 						+ advanceSearch.getAdvanceSearchPageTitle());
 	}
 
+	// TODO: Move all page banner verifications to a single test class.
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void verifyBanner() {
-		Assert.assertTrue(banner.getBanner().isDisplayed());
-		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
+
+		Banner banner = new Banner(driver);
+
+		Assert.assertTrue(banner.isDisplayed(), "Banner is not visible.");
+		Assert.assertEquals(banner.getAltText(), "National Cancer Institute", "Banner alt-text is mismatched.");
+
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
 	@Test(groups = { "Smoke" }, priority = 1)
 	public void verify_bread_crumb() {
-		crumb.getBreadCrumb();
-		Assert.assertEquals(crumb.getBreadCrumb(), advanceSearch.BREAD_CRUMB);
+		crumb.getBreadCrumbText();
+		Assert.assertEquals(crumb.getBreadCrumbText(), advanceSearch.BREAD_CRUMB);
 		System.out.println("Breadcrumb is displaying correctly");
 		logger.log(LogStatus.PASS, "Pass => " + "Verifying the Breadcrumb of the page");
 
@@ -91,7 +94,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterLiveHelp() {
-		Assert.assertTrue(delighter.getDelighterLiveHelp().isDisplayed());
+		Assert.assertTrue(delighter.getLiveHelpDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
@@ -107,7 +110,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhat() {
-		Assert.assertTrue(delighter.getDelighterWhat().isDisplayed());
+		Assert.assertTrue(delighter.getWhatAreDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterWhatURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
@@ -123,7 +126,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhich() {
-		Assert.assertTrue(delighter.getDelighterWhich().isDisplayed());
+		Assert.assertTrue(delighter.getWhichTrialDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("DelighterWhichURL");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();
