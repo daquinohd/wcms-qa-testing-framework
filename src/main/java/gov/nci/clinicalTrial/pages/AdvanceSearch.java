@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import gov.nci.Utilities.FunctionLibrary;
+import gov.nci.Utilities.ScrollUtil;
 
 public class AdvanceSearch {
 
@@ -187,13 +187,13 @@ public class AdvanceSearch {
 	}
 
 	public void defaultSearch() {
-		FunctionLibrary.scrollIntoview(driver, box_LeadOrganization);
+		ScrollUtil.scrollIntoview(driver, box_LeadOrganization);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		btn_Search.click();
 	}
 
 	public void getCancerType(String cancerType) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, AdvanceSearchPageTitle);
+		ScrollUtil.scrollIntoview(driver, AdvanceSearchPageTitle);
 		getCancerTypeBox().click();
 		WebElement txt_CancerTypeBox = driver.findElement(By.xpath(
 				"//span[@class='select2-search select2-search--dropdown']/input[@class='select2-search__field']"));
@@ -228,7 +228,7 @@ public class AdvanceSearch {
 	}
 
 	public void getAge(int age) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lbl_side_effects);
+		ScrollUtil.scrollIntoview(driver, lbl_side_effects);
 		txt_age.click();
 		txt_age.clear();
 		txt_age.sendKeys(String.valueOf(age));
@@ -239,7 +239,7 @@ public class AdvanceSearch {
 	}
 
 	public void getKeywordPhrase(String keyword) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lbl_side_effects);
+		ScrollUtil.scrollIntoview(driver, lbl_side_effects);
 		txt_keywords.click();
 		txt_keywords.clear();
 		txt_keywords.sendKeys(keyword);
@@ -250,7 +250,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Zipcode(String zip) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_location);
+		ScrollUtil.scrollIntoview(driver, lgd_location);
 		rbtn_zipcode.click();
 		txt_zipcode.click();
 		txt_zipcode.clear();
@@ -283,7 +283,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_CountryStateCity(String country, String state, String city) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_location);
+		ScrollUtil.scrollIntoview(driver, lgd_location);
 		rbtn_countryStateCity.click();
 		getState(state);
 		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -297,7 +297,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Hospital(String hospital) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, rbtn_countryStateCity);
+		ScrollUtil.scrollIntoview(driver, rbtn_countryStateCity);
 		rbtn_hospital.click();
 		getHospital(hospital);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -306,7 +306,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_AtNIH() throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, rbtn_countryStateCity);
+		ScrollUtil.scrollIntoview(driver, rbtn_countryStateCity);
 		rbtn_atNIH.click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		defaultSearch();
@@ -314,7 +314,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_TrialType(String trialType) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_trialtype);
+		ScrollUtil.scrollIntoview(driver, lgd_trialtype);
 		switch (trialType) {
 		case ("Prevention"):
 			cb_trialtype_prevention.click();
@@ -390,7 +390,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Drug(String drug) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_drugtreatment1);
+		ScrollUtil.scrollIntoview(driver, lgd_drugtreatment1);
 		System.out.println("Drug box is displayed");
 		getDrug(drug);
 		System.out.println("Drug is entered");
@@ -400,7 +400,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_Treatment(String treatment) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_drugtreatment1);
+		ScrollUtil.scrollIntoview(driver, lgd_drugtreatment1);
 		System.out.println("Drug box is displayed");
 		getTreatment(treatment);
 		System.out.println("Treatment is entered");
@@ -410,7 +410,7 @@ public class AdvanceSearch {
 	}
 
 	public void advSearch_TrialPhase(String trialphase) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_drugtreatment1);
+		ScrollUtil.scrollIntoview(driver, lgd_drugtreatment1);
 		switch (trialphase) {
 		case ("Phase I"):
 			cb_trialphase1.click();
@@ -435,7 +435,7 @@ public class AdvanceSearch {
 
 	/* Verify advance search for Trial Id */
 	public void advSearch_TrialID(String trialId) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_trialPhase);
+		ScrollUtil.scrollIntoview(driver, lgd_trialPhase);
 		System.out.println("Trial Phase box is displayed");
 		getTrialId(trialId);
 		System.out.println("Trial Id is entered");
@@ -446,7 +446,7 @@ public class AdvanceSearch {
 
 	/* Verify advance search for Trial Investigator */
 	public void advSearch_TrialInvestigator(String investigator) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_trialId);
+		ScrollUtil.scrollIntoview(driver, lgd_trialId);
 		System.out.println("Trial Investigator box is displayed");
 		getTrialInvestigators(investigator);
 		System.out.println("Trial Investigator is entered");
@@ -457,7 +457,7 @@ public class AdvanceSearch {
 
 	/* Verify advance search for Lead Organization */
 	public void advSearch_LeadOrganization(String leadOrganization) throws InterruptedException {
-		FunctionLibrary.scrollIntoview(driver, lgd_trialInvestigator);
+		ScrollUtil.scrollIntoview(driver, lgd_trialInvestigator);
 		//((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lgd_trialInvestigator);
 		System.out.println("Lead Organization box is displayed");
 		getLeadOrganization(leadOrganization);
