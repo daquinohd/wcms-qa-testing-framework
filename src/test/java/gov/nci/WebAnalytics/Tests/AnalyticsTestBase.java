@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
@@ -26,7 +25,6 @@ import org.testng.annotations.Parameters;
 import org.testng.ITestResult;
 
 import gov.nci.Utilities.BrowserManager;
-import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ScreenShot;
 import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.WebAnalytics.AnalyticsRequest;
@@ -35,11 +33,7 @@ public class AnalyticsTestBase extends BaseClass {
 
 	// TODO: Create 'catch-all' Contains() method
 	// TODO: Clean up
-	public static ExtentReports report;
-	public static ExtentTest logger;
 	public static WebDriver driver;
-	public ConfigReader config = new ConfigReader();
-	public String pageURL;
 
 	// BrowserMobProxy object - needed to create HAR
     public static BrowserMobProxy proxy = new BrowserMobProxyServer();

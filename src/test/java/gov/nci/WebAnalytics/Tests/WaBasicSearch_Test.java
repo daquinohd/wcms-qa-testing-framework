@@ -8,7 +8,7 @@ import org.testng.Assert;
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.WebAnalytics.Nav;
 
-public class CTSBasicSearch_Test extends AnalyticsTestBase {
+public class WaBasicSearch_Test extends AnalyticsTestBase {
 	
 	private BasicSearch basicSearch;
 
