@@ -20,9 +20,18 @@ public class BasicSearchResults extends ClinicalTrialPageObjectBase {
 	@FindBy(how = How.CSS, using = ".cts-results-label")
 	WebElement lbl_ResultsCount;
 
+	// Select all checkboxes
+	@FindBy(how = How.CSS, using = "#checkAllTop")
+	WebElement topSelectAll;
+	@FindBy(how = How.CSS, using = "checkAllLower")
+	WebElement bottomSelectAll;
+
+
+	// Results List display area
+	@FindBy(how = How.CSS, using = ".cts-results-container")
+	WebElement resultsArea;
+
 	private Pager pagerControl;
-	private Checkbox topSelectAllControl;
-	private Checkbox bottomSelectAllControl;
 
 	public BasicSearchResults(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
 		this(browser, null);
@@ -33,8 +42,6 @@ public class BasicSearchResults extends ClinicalTrialPageObjectBase {
 		PageFactory.initElements(browser, this);
 
 		pagerControl = new Pager(browser);
-		topSelectAllControl = new Checkbox(browser, By.cssSelector("#checkAllTop"));
-		bottomSelectAllControl = new Checkbox(browser, By.cssSelector("#checkAllLower"));
 	}
 
 	public String getResultsCountText() {
@@ -45,16 +52,20 @@ public class BasicSearchResults extends ClinicalTrialPageObjectBase {
 		return lbl_ResultsCount.isDisplayed();
 	}
 
+	public boolean getResultsListIsVisible() {
+		return resultsArea.isDisplayed();
+	}
+
 	public Pager getPager() {
 		return pagerControl;
 	}
 
 	public Checkbox getUpperSelectAll(){
-		return topSelectAllControl;
+		throw new RuntimeException("Not Implmented");
 	}
 
 	public Checkbox getLowerSelectAll() {
-		return bottomSelectAllControl;
+		throw new RuntimeException("Not Implmented");
 	}
 
 

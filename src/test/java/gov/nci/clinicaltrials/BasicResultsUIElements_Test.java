@@ -43,8 +43,8 @@ public class BasicResultsUIElements_Test extends BaseClass {
     private BasicSearchResults getResultsPage(String pageUrl) throws MalformedURLException, UnsupportedEncodingException{
         // Create search page with chat prompt suppressed.
         driver.get(pageURL);
-        SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
-        BasicSearchResults results = new BasicSearchResults(driver, chatPrompt);
+        SuppressChatPromptPageObject chatBlock = new SuppressChatPromptPageObject(driver, null);
+        BasicSearchResults results = new BasicSearchResults(driver, chatBlock);
         return results;
     }
 
@@ -114,11 +114,10 @@ public class BasicResultsUIElements_Test extends BaseClass {
     public void verifyResultListIsPresent() {
 
         try {
-
             // Load results for empty search critera.
             BasicSearchResults page = getResultsPage(pageURL);
 
-            Assert.assertTrue(page.getPager().IsVisible(), "Pager not displayed!");
+            Assert.assertTrue(page.getResultsListIsVisible(), "Result list not displayed!");
 
         } catch (MalformedURLException | UnsupportedEncodingException e) {
             Assert.fail("Error creating Basic Search Results page.");
@@ -126,14 +125,20 @@ public class BasicResultsUIElements_Test extends BaseClass {
         }
     }
 
+
     /**
-     * Verify a results list is present.
+     * TODO: Enable the tests for whether upper and lower "Select All"
+     * buttons are present.
      */
-    @Test(groups = { "Smoke" })
+
+
+    /**
+     * Verify the upper "Select All" button is present.
+     */
+    //@Test(groups = { "Smoke" })
     public void verifyUpperSelectAllIsPresent() {
 
         try {
-
             // Load results for empty search critera.
             BasicSearchResults page = getResultsPage(pageURL);
 
@@ -148,7 +153,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
     /**
      * Verify a results list is present.
      */
-    @Test(groups = { "Smoke" })
+    //@Test(groups = { "Smoke" })
     public void verifyLowerSelectAllIsPresent() {
 
         try {
