@@ -26,6 +26,13 @@ public class ConfigReader {
 		return properties.getProperty(pageURL);
 	}
 
+	// Whey didn't you just go home? 
+	// That's your home. 
+	// Are you too good for your home? Answer me!
+	public String goHome() {
+		return getPageURL("HomePage");
+	}
+
 	public String getDriverPath(String driverPath) {
 		return properties.getProperty(driverPath);
 	}

@@ -27,13 +27,6 @@ public class WaBasicSearch_Test extends AnalyticsTestBase {
 		}
 	}
 
-	/// ??? returns the expected general/shared values
-	@Test(groups = { "Analytics" })
-	public void testBasicGeneral() {
-		Assert.assertTrue(1 == 1);
-		logger.log(LogStatus.PASS, "CTS Basic gen value test passed.");
-	}
-	
 	@Test(groups = { "Analytics" })
 	public void testBasicBegin() {
 		/* Do browser actions  **/ 
