@@ -1,4 +1,4 @@
-.settings
-target
-test-output
-
+/.settings
+/target
+/test-output
+/.vscode

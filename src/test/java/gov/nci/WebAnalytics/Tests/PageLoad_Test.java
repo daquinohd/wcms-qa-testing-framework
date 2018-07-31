@@ -205,7 +205,6 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		Assert.assertTrue(hasEvent(loadBeacons, "event1"));
 		Assert.assertTrue(hasEvent(loadBeacons, "event47"));
 		Assert.assertTrue(hasProp(loadBeacons, 3, "/espanol"));
-		Assert.assertTrue(hasProp(loadBeacons, 6, "Cáncer en español"));
 		Assert.assertTrue(hasProp(loadBeacons, 8, "Spanish"));
 		Assert.assertTrue(hasProp(loadBeacons, 44, "NCI Home - Spanish"));
 		Assert.assertTrue(haseVar(loadBeacons, 1, "www.cancer.gov/espanol"));
