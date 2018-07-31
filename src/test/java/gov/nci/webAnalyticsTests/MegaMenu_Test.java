@@ -1,4 +1,4 @@
-package gov.nci.WebAnalytics.Tests;
+package gov.nci.webAnalyticsTests;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;

@@ -1,4 +1,4 @@
-package gov.nci.WebAnalytics.Tests;
+package gov.nci.webAnalyticsTests;
 
 import org.testng.annotations.Test;
 import org.testng.Assert;

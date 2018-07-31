@@ -10,11 +10,12 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.WaBasicSearch_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
+			<class name="gov.nci.webAnalyticsTests.PageLoad_Test" />
+			<class name="gov.nci.webAnalyticsTests.WaBasicSearch_Test" />
+			<class name="gov.nci.webAnalyticsTests.WaSitewideSearch_Test" />
+			<class name="gov.nci.webAnalyticsTests.Resize_Test" />
+			<class name="gov.nci.webAnalyticsTests.MegaMenu_Test" />
+			<class name="gov.nci.webAnalyticsTests.Sandbox_Test" />
 		</classes>
 	</test>
 	-->
@@ -27,11 +28,12 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.WaBasicSearch_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
+			<class name="gov.nci.webAnalyticsTests.PageLoad_Test" />
+			<class name="gov.nci.webAnalyticsTests.WaBasicSearch_Test" />
+			<class name="gov.nci.webAnalyticsTests.WaSitewideSearch_Test" />
+			<class name="gov.nci.webAnalyticsTests.Resize_Test" />
+			<class name="gov.nci.webAnalyticsTests.MegaMenu_Test" />
+			<class name="gov.nci.webAnalyticsTests.Sandbox_Test" />
 		</classes>
 	</test>
 	-->
@@ -43,11 +45,12 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.WaBasicSearch_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
-			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
+			<class name="gov.nci.webAnalyticsTests.PageLoad_Test" />
+			<class name="gov.nci.webAnalyticsTests.WaBasicSearch_Test" />
+			<class name="gov.nci.webAnalyticsTests.WaSitewideSearch_Test" />
+			<class name="gov.nci.webAnalyticsTests.Resize_Test" />
+			<class name="gov.nci.webAnalyticsTests.MegaMenu_Test" />
+			<class name="gov.nci.webAnalyticsTests.Sandbox_Test" />
 		</classes>
 	</test>
 </suite>

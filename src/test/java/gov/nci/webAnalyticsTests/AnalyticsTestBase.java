@@ -1,52 +1,52 @@
-package gov.nci.WebAnalytics.Tests;
+package gov.nci.webAnalyticsTests;
 
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.core.har.HarEntry;
 import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
 import gov.nci.Utilities.BrowserManager;
-import gov.nci.clinicaltrials.BaseClass;
+import gov.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ScreenShot;
 import gov.nci.WebAnalytics.AnalyticsRequest;
 
-public class AnalyticsTestBase extends BaseClass {
+public class AnalyticsTestBase {
 
+	// TODO: Set default URLs at test level, not base
+	//// URL may need to be used as a param
 	// TODO: Create 'catch-all' Contains() method
-	// TODO: Clean up & refactor 
+	// TODO: Clean up setters / getters
+	// TODO: General clean up & refactor 
 	public static WebDriver driver;
-
-	// BrowserMobProxy object - needed to create HAR
-    public static BrowserMobProxy proxy = new BrowserMobProxyServer();
+    public static BrowserMobProxy proxy;
+	protected static ExtentReports report;
+	protected static ExtentTest logger;
+	protected ConfigReader config = new ConfigReader();	
 	
-	// List of HAR (HTTP archive) request URLs 
-	private List<String> harUrlList;
-	public List<String> getHarUrlList() {
-		return harUrlList;
-	}
-	
-	// List of analytics request URLs fired off by 
-	// an analytics load event, ie s.t() 
-	private List<AnalyticsRequest> loadBeacons;
-	public List<AnalyticsRequest> getLoadBeacons() {
-		return loadBeacons;
-	}
-
-	// List of analytics request URLs fired off by an 
-	// analytics load event, ie s.tl() 
-	private List<AnalyticsRequest> clickBeacons;
-	public List<AnalyticsRequest> getClickBeacons() {
-		return clickBeacons;
-	}
+	protected List<String> harUrlList;	
+	protected List<AnalyticsRequest> loadBeacons;
+	protected List<AnalyticsRequest> clickBeacons;
 	
 	// A single analytics request URL
 	private AnalyticsRequest beacon;
@@ -76,25 +76,68 @@ public class AnalyticsTestBase extends BaseClass {
 	* @BeforeMethod: The annotated method will be run before each test method. 
 	* @AfterMethod: The annotated method will be run after each test method.
 	**/
+	
+	@BeforeTest(groups = { "Analytics" })
+	@Parameters
+	public void beforeTest() {
+		System.out.println(this.getClass().getSimpleName());
+		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
+		String extentReportPath = config.getExtentReportPath();
+		System.out.println("Logger Path:" + extentReportPath);
+		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
+		System.out.println("Report Path: " + report);
+		report.addSystemInfo("Environment", config.getProperty("Environment"));
+	}
 
 	@BeforeGroups(groups = { "Analytics" })
 	@Parameters({ "browser" })
-	public void setup(String browser) throws MalformedURLException {
-		
+	public void beforeGroups(String browser) throws MalformedURLException {		
 		logger = report.startTest(this.getClass().getSimpleName());
-		pageURL = config.getPageURL("HomePage");
-		System.out.println("PageURL: " + pageURL);
-						
-		// setupProxy(driver);
-		this.initializeProxy(pageURL);
+		String initUrl = config.getPageURL("HomePage");
+
+		// Start the BrowserMob proxy on the site homepage
+		this.initializeProxy(initUrl);
 		
 		// Initialize driver and open browser
-		driver = BrowserManager.startProxyBrowser(browser, pageURL, proxy);
+		driver = BrowserManager.startProxyBrowser(browser, initUrl, proxy);
 		
-		// Add entries to the HAR log		
-		System.out.println("Analytics setup done");
-	}	
-			
+		// Add entries to the HAR log
+		System.out.println("Analytics group setup done.\r\nStarting from " + initUrl);
+		
+	}
+	
+	@BeforeClass(groups = { "Analytics" })
+	public void beforeClass() {
+		logger = report.startTest(this.getClass().getSimpleName());
+	}
+
+	@BeforeMethod(groups = { "Analytics" })
+	public void beforeMethod() throws RuntimeException {
+		// Reset our browser to full screen before each method
+		driver.manage().window().maximize();
+	}
+
+	@AfterMethod(groups = { "Analytics" })
+	public void afterMethod(ITestResult result) {
+		if (result.getStatus() == ITestResult.FAILURE) {
+			String screenshotPath = "";
+			if(driver != null) {
+				screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
+			}
+			logger.log(LogStatus.FAIL, screenshotPath + " Fail => " + result.getName());
+		} else if (result.getStatus() == ITestResult.SKIP) {
+			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
+		}
+		else {
+			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
+		}
+	}
+
+	@AfterClass(groups = { "Analytics" })
+	public void afterClass() {
+		report.endTest(logger);
+	}
+
 	@AfterGroups(groups = { "Analytics" })
 	public void afterGroups() {
 		System.out.println("=== Quitting Driver ===");
@@ -102,13 +145,13 @@ public class AnalyticsTestBase extends BaseClass {
 		report.endTest(logger);
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
+	}	
+	
+	@AfterTest(groups = { "Analytics"})
+	public void afterTest() {
+		report.flush();
 	}
-
-	@BeforeMethod(groups = { "Analytics" })
-	public void beforeMethodMaximize() throws RuntimeException {
-		// Reset our browser to full screen before each method
-		driver.manage().window().maximize();
-	}
+	
 	
 	/******************************************************
 	 * Section: Initialize BMP and request beacon objects *
@@ -121,15 +164,12 @@ public class AnalyticsTestBase extends BaseClass {
 	 */
 	protected void initializeProxy(String url) throws RuntimeException {
 
-		// We should never run into this, but if so, "stop" the proxy by creating a BMP instance
-		if(proxy.isStarted()) {
-		    proxy = new BrowserMobProxyServer();
-		}
-		
-		// Start the proxy
+		// New BrowserMobProxy instance - this is needed to create the HAR (HTTP archive) object
 		System.out.println("=== Starting BrowserMobProxy ===");
-	    proxy.start();
-	    
+		proxy = new BrowserMobProxyServer();
+	    proxy.start(0);
+
+	    // Selenium proxy object, capabilities, and WebDriver instantiation are handled in BrowserManager:startProxyBrowser()
 	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
 	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
@@ -139,7 +179,8 @@ public class AnalyticsTestBase extends BaseClass {
 	}
 	
 	/**
-	 * Configure BrowserMob Proxy for Selenium.<br>
+	 * Build the list of HAR (HTTP archive) request URLs 
+	 * TODO: refactor into har Url list and tracking server list
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 * @throws IllegalArgumentException
@@ -172,10 +213,13 @@ public class AnalyticsTestBase extends BaseClass {
 		
 		// The HAR list has been created; clear the log for next pass
 		har.getLog().getEntries().clear();		
+		// For further reading, see https://en.wiktionary.org/wiki/hardy_har_har
 	}
 	
 	/**
 	 * Set create lists of AnalyticsRequest objects for load and click events
+	 * loadBeacons -> a list of analytics request URLs fired off by an analytics load event, ie s.tl() 
+	 * clickBeacons -> a list of analytics request URLs fired off by an analytics load event, ie s.t() 			 * 
 	 * @param urlList
 	 */
 	protected void setBeaconLists(List<String> urlList) {
