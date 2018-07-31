@@ -31,7 +31,7 @@ public class BaseClass {
 	protected String pageURL; // TODO: Get rid of pageURL from BaseClass.
 	protected ConfigReader config = new ConfigReader();
 
-	@BeforeTest(groups = { "Smoke", "current" })
+	@BeforeTest(groups = { "Smoke", "Analytics", "current" })
 	@Parameters
 	public void beforeTest() {
 		// log.info("Starting a new test");
@@ -45,23 +45,26 @@ public class BaseClass {
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
 
-	@BeforeClass(groups = { "Smoke", "current" })
+	@BeforeClass(groups = { "Smoke", "Analytics", "current" })
 	public void beforeClass() {
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
 
-
-	@BeforeMethod(groups = { "Smoke", "current" })
+	@BeforeMethod(groups = { "Smoke", "Analytics", "current" })
 	public void beforeMethod() {
+		try {
+			// Force the page to load fresh before each test.
+			// TODO: explicitly load the page in each test.
+			driver.get(pageURL);
+			((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
+		}
+		catch(NullPointerException ex) {
+			logger.log(LogStatus.INFO, "No driver object found in beforeMethod()");
+		}		
 
-		// Force the page to load fresh before each test.
-		// TODO: explicitly load the page in each test.
-		driver.get(pageURL);
-
-		((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
 	}
 
-	@AfterMethod(groups = { "Smoke", "current" })
+	@AfterMethod(groups = { "Smoke", "Analytics", "current" })
 	public void tearDown(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
@@ -76,13 +79,20 @@ public class BaseClass {
 		}
 	}
 
-	@AfterClass(groups = { "Smoke", "current" })
+	@AfterClass(groups = { "Smoke", "Analytics", "current" })
 	public void afterClass() {
-		driver.quit();
-		report.endTest(logger);
+		try {
+			driver.quit();
+		}
+		catch(NullPointerException ex) {
+			logger.log(LogStatus.INFO, "No driver object found in afterClass()");
+		}
+		finally {
+			report.endTest(logger);
+		}
 	}
 
-	@AfterTest(groups = { "Smoke", "current" })
+	@AfterTest(groups = { "Smoke", "Analytics", "current" })
 	public void afterTest() {
 		report.flush();
 	}

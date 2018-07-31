@@ -1,13 +1,9 @@
 package gov.nci.WebAnalytics.Tests;
 
 import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.LogStatus;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.core.har.Har;
@@ -15,24 +11,18 @@ import net.lightbody.bmp.core.har.HarEntry;
 import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterGroups;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
-import org.testng.ITestResult;
 
 import gov.nci.Utilities.BrowserManager;
-import gov.nci.Utilities.ScreenShot;
 import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.WebAnalytics.AnalyticsRequest;
 
 public class AnalyticsTestBase extends BaseClass {
 
 	// TODO: Create 'catch-all' Contains() method
-	// TODO: Clean up
+	// TODO: Clean up & refactor 
 	public static WebDriver driver;
 
 	// BrowserMobProxy object - needed to create HAR
@@ -85,23 +75,7 @@ public class AnalyticsTestBase extends BaseClass {
 	* @AfterClass: The annotated method will be run after all the test methods in the current class have been run. 
 	* @BeforeMethod: The annotated method will be run before each test method. 
 	* @AfterMethod: The annotated method will be run after each test method.
-	**/	
-	@BeforeTest(groups = { "Analytics" })
-	@Parameters	
-	public void beforeTest() {
-		// log.info("Starting a new test");
-		System.out.println(this.getClass().getSimpleName());
-		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
-		String extentReportPath = config.getExtentReportPath();
-		System.out.println("Logger Path:" + extentReportPath);
-		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		report.addSystemInfo("Environment", config.getProperty("Environment"));
-	}
-	
-	@AfterTest(groups = { "Analytics" })
-	public void afterTest() {
-		report.flush();
-	}	
+	**/
 
 	@BeforeGroups(groups = { "Analytics" })
 	@Parameters({ "browser" })
@@ -129,34 +103,12 @@ public class AnalyticsTestBase extends BaseClass {
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
 	}
-	
-	@BeforeClass(groups = { "Analytics" })
-	public void beforeClass() {
-		logger = report.startTest(this.getClass().getSimpleName());
-	}
 
 	@BeforeMethod(groups = { "Analytics" })
-	public void preMaximize() throws RuntimeException {
+	public void beforeMethodMaximize() throws RuntimeException {
 		// Reset our browser to full screen before each method
 		driver.manage().window().maximize();
 	}
-	
-	@AfterMethod(groups = { "Analytics" })
-	public void tearDown(ITestResult result) {
-		if (result.getStatus() == ITestResult.FAILURE) {
-			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
-			String image = logger.addScreenCapture(screenshotPath);
-			// logger.addScreenCapture("./test-output/ExtentReport/");
-			logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
-			driver.get(pageURL);
-		}
-
-		if (result.getStatus() == ITestResult.SKIP) {
-			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
-			driver.get(pageURL);
-		}
-	}
-	
 	
 	/******************************************************
 	 * Section: Initialize BMP and request beacon objects *
