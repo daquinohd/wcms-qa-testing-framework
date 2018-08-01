@@ -4,38 +4,14 @@
 	<!--
 	<test name="NCI - Chrome Testing" >
 		<parameter name="browser" value="Chrome" />
-		<groups>
-			<run>
-				<include name="Analytics" />
-			</run>
-		</groups>
-		<classes>
-			<class name="gov.nci.webAnalyticsTests.PageLoad_Test" />
-			<class name="gov.nci.webAnalyticsTests.WaBasicSearch_Test" />
-			<class name="gov.nci.webAnalyticsTests.WaSitewideSearch_Test" />
-			<class name="gov.nci.webAnalyticsTests.Resize_Test" />
-			<class name="gov.nci.webAnalyticsTests.MegaMenu_Test" />
-			<class name="gov.nci.webAnalyticsTests.Sandbox_Test" />
-		</classes>
-	</test>
+	-->
+	<!--
+	<test name="NCI - Chrome Testing Headless" >
+		<parameter name="browser" value="ChromeHeadless" />
 	-->
 	<!--
 	<test name="NCI - Firefox Testing" >
 		<parameter name="browser" value="Firefox" />
-		<groups>
-			<run>
-				<include name="Analytics" />
-			</run>
-		</groups>
-		<classes>
-			<class name="gov.nci.webAnalyticsTests.PageLoad_Test" />
-			<class name="gov.nci.webAnalyticsTests.WaBasicSearch_Test" />
-			<class name="gov.nci.webAnalyticsTests.WaSitewideSearch_Test" />
-			<class name="gov.nci.webAnalyticsTests.Resize_Test" />
-			<class name="gov.nci.webAnalyticsTests.MegaMenu_Test" />
-			<class name="gov.nci.webAnalyticsTests.Sandbox_Test" />
-		</classes>
-	</test>
 	-->
 	<test name="NCI - Gecko Testing Headless" >
 		<parameter name="browser" value="GeckoHeadless" />

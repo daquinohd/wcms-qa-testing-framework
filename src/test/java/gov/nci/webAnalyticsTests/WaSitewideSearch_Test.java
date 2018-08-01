@@ -20,6 +20,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		driver.get(config.goHome());
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
+			swSearchResults = new SitewideSearchResults();
 		} catch (Exception ex) {
 			System.out.println("feh");
 		}
@@ -29,7 +30,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" })
 	public void doTest1() {
 	    swSearchForm.setSitewideSearchKeyword("ipilimumab");
-	    // setClickBeacon();
+	    setClickBeacon();
 		Assert.assertTrue(1 == 1);
 		logger.log(LogStatus.PASS, "Test 1 passed");
 	}

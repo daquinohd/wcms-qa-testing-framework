@@ -38,6 +38,7 @@ public class AnalyticsTestBase {
 	// TODO: Create 'catch-all' Contains() method
 	// TODO: Clean up setters / getters
 	// TODO: General clean up & refactor 
+	// TODO: Handle null exceptions in has() methods 	
 	public static WebDriver driver;
     public static BrowserMobProxy proxy;
 	protected static ExtentReports report;
@@ -272,7 +273,8 @@ public class AnalyticsTestBase {
 	 * @return the last AnalyticsRequest object
 	 */
 	private static AnalyticsRequest getLastReq(List<AnalyticsRequest> requests) {
-		AnalyticsRequest request = requests.get(requests.size() - 1);
+		int index = requests.size() - 1;
+		AnalyticsRequest request = (index >= 0) ? requests.get(index) : null;
 		return request;
 	}
 	

@@ -5,63 +5,53 @@ import java.net.MalformedURLException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import gov.nci.framework.PageObjectBase;
 
 public class SitewideSearchForm extends PageObjectBase {
 	
-	// Local driver object and actions
-	private Actions action;
-	private WebDriverWait wait;
-	
 	// Constructor to initialize the page object
 	public SitewideSearchForm(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
-		action = new Actions(driver);
-		wait = new WebDriverWait(driver, 5);		
 		PageFactory.initElements(driver, this);
+		System.out.print("SitewdieSearchForm initialized.");
 	}
 
 	/**************** Sitewide Search Form Elements *****************************/
 	@FindBy(css = "#siteSearchForm")
-	WebElement sw_search_form;
+	WebElement form_sw_search;
 	@FindBy(css = "#siteSearchForm label")
-	WebElement sw_search_form_label;
+	WebElement lbl_sw_search;
 	@FindBy(css = "#siteSearchForm input#swKeyword")
-	WebElement sw_search_form_input;
-	@FindBy(how = How.XPATH, using = ".//input[@id='swKeyword']")
-	private WebElement txt_sws;
+	WebElement input_sw_search;
+	@FindBy(css = "#siteSearchForm button#sitesearch")
+	WebElement btn_sw_search;
 	
 	public WebElement getSitewideSearchForm() {
-		return sw_search_form;
+		return form_sw_search;
 	}
 
 	public WebElement getSitewideSearchFormLabel() {
-		return sw_search_form_label;
+		return lbl_sw_search;
 	}
 
 	public WebElement getSitewideSearchFormInput() {
-		return sw_search_form_input;
+		return input_sw_search;
 	}
 
-	public WebElement getSitewideSearchFormInputXPath() {
-		return txt_sws;
+	public WebElement getSitewideSearchFormButton() {
+		return btn_sw_search;
 	}
 	
 	/**
-	 * Places text in the "Cancer type or keyword" field, but doesn't select anything
-	 * from autocmplete.
-	 *
+	 * Places text in the siteside search input field.
 	 * @param searchText the value to insert in the keyword field.
 	 */
 	public void setSitewideSearchKeyword(String searchText) {
-		txt_sws.sendKeys(searchText);
+		input_sw_search.sendKeys(searchText);
 	}
 	
 }
