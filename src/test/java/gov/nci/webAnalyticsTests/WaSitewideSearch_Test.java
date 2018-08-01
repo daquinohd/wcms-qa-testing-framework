@@ -2,7 +2,7 @@ package gov.nci.webAnalyticsTests;
 
 import com.relevantcodes.extentreports.LogStatus;
 
-import gov.nci.sitewideSearch.common.SiteWideSearchForm;
+import gov.nci.sitewideSearch.common.SitewideSearchForm;
 import gov.nci.sitewideSearch.pages.SitewideSearchResults;
 import junit.framework.Assert;
 
@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
-	private SiteWideSearchForm swSearchForm;
+	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
@@ -19,7 +19,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	public void setup() {
 		driver.get(config.goHome());
 		try {
-			swSearchForm = new SiteWideSearchForm(driver);
+			swSearchForm = new SitewideSearchForm(driver);
 		} catch (Exception ex) {
 			System.out.println("feh");
 		}

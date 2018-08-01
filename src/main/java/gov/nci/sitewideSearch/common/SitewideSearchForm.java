@@ -14,14 +14,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import gov.nci.framework.PageObjectBase;
 
-public class SiteWideSearchForm extends PageObjectBase {
+public class SitewideSearchForm extends PageObjectBase {
 	
 	// Local driver object and actions
 	private Actions action;
 	private WebDriverWait wait;
 	
 	// Constructor to initialize the page object
-	public SiteWideSearchForm(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+	public SitewideSearchForm(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		action = new Actions(driver);
 		wait = new WebDriverWait(driver, 5);		
