@@ -21,27 +21,28 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	private SitewideSearchResults swSearchResults;
 	String testDataFilePath;
 	
-	// TODO: Add data providers / iterator
-	// TODO: split beforeMethod() and beforeClass() methods
-	@BeforeMethod(groups = { "Analytics" }) 
-	// Run before each test method in this class	
+	@BeforeClass(groups = { "Analytics" }) 
 	public void setup() {
+		testDataFilePath = config.getProperty("SitewideSearchData");
+	}
+	
+	// TODO: do we need to split this further
+	// TODO: separate page / component object creation
+	// TODO: Spanish sws
+	@BeforeMethod(groups = { "Analytics" }) 
+	public void beforeEachTest() {
 		driver.get(config.goHome());
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
 			//swSearchResults = new SitewideSearchResults();
 		} catch (Exception ex) {
-			System.out.println("feh");
+			Assert.fail("Error initializing sitewide search.");
+			ex.printStackTrace();
 		}
-	}
-		
-	@BeforeClass(groups = { "Analytics" }) 
-	protected void preClass() {
-		testDataFilePath = config.getProperty("SitewideSearchData");		
 	}
 	
 	// Test for search click events
-	@Test(dataProvider = "SearchTerms", groups = { "Analytics" })
+	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
 	public void testSitewideSearchButtonClick(String searchTerm) {
 		try {
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
@@ -62,7 +63,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
 	// Test for searchresults load events
 	@Test(groups = { "Analytics" })
-	public void testSitewideSearchResultsLoad() {		
+	public void testSitewideSearchResultsLoad() {
 		try {
 		    swSearchForm.setSitewideSearchKeyword("wingardium leviosa");
 		    swSearchForm.clickSearchButton();
@@ -78,20 +79,44 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		}
 	}
 	
-	/******************** Data Providers ****************/	
+	/******************** Data Providers ****************/		
+
+	@DataProvider(name = "CancerTerms")
+	public Iterator<Object[]> readCancerTerm_Data() {
+		return getDataIteratorObject("CancerTerm");
+	}
+
+	@DataProvider(name = "BestBetTerms")
+	public Iterator<Object[]> readBestBetTerm_Data() {
+		return getDataIteratorObject("BestBet");
+	}
 	
-	// TODO: categorize search terms
-	@DataProvider(name = "SearchTerms")
-	public Iterator<Object[]> readSitewideSearch_Data() {
+	@DataProvider(name = "DefinitionTerms")
+	public Iterator<Object[]> readDefinitionTerm_Data() {
+		return getDataIteratorObject("Definition");
+	}
+	
+	@DataProvider(name = "OtherTerms")
+	public Iterator<Object[]> readOtherTerm_Data() {
+		return getDataIteratorObject("Other");
+	}
+	
+	@DataProvider(name = "NoMatchTerms")
+	public Iterator<Object[]> readNoMatchTerm_Data() {
+		return getDataIteratorObject("NoMatch");
+	}
+	
+	private Iterator<Object[]> getDataIteratorObject(String columnName) {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String searchTerm = excelReader.getCellData(TESTDATA_SHEET_NAME, "SearchTerm", rowNum);
-			System.out.println("Sitewide search term ======= " + searchTerm);
-			Object ob[] = { searchTerm };
-			myObjects.add(ob);
+			String searchTerm = excelReader.getCellData(TESTDATA_SHEET_NAME, columnName, rowNum);
+			if(!searchTerm.isEmpty()) {
+				System.out.println("Sitewide search term ======= " + searchTerm);
+				Object ob[] = { searchTerm };
+				myObjects.add(ob);
+			}
 		}
 		return myObjects.iterator();
 	}
-
 }
