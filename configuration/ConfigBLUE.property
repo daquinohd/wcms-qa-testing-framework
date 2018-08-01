@@ -1,46 +1,46 @@
 ************************Environment URLs***********************************
-BasicClinicalTrialSearchURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
-BasicSearchResultsURL=https://www-blue.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
-AdvanceSearchPageURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
-BasicSearchResultsURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
-ResultsPageURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
-DelighterLiveHelpURL=https://www-blue-dev.cancer.gov/contact
-DelighterWhatURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
-DelighterWhichURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
-DelighterFeedbackURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+BasicClinicalTrialSearchURL	= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
+BasicSearchResultsURL		= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
+AdvanceSearchPageURL 		= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+BasicSearchResultsURL 		= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
+ResultsPageURL				= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
+DelighterLiveHelpURL		= https://www-blue-dev.cancer.gov/contact
+DelighterWhatURL			= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+DelighterWhichURL			= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
+DelighterFeedbackURL		= https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 
 ************************Drivers Path***************************************
-ChromeDriver=./resources/drivers/chromedriver.exe
-FirefoxDriver=./resources/drivers/geckodriver.exe
-DriverPath_Mac=./resources/drivers/macos
-DriverPath_Win=./resources/drivers/win
-DriverPath_Linux=./resources/drivers/linux
-DriverName_ChromeDriver=chromedriver
-DriverName_FirefoxDriver=geckodriver
+ChromeDriver				= ./resources/drivers/chromedriver.exe
+FirefoxDriver				= ./resources/drivers/geckodriver.exe
+DriverPath_Mac				= ./resources/drivers/macos
+DriverPath_Win				= ./resources/drivers/win
+DriverPath_Linux			= ./resources/drivers/linux
+DriverName_ChromeDriver		= chromedriver
+DriverName_FirefoxDriver	= geckodriver
 
-***********************Reporting******************************************
-ExtentReports= ./test-output/ExtentReport/
-ScreenShots= ./test-output/Screenshots/
-Environment= BLUEEnvironment
+***********************Reporting*******************************************
+ExtentReports	= ./test-output/ExtentReport/
+ScreenShots		= ./test-output/Screenshots/
+Environment		= BLUEEnvironment
 
 ***********************Page Types******************************************
-HomePage=https://www-blue-dev.cancer.gov
-BlogPostPage=https://www-blue-dev.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
-BlogSeriesPage=https://www-blue-dev.cancer.gov/news-events/cancer-currents-blog
-CTHPPatient=https://www-blue-dev.cancer.gov/types/bladder
-CTHPHP=https://www-blue-dev.cancer.gov/types/breast/hp
-InnerPage=https://www-blue-dev.cancer.gov/about-nci/visit
-LandingPage=https://www-blue-dev.cancer.gov/research
-PDQPage=https://www-blue-dev.cancer.gov/types/breast/patient/breast-prevention-pdq
-TopicPage=https://www-blue-dev.cancer.gov/grants-training/apply-grant
-SpanishPage=https://www-blue-dev.cancer.gov/espanol
-AppModulePage=https://www-blue-dev.cancer.gov/publications/dictionaries/cancer-terms
+HomePage		= https://www-blue-dev.cancer.gov
+BlogPostPage	= https://www-blue-dev.cancer.gov/news-events/cancer-currents-blog/2018/presidents-cancer-panel-drug-prices
+BlogSeriesPage	= https://www-blue-dev.cancer.gov/news-events/cancer-currents-blog
+CTHPPatient		= https://www-blue-dev.cancer.gov/types/bladder
+CTHPHP			= https://www-blue-dev.cancer.gov/types/breast/hp
+InnerPage		= https://www-blue-dev.cancer.gov/about-nci/visit
+LandingPage		= https://www-blue-dev.cancer.gov/research
+PDQPage			= https://www-blue-dev.cancer.gov/types/breast/patient/breast-prevention-pdq
+TopicPage		= https://www-blue-dev.cancer.gov/grants-training/apply-grant
+SpanishPage		= https://www-blue-dev.cancer.gov/espanol
+AppModulePage	= https://www-blue-dev.cancer.gov/publications/dictionaries/cancer-terms
 
-***********************Test Data******************************************
-TestData= ./test-data/TestData.xlsx
-ClinicalTrialData= ./test-data/clinical-trials.xlsx
-TestData=./test-data/TestData.xlsx
+***********************Test Data*******************************************
+TestData			= ./test-data/TestData.xlsx
+ClinicalTrialData	= ./test-data/clinical-trials.xlsx
+SitewideSearchData	= ./test-data/sitewide-search.xlsx
 
-***********************External Resources*********************************
-AnalyticsTrackingServer=nci.122.2o7.net
-StaticServer=static.cancer.gov
+***********************External Resources**********************************
+AnalyticsTrackingServer	= nci.122.2o7.net
+StaticServer 			= static.cancer.gov
