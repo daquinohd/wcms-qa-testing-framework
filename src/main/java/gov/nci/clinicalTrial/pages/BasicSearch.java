@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import gov.nci.Utilities.ScrollUtil;
 import gov.nci.clinicalTrial.common.Delighter;
 import gov.nci.framework.AutoSuggestHelper;
 
@@ -178,6 +179,9 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 	 * @throws MalformedURLException
 	 */
 	public BasicSearchResults clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
+
+		// Make the search button visible so it can be clicked.
+		ScrollUtil.scrollIntoview(this.browser, btn_Search);
 
 		expectUrlChange(() ->{
 			btn_Search.click();

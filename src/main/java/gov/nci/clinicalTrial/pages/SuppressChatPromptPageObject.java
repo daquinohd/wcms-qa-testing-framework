@@ -19,8 +19,6 @@ public class SuppressChatPromptPageObject extends ClinicalTrialPageObjectBase {
 
         // Block the proactive chat prompt
         Cookie optionCookie = new Cookie("ProactiveLiveHelpForCTSPrompt-opt", "true", null);
-        Cookie timerCookie = new Cookie("ProactiveLiveHelpForCTSPrompt-timer", "0");
         browser.manage().addCookie(optionCookie);
-        browser.manage().addCookie(timerCookie);
     }
 }
