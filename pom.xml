@@ -17,7 +17,7 @@
 		Set up the default test suite to run if one isn't specified from mvn command line.
 		(override with "-Dsurefire.suiteXmlFiles=<testfile>", specifying a path if needed.)
 	-->
-    <smokeSuiteFile>resources/testng-R4R.xml</smokeSuiteFile>
+    <smokeSuiteFile>resources/testng-All.xml</smokeSuiteFile>
     <defaultSuiteFiles>${smokeSuiteFile}</defaultSuiteFiles>
     <suiteFile>${defaultSuiteFiles}</suiteFile>
 

@@ -19,6 +19,10 @@ public class FunctionLibrary {
 		}
 	}
 
+	public static void scrollIntoView(WebDriver driver, int l) {
+		((JavascriptExecutor) driver).executeScript("scroll(0, " + l + ");");
+	}
+
 	public static void waitForElement(WebDriver driver, WebElement elementToBeLoaded) {
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		wait.until(ExpectedConditions.visibilityOf(elementToBeLoaded));

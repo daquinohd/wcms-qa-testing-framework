@@ -130,7 +130,7 @@ public class Resources4Researchers_Test extends BaseClass {
 		Assert.assertTrue(driver.getCurrentUrl().endsWith("q=" + keyword));
 		System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
 
-		//Verify that the Search Box is empty
+		//Verify that the Search Box contains search keyword
 		WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
 		Assert.assertTrue(ele.getAttribute("value").equals(keyword));
 

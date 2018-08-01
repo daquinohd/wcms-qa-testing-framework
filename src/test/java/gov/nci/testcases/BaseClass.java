@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -16,12 +15,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
-import gov.nci.Utilities.ConfigReader;
-import gov.nci.Utilities.ScreenShot;
-
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+
+import gov.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ScreenShot;
 
 public class BaseClass {
 
@@ -68,7 +67,7 @@ public class BaseClass {
 			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		}
 
-		((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
+		//((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
 	}
 
 	@AfterMethod(groups = { "Smoke", "current" })
@@ -85,6 +84,7 @@ public class BaseClass {
 			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
 			driver.get(pageURL);
 		}
+
 	}
 
 	@AfterClass(groups = { "Smoke", "current" })

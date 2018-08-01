@@ -13,14 +13,15 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.relevantcodes.extentreports.LogStatus;
+
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.clinicalTrial.common.Delighters;
+import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import com.relevantcodes.extentreports.LogStatus;
 
 public class BasicSearch_Test extends BaseClass {
 
@@ -59,7 +60,7 @@ public class BasicSearch_Test extends BaseClass {
 	}
 
 	// Verifying the UI components of Basic Search
-	@Test(groups = { "Smoke" })
+	//@Test(groups = { "Smoke" })
 	public void verifyUI() {
 		basicSearch.verifyUI();
 		Assert.assertTrue(basicSearch.verifyUI()[0].isDisplayed(), "Basic CTS definition text is displayed");

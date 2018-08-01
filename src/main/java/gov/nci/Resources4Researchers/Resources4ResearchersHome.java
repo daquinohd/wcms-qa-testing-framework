@@ -40,7 +40,6 @@ public class Resources4ResearchersHome {
 	WebElement lnk_Learn_more_about_R4R;
 	@FindBy(how = How.XPATH, using = "(//div[@class='home-tile__icon  r4r-DEFAULT'])[1]")
 	WebElement icon_SearchForResources;
-
 	@FindBy(how = How.XPATH, using = "(//*[@class='home-tile__text']/h2)[1]")
 	WebElement lbl_SearchForResources;
 	@FindBy(how = How.XPATH, using = "(//*[@class='home-tile__text']/p)[1]")

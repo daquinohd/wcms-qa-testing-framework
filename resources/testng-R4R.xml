@@ -8,15 +8,9 @@
 				<include name="Smoke" />
 			</run>
 		</groups>
-		<classes> 	
-			 <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
-			 
-			    
-			  <!--    	
-			  <class name="gov.nci.testcases.BasicSearch_Test" /> 
-			  <class name="gov.nci.testcases.AdvanceSearch_Test" />
-			  <class name="gov.nci.testcases.AdvanceSearchResults_Test" />  --> 	
-
+		<classes> 	 
+			  <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
+			   <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" />	
 		</classes>
 	</test> 
 	
