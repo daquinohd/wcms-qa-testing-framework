@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.clinicalTrial.pages.AdvanceSearch;
+import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.clinicalTrial.common.Delighters;
 import gov.nci.commonobjects.Banner;
@@ -42,7 +43,14 @@ public class AdvanceSearch_Test extends BaseClass {
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
 
-		advanceSearch = new AdvanceSearch(driver);
+		try {
+			SuppressChatPromptPageObject chatBlock = new SuppressChatPromptPageObject(driver, null);
+			advanceSearch = new AdvanceSearch(driver, chatBlock);
+		} catch (Exception e) {
+			advanceSearch = null;
+			logger.log(LogStatus.ERROR, "Error creating Advanced Search page.");
+		}
+
 		System.out.println("Advance Search setup done");
 		delighter = new Delighters(driver);
 		crumb = new BreadCrumb(driver);
