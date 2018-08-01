@@ -359,7 +359,16 @@ public class AnalyticsTestBase {
 			return true;
 		}
 		return false;
-	}	
+	}
+
+	/**
+	 * Utility function overload to check for a given eVar 
+	 * @param num
+	 * @return
+	 */
+	public boolean haseVar(int num) {
+		return haseVar(num, "");
+	}
 
 	/**
 	 * Utility function to check for a given heirarchy and value

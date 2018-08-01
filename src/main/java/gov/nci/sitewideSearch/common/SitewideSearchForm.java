@@ -6,18 +6,18 @@ import java.net.MalformedURLException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.framework.PageObjectBase;
 
 public class SitewideSearchForm extends PageObjectBase {
 	
+	// TODO: see if we actually  need to extend PageObjectBase
 	// Constructor to initialize the page object
 	public SitewideSearchForm(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		PageFactory.initElements(driver, this);
-		System.out.print("SitewdieSearchForm initialized.");
+		System.out.println("SitewideSearchForm initialized.");
 	}
 
 	/**************** Sitewide Search Form Elements *****************************/
@@ -53,5 +53,16 @@ public class SitewideSearchForm extends PageObjectBase {
 	public void setSitewideSearchKeyword(String searchText) {
 		input_sw_search.sendKeys(searchText);
 	}
+	
+	/**
+	 * Clicks the form's search button.
+	 */
+	public void clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() ->{
+			btn_sw_search.click();
+		});
+
+	}	
 	
 }

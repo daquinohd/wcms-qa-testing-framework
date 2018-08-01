@@ -1,13 +1,11 @@
 package gov.nci.webAnalyticsTests;
 
-import com.relevantcodes.extentreports.LogStatus;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import gov.nci.sitewideSearch.common.SitewideSearchForm;
 import gov.nci.sitewideSearch.pages.SitewideSearchResults;
-import junit.framework.Assert;
-
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
@@ -20,26 +18,47 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		driver.get(config.goHome());
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
-			swSearchResults = new SitewideSearchResults();
+			//swSearchResults = new SitewideSearchResults();
 		} catch (Exception ex) {
 			System.out.println("feh");
 		}
 	}
 		
-	// Do the thing
+	// Test for search click events
 	@Test(groups = { "Analytics" })
-	public void doTest1() {
-	    swSearchForm.setSitewideSearchKeyword("ipilimumab");
-	    setClickBeacon();
-		Assert.assertTrue(1 == 1);
-		logger.log(LogStatus.PASS, "Test 1 passed");
+	public void testSitewideSearchButtonClick() {		
+		try {
+		    swSearchForm.setSitewideSearchKeyword("ipilimumab");
+		    swSearchForm.clickSearchButton();
+		    setClickBeacon();
+			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(14, "ipilimumab"), "Search term value does not match.");
+			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(haseVar(14, "ipilimumab"), "Search type value incorrect.");
+		} catch (Exception e) {
+			Assert.fail("Error submitting sitewide search.");
+			e.printStackTrace();
+		}
 	}
 	
-	/// Test test
+	// Test for searchresults load events
 	@Test(groups = { "Analytics" })
-	public void doTest2() {
-		Assert.assertTrue(2 == 2);
-		logger.log(LogStatus.PASS, "Test2 passed. Jeah jeah jeah.");
+	public void testSitewideSearchResultsLoad() {		
+		try {
+		    swSearchForm.setSitewideSearchKeyword("ipilimumab");
+		    swSearchForm.clickSearchButton();
+		    setLoadBeacon();
+			Assert.assertTrue(hasEvent(1), "Event value incorrect.");
+			Assert.assertTrue(hasEvent(47), "Event value incorrect.");
+			Assert.assertFalse(hasEvent(2), "Unexpected event value.");
+			Assert.assertTrue(hasProp(44, "Global search"), "Search type value incorrect");
+		} catch (Exception e) {
+			Assert.fail("Error loading sitewide search results page.");
+			e.printStackTrace();
+		}
 	}
 
 }
