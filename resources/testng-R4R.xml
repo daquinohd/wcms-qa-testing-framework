@@ -5,14 +5,15 @@
 		<parameter name="browser" value="Chrome" />
 		<groups>
 			<run>
-				<include name="current" />
+				<include name="Smoke" />
 			</run>
 		</groups>
 		<classes> 	
-			 <class name="gov.nci.testcases.BasicSearch_Test" /> 
+			 <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
 			 
 			    
 			  <!--    	
+			  <class name="gov.nci.testcases.BasicSearch_Test" /> 
 			  <class name="gov.nci.testcases.AdvanceSearch_Test" />
 			  <class name="gov.nci.testcases.AdvanceSearchResults_Test" />  --> 	
 
