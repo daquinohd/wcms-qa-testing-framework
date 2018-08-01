@@ -1,9 +1,3 @@
-
-
-
-
-
-
 package gov.nci.framework;
 
 import java.io.UnsupportedEncodingException;
@@ -110,12 +104,6 @@ public class PageObjectBase {
         // event to fire.
         new WebDriverWait(this.browser, 5).until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
-    }
-    
-
-    // Debugging utility function
-    public void expectVisibility(WebElement element) {
-    	new WebDriverWait(this.browser, 5).until(ExpectedConditions.visibilityOf(element));
-    }
+    }    
     
 }

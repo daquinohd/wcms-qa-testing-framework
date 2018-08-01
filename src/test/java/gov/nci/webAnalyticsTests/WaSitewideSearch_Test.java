@@ -1,17 +1,28 @@
 package gov.nci.webAnalyticsTests;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.sitewideSearch.common.SitewideSearchForm;
 import gov.nci.sitewideSearch.pages.SitewideSearchResults;
+import gov.nci.Utilities.ExcelManager;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
+	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
+	
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
+	String testDataFilePath;
 	
+	// TODO: Add data providers / iterator
+	// TODO: split beforeMethod() and beforeClass() methods
 	@BeforeMethod(groups = { "Analytics" }) 
 	// Run before each test method in this class	
 	public void setup() {
@@ -24,6 +35,11 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		}
 	}
 		
+	@BeforeClass(groups = { "Analytics" }) 
+	protected void preClass() {
+		testDataFilePath = config.getProperty("SitewideSearchData");		
+	}
+	
 	// Test for search click events
 	@Test(groups = { "Analytics" })
 	public void testSitewideSearchButtonClick() {		
@@ -48,7 +64,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" })
 	public void testSitewideSearchResultsLoad() {		
 		try {
-		    swSearchForm.setSitewideSearchKeyword("ipilimumab");
+		    swSearchForm.setSitewideSearchKeyword("wingardium leviosa");
 		    swSearchForm.clickSearchButton();
 		    setLoadBeacon();
 			Assert.assertTrue(hasEvent(1), "Event value incorrect.");
@@ -59,6 +75,21 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			Assert.fail("Error loading sitewide search results page.");
 			e.printStackTrace();
 		}
+	}
+	
+	
+	// Start building data thingy
+	@DataProvider(name = "SitewideSearch")
+	public Iterator<Object[]> readSitewideSearch_Data() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String searchTerm = excelReader.getCellData(TESTDATA_SHEET_NAME, "LeadOrganization", rowNum);
+			System.out.println("Lead Organization in data provider ======= " + searchTerm);
+			Object ob[] = { searchTerm };
+			myObjects.add(ob);
+		}
+		return myObjects.iterator();
 	}
 
 }
