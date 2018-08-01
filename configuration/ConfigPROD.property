@@ -1,8 +1,8 @@
 ************************Environment URLs***********************************
 HomePageURL=https://www.cancer.gov/
 BasicClinicalTrialSearchURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search
+BasicSearchResultsURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
-BasicSearchResultsURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
 ResultsPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www.cancer.gov/contact
 DelighterWhatURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
@@ -40,3 +40,4 @@ AppModulePage=https://www.cancer.gov/publications/dictionaries/cancer-terms
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx

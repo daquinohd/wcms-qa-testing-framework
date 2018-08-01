@@ -1,5 +1,9 @@
 package gov.nci.clinicalTrial.pages;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,162 +11,293 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import gov.nci.Utilities.FunctionLibrary;
+import gov.nci.Utilities.ScrollUtil;
+import gov.nci.clinicalTrial.common.Delighter;
+import gov.nci.framework.AutoSuggestHelper;
 
-public class BasicSearch {
+public class BasicSearch extends ClinicalTrialPageObjectBase {
 
-	public final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information";
-	WebDriver driver;
+	WebDriver browser;
 
-	/*************** Basic Search Page WebElements **********************/
-	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div")
-	WebElement txt_SearchTip;
-	//@FindBy(how = How.LINK_TEXT, using = "advanced search")
-	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[1]/div/div/a")
-	WebElement lnk_AdvSearch;
+	/**************** Basic Search Form *********************************/
+	@FindBy(how = How.XPATH, using = "//*[@id='form--cts-basic']")
+	private WebElement form_Search;
+
+	/*************** Basic Search Page UI Elements **********************/
+	@FindBy(how = How.CSS, using = ".search-tip")
+	private WebElement txt_SearchTip;
+	@FindBy(how = How.CSS, using = ".search-tip a")
+	private WebElement lnk_AdvSearch;
 	@FindBy(how = How.XPATH, using = ".//input[@id='q']")
-	WebElement txt_CancerType;
+	private WebElement txt_CancerType;
 	@FindBy(how = How.CSS, using = "#fieldset--type > legend > span")
-	WebElement lbl_CancerType;
+	private WebElement lbl_CancerType;
 	@FindBy(how = How.CSS, using = "#fieldset--type > a")
-	WebElement lnk_CancerTypeHelp;
+	private WebElement lnk_CancerTypeHelp;
 	@FindBy(how = How.CSS, using = "#fieldset--age > legend > span")
-	WebElement lbl_Age;
+	private WebElement lbl_Age;
 	@FindBy(how = How.CSS, using = "#fieldset--age > a")
-	WebElement lnk_AgeHelp;
+	private WebElement lnk_AgeHelp;
 	@FindBy(how = How.CSS, using = "#fieldset--zip > legend > span")
-	WebElement lbl_Zipcode;
+	private WebElement lbl_Zipcode;
 	@FindBy(how = How.CSS, using = "#fieldset--zip > a")
-	WebElement lnk_ZipcodeHelp;
+	private WebElement lnk_ZipcodeHelp;
 	@FindBy(how = How.XPATH, using = ".//input[@id='z']")
-	WebElement txt_Zipcode;
+	private WebElement txt_Zipcode;
 	@FindBy(how = How.XPATH, using = ".//input[@id='a']")
-	WebElement txt_Age;
+	private WebElement txt_Age;
 	@FindBy(how = How.XPATH, using = ".//*[@id='q']")
-	WebElement msg_CancerType;
+	private WebElement msg_CancerType;
 	@FindBy(how = How.XPATH, using = ".//*[@id='fieldset--age']/div")
-	WebElement text_Age;
+	private WebElement text_Age;
 	@FindBy(how = How.XPATH, using = ".//*[@id='fieldset--zip']/div")
-	WebElement text_Zipcode;
-	//@FindBy(how = How.XPATH, using = ".//input[@type='submit'][@class='submit button'] [@value='Search']")
-	//WebElement btn_Search;
+	private WebElement text_Zipcode;
 	@FindBy(how = How.XPATH, using = ".//input[@type='submit'][@class='submit button'] [@value='Find Trials']")
-	WebElement btn_Search;
+	private WebElement btn_Search;
 
-	@FindBy(how = How.CSS, using = ".delighter.cts-feedback")
-	WebElement delighter_Feedback;
-	@FindBy(how = How.CSS, using = ".delighter.cts-feedback>h4")
-	WebElement sendUsYourFeedback;
-	@FindBy(how = How.CSS, using = ".ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.cts-feedback-dialog")
-	WebElement delighter_FeedbackPopup;
-	@FindBy(how = How.CSS, using = "#cts-feedback-cancel")
-	WebElement delighter_FeedbackPopupCancel;
-	@FindBy(how = How.XPATH, using = ".//*[@id='cgvBody']/div[2]/div/div[2]")
-	WebElement module_CTSApi;
 	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]")
-	WebElement text_BasicDefinition;
+	private WebElement text_HeaderText;
 	@FindBy(how = How.XPATH, using = "//*[@id='cgvBody']/div[1]/p/a[2]")
-	WebElement lnk_Steps;
+	private WebElement lnk_NextSteps;
 	@FindBy(how = How.CSS, using = ".api-reference-content > p:nth-child(1) > a:nth-child(1)")
-	WebElement lnk_CTSApi;
+	private WebElement lnk_CTSApi;
 	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--type']/legend['Cancer Type/Keyword']")
-	WebElement lgd_cancerType;
+	private WebElement lgd_cancerType;
+
+	// Delighters
+	private Delighter delighter_LiveHelp;
+	private Delighter delighter_What;
+	private Delighter delighter_Which;
+
+	// Error messages
+	@FindBy(how = How.XPATH, using  = "//fieldset[@id='fieldset--age']/div[@class='error-msg']")
+	private WebElement err_AgeInputDisplay;
+
+	@FindBy(how = How.XPATH, using = "//fieldset[@id='fieldset--zip']/div[@class='error-msg']")
+	private WebElement err_ZipCodeInputDisplay;
 
 	// Constructor - Initializing the Page objects
-	public BasicSearch(WebDriver driver) {
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-		System.out.println("PageFactory initiated");
+	public BasicSearch(WebDriver browser, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException {
+		super(browser, decorator);
+		this.browser = browser;
+		PageFactory.initElements(browser, this);
+
+		delighter_LiveHelp = new Delighter(browser, By.cssSelector(".delighter.cts-livehelp"));
+		delighter_What = new Delighter(browser, By.cssSelector(".delighter.cts-what"));
+		delighter_Which = new Delighter(browser, By.cssSelector(".delighter.cts-which"));
 	}
 
-	//UI components
-	public WebElement[] verifyUI() {
-		return new WebElement[] { text_BasicDefinition, lbl_CancerType, lnk_CancerTypeHelp, lbl_Age, lnk_AgeHelp,
-				lbl_Zipcode, lnk_ZipcodeHelp, btn_Search, msg_CancerType, text_Age, text_Zipcode, txt_SearchTip };
 
+	public WebElement getHeaderText() {
+		return text_HeaderText;
 	}
 
-	public void clickSteps() {
-		lnk_Steps.click();
+	public WebElement getCancerTypeLabel() {
+		return lbl_CancerType;
 	}
 
-	// Default Search
-	public void searchDefault() {
-		FunctionLibrary.scrollIntoview(driver, lgd_cancerType);
-		btn_Search.click();
+	public WebElement getCancerTypeMessageElement() {
+		return msg_CancerType;
 	}
 
-	// Search based on cancer type
-	public void searchCancerType(String cancerType) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_CancerType.sendKeys(Keys.RETURN);
-
+	public WebElement getCancerTypeHelpLink() {
+		return lnk_CancerTypeHelp;
 	}
 
-	// Search based on Age
-	public void searchAge(int age) {
-		txt_Age.sendKeys(String.valueOf(age));
-		btn_Search.click();
+	public WebElement getAgeLabel() {
+		return lbl_Age;
 	}
 
-	public void searchZip(String zipCode) {
+	public WebElement getAgeHelpLink() {
+		return lnk_AgeHelp;
+	}
+
+	public WebElement getTextAgeElement() {
+		return text_Age;
+	}
+
+	public WebElement getZipCodeLabel() {
+		return lbl_Zipcode;
+	}
+
+	public WebElement getZipCodeHelpLink() {
+		return lnk_ZipcodeHelp;
+	}
+
+	public WebElement getZipCodeTextElement() {
+		return text_Zipcode;
+	}
+
+	public WebElement getZipCodeField() {
+		return txt_Zipcode;
+	}
+
+	public WebElement getSearchTipElement() {
+		return txt_SearchTip;
+	}
+
+	public WebElement getSearchButton() {
+		return btn_Search;
+	}
+
+	public WebElement getNextStepsLink() {
+		return lnk_NextSteps;
+	}
+
+	/**
+	 * Delighter accessors
+	 */
+	public Delighter getLiveHelpDelighter() {
+		return delighter_LiveHelp;
+	}
+
+	public Delighter getWhatAreDelighter() {
+		return delighter_What;
+	}
+
+	public Delighter getWhichTrialDelighter() {
+		return delighter_Which;
+	}
+
+	/**
+	 * Error Displays
+	 */
+	public WebElement getAgeInputError() {
+		return err_AgeInputDisplay;
+	}
+
+	public WebElement getZipCodeInputError() {
+		return err_ZipCodeInputDisplay;
+	}
+
+	/**
+	 * Clicks the form's search button.
+	 *
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
+	 */
+	public BasicSearchResults clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
+
+		// Make the search button visible so it can be clicked.
+		ScrollUtil.scrollIntoview(this.browser, btn_Search);
+
+		expectUrlChange(() ->{
+			btn_Search.click();
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
+
+	/**
+	 * Simulates pressing "Enter" while the Keyword field has focus.
+	 *
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
+	 */
+	public BasicSearchResults pressEnterOnKeywordField() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() -> {
+			txt_CancerType.sendKeys(Keys.RETURN);
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
+
+	/**
+	 * Simulates pressing "Enter" while the Age field has focus.
+	 *
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
+	 */
+	public BasicSearchResults pressEnterOnAgeField() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() -> {
+			txt_Age.sendKeys(Keys.RETURN);
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
+
+	/**
+	 * Simulates pressing "Enter" while the ZIP code field has focus.
+	 *
+	 * @return A BasicSearchResults object containing the results of the form
+	 *         submission.
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
+	 */
+	public BasicSearchResults pressEnterOnZipCodeField() throws MalformedURLException, UnsupportedEncodingException {
+
+		expectUrlChange(() -> {
+			txt_Zipcode.sendKeys(Keys.RETURN);
+		});
+
+		BasicSearchResults result = new BasicSearchResults(this.browser);
+		return result;
+	}
+
+	/**
+	 * Selects the cancer type from the autosuggest list.
+	 *
+	 * @param cancerType String containing the exact cancer type name to be selected. This must be the full name.
+	 */
+	public void setExactCancerType(String cancerType) throws MalformedURLException, UnsupportedEncodingException {
+
+		// CSS selector for the autosuggest. This appears in the DOM on page load.
+		String autoSuggestListSelector = "ul.ui-autocomplete.ui-front:not(.sitewide-search-menu)";
+
+		// CSS selector for the first list item, relative to the overall list. This appears in the DOM
+		// when the list is first rendered.
+		String autoSuggestListItemSelector = "li.ui-menu-item";
+
+		AutoSuggestHelper suggestHelper = new AutoSuggestHelper(browser);
+		suggestHelper.SelectExact(cancerType, txt_CancerType, autoSuggestListSelector, autoSuggestListItemSelector);
+	}
+
+	/**
+	 * Places text in the "Cancer type or keyword" field, but doesn't select anything
+	 * from autocmplete.
+	 *
+	 * @param searchText the value to insert in the keyword field.
+	 */
+	public void setSearchKeyword(String searchText) {
+		txt_CancerType.sendKeys(searchText);
+	}
+
+	/**
+	 * Places a value in the search form's "Age" field.
+	 * Allows non-integer values in order to allow tests of error handling.
+	 *
+	 * @param age the value to place in the age field.
+	 */
+	public void setSearchAge(String age){
+		txt_Age.sendKeys(age);
+	}
+
+	/**
+	 * Places a value in the search form's "ZIP code" field. Allows non-integer
+	 * values in order to allow tests of error handling.
+	 *
+	 * @param zipCode the value to place in the ZIP code field
+	 */
+	public void setSearchZip(String zipCode){
 		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
 	}
 
-	public void searchCancerTypeAge(String cancerType, int age) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_Age.sendKeys(String.valueOf(age));
-		btn_Search.click();
-		// txt_CancerType.sendKeys(Keys.RETURN);
-	}
-
-	public void searchCancerTypeZip(String cancerType, String zipCode) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-		// txt_CancerType.sendKeys(Keys.RETURN);
-	}
-
-	public void searchAgeZip(int age, String zipCode) {
-		txt_Age.sendKeys(String.valueOf(age));
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-	}
-
-	public void searchCancerTypeAgeZip(String cancerType, int age, String zipCode) {
-		txt_CancerType.sendKeys(cancerType);
-		txt_Age.sendKeys(String.valueOf(age));
-		txt_Zipcode.sendKeys(zipCode);
-		btn_Search.click();
-		// txt_CancerType.sendKeys(Keys.RETURN);
-	}
-
-	/*
-	 * public void clickDelighterWhat() { delighter_What.click(); }
-	 * 
-	 * public void clickDelighterWhich() { delighter_Which.click(); }
-	 * 
-	 * public WebElement getDelighterWhich() { return delighter_Which; }
-	 
-	public void clickDelighterFeedback() {
-	
-		delighter_Feedback.click();
-	}
-	
-	public WebElement getDelighterFeedback() {
-		return delighter_Feedback;
-	}
-	
-	public WebElement delighterFeedbackPopup() {
-		return delighter_FeedbackPopup;
-	}
-	
-	public void clickDelighterFeedbackPopupCancel() {
-		delighter_FeedbackPopupCancel.click();
-	} */
-
-	public void clickAdvSearch() {
-		lnk_AdvSearch.click();
+	/**
+	 * Gets the URL associated with the Advanced Search link in the
+	 * "Search tips" box.
+	 */
+	public String getAdvancedSearchLinkUrl() {
+		return lnk_AdvSearch.getAttribute("href");
 	}
 }

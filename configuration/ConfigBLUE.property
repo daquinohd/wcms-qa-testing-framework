@@ -1,5 +1,6 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
+BasicSearchResultsURL=https://www-blue.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-blue-dev.cancer.gov/contact
 DelighterWhatURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
@@ -35,3 +36,4 @@ SpanishPage=https://www-blue-dev.cancer.gov/espanol
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx

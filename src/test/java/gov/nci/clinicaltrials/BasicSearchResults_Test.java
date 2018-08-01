@@ -1,4 +1,4 @@
-package gov.nci.testcases;
+package gov.nci.clinicaltrials;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,10 +12,14 @@ import org.testng.annotations.Test;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
+
 import com.relevantcodes.extentreports.LogStatus;
 
 public class BasicSearchResults_Test extends BaseClass {
+
 	BasicSearchResults basicSearchResults;
+	String testDataFilePath;
 
 	@BeforeClass(groups = { "Smoke" })
 	@Parameters({ "browser" })
@@ -25,9 +29,19 @@ public class BasicSearchResults_Test extends BaseClass {
 		System.out.println("PageURL: " + pageURL);
 		driver = BrowserManager.startBrowser(browser, pageURL);
 
-		basicSearchResults = new BasicSearchResults(driver);
+		try {
+			// Create search page with chat prompt suppressed.
+			SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
+			basicSearchResults = new BasicSearchResults(driver, chatPrompt);
+		} catch (Exception e) {
+			basicSearchResults = null;
+			logger.log(LogStatus.ERROR, "Error creating Basic Search results page.");
+		}
 		System.out.println("Basic search results setup done");
+		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
+
+	
 
 	@Test(groups = { "Smoke" })
 	public void clickPrint() {

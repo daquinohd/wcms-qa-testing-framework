@@ -6,6 +6,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
+/**
+ * === DO NOT USE THIS CLASS IN ANY NEW CODE! ===
+ * 
+ * This class consists of "miscellaneous" functions and will be refactored.
+ * 
+ * "Scroll into view" methods should become part of ScrollUtil.
+ * 
+ * "Wait for Navigation" methods should be moved to a suitable class in gov.nci.framework
+ *  	(Potentially, but not for certain, PageObjectBase).
+ * 
+ * "Wait fo element" methods need to be considered on a case-by-case basis whether they
+ * 		should be deleted, or else moved to a suitable helper class in gov.nci.framework.
+ * 
+ */
+@Deprecated
 public class FunctionLibrary {
 
 	public static void scrollIntoview(WebDriver driver, WebElement element) {

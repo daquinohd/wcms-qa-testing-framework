@@ -22,7 +22,7 @@ import org.testng.annotations.Parameters;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ScreenShot;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;

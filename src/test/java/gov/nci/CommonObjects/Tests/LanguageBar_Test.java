@@ -14,7 +14,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.commonobjects.LanguageBar;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 
 public class LanguageBar_Test extends BaseClass {
 

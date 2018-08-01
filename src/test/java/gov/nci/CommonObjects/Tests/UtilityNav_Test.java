@@ -14,7 +14,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.commonobjects.UtilityNav;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 
 public class UtilityNav_Test extends BaseClass {
 

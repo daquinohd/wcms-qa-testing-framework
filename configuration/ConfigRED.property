@@ -1,5 +1,6 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
+BasicSearchResultsURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 DelighterLiveHelpURL=https://www-red-dev.cancer.gov/contact
 DelighterWhatURL=https://www-red-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
@@ -36,3 +37,4 @@ AppModulePage=https://www-red-dev.cancer.gov/publications/dictionaries/cancer-te
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx

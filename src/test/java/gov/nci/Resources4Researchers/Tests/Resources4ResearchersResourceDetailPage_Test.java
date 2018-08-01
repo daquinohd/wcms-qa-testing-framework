@@ -19,7 +19,7 @@ import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.FunctionLibrary;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 	// public static final String TESTDATA_SHEET_NAME = "AdvanceSearch";

@@ -9,15 +9,15 @@
 			</run>
 		</groups>
 		<classes> 	
-			  <class name="gov.nci.testcases.BasicSearch_Test" />
-			  <class name="gov.nci.testcases.AdvanceSearch_Test" /> 
-			  <!-- <class name="gov.nci.testcases.AdvanceSearchResults_Test" /> 
+			  <class name="gov.nci.clinicaltrials.BasicSearch_Test" />
+			  <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" /> 
+			  <!-- <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> 
 			  <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
 			  <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" />
 			  <class name="gov.nci.CommonObjects.Tests.LanguageBar_Test" />
 			  <class name="gov.nci.CommonObjects.Tests.UtilityNav_Test" /> 
 			   
-			  <class name="gov.nci.testcases.BasicSearchResults_Test" />
+			  <class name="gov.nci.clinicaltrials.BasicSearchResults_Test" />
 			  --> 
 		</classes>
 	</test> 
@@ -30,15 +30,15 @@
 			</run>
 		</groups>
 		<classes> 	
-			<class name="gov.nci.testcases.BasicSearch_Test" />
-			  <class name="gov.nci.testcases.AdvanceSearch_Test" /> 
-			  <class name="gov.nci.testcases.AdvanceSearchResults_Test" /> 
+			<class name="gov.nci.clinicaltrials.BasicSearch_Test" />
+			  <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" /> 
+			  <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> 
 			  <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
 			  <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" />
 			  <class name="gov.nci.CommonObjects.Tests.LanguageBar_Test" />
 			  <class name="gov.nci.CommonObjects.Tests.UtilityNav_Test" /> 
 			
-			  <class name="gov.nci.testcases.BasicSearchResults_Test" />
+			  <class name="gov.nci.clinicaltrials.BasicSearchResults_Test" />
 			 
 		</classes>
 	</test>  --> 
@@ -51,11 +51,11 @@
 			</run>
 		</groups>
 		<classes> 	
-			 <class name="gov.nci.testcases.BasicSearch_Test" /> 
-			<class name="gov.nci.testcases.AdvanceSearch_Test" />
+			 <class name="gov.nci.clinicaltrials.BasicSearch_Test" /> 
+			<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
 			
 			 
-			  <class name="gov.nci.testcases.AdvanceSearchResults_Test" />  
+			  <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" />  
 			
 		</classes>
 	</test>  -->
@@ -68,10 +68,10 @@
 			</run>
 		</groups>
 		<classes> 	
-		 <class name="gov.nci.testcases.BasicSearch_Test" /> 
-		<class name="gov.nci.testcases.AdvanceSearch_Test" />
+		 <class name="gov.nci.clinicaltrials.BasicSearch_Test" /> 
+		<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
 			
-		 <class name="gov.nci.testcases.AdvanceSearchResults_Test" /> 
+		 <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> 
 			
 		</classes>
 	</test> -->
@@ -83,8 +83,8 @@
 			</run>
 		</groups>
 		<classes> 	
-			<class name="gov.nci.testcases.BasicSearch_Test" />
-		<class name="gov.nci.testcases.AdvanceSearch_Test" />
+			<class name="gov.nci.clinicaltrials.BasicSearch_Test" />
+		<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
 		</classes>
 	</test>  -->
 	
@@ -96,8 +96,8 @@
 			</run>
 		</groups>
 		<classes> 	
-			<class name="gov.nci.testcases.BasicSearch_Test" />
-			  <class name="gov.nci.testcases.AdvanceSearch_Test" /> 
+			<class name="gov.nci.clinicaltrials.BasicSearch_Test" />
+			  <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" /> 
 		</classes>
 	</test>   -->
 </suite>
