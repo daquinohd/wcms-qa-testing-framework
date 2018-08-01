@@ -41,19 +41,19 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 	
 	// Test for search click events
-	@Test(groups = { "Analytics" })
-	public void testSitewideSearchButtonClick() {		
+	@Test(dataProvider = "SearchTerms", groups = { "Analytics" })
+	public void testSitewideSearchButtonClick(String searchTerm) {
 		try {
-		    swSearchForm.setSitewideSearchKeyword("ipilimumab");
+		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
 		    setClickBeacon();
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
 			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(hasProp(14, "ipilimumab"), "Search term value does not match.");
+			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
 			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
 			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, "ipilimumab"), "Search type value incorrect.");
+			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -71,21 +71,23 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			Assert.assertTrue(hasEvent(47), "Event value incorrect.");
 			Assert.assertFalse(hasEvent(2), "Unexpected event value.");
 			Assert.assertTrue(hasProp(44, "Global search"), "Search type value incorrect");
+			// Assert.assertTrue(hasHier()); // TODO: fix hier check
 		} catch (Exception e) {
 			Assert.fail("Error loading sitewide search results page.");
 			e.printStackTrace();
 		}
 	}
 	
+	/******************** Data Providers ****************/	
 	
-	// Start building data thingy
-	@DataProvider(name = "SitewideSearch")
+	// TODO: categorize search terms
+	@DataProvider(name = "SearchTerms")
 	public Iterator<Object[]> readSitewideSearch_Data() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String searchTerm = excelReader.getCellData(TESTDATA_SHEET_NAME, "LeadOrganization", rowNum);
-			System.out.println("Lead Organization in data provider ======= " + searchTerm);
+			String searchTerm = excelReader.getCellData(TESTDATA_SHEET_NAME, "SearchTerm", rowNum);
+			System.out.println("Sitewide search term ======= " + searchTerm);
 			Object ob[] = { searchTerm };
 			myObjects.add(ob);
 		}
