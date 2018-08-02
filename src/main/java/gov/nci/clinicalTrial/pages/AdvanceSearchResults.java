@@ -1,5 +1,7 @@
 package gov.nci.clinicalTrial.pages;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class AdvanceSearchResults {
+public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 	public static final String SEARCH_RESULT_PAGE_TITLE = "Clinical Trials Search Results";
 	public static final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information\nFind NCI-Supported Clinical Trials";
 	public static final String H1_TITLE = "Clinical Trials Search Results";
@@ -45,7 +47,8 @@ public class AdvanceSearchResults {
 	List<WebElement> checkBoxes3;
 
 	/********** Constructor: Initializing the Page Objects *****************/
-	public AdvanceSearchResults(WebDriver driver) {
+	public AdvanceSearchResults(WebDriver driver, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException{
+		super(driver, decorator);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}

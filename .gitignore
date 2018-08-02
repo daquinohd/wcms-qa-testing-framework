@@ -1,3 +1,8 @@
+# Allow developers to have a local script for their desired configuration
+/run.bat
+/run.cmd
+/run.sh
+
 /.settings
 /target
 /test-output
