@@ -62,7 +62,9 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 	
 	// Test for searchresults load events
+	// TODO: troubleshoot dataProvider error on this test
 	@Test(groups = { "Analytics" })
+	//@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" })
 	public void testSitewideSearchResultsLoad() {
 		try {
 		    swSearchForm.setSitewideSearchKeyword("wingardium leviosa");
