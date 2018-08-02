@@ -33,12 +33,15 @@ import gov.nci.WebAnalytics.AnalyticsRequest;
 
 public class AnalyticsTestBase {
 
-	// TODO: Set default URLs at test level, not base
-	//// URL may need to be used as a param
-	// TODO: Create 'catch-all' Contains() method
-	// TODO: Clean up setters / getters
-	// TODO: General clean up & refactor 
-	// TODO: Handle null exceptions in has() methods 	
+	/**
+	* TODO: Set default URLs at test level, not base
+	* 	- URL may need to be used as a param
+	* TODO: Move has/is methods back into AnalyticsRequest 
+	*  - Handle null exceptions in has() methods
+	*  - Create 'catch-all' Contains() method
+	* TODO: Clean up setters / getters
+	* TODO: General clean up & refactor 
+	**/	
 	public static WebDriver driver;
     public static BrowserMobProxy proxy;
 	protected static ExtentReports report;
@@ -369,27 +372,5 @@ public class AnalyticsTestBase {
 	public boolean haseVar(int num) {
 		return haseVar(num, "");
 	}
-
-	/**
-	 * Utility function to check for a given heirarchy and value
-	 * @param num
-	 * @param val
-	 * @return
-	 */
-	public boolean hasHier(int num, String val) {
-		// TODO: fill this out
-		return false;
-	}
-	
-	/**
-	 * Utility function to check for a user-specified analytics variable and value
-	 * @param name
-	 * @param value
-	 * @return bool
-	 */
-	public boolean hasVariable(String name, String value) {
-		// TODO: fill this out
-		return false;
-	}	
 	
 }

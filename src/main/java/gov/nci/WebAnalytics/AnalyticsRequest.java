@@ -248,5 +248,32 @@ public class AnalyticsRequest {
 	private static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm) {
 		return getNumberedParams(paramList, parm, parm);
 	}	
+		
+	/**************** Checks for given values ****************/
+
+	/**
+	 * Utility function to check for a given heirarchy and value
+	 * @param num
+	 * @param val
+	 * @return
+	 */
+	public boolean hasHier(int num, String val) {
+		String blob = this.getEvars().toString();
+		if(blob.toLowerCase().contains("hier" + Integer.toString(num) + "=" + val.toLowerCase())) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Utility function to check for a user-specified analytics variable and value
+	 * @param name
+	 * @param value
+	 * @return bool
+	 */
+	public boolean hasVariable(String name, String value) {
+		// TODO: fill this out
+		return false;
+	}		
 
 }

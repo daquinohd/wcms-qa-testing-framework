@@ -10,7 +10,7 @@ import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 
 public class WaBasicSearch_Test extends AnalyticsTestBase {
 
-	// TODO: figure out why event fails on occasion	
+	// TODO: add wait() to capture begin / abandon events
 	private BasicSearch basicSearch;
 
 	@BeforeMethod(groups = { "Analytics" }) 
