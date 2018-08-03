@@ -2,90 +2,22 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="QA Environment1" parallel="none">
 	  <test name="NCI - Chrome Testing" preserve-order="true">
-		<parameter name="browser" value="Chrome" />
+		<!--
+			The browser parameter is set in pom.xml as part of invoking
+			the maven-surefire-plugin.
+
+			<parameter name="browser" value="Chrome" />
+		-->
 		<groups>
 			<run>
-				<include name="current" />
+				<include name="Smoke" />
 			</run>
 		</groups>
-		<classes> 	
-			 <class name="gov.nci.clinicaltrials.BasicSearch_Test" /> 
-			 
-			    
-			  <!--    	
-			  <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
-			  <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" />  --> 	
-
+		<classes> 	 
+			  <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
+			   <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" />	
 		</classes>
 	</test> 
 	
-	<!--  <test name="NCI - iPhone Testing" >
-		<parameter name="browser" value="iPhone6" />
-		<groups>
-			<run>
-				<include name="Smoke" />
-			</run>
-		</groups>
-		<classes> 	
-			 <class name="gov.nci.clinicaltrials.BasicSearch_Test" /> 
-			<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
-			
-			 
-			  <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" />  
-			
-		</classes>
-	</test>  -->
-	
-	<!--  <test name="NCI - iPad Testing" >
-		<parameter name="browser" value="iPad" />
-		<groups>
-			<run>
-				<include name="Smoke" />
-			</run>
-		</groups>
-		<classes> 	
-		 <class name="gov.nci.clinicaltrials.BasicSearch_Test" /> 
-		<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
-			
-		 <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> 
-			
-		</classes>
-	</test> -->
-	<!--<test name="NCI - Chrome Testing Headless" >
-		<parameter name="browser" value="ChromeHeadless" />
-		<groups>
-			<run>
-				<include name="Smoke" />
-			</run>
-		</groups>
-		<classes> 	
-			<class name="gov.nci.clinicaltrials.BasicSearch_Test" />
-		<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
-		</classes>
-	</test>  -->
-	<!--   <test name="NCI - Firefox Testing" >
-		<parameter name="browser" value="Firefox" />
-		<groups>
-			<run>
-				<include name="Smoke" />
-			</run>
-		</groups>
-		<classes> 	
-			 <class name="gov.nci.clinicaltrials.BasicSearch_Test" /> 
-			   <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
-		</classes>
-	</test>  --> 
-	<!-- <test name="NCI - Firefox Testing Headless" >
-		<parameter name="browser" value="FirefoxHeadless" />
-		<groups>
-			<run>
-				<include name="Smoke" />
-			</run>
-		</groups>
-		<classes> 	
-			<class name="gov.nci.clinicaltrials.BasicSearch_Test" />
-			  <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" /> 
-		</classes>
-	</test>   -->
 </suite>
 

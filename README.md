@@ -19,7 +19,22 @@ To execute a specific test suite, execute the command
 Where `<testfile>` is the test suite file and path.  Multiple test suites may be specified by separating them
 with commas. e.g.
 
-    mvn test -Dsurefire.suiteXmlFiles=resources\testng-CTS.xml,resources\testng-R4R.xml 
+    mvn test -Dsurefire.suiteXmlFiles=resources\testng-CTS.xml,resources\testng-R4R.xml
+
+Tests default to running in Chrome Headless. To use a different browser, include the arguement -Dbrowser=<browser>
+
+    mvn test -Dbrowser=Chrome
+
+Valid browser names are:
+* Chrome
+* ChromeHeadless
+* Firefox
+* GeckoHeadless
+* iPhone6
+* iPad
+
+**NOTE:** Names are CaSe seNstive.  (e.g. "Chrome" is not the same as "chrome.")
+
 
 ## Setup For Eclipse
 1. Open Eclipse and workspace.
