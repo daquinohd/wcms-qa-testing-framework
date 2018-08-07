@@ -2,6 +2,7 @@ package gov.nci.Resources4Researchers;
 
 import java.util.List;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,13 +23,13 @@ public class Resources4ResearchersResourceDetailPage {
 	// public static final String R4R_H1_PAGE_TITLE = "Resources for Researchers
 	// Search Results";
 	public final String BREAD_CRUMB = "Home\nResearch";
-	public static final String R4R_HOME_PAGE_URL = "https://www-qa.cancer.gov/research/about-r4r";
+	public static final String R4R_HOME_PAGE_URL = "https://www-qa.cancer.gov/research/resources/";
 
 	/*
 	 * Resources for Researchers Resource Detail Page WebElements
 	 * 
 	 */
-	@FindBy(how = How.XPATH, using = "//*[@id='r4r-root']/main/div[2]/header/h1")
+	@FindBy(how = How.XPATH, using = "//div[@class='r4r-resource  r4r-DEFAULT']/header")
 	WebElement r4rResourceDetailH1PageTitle;
 	@FindBy(how = How.LINK_TEXT, using = "< Back to results")
 	WebElement lnk_BacktoSearchResults;
@@ -78,9 +79,6 @@ public class Resources4ResearchersResourceDetailPage {
 	/*
 	 * Get Page title of Search Results page
 	 */
-	// public String getPageTitle() {
-	// return R4R_PAGE_TITLE;
-	// }
 
 	public WebElement getPageH1Title() {
 		return r4rResourceDetailH1PageTitle;
@@ -192,12 +190,30 @@ public class Resources4ResearchersResourceDetailPage {
 	}
 
 	/*
+	 * Get Element Search Text box
+	 */
+	public WebElement getSearchBoxText() {
+		return txt_Search;
+	}
+
+	/*
 	 * Search Resources for Researchers based on any keyword
 	 */
-	public void search(String keyword) {
-		getSearchBox().click();
-		getSearchBox().sendKeys(keyword);
+	public void searchbyClick(String keyword) {
+		// FunctionLibrary.scrollIntoview(driver, box_Search);
+		getSearchBoxText().click();
+		getSearchBoxText().sendKeys(keyword);
 		getSearchButton().click();
+	}
+
+	/*
+	 * Search Resources for Researchers based on any keyword
+	 */
+	public void searchbyEnter(String keyword) {
+		// FunctionLibrary.scrollIntoview(driver, box_Search);
+		getSearchBoxText().click();
+		getSearchBoxText().sendKeys(keyword);
+		getSearchBoxText().sendKeys(Keys.RETURN);
 	}
 
 	/*

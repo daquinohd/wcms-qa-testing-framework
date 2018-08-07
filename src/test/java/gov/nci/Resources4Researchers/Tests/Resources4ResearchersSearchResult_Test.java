@@ -23,7 +23,7 @@ import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.clinicaltrials.BaseClass;
+import gov.nci.testcases.BaseClass;
 
 public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
@@ -52,14 +52,15 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" })
 	public void verifyBanner() {
-		Assert.assertTrue(banner.isDisplayed());
-		Assert.assertEquals(banner.getAltText(), "National Cancer Institute");
+		Assert.assertTrue(banner.getBanner().isDisplayed());
+		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
 		logger.log(LogStatus.PASS, "Verify the Banner of the page");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verify_bread_crumb() {
-		Assert.assertEquals(crumb.getBreadCrumbText(), r4rSearchResult.BREAD_CRUMB);
+		crumb.getBreadCrumb();
+		Assert.assertEquals(crumb.getBreadCrumb(), r4rSearchResult.BREAD_CRUMB);
 		logger.log(LogStatus.PASS, "Verify the Breadcrumb of the page");
 
 	}
@@ -93,18 +94,19 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		System.out.println("Search Keyword: " + keyword);
 		r4rSearchResult.search(keyword);
 
-		//Verify Search Results Page H1 Title
+		// Verify Search Results Page H1 Title
 		verifySearchResultsPageTitle();
 
-		//Verify the URL to contain q=keyword
+		// Verify the URL to contain q=keyword
 		Assert.assertTrue(driver.getCurrentUrl().endsWith("q=" + keyword));
 		System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
 
-		//Verify that the Search Box contains search keyword
+		// Verify that the Search Box contains search keyword
 		WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
 		Assert.assertTrue(ele.getAttribute("value").equals(keyword));
 
-		//Verify the message on the screen when search is done for keyword having no result Ex-Terminology 
+		// Verify the message on the screen when search is done for keyword
+		// having no result Ex-Terminology
 		if (keyword.equalsIgnoreCase("Terminology")) {
 			WebElement resultText = driver.findElement(By.xpath("//div[@class='results__noresults  ']"));
 			System.out.println("No Results Text: " + resultText.getText());
@@ -123,7 +125,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void verifyToolTypesOptions() {
 		Assert.assertTrue(r4rSearchResult.getToolTypeBox().isDisplayed(), "Tool Types Box is not displayed");
-		Assert.assertEquals(r4rSearchResult.getToolTypeLabel().getText(), "Tool Types");
+		Assert.assertEquals(r4rSearchResult.getToolTypeLabel().getText(), "Tool Type");
 		List<String> toolTypeNameAsString = r4rSearchResult.getToolTypesOptionsName();
 		Assert.assertTrue(r4rSearchResult.EXP_TOOL_TYPE_OPTIONS.equals(toolTypeNameAsString));
 		logger.log(LogStatus.PASS,
@@ -138,40 +140,44 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		for (int i = 1; i <= toolTypeOptions.size(); i++) {
 
-			//Clicking on tool type option 
+			// Clicking on tool type option
 			System.out.println("Tool Type Option=============" + toolTypeOptions.get(i - 1).getText());
 			String toolTypeOption = toolTypeOptions.get(i - 1).getText();
 			toolTypeOptions.get(i - 1).click();
 
-			//Verify Search Results Page Title
+			// Verify Search Results Page Title
 			verifySearchResultsPageTitle();
 
-			//Verify the URL to contain toolTypes=<tool type option clicked>
-			//Assert.assertTrue(driver.getCurrentUrl().endsWith("toolTypes=" + toolTypeNameAsString.get(i - 1)));
-			//System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
+			// Verify the URL to contain toolTypes=<tool type option clicked>
+			// Assert.assertTrue(driver.getCurrentUrl().endsWith("toolTypes=" +
+			// toolTypeNameAsString.get(i - 1)));
+			// System.out.println("Search Result Page URL: " +
+			// driver.getCurrentUrl());
 
-			//Verify that the Search Box is empty
+			// Verify that the Search Box is empty
 			WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
 			Assert.assertTrue(ele.getAttribute("value").equals(""));
 
-			//Verify that Your Selection field displays the tool type clicked
+			// Verify that Your Selection field displays the tool type clicked
 			WebElement toolType = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
 			System.out.println("Your Selection Filter: " + toolType.getText());
 			Assert.assertTrue(toolType.getText().equals(toolTypeNameAsString.get(i - 1)));
 
-			//Verify that Result Count text contains the same number as present in the Tool Type Option
+			// Verify that Result Count text contains the same number as present
+			// in the Tool Type Option
 			String resultCount = driver.findElement(By.xpath("//div[@class='r4r-pager__count  r4r-DEFAULT']"))
 					.getText();
 			System.out.println("Text in Result Count: " + resultCount);
 			Assert.assertTrue(resultCount.contains(toolTypeNumberAsString.get(i - 1)), "Result count not matching");
 
-			//Verify that tool type box displays the tool type filter
+			// Verify that tool type box displays the tool type filter
 			WebElement toolTypeFilter = driver
 					.findElement(By.xpath("(//span[@class='filter__label  r4r-DEFAULT'])[1]"));
 			System.out.println("Selected Tool Type Filter=======: " + toolTypeFilter.getText());
 			Assert.assertTrue(toolTypeFilter.getText().equals(toolTypeOption));
 
-			//Verify the number of results in results container after applying the tool type filter
+			// Verify the number of results in results container after applying
+			// the tool type filter
 			if (Integer.parseInt(toolTypeNumberAsString.get(i - 1)) <= 20) {
 
 				List<WebElement> searchResultItems = driver
@@ -190,7 +196,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void verifyResearchAreaOptions() {
 		Assert.assertTrue(r4rSearchResult.getResearchAreaBox().isDisplayed(), "Research Area Box is not displayed");
-		Assert.assertEquals(r4rSearchResult.getResearchAreaLabel().getText(), "Research Areas");
+		Assert.assertEquals(r4rSearchResult.getResearchAreaLabel().getText(), "Research Area");
 		List<String> researchAreaNameAsString = r4rSearchResult.getResearchAreaOptionsName();
 		Assert.assertTrue(r4rSearchResult.EXP_RESEARCH_AREA_OPTIONS.equals(researchAreaNameAsString));
 		logger.log(LogStatus.PASS,
@@ -205,39 +211,45 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		for (int i = 1; i <= researchAreaOptions.size(); i++) {
 
-			//Clicking on Research Area option 
+			// Clicking on Research Area option
 			String researchAreaOption = researchAreaOptions.get(i - 1).getText();
 			System.out.println("RESEARCH AREA OPTION: " + researchAreaOption);
 
 			FunctionLibrary.scrollIntoview(driver, r4rSearchResult.getToolTypeBox());
 
 			researchAreaOptions.get(i - 1).click();
-			//researchAreaOptionsCheckboxes.get(i - 1).click();
+			// researchAreaOptionsCheckboxes.get(i - 1).click();
 			System.out.println("RESEARCH AREA CLICKED: " + researchAreaOptions.get(i - 1).getText());
 
-			//Verify Search Results Page Title
+			// Verify Search Results Page Title
 			verifySearchResultsPageTitle();
 
-			//Verify the URL to contain researchArea=<research area option>. This validation is complex as URL text is not same as link text
-			//Assert.assertTrue(driver.getCurrentUrl().endsWith("researchArea=" + researchAreaNameAsString.get(i - 1)));
-			//System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
+			// Verify the URL to contain researchArea=<research area option>.
+			// This validation is complex as URL text is not same as link text
+			// Assert.assertTrue(driver.getCurrentUrl().endsWith("researchArea="
+			// + researchAreaNameAsString.get(i - 1)));
+			// System.out.println("Search Result Page URL: " +
+			// driver.getCurrentUrl());
 
-			//Verify that the Search Box is empty
+			// Verify that the Search Box is empty
 			WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
 			Assert.assertTrue(ele.getAttribute("value").equals(""));
 
-			//Verify that Your Selection field displays the research area clicked
+			// Verify that Your Selection field displays the research area
+			// clicked
 			WebElement researchArea = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
 			System.out.println("Your Selection Filter: " + researchArea.getText());
 			Assert.assertTrue(researchArea.getText().equals(researchAreaNameAsString.get(i - 1)));
 
-			//Verify that Result Count text contains the same number as present in the Tool Type Option
+			// Verify that Result Count text contains the same number as present
+			// in the Tool Type Option
 			String resultCount = driver.findElement(By.xpath("//div[@class='r4r-pager__count  r4r-DEFAULT']"))
 					.getText();
 			System.out.println("Text in Result Count: " + resultCount);
 			Assert.assertTrue(resultCount.contains(researchAreaNumberAsString.get(i - 1)), "Result count not matching");
 
-			//Verify that Research Area box displays the Research Area filter as checked
+			// Verify that Research Area box displays the Research Area filter
+			// as checked
 			WebElement researchAreaFilter = driver.findElement(By
 					.xpath("(//h4[@class='facet__title  r4r-DEFAULT' and contains(text(),'Research Areas')]/following-sibling::label[@class='facet__filter  r4r-DEFAULT'])["
 							+ i + "]"));
@@ -246,7 +258,8 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			System.out.println("Selected Research Area Filter=======: " + researchAreaFilter.getText());
 			Assert.assertTrue(researchAreaFilter.getText().equals(researchAreaOption));
 
-			//Verify the number of results in results container after applying the Research Area filter
+			// Verify the number of results in results container after applying
+			// the Research Area filter
 			if (Integer.parseInt(researchAreaNumberAsString.get(i - 1)) <= 20) {
 
 				List<WebElement> searchResultItems = driver
@@ -264,7 +277,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void verifyResearchTypesOptions() {
 		Assert.assertTrue(r4rSearchResult.getResearchTypeBox().isDisplayed(), "Research Type Box is not displayed");
-		Assert.assertEquals(r4rSearchResult.getResearchTypesLabel().getText(), "Research Types");
+		Assert.assertEquals(r4rSearchResult.getResearchTypesLabel().getText(), "Research Type");
 		List<String> researchTypeNameAsString = r4rSearchResult.getResearchTypeOptionsName();
 		Assert.assertTrue(r4rSearchResult.EXP_RESEARCH_TYPE_OPTIONS.equals(researchTypeNameAsString));
 		logger.log(LogStatus.PASS,
@@ -279,7 +292,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		for (int i = 1; i <= researchTypeOptions.size(); i++) {
 
-			//Clicking on Research Area option 
+			// Clicking on Research Area option
 			String researchTypeOption = researchTypeOptions.get(i - 1).getText();
 			System.out.println("RESEARCH TYPE OPTION: " + researchTypeOption);
 
@@ -287,23 +300,28 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			researchTypeOptions.get(i - 1).click();
 			System.out.println("RESEARCH TYPE CLICKED: " + researchTypeOptions.get(i - 1).getText());
 
-			//Verify Search Results Page Title
+			// Verify Search Results Page Title
 			verifySearchResultsPageTitle();
 
-			//Verify the URL to contain researchArea=<research area option>. This validation is complex as URL text is not same as link text
-			//Assert.assertTrue(driver.getCurrentUrl().endsWith("researchArea=" + researchAreaNameAsString.get(i - 1)));
-			//System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
+			// Verify the URL to contain researchArea=<research area option>.
+			// This validation is complex as URL text is not same as link text
+			// Assert.assertTrue(driver.getCurrentUrl().endsWith("researchArea="
+			// + researchAreaNameAsString.get(i - 1)));
+			// System.out.println("Search Result Page URL: " +
+			// driver.getCurrentUrl());
 
-			//Verify that the Search Box is empty
+			// Verify that the Search Box is empty
 			WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
 			Assert.assertTrue(ele.getAttribute("value").equals(""));
 
-			//Verify that Your Selection field displays the research area clicked
+			// Verify that Your Selection field displays the research area
+			// clicked
 			WebElement researchType = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
 			System.out.println("Your Selection Filter: " + researchType.getText());
 			Assert.assertTrue(researchType.getText().equals(researchTypeNameAsString.get(i - 1)));
 
-			//Verify that Result Count text contains the same number as present in the Tool Type Option
+			// Verify that Result Count text contains the same number as present
+			// in the Tool Type Option
 			String resultCount = driver.findElement(By.xpath("//div[@class='r4r-pager__count  r4r-DEFAULT']"))
 					.getText();
 			System.out.println("Text in Result Count: " + resultCount);
@@ -322,20 +340,21 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		String toolTypeXPath = "//label[@class='facet__filter  r4r-DEFAULT']/input[@value='" + toolType
 				+ "']/ancestor::label";
-		//FunctionLibrary.scrollIntoview(driver, r4rSearchResult.getSearchBox());
+		// FunctionLibrary.scrollIntoview(driver,
+		// r4rSearchResult.getSearchBox());
 		WebElement toolType1 = driver.findElement(By.xpath(toolTypeXPath));
 		toolType1.click();
-		//Verify that Tool Sub-Type box is displayed 
+		// Verify that Tool Sub-Type box is displayed
 		WebElement box_SubToolType = driver
 				.findElement(By.xpath("//div[@class='facet__box facet__box--tool-subtypes r4r-DEFAULT']"));
 		Assert.assertTrue(box_SubToolType.isDisplayed());
 
-		//Verify that Tool Sub-Type box label is displayed
+		// Verify that Tool Sub-Type box label is displayed
 		WebElement lbl_ToolSubType = driver
 				.findElement(By.xpath("//div[@class='facet__box facet__box--tool-subtypes r4r-DEFAULT']/h4"));
-		Assert.assertEquals(lbl_ToolSubType.getText(), "Tool Sub-Types");
+		Assert.assertEquals(lbl_ToolSubType.getText(), "Tool Sub-Type");
 
-		//Verify that expected Tool Sub-Type box items are displayed
+		// Verify that expected Tool Sub-Type box items are displayed
 		List<WebElement> toolSubTypeItems = driver
 				.findElements(By.xpath("//div[@class='facet__box facet__box--tool-subtypes r4r-DEFAULT']/label"));
 		Assert.assertFalse(toolSubTypeItems.isEmpty(), "Tool Sub-Types box is empty");
@@ -372,7 +391,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		driver.navigate().back();
 		logger.log(LogStatus.PASS,
-				"Verify that Tool Sub-Types box is present, Title of the box is Tool Sub-Types and names of Tool Sub-Types are as displayed in Tool Sub-Types Box ");
+				"Verify that Tool Sub-Types box is present, Title of the box is Tool Sub-Type and names of Tool Sub-Types are as displayed in Tool Sub-Type Box ");
 	}
 
 	/********************** Data Providers **********************/

@@ -1,6 +1,8 @@
 package gov.nci.Resources4Researchers.Tests;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -8,7 +10,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -16,15 +20,15 @@ import gov.nci.Resources4Researchers.Resources4ResearchersHome;
 import gov.nci.Resources4Researchers.Resources4ResearchersResourceDetailPage;
 import gov.nci.Resources4Researchers.Resources4ResearchersSearchResult;
 import gov.nci.Utilities.BrowserManager;
+import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.clinicaltrials.BaseClass;
+import gov.nci.testcases.BaseClass;
 
 public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
-	// public static final String TESTDATA_SHEET_NAME = "AdvanceSearch";
-	// public static final String API_REFERENCE_H3 = "The Clinical Trials API:
-	// Use our data to power your own clinical trial search";
+
+	public static final String TESTDATA_SHEET_NAME = "R4R";
 
 	Resources4ResearchersHome r4rHome;
 	Resources4ResearchersSearchResult r4rSearchResult;
@@ -46,142 +50,191 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 		crumb = new BreadCrumb(driver);
 		banner = new Banner(driver);
 		r4rSearchResult = new Resources4ResearchersSearchResult(driver, logger);
-		testDataFilePath = config.getProperty("TestData");
+		testDataFilePath = config.getProperty("TestDataR4R");
 	}
 
-	// @Test(groups = { "Smoke" })
-	/*
-	 * public void verifyr4rHomeH1Title() {
-	 * Assert.assertEquals(r4rHome.getPageH1Title().getText(),
-	 * r4rHome.R4R_PAGE_TITLE); logger.log(LogStatus.PASS,
-	 * "Verify that H1 Title of the page is *Resources for Researchers* | Actual Result: "
-	 * + r4rHome.getPageH1Title()); }
-	 */
+	@Test(groups = { "Smoke" })
+	public void verifyResourceDetailPageTitle() {
+		Assert.assertTrue(r4rResourceDetail.getPageH1Title().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that Title of the Resource Detail page is displayed | Actual Result: "
+				+ r4rResourceDetail.getPageH1Title());
+	}
 
-	// @Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void verifyResources4ResearchersHome() {
 		Assert.assertTrue(r4rResourceDetail.getResources4ResearchersHome().isDisplayed());
-		// Assert.assertTrue(FunctionLibrary.waitURLToBe(driver,
-		// r4rHome.R4R_LEARN_MORE_PAGE_URL));
 		logger.log(LogStatus.PASS,
 				"Verify that there is a link titled as 'Resources for Researchers Home' is displayed on the Resource Detail page ");
 		r4rResourceDetail.clickResources4ResearchersHome();
 		Assert.assertTrue(FunctionLibrary.waitURLToBe(driver, r4rResourceDetail.R4R_HOME_PAGE_URL));
+		driver.navigate().to(pageURL);
 		logger.log(LogStatus.PASS,
 				"Verify that 'Resources for Researchers Home' link correctly redirects to R4R homepage");
 	}
 
-	// @Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void verifyBackToResult() {
+		driver.navigate().to(pageURL);
 		Assert.assertFalse(r4rResourceDetail.getBacktoResult().isDisplayed());
+		// Assert.assertNull(r4rResourceDetail.getBacktoResult());
 		// Assert.assertTrue(FunctionLibrary.waitURLToBe(driver,
 		// r4rHome.R4R_LEARN_MORE_PAGE_URL));
 		logger.log(LogStatus.PASS,
 				"Verify that there is Back to result link is not displayed on the Resource Detail page ");
 	}
 
-	// @Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" })
 	public void verifyVisitResource() {
-		Assert.assertFalse(r4rResourceDetail.getVisitResource().isDisplayed());
+		Assert.assertTrue(r4rResourceDetail.getVisitResource().isDisplayed());
 		logger.log(LogStatus.PASS,
-				"Verify that there is Back to result link is not displayed on the Resource Detail page ");
+				"Verify that there is Visit Resource link is displayed on the Resource Detail page ");
+
 	}
 
-	// @Test(groups = { "Smoke" })
-	/*
-	 * public void verifyViewAllResources() { r4rHome.clickViewAllResources();
-	 * 
-	 * // Verify Search Results Page H1 Title verifySearchResultsPageTitle();
-	 * 
-	 * // Verify the URL to contain from=0
-	 * Assert.assertTrue(driver.getCurrentUrl().endsWith("search?from=0"));
-	 * 
-	 * r4rSearchResult.clickResources4ResearchersHome(); }
-	 * 
-	 * 
-	 * @Test(groups = { "Smoke" }) public void verifyToolTypesOptions() {
-	 * r4rHome.compareToolTypesOptions();
-	 * 
-	 * List<WebElement> allElements = r4rHome.getToolTypeOptions(); List<String>
-	 * actualTooltips = new ArrayList<>(); for (WebElement ele : allElements) {
-	 * System.out.println("Name + Number===>" + ele.getText());
-	 * actualTooltips.add(ele.getText());
-	 * 
-	 * String s = ele.getText(); s = s.substring(0, s.indexOf("("));
-	 * 
-	 * // s = s.substring(s., s.indexOf("(")); // s = s.substring(s.indexOf("(")
-	 * + 1, s.indexOf(")")); // System.out.println("Number==>" + s);
-	 * System.out.println("Name==>" + s); }
-	 * 
-	 * boolean areTooltipsAsExpected =
-	 * r4rHome.TOOL_TYPE_OPTIONS.equals(actualTooltips);
-	 * Assert.assertTrue(areTooltipsAsExpected);
-	 * 
-	 * }
-	 */
+	@Test(groups = { "Smoke" })
+	public void verifyResourceAccessImage() {
+		Assert.assertTrue(r4rResourceDetail.getResourceAccessImage().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Resource Access Image displayed on the Resource Detail page ");
+	}
 
-	/*
-	 * @Test(dataProvider = "CancerType_SubType_Stage", groups = { "Smoke" },
-	 * priority = 2) public void advancesearch_CancerType_SubType_Stage(String
-	 * cancerTypeId, String cancerType, String cancerSubTypeId, String
-	 * cancerSubType, String cancerStageId, String cancerStage) throws
-	 * InterruptedException { Object[][] data; Thread.sleep(50);
-	 * 
-	 * advanceSearch.advSearch_CancerType_SubType_Stage(cancerType,
-	 * cancerSubType, cancerStage);
-	 * 
-	 * // Verify page title verifyAdvanceSearchResultsPageTitle();
-	 * 
-	 * // Verify search criteria in URL String pageURL = driver.getCurrentUrl();
-	 * System.out.
-	 * println("advancesearch_CancerType_SubType_Stage: Current Page URL: " +
-	 * pageURL); Assert.assertTrue(pageURL.contains("t=" + cancerTypeId + "&st="
-	 * + cancerSubTypeId + "&stg=" + cancerStageId)); System.out.
-	 * println("advancesearch_CancerType_SubType_Stage: Cancer Type ID: t=" +
-	 * cancerTypeId + "&st=" + cancerSubTypeId + "&stg=" + cancerStageId);
-	 * 
-	 * // Verify that show search criteria table contains the selected search //
-	 * criteria data = verifySearchCriteriaTable();
-	 * 
-	 * Assert.assertEquals(data[1][1], cancerType, "CancerType not matched");
-	 * Assert.assertEquals(data[2][1], cancerSubType,
-	 * "CancerSubType not matched"); Assert.assertEquals(data[3][1],
-	 * cancerStage, "CancerStage not matched");
-	 * 
-	 * driver.findElement(By.linkText("Start Over")).click();
-	 * logger.log(LogStatus.PASS,
-	 * "Verify Search by Cancer Type, SubType and Stage on Advanced CTS. CancerType = "
-	 * + cancerType + " , CancerSubType = " + cancerSubType +
-	 * " , CancerStage = " + cancerStage);
-	 * 
-	 * }
-	 */
+	@Test(groups = { "Smoke" })
+	public void verifyResourceAccessText() {
+		Assert.assertTrue(r4rResourceDetail.getResourceAccessText().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Resource Access Text displayed on the Resource Detail page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyContactInfoTitle() {
+		Assert.assertTrue(r4rResourceDetail.getContactInfoTitle().isDisplayed());
+		Assert.assertEquals(r4rResourceDetail.getContactInfoTitle().getText(), "Contact Information");
+		logger.log(LogStatus.PASS, "Verify that there is Contact Info Title displayed on the Resource Detail page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyContactInfoDetail() {
+		Assert.assertTrue(r4rResourceDetail.getContactInfoDetail().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Contact Info Details displayed on the Resource Detail page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyNCIAffiliationTitle() {
+		Assert.assertTrue(r4rResourceDetail.getNCIAffliationTitle().isDisplayed());
+		Assert.assertEquals(r4rResourceDetail.getNCIAffliationTitle().getText(), "NCI Affiliation");
+		logger.log(LogStatus.PASS, "Verify that there is NCI Affiliation Title displayed on the Resource Detail page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyNCIAffiliationDetail() {
+		Assert.assertTrue(r4rResourceDetail.getNCIAffliationDetail().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is NCI Affiliation text displayed on the Resource Detail page ");
+	}
+
+	@Test(dataProvider = "Search", groups = { "Smoke" })
+	public void verifySearchbyClick(String keyword) {
+
+		System.out.println("Search Keyword: " + keyword);
+		r4rResourceDetail.searchbyClick(keyword);
+
+		// Verify Search Results Page H1 Title
+		verifySearchResultsPageTitle();
+
+		// Verify the URL to contain q=keyword
+		Assert.assertTrue(driver.getCurrentUrl().endsWith("q=" + keyword));
+		System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
+
+		// Verify that the Search Box contains search keyword
+		WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
+		Assert.assertTrue(ele.getAttribute("value").equals(keyword));
+
+		// Verify the message on the screen when search is done for keyword
+		// having no result Eg-Terminology
+		if (keyword.equalsIgnoreCase("Terminology")) {
+			WebElement resultText = driver.findElement(By.xpath("//div[@class='results__main  r4r-DEFAULT']/div"));
+			System.out.println("No Results Text: " + resultText.getText());
+			Assert.assertTrue(
+					resultText.getText()
+							.equals("No results were found for your search. Please try another search or view all resources."),
+					"No Result text is displayed/matched");
+		}
+		ele.clear();
+		driver.navigate().to(pageURL);
+		logger.log(LogStatus.PASS,
+				"Verify that when a keyword is searched, Search Result page is displayed with following validations: "
+						+ "Page Title, URL containing q=keyword and Search bar displays the keyword. If no result for a keyword, no result message is displayed");
+	}
+
+	@Test(dataProvider = "Search", groups = { "Smoke" })
+	public void verifySearchbyENTER(String keyword) {
+
+		System.out.println("Search Keyword: " + keyword);
+		r4rResourceDetail.searchbyEnter(keyword);
+
+		// Verify Search Results Page H1 Title
+		verifySearchResultsPageTitle();
+
+		// Verify the URL to contain q=keyword
+		Assert.assertTrue(driver.getCurrentUrl().endsWith("q=" + keyword));
+		System.out.println("Search Result Page URL: " + driver.getCurrentUrl());
+
+		// Verify that the Search Box contains search keyword
+		WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
+		Assert.assertTrue(ele.getAttribute("value").equals(keyword));
+
+		// Verify the message on the screen when search is done for keyword
+		// having no result Eg-Terminology
+		if (keyword.equalsIgnoreCase("Terminology")) {
+			WebElement resultText = driver.findElement(By.xpath("//div[@class='results__main  r4r-DEFAULT']/div"));
+			System.out.println("No Results Text: " + resultText.getText());
+			Assert.assertTrue(
+					resultText.getText()
+							.equals("No results were found for your search. Please try another search or view all resources."),
+					"No Result text is displayed/matched");
+		}
+		ele.clear();
+		driver.navigate().to(pageURL);
+		logger.log(LogStatus.PASS,
+				"Verify that when a keyword is searched, Search Result page is displayed with following validations: "
+						+ "Page Title, URL containing q=keyword and Search bar displays the keyword. If no result for a keyword, no result message is displayed");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void searchByRelatedResourcesItems() {
+		List<WebElement> relatedResource = r4rResourceDetail.getRelatedResources();
+
+		for (int i = 0; i <= relatedResource.size() - 1; i++) {
+
+			// Clicking on Related Resource
+			String researchArea = relatedResource.get(i).getText();
+			System.out.println("RELATED RESOURCE DISPLAYED: " + researchArea);
+			relatedResource.get(i).click();
+			System.out.println("RELATED RESOURCE CLICKED: " + researchArea);
+
+			// Verify Search Results Page Title
+			verifySearchResultsPageTitle();
+			// driver.navigate().to(pageURL);
+		}
+
+	}
+
 	/********************** Data Providers **********************/
 
-	/*
-	 * @DataProvider(name = "CancerType_SubType") public Iterator<Object[]>
-	 * readCancerType_SubType_Data() { ExcelManager excelReader = new
-	 * ExcelManager(testDataFilePath);
-	 * 
-	 * ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-	 * 
-	 * for (int rowNum = 2; rowNum <=
-	 * excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) { String
-	 * cancerTypeId = excelReader.getCellData(TESTDATA_SHEET_NAME,
-	 * "CancerTypeId", rowNum); String cancerType =
-	 * excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerType", rowNum);
-	 * String cancerSubTypeId = excelReader.getCellData(TESTDATA_SHEET_NAME,
-	 * "CancerSubTypeId", rowNum); String cancerSubType =
-	 * excelReader.getCellData(TESTDATA_SHEET_NAME, "CancerSubType", rowNum);
-	 * Object ob[] = { cancerTypeId, cancerType, cancerSubTypeId, cancerSubType
-	 * };
-	 * 
-	 * myObjects.add(ob);
-	 * 
-	 * } return myObjects.iterator();
-	 * 
-	 * }
-	 */
+	@DataProvider(name = "Search")
+	public Iterator<Object[]> readSearchData() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "Keyword", rowNum);
+			Object ob[] = { cancerType };
+
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+
+	}
+
 	/********************** Common Functions **********************/
 	// Verify Search Results page title
 	public void verifySearchResultsPageTitle() {
@@ -189,38 +242,4 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 		System.out.println("R4R Search Results Page Title: " + pageTitle);
 		Assert.assertTrue(pageTitle.contains(r4rSearchResult.getPageTitle()));
 	}
-
-	// Verify that show search criteria table contains the selected search
-	// criteria
-	public Object[][] verifySearchCriteriaTable() {
-		Object[][] data;
-
-		driver.findElement(By.xpath(".//*[@class='ctscb']")).click();
-
-		WebElement table_element = driver.findElement(By.xpath(".//table[@class='table no-auto-enlarge']"));
-
-		List<WebElement> tr_collection = table_element.findElements(By.tagName("tr"));
-		System.out.println("Verify Table: NUMBER OF ROWS IN THIS TABLE = " + tr_collection.size());
-		data = new Object[tr_collection.size()][2];
-		int row_num, col_num;
-		row_num = 0;
-
-		for (WebElement trElement : tr_collection) {
-			List<WebElement> td_collection = trElement.findElements(By.xpath("td"));
-			System.out.println("Verify Table: NUMBER OF COLUMNS=" + td_collection.size());
-
-			col_num = 0;
-			for (WebElement tdElement : td_collection) {
-				System.out.println(
-						"Verify Table: row # " + row_num + ", col # " + col_num + "text=" + tdElement.getText());
-				data[row_num][col_num] = tdElement.getText();
-				System.out.println("Verify Table: DATA=" + data[row_num][col_num]);
-				col_num++;
-			}
-			row_num++;
-		}
-
-		return data;
-	}
-
 }
