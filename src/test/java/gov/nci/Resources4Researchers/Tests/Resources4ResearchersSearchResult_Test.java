@@ -23,7 +23,7 @@ import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
@@ -52,15 +52,14 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" })
 	public void verifyBanner() {
-		Assert.assertTrue(banner.getBanner().isDisplayed());
-		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
+		Assert.assertTrue(banner.isDisplayed());
+		Assert.assertEquals(banner.getAltText(), "National Cancer Institute");
 		logger.log(LogStatus.PASS, "Verify the Banner of the page");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verify_bread_crumb() {
-		crumb.getBreadCrumb();
-		Assert.assertEquals(crumb.getBreadCrumb(), r4rSearchResult.BREAD_CRUMB);
+		Assert.assertEquals(crumb.getBreadCrumbText(), r4rSearchResult.BREAD_CRUMB);
 		logger.log(LogStatus.PASS, "Verify the Breadcrumb of the page");
 
 	}

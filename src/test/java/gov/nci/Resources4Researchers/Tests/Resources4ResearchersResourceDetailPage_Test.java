@@ -24,7 +24,7 @@ import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 

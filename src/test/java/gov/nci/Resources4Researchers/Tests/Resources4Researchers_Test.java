@@ -24,7 +24,7 @@ import gov.nci.Utilities.FunctionLibrary;
 import gov.nci.clinicalTrial.pages.AdvanceSearch;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.testcases.BaseClass;
+import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4Researchers_Test extends BaseClass {
 
@@ -55,15 +55,14 @@ public class Resources4Researchers_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" })
 	public void verifyBanner() {
-		Assert.assertTrue(banner.getBanner().isDisplayed());
-		Assert.assertEquals(banner.getBanner().getAttribute("alt"), "National Cancer Institute");
+		Assert.assertTrue(banner.isDisplayed());
+		Assert.assertEquals(banner.getAltText(), "National Cancer Institute");
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verify_bread_crumb() {
-		crumb.getBreadCrumb();
-		Assert.assertEquals(crumb.getBreadCrumb(), r4rHome.BREAD_CRUMB);
+		Assert.assertEquals(crumb.getBreadCrumbText(), r4rHome.BREAD_CRUMB);
 		System.out.println("Breadcrumb is displaying correctly");
 		logger.log(LogStatus.PASS, "Pass => " + "Verifying the Breadcrumb of the page");
 
