@@ -63,7 +63,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
 	// Test for searchresults load events
 	// TODO: fix NoSuchSessionException() - may be related to setLoadBeacon() 
-	//@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" })
+	@Test(groups = { "Analytics" })
 	public void testSitewideSearchResultsLoad() {
 		try {
 		    swSearchForm.setSitewideSearchKeyword("wingardium leviosa");
