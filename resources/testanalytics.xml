@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="QA Environment" parallel="none">
+	<test name="NCI - Gecko Testing Headless" >
+		<!--
+			The browser parameter is set in pom.xml as part of invoking
+			the maven-surefire-plugin.
+
+			<parameter name="browser" value="Chrome" />
+		-->
+		<groups>
+			<run>
+				<include name="Analytics" />
+			</run>
+		</groups>
+		<classes>
+			<class name="gov.nci.WebAnalytics.Tests.PageLoad_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Resize_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.MegaMenu_Test" />
+			<class name="gov.nci.WebAnalytics.Tests.Sandbox_Test" />
+		</classes>
+	</test>
+</suite>
