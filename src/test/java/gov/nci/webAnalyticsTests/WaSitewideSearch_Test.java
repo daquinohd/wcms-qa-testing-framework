@@ -42,7 +42,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 	
 	// Test for search click events
-	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
+	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" }, priority = 1)
 	public void testSitewideSearchButtonClick(String searchTerm) {
 		try {
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
@@ -61,10 +61,47 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		}
 	}
 	
+	// Test for unmatched search click
+	@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" }, priority = 2)
+	public void testSitewideSearchNoMatch(String searchTerm) {
+		try {
+		    swSearchForm.setSitewideSearchKeyword(searchTerm);
+		    swSearchForm.clickSearchButton();
+		    setClickBeacon();
+			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+		} catch (Exception e) {
+			Assert.fail("Error submitting sitewide search.");
+			e.printStackTrace();
+		}
+	}	
+	
 	// Test for searchresults load events
-	// TODO: fix NoSuchSessionException() - may be related to setLoadBeacon() 
-	@Test(groups = { "Analytics" })
-	public void testSitewideSearchResultsLoad() {
+	@Test(dataProvider = "OtherTerms", groups = { "Analytics" }, priority = 3)
+	public void testSitewideSearchResultsLoad(String searchTerm) {
+		try {
+		    swSearchForm.setSitewideSearchKeyword(searchTerm);
+		    swSearchForm.clickSearchButton();
+		    setLoadBeacon();
+			Assert.assertTrue(hasEvent(1), "Event value incorrect.");
+			Assert.assertTrue(hasEvent(47), "Event value incorrect.");
+			Assert.assertFalse(hasEvent(2), "Unexpected event value.");
+			Assert.assertTrue(hasProp(44, "Global search"), "Search type value incorrect");
+			// Assert.assertTrue(hasHier()); // TODO: fix hier check
+		} catch (Exception e) {
+			Assert.fail("Error loading sitewide search results page.");
+			e.printStackTrace();
+		}
+	}
+	
+	// Test for searchresults load events
+	@Test(groups = { "Analytics" }, priority = 4)
+	public void testNoResultsOnce() {
 		try {
 		    swSearchForm.setSitewideSearchKeyword("wingardium leviosa");
 		    swSearchForm.clickSearchButton();
@@ -76,6 +113,49 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			// Assert.assertTrue(hasHier()); // TODO: fix hier check
 		} catch (Exception e) {
 			Assert.fail("Error loading sitewide search results page.");
+			e.printStackTrace();
+		}
+	}	
+	
+	// Test for searchresults load events
+	@Test(groups = { "Analytics" }, priority = 5)
+	public void testAllSitewideSearchResultsLoad() {
+		try {
+		    swSearchForm.setSitewideSearchKeyword("");
+		    swSearchForm.clickSearchButton();
+		    setLoadBeacon();
+			Assert.assertTrue(hasEvent(1), "Event value incorrect.");
+			Assert.assertTrue(hasEvent(47), "Event value incorrect.");
+			Assert.assertFalse(hasEvent(2), "Unexpected event value.");
+			Assert.assertTrue(hasProp(44, "Global search"), "Search type value incorrect");
+		} catch (Exception e) {
+			Assert.fail("Error loading sitewide search results page.");
+			e.printStackTrace();
+		}
+	}	
+	
+	// Test for search click events
+	/**
+	* TODO: fix NoSuchSessionException()
+	* This only seems to break when the data provider is used AND
+	* when it's the final test on the list
+	* The driver may be quitting before expected
+	*/	
+	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" }, priority = 6)
+	public void itBreaksHere(String searchTerm) {
+		try {
+		    swSearchForm.setSitewideSearchKeyword(searchTerm);
+		    swSearchForm.clickSearchButton();
+		    setClickBeacon();
+			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+		} catch (Exception e) {
+			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
 		}
 	}
