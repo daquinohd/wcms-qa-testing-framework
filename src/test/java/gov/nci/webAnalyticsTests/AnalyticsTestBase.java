@@ -283,8 +283,13 @@ public class AnalyticsTestBase {
 	
 	
 	/*********************************
-	 * Section - Common test methods *
+	 * Section - Common methods used by tests *
 	 *********************************/
+	/***
+	 * TODO: move these into request class
+	 * TODO: replace "contains' with "matches" where possible
+	 * TODO: add shared click / load tests here
+	 */
 	
 	/**
 	 * Utility function to check for a given suite name
