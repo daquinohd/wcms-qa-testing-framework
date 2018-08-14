@@ -13,6 +13,7 @@ import gov.nci.framework.PageObjectBase;
 public class SitewideSearchForm extends PageObjectBase {
 	
 	// TODO: see if we actually  need to extend PageObjectBase
+	// TODO: handle JS error on console
 	// Constructor to initialize the page object
 	public SitewideSearchForm(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);

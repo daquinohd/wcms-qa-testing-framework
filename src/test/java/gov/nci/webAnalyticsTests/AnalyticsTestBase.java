@@ -41,6 +41,7 @@ public class AnalyticsTestBase {
 	*  - Create 'catch-all' Contains() method
 	* TODO: Clean up setters / getters
 	* TODO: General clean up & refactor 
+	* TODO: create timer
 	**/	
 	public static WebDriver driver;
     public static BrowserMobProxy proxy;
@@ -82,8 +83,8 @@ public class AnalyticsTestBase {
 	**/
 	
 	@BeforeTest(groups = { "Analytics" })
-	@Parameters
-	public void beforeTest() {
+	@Parameters({ "browser" })
+	public void beforeTest(String browser) throws MalformedURLException {
 		System.out.println(this.getClass().getSimpleName());
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
@@ -91,11 +92,8 @@ public class AnalyticsTestBase {
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
 		System.out.println("Report Path: " + report);
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
-	}
-
-	@BeforeGroups(groups = { "Analytics" })
-	@Parameters({ "browser" })
-	public void beforeGroups(String browser) throws MalformedURLException {		
+		
+		
 		logger = report.startTest(this.getClass().getSimpleName());
 		String initUrl = config.getPageURL("HomePage");
 
@@ -107,7 +105,11 @@ public class AnalyticsTestBase {
 		
 		// Add entries to the HAR log
 		System.out.println("Analytics group setup done.\r\nStarting from " + initUrl);
-		
+				
+	}
+
+	//@BeforeGroups(groups = { "Analytics" })
+	public void beforeGroups(String browser) throws MalformedURLException {		
 	}
 	
 	@BeforeClass(groups = { "Analytics" })
@@ -144,15 +146,16 @@ public class AnalyticsTestBase {
 
 	@AfterGroups(groups = { "Analytics" })
 	public void afterGroups() {
+	}	
+	
+	@AfterTest(groups = { "Analytics"})
+	public void afterTest() {
 		System.out.println("=== Quitting Driver ===");
 		driver.quit();
 		report.endTest(logger);
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
-	}	
-	
-	@AfterTest(groups = { "Analytics"})
-	public void afterTest() {
+
 		report.flush();
 	}
 	
