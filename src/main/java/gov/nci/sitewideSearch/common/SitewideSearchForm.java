@@ -18,7 +18,6 @@ public class SitewideSearchForm extends PageObjectBase {
 	public SitewideSearchForm(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		PageFactory.initElements(driver, this);
-		System.out.println("SitewideSearchForm initialized.");
 	}
 
 	/**************** Sitewide Search Form Elements *****************************/

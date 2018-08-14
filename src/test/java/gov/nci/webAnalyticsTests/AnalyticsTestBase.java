@@ -37,28 +37,20 @@ public class AnalyticsTestBase {
 	*  - Handle null exceptions in has() methods
 	*  - Create 'catch-all' Contains() method
 	* TODO: Clean up setters / getters
-	* TODO: General clean up & refactor 
-	* TODO: create timer
+	* TODO: Refactor setBeacon() methods
+	* TODO: Create timer
+	* TODO: Move "Logger Path" output up one level
 	**/	
 	public static WebDriver driver;
     public static BrowserMobProxy proxy;
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
-	protected String testClass;
 	protected ConfigReader config = new ConfigReader();	
 	
 	protected List<String> harUrlList;	
 	protected List<AnalyticsRequest> loadBeacons;
 	protected List<AnalyticsRequest> clickBeacons;
-	
-	// A single analytics request URL
-	private AnalyticsRequest beacon;
-	public AnalyticsRequest getBeacon() {
-		return beacon;
-	}
-	public void setBeacon(AnalyticsRequest beacon) {
-		this.beacon = beacon;
-	}
+	protected AnalyticsRequest beacon;
 	
 	/**************************************
 	 * Section: TextNG Befores & Afters *
@@ -83,10 +75,6 @@ public class AnalyticsTestBase {
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters({ "browser" })
 	public void beforeTest(String browser) throws MalformedURLException {
-		// Set the name of the test class
-		testClass = this.getClass().getSimpleName();
-		System.out.println(testClass);
-
 		// Start the BrowserMob proxy on the site homepage
 		String initUrl = config.goHome();
 		System.out.println("=== Starting BrowserMobProxy ===");
@@ -100,11 +88,12 @@ public class AnalyticsTestBase {
 	
 	@BeforeClass(groups = { "Analytics" })
 	public void beforeClass() {
+		String testClass = this.getClass().getSimpleName();
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 		
-		System.out.println("=== Starting Driver ===");
-		System.out.println("Logger Path:" + extentReportPath);
+		System.out.println(testClass);
+		System.out.println("Logger Path:" + extentReportPath + "\n");
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 		logger = report.startTest(testClass);
@@ -193,13 +182,11 @@ public class AnalyticsTestBase {
 	    	if(result.contains(AnalyticsRequest.TRACKING_SERVER))
 	    	{
 	    		harUrlList.add(result);
-	    		System.out.println(result);
 	    	}
 	    }
 	    
 	    // Debug size of HAR list
     	System.out.println("Total HAR entries: " + entries.size());
-		System.out.println("Total analytics requests: " + harUrlList.size());
 		
 		// The HAR list has been created; clear the log for next pass
 		har.getLog().getEntries().clear();		
@@ -233,10 +220,13 @@ public class AnalyticsTestBase {
 				loadBeacons.add(request);
 			}
 		}
-		
-		System.out.println("Total load beacons: " + loadBeacons.size());
-		System.out.println("Total click beacons: " + clickBeacons.size());
-	}	
+
+	    // Debug analytics beacons 	
+		System.out.println("Total analytics requests: " + urlList.size() 
+			+ " (load: " + loadBeacons.size() 
+			+ ", click: " + clickBeacons.size() + ")"
+		);
+	}
 	
 	/**
 	 * Set the global loadBeacons and beacon variables
@@ -244,7 +234,9 @@ public class AnalyticsTestBase {
 	protected void setClickBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		setBeacon(getLastReq(clickBeacons));
+		beacon = getLastReq(clickBeacons);
+		System.out.println("== Click beacon to test ==");
+		System.out.println(beacon.getUrl() + "\n");
 	}
 	
 	/**
@@ -253,7 +245,9 @@ public class AnalyticsTestBase {
 	protected void setLoadBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		setBeacon(getLastReq(loadBeacons));
+		beacon = getLastReq(loadBeacons);
+		System.out.println("== Load beacon to test ==");
+		System.out.println(beacon.getUrl() + "\n");
 	}
 	
 	/**
