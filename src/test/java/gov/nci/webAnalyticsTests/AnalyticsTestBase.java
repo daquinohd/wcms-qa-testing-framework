@@ -26,7 +26,6 @@ import org.testng.annotations.Parameters;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
-import gov.nci.Utilities.ScreenShot;
 import gov.nci.WebAnalytics.AnalyticsRequest;
 
 public class AnalyticsTestBase {
@@ -45,6 +44,7 @@ public class AnalyticsTestBase {
     public static BrowserMobProxy proxy;
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
+	protected String testClass;
 	protected ConfigReader config = new ConfigReader();	
 	
 	protected List<String> harUrlList;	
@@ -82,8 +82,10 @@ public class AnalyticsTestBase {
 	
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters({ "browser" })
-	public void beforeTest(String browser) throws MalformedURLException {		
-		System.out.println(this.getClass().getSimpleName());
+	public void beforeTest(String browser) throws MalformedURLException {
+		// Set the name of the test class
+		testClass = this.getClass().getSimpleName();
+		System.out.println(testClass);
 
 		// Start the BrowserMob proxy on the site homepage
 		String initUrl = config.goHome();
@@ -100,10 +102,12 @@ public class AnalyticsTestBase {
 	public void beforeClass() {
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
+		
+		System.out.println("=== Starting Driver ===");
 		System.out.println("Logger Path:" + extentReportPath);
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
-		logger = report.startTest(this.getClass().getSimpleName());
+		logger = report.startTest(testClass);
 	}
 	
 	@BeforeMethod(groups = { "Analytics" })
@@ -128,6 +132,7 @@ public class AnalyticsTestBase {
 	@AfterClass(groups = { "Analytics" })
 	public void afterClass() {
 		report.endTest(logger);
+		report.flush();
 	}
 	
 	@AfterTest(groups = { "Analytics"})
@@ -136,7 +141,6 @@ public class AnalyticsTestBase {
 		driver.quit();
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
-		report.flush();
 	}
 	
 	/******************************************************
