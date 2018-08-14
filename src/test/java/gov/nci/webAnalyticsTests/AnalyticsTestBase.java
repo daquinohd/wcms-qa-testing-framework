@@ -17,11 +17,9 @@ import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterGroups;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -84,39 +82,30 @@ public class AnalyticsTestBase {
 	
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters({ "browser" })
-	public void beforeTest(String browser) throws MalformedURLException {
+	public void beforeTest(String browser) throws MalformedURLException {		
 		System.out.println(this.getClass().getSimpleName());
-		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
-		String extentReportPath = config.getExtentReportPath();
-		System.out.println("Logger Path:" + extentReportPath);
-		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		System.out.println("Report Path: " + report);
-		report.addSystemInfo("Environment", config.getProperty("Environment"));
-		
-		
-		logger = report.startTest(this.getClass().getSimpleName());
-		String initUrl = config.getPageURL("HomePage");
 
 		// Start the BrowserMob proxy on the site homepage
+		String initUrl = config.goHome();
+		System.out.println("=== Starting BrowserMobProxy ===");
 		this.initializeProxy(initUrl);
 		
 		// Initialize driver and open browser
+		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, initUrl, proxy);
-		
-		// Add entries to the HAR log
 		System.out.println("Analytics group setup done.\r\nStarting from " + initUrl);
-				
-	}
-
-	//@BeforeGroups(groups = { "Analytics" })
-	public void beforeGroups(String browser) throws MalformedURLException {		
 	}
 	
 	@BeforeClass(groups = { "Analytics" })
 	public void beforeClass() {
+		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
+		String extentReportPath = config.getExtentReportPath();
+		System.out.println("Logger Path:" + extentReportPath);
+		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
+		report.addSystemInfo("Environment", config.getProperty("Environment"));
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
-
+	
 	@BeforeMethod(groups = { "Analytics" })
 	public void beforeMethod() throws RuntimeException {
 		// Reset our browser to full screen before each method
@@ -126,39 +115,29 @@ public class AnalyticsTestBase {
 	@AfterMethod(groups = { "Analytics" })
 	public void afterMethod(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
-			String screenshotPath = "";
-			if(driver != null) {
-				screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
-			}
-			logger.log(LogStatus.FAIL, screenshotPath + " Fail => " + result.getName());
-		} else if (result.getStatus() == ITestResult.SKIP) {
+			logger.log(LogStatus.FAIL, "Fail => " + result.getName());
+		}
+		else if (result.getStatus() == ITestResult.SKIP) {
 			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
 		}
 		else {
 			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
 		}
 	}
-
+	
 	@AfterClass(groups = { "Analytics" })
 	public void afterClass() {
 		report.endTest(logger);
 	}
-
-	@AfterGroups(groups = { "Analytics" })
-	public void afterGroups() {
-	}	
 	
 	@AfterTest(groups = { "Analytics"})
 	public void afterTest() {
 		System.out.println("=== Quitting Driver ===");
 		driver.quit();
-		report.endTest(logger);
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
-
 		report.flush();
 	}
-	
 	
 	/******************************************************
 	 * Section: Initialize BMP and request beacon objects *
@@ -172,7 +151,6 @@ public class AnalyticsTestBase {
 	protected void initializeProxy(String url) throws RuntimeException {
 
 		// New BrowserMobProxy instance - this is needed to create the HAR (HTTP archive) object
-		System.out.println("=== Starting BrowserMobProxy ===");
 		proxy = new BrowserMobProxyServer();
 	    proxy.start(0);
 
@@ -182,12 +160,13 @@ public class AnalyticsTestBase {
 
 	    // Create a new HAR with a label matching the hostname
 	    proxy.newHar(url);	    
-		System.out.println("=== Started BrowserMobProxy successfully ===");
+		System.out.println("== Started BrowserMobProxy successfully ==");
 	}
 	
 	/**
 	 * Build the list of HAR (HTTP archive) request URLs 
 	 * TODO: refactor into har Url list and tracking server list
+	 * TODO: only print tested URL
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 * @throws IllegalArgumentException

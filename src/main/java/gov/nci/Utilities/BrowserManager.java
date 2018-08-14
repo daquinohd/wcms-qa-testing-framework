@@ -154,7 +154,6 @@ public class BrowserManager {
 		FirefoxOptions firefoxOptions = new FirefoxOptions();			
 		
 	    // Get the Selenium proxy object and configure it as a desired capability
-		System.out.println("=== Starting Driver ===");
 	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(bmp);
 		
 		if(browserName.equalsIgnoreCase("Chrome")) {
