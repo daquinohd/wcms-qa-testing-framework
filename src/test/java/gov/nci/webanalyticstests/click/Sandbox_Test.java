@@ -1,6 +1,9 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests.click;
 
 import org.testng.annotations.Test;
+
+import gov.nci.webanalyticstests.AnalyticsTestBase;
+
 import org.testng.Assert;
 
 public class Sandbox_Test extends AnalyticsTestBase {

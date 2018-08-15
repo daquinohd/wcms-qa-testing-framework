@@ -1,4 +1,4 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests.click;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.WebAnalytics.Resize;
+import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class Resize_Test extends AnalyticsTestBase {
 	

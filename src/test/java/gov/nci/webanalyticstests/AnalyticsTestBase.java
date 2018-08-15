@@ -1,4 +1,4 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests;
 
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests.click;
 
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeMethod;
@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
+import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class WaBasicSearch_Test extends AnalyticsTestBase {
 

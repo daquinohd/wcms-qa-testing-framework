@@ -1,4 +1,4 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests.click;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,27 +10,23 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.sitewideSearch.common.SitewideSearchForm;
+import gov.nci.webanalyticstests.AnalyticsTestBase;
 import gov.nci.Utilities.ExcelManager;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
-	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";
-	
+	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";	
 	private SitewideSearchForm swSearchForm;
-	String testDataFilePath;
+	private String testDataFilePath;
 	
 	@BeforeClass(groups = { "Analytics" }) 
 	public void setup() {
 		testDataFilePath = config.getProperty("SitewideSearchData");
 	}
 	
-	// TODO: do we need to split this further
-	// TODO: separate page / component object creation
-	// TODO: Spanish sws
-	// TODO: Subsite sws
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void beforeEachTest() {
+	public void setupTestMethod() {
 		driver.get(config.goHome());
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
@@ -129,8 +125,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	 * 
 	 ****/	
 	
-	/******************** Data Providers ****************/		
-
+	/******************** Data Providers ****************/
 	@DataProvider(name = "CancerTerms")
 	public Iterator<Object[]> readCancerTerm_Data() {
 		return getDataIteratorObject("CancerTerm", TESTDATA_SHEET_NAME);
@@ -146,6 +141,11 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		return getDataIteratorObject("NoMatch", TESTDATA_SHEET_NAME);
 	}
 	
+	/**
+	 * Get an iterable collection of test objects given a data sheet name and column
+	 * @param columnName
+	 * @param sheetName
+	 */	
 	private Iterator<Object[]> getDataIteratorObject(String columnName, String sheetName) {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();

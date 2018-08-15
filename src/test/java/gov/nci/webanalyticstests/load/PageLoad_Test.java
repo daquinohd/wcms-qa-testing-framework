@@ -1,4 +1,4 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests.load;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import gov.nci.WebAnalytics.AnalyticsRequest;
 import gov.nci.WebAnalytics.PageLoad;
+import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class PageLoad_Test extends AnalyticsTestBase {
 

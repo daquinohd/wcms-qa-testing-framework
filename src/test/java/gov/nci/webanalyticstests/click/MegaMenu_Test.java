@@ -1,4 +1,4 @@
-package gov.nci.webAnalyticsTests;
+package gov.nci.webanalyticstests.click;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import gov.nci.WebAnalytics.MegaMenu;
+import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class MegaMenu_Test extends AnalyticsTestBase {
 	
