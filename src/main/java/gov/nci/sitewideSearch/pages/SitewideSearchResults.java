@@ -13,7 +13,7 @@ public class SitewideSearchResults extends PageObjectBase {
 	public SitewideSearchResults(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		PageFactory.initElements(driver, this);
-		System.out.println("SitewideSearchForm initialized.");
+		//System.out.println("SitewideSearchForm initialized.");
 	}
 	
 }

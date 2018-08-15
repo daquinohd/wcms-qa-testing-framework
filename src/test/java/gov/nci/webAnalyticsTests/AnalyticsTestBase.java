@@ -83,7 +83,8 @@ public class AnalyticsTestBase {
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, initUrl, proxy);
-		System.out.println("Analytics group setup done.\r\nStarting from " + initUrl);
+    	System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
+		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 	}
 	
 	@BeforeClass(groups = { "Analytics" })
@@ -171,7 +172,6 @@ public class AnalyticsTestBase {
 	    // and export performance data as a HAR file object.
 	    Har har = proxy.getHar();
 	    List<HarEntry> entries = har.getLog().getEntries();
-    	System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + ":");
     	
     	// Reset HAR URL list
     	harUrlList = new ArrayList<String>();
@@ -222,9 +222,9 @@ public class AnalyticsTestBase {
 		}
 
 	    // Debug analytics beacons 	
-		System.out.println("Total analytics requests: " + urlList.size() 
-			+ " (load: " + loadBeacons.size() 
-			+ ", click: " + clickBeacons.size() + ")"
+		System.out.println(urlList.size() + " total analytics requests ("
+			+ loadBeacons.size() + " loads, " 
+			+ clickBeacons.size() + " clicks)"
 		);
 	}
 	
@@ -235,7 +235,7 @@ public class AnalyticsTestBase {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
 		beacon = getLastReq(clickBeacons);
-		System.out.println("== Click beacon to test ==");
+		System.out.println("Click beacon to test: ");
 		System.out.println(beacon.getUrl() + "\n");
 	}
 	
@@ -246,7 +246,7 @@ public class AnalyticsTestBase {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
 		beacon = getLastReq(loadBeacons);
-		System.out.println("== Load beacon to test ==");
+		System.out.println("Load beacon to test: ");
 		System.out.println(beacon.getUrl() + "\n");
 	}
 	

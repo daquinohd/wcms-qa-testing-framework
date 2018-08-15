@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.sitewideSearch.common.SitewideSearchForm;
-import gov.nci.sitewideSearch.pages.SitewideSearchResults;
 import gov.nci.Utilities.ExcelManager;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
@@ -18,7 +17,6 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
 	
 	private SitewideSearchForm swSearchForm;
-	private SitewideSearchResults swSearchResults;
 	String testDataFilePath;
 	
 	@BeforeClass(groups = { "Analytics" }) 
@@ -34,7 +32,6 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		driver.get(config.goHome());
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
-			//swSearchResults = new SitewideSearchResults();
 		} catch (Exception ex) {
 			Assert.fail("Error initializing sitewide search.");
 			ex.printStackTrace();
