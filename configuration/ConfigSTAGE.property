@@ -35,6 +35,7 @@ PDQPage			= https://www-stage.cancer.gov/types/breast/patient/breast-prevention-
 TopicPage		= https://www-stage.cancer.gov/grants-training/apply-grant
 SpanishPage		= https://www-stage.cancer.gov/espanol
 AppModulePage	= https://www-stage.cancer.gov/publications/dictionaries/cancer-terms
+MicroSite	    = https://www-stage.cancer.gov/sites/nano
 
 ***********************Test Data*******************************************
 TestData			= ./test-data/TestData.xlsx

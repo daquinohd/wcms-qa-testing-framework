@@ -35,6 +35,7 @@ PDQPage			= https://www-pink-dev.cancer.gov/types/breast/patient/breast-preventi
 TopicPage		= https://www-pink-dev.cancer.gov/grants-training/apply-grant
 SpanishPage		= https://www-pink-dev.cancer.gov/espanol
 AppModulePage	= https://www-pink-dev.cancer.gov/publications/dictionaries/cancer-terms
+MicroSite	    = https://www-pink-dev.cancer.gov/sites/nano
 
 ***********************Test Data*******************************************
 TestData			= ./test-data/TestData.xlsx

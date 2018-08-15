@@ -35,6 +35,7 @@ PDQPage			= https://www-red-dev.cancer.gov/types/breast/patient/breast-preventio
 TopicPage		= https://www-red-dev.cancer.gov/grants-training/apply-grant
 SpanishPage		= https://www-red-dev.cancer.gov/espanol
 AppModulePage	= https://www-red-dev.cancer.gov/publications/dictionaries/cancer-terms
+MicroSite	    = https://www-red-dev.cancer.gov/sites/nano
 
 ***********************Test Data*******************************************
 TestData			= ./test-data/TestData.xlsx
