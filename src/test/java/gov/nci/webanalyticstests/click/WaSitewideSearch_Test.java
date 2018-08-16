@@ -9,9 +9,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.sitewideSearch.common.SitewideSearchForm;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 import gov.nci.Utilities.ExcelManager;
+import gov.nci.commonobjects.SitewideSearchForm;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
