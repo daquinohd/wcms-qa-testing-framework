@@ -98,8 +98,8 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 	
 	// Verify analytics click values for microsite-wide search
-	@Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 5)
-	public void testSitewideSearchButtonClick(String searchTerm) {
+	@Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 4)
+	public void testMicroSitewideSearch(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("MicroSite"));			
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
@@ -117,7 +117,28 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			e.printStackTrace();
 		}
 	}
-		
+
+	// Verify analytics click values when searching from sitewide search results page
+	// @Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 5)
+	public void testSitewideSitewide(String searchTerm) {
+		try {
+			driver.get(config.getPageURL("SitewideResultsPage"));			
+		    swSearchForm.setSitewideSearchKeyword(searchTerm);
+		    swSearchForm.clickSearchButton();
+		    setClickBeacon();
+			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+		} catch (Exception e) {
+			Assert.fail("Error submitting sitewide search.");
+			e.printStackTrace();
+		}
+	}
+	
 	/**** 
 	 * TODO tests 
 	 * Results page (separate test?)
