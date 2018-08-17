@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.framework.PageObjectBase;
@@ -52,9 +53,9 @@ public class SitewideSearchResults extends PageObjectBase {
 	@FindBy(css = "form.sitewide-search-results")
 	WebElement form_sw_res_search;
 	// TODO: key off something other than these IDs if possible
-	@FindBy(css = "form.sitewide-search-results input#ctl34_rblSWRSearchType_0")
+	@FindBy(how = How.XPATH, using = "//label[@for='ctl34_rblSWRSearchType_0']")
 	WebElement btn_search_new;
-	@FindBy(css = "form.sitewide-search-results input#ctl34_rblSWRSearchType_1")
+	@FindBy(how = How.XPATH, using = "//label[@for='ctl34_rblSWRSearchType_1']")
 	WebElement btn_search_within;
 	@FindBy(css = "form.sitewide-search-results input#ctl34_txtSWRKeyword")
 	WebElement input_sw_res_search;

@@ -16,7 +16,9 @@ import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
-	/// TODO: We can remove "wa" from class names
+	// TODO: Remove "wa" from class names
+	// TODO: Refactor common asserts after redoing setBeacon() logic
+	
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
 	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";	
 	private SitewideSearchForm swSearchForm;
@@ -123,16 +125,15 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
 		}
-	}
-
+	}	
 	// Verify analytics click values when searching from sitewide search results page
-	//@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
+	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
 	public void testSearchWithinResults(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("SitewideResultsPage"));
-			swSearchResults = new SitewideSearchResults(driver);			
-			swSearchResults.setSitewideSearchKeyword(searchTerm);
+			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.doWithinSearch();
+			swSearchResults.setSitewideSearchKeyword(searchTerm);
 		    swSearchResults.clickSearchButton();
 		    setClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
@@ -161,7 +162,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			System.out.println("Sitewide search term: " + searchTerm);
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");
 			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
 			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
 			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
@@ -171,9 +172,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			e.printStackTrace();
 		}
 	}
-	
-	// TODO: refactor common asserts after redoing setBeacon() logic
-	
+		
 	/******************** Data Providers ****************/
 	@DataProvider(name = "CancerTerms")
 	public Iterator<Object[]> readCancerTerm_Data() {
