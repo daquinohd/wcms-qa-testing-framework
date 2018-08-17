@@ -17,9 +17,9 @@
 			<class name="gov.nci.clinicaltrials.BasicSearchDelighters_Test"/>
 			<class name="gov.nci.clinicaltrials.BasicSearch_Test" />
 			<class name="gov.nci.clinicaltrials.BasicResultsUIElements_Test" />
-			<!-- <class name="gov.nci.clinicaltrials.BasicSearchResults_Test" />
+			<class name="gov.nci.clinicaltrials.BasicSearchResults_Test" />
 			<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
-			<class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> -->
+			<class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" />
 			    
 		</classes>
 	</test> 

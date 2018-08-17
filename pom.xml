@@ -144,7 +144,7 @@
                   iPhone6
                   iPad
             -->
-            <browser>ChromeHeadless</browser>
+            <browser>Chrome</browser>
           </systemPropertyVariables>
         </configuration>
 
