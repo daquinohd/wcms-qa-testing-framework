@@ -119,7 +119,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 
 	// Verify analytics click values when searching from sitewide search results page
-	// @Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 5)
+	@Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 5)
 	public void testSitewideSitewide(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("SitewideResultsPage"));			
