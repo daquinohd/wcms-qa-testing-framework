@@ -36,6 +36,7 @@ TopicPage		= https://www-qa.cancer.gov/grants-training/apply-grant
 SpanishPage		= https://www-qa.cancer.gov/espanol
 AppModulePage	= https://www-qa.cancer.gov/publications/dictionaries/cancer-terms
 MicroSite	    = https://www-qa.cancer.gov/sites/nano
+SitewideResultsPage	    = https://www-qa.cancer.gov/search/results
 
 ***********************Test Data*******************************************
 TestData			= ./test-data/TestData.xlsx

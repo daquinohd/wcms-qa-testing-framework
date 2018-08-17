@@ -221,10 +221,10 @@ public class AnalyticsTestBase {
 			}
 		}
 
-	    // Debug analytics beacons 	
-		System.out.println(urlList.size() + " total analytics requests ("
-			+ loadBeacons.size() + " loads, " 
-			+ clickBeacons.size() + " clicks)"
+	    // Debug analytics beacon counts
+		System.out.println("Total analytics requests: " + urlList.size()
+			+ " (load: " + loadBeacons.size() 
+			+ ", click: " + clickBeacons.size() + ")"
 		);
 	}
 	
