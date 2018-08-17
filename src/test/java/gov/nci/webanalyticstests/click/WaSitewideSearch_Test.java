@@ -9,15 +9,18 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalyticstests.AnalyticsTestBase;
-import gov.nci.Utilities.ExcelManager;
 import gov.nci.commonobjects.SitewideSearchForm;
+import gov.nci.sitewidesearch.pages.SitewideSearchResults;
+import gov.nci.Utilities.ExcelManager;
+import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	
+	/// TODO: We can remove "wa" from class names
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
 	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";	
 	private SitewideSearchForm swSearchForm;
+	private SitewideSearchResults swSearchResults;
 	private String testDataFilePath;
 	
 	@BeforeClass(groups = { "Analytics" }) 
@@ -35,14 +38,15 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			ex.printStackTrace();
 		}
 	}
-		
+
 	// Verify analytics click values for sitewide cancer term search
-	@Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 1)
+	@Test(dataProvider = "CancerTerms", groups = { "Analytics" })
 	public void testSitewideSearch(String searchTerm) {
 		try {
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
 		    setClickBeacon();
+			System.out.println("Sitewide search term: " + searchTerm);		    
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
 			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -57,13 +61,14 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 	
 	// Verify analytics click values for sitewide Spanish term search
-	@Test(dataProvider = "CancerTermsEs", groups = { "Analytics" }, priority = 2)
+	@Test(dataProvider = "CancerTermsEs", groups = { "Analytics" })
 	public void testSitewideSearchEspanol(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("SpanishPage"));
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
 		    setClickBeacon(); 
+			System.out.println("Sitewide search term: " + searchTerm);		    
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
 			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -78,12 +83,13 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 
 	// Verify analytics click values for sitewide search w/o results
-	@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" }, priority = 3)
+	@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" })
 	public void testSitewideSearchNoMatch(String searchTerm) {
 		try {
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
 		    setClickBeacon();
+			System.out.println("Sitewide search term: " + searchTerm);		    
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
 			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -98,13 +104,14 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 	
 	// Verify analytics click values for microsite-wide search
-	@Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 4)
+	@Test(dataProvider = "CancerTerms", groups = { "Analytics" })
 	public void testMicroSitewideSearch(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("MicroSite"));			
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
 		    setClickBeacon();
+			System.out.println("Sitewide search term: " + searchTerm);		    
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
 			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -119,16 +126,42 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	}
 
 	// Verify analytics click values when searching from sitewide search results page
-	@Test(dataProvider = "CancerTerms", groups = { "Analytics" }, priority = 5)
-	public void testSitewideSitewide(String searchTerm) {
+	//@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
+	public void testSearchWithinResults(String searchTerm) {
 		try {
-			driver.get(config.getPageURL("SitewideResultsPage"));			
-		    swSearchForm.setSitewideSearchKeyword(searchTerm);
-		    swSearchForm.clickSearchButton();
+			driver.get(config.getPageURL("SitewideResultsPage"));
+			swSearchResults = new SitewideSearchResults(driver);			
+			swSearchResults.setSitewideSearchKeyword(searchTerm);
+			swSearchResults.doWithinSearch();
+		    swSearchResults.clickSearchButton();
 		    setClickBeacon();
+			System.out.println("Sitewide search term: " + searchTerm);
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+		} catch (Exception e) {
+			Assert.fail("Error submitting sitewide search.");
+			e.printStackTrace();
+		}
+	}	
+	
+	// Verify analytics click values when searching from sitewide search results page
+	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
+	public void testSearchNewFromResults(String searchTerm) {
+		try {
+			driver.get(config.getPageURL("SitewideResultsPage"));
+			swSearchResults = new SitewideSearchResults(driver);			
+			swSearchResults.setSitewideSearchKeyword(searchTerm);
+		    swSearchResults.clickSearchButton();
+		    setClickBeacon();
+			System.out.println("Sitewide search term: " + searchTerm);
+			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");
 			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
 			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
 			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
@@ -139,12 +172,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		}
 	}
 	
-	/**** 
-	 * TODO tests 
-	 * Results page (separate test?)
-	 * Form on results page
-	 * 
-	 ****/	
+	// TODO: refactor common asserts after redoing setBeacon() logic
 	
 	/******************** Data Providers ****************/
 	@DataProvider(name = "CancerTerms")
@@ -156,7 +184,12 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 	public Iterator<Object[]> readCancerTermEs_Data() {
 		return getDataIteratorObject("CancerTerm", TESTDATA_SHEET_NAME_ES);
 	}
-		
+
+	@DataProvider(name = "DefinitionTerms")
+	public Iterator<Object[]> readDefinitionTerm_Data() {
+		return getDataIteratorObject("Definition", TESTDATA_SHEET_NAME);
+	}
+	
 	@DataProvider(name = "NoMatchTerms")
 	public Iterator<Object[]> readNoMatchTerm_Data() {
 		return getDataIteratorObject("NoMatch", TESTDATA_SHEET_NAME);
