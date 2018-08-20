@@ -139,7 +139,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			System.out.println("Sitewide search term: " + searchTerm);
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");			
 			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
 			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
 			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
@@ -162,7 +162,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			System.out.println("Sitewide search term: " + searchTerm);
 			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
 			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");
+			Assert.assertTrue(hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");			
 			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
 			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
 			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
