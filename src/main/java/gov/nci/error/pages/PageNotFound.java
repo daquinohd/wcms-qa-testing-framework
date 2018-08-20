@@ -32,15 +32,15 @@ public class PageNotFound extends PageObjectBase {
 	WebElement txt_err_content_en;
 	@FindBy(css = ".error-content-spanish")
 	WebElement txt_err_content_es;
-	@FindBy(how = How.XPATH, using = "//label[@for='english1']")
+	@FindBy(how = How.XPATH, using = "//label[@for='englishl']")
 	WebElement btn_search_en;
-	@FindBy(how = How.XPATH, using = "//label[@for='spanish1']")
+	@FindBy(how = How.XPATH, using = "//label[@for='spanishl']")
 	WebElement btn_search_es;
 	@FindBy(css = ".error-searchbar input#nfKeyword")
 	WebElement input_err_search;		
-	@FindBy(css = ".error-searchbar input#nf-search__button")
+	@FindBy(css = ".error-searchbar button#nf-search__button")
 	WebElement btn_err_search;
-		
+	
 	public WebElement getContentEn() {
 		return txt_err_content_en;
 	}
