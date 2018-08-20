@@ -16,16 +16,16 @@ import gov.nci.Utilities.ExcelManager;
 import gov.nci.WebAnalytics.AnalyticsRequest;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
-public class WaSitewideSearch_Test extends AnalyticsTestBase {
+public class SitewideSearch_Test extends AnalyticsTestBase {
 
+	// TODO: refactor common assertions
+	// TODO: do driver.get at test level ?
+	
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
 	private PageNotFound pageNotFound;
 	private AnalyticsRequest beacon;
 	
-	// TODO: Remove "wa" from class names
-	// TODO: Refactor common asserts after redoing setBeacon() logic
-	// TODO: Add search from error page
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
 	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";	
 	private String testDataFilePath;
@@ -203,7 +203,10 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			e.printStackTrace();
 		}
 	}
-		
+
+	/******************** Common Assertions ****************/
+
+	
 	/******************** Data Providers ****************/
 	@DataProvider(name = "CancerTerms")
 	public Iterator<Object[]> readCancerTerm_Data() {
