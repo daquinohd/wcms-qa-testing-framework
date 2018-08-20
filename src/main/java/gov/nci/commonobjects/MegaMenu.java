@@ -1,4 +1,4 @@
-package gov.nci.WebAnalytics;
+package gov.nci.commonobjects;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import gov.nci.WebAnalytics.Nav;
+import gov.nci.WebAnalytics.Resize;
 import gov.nci.framework.PageObjectBase;
 
 public class MegaMenu extends PageObjectBase{

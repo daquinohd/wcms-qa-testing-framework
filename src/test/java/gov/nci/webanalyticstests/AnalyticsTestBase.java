@@ -50,7 +50,6 @@ public class AnalyticsTestBase {
 	protected List<String> harUrlList;	
 	protected List<AnalyticsRequest> loadBeacons;
 	protected List<AnalyticsRequest> clickBeacons;
-	protected AnalyticsRequest beacon;
 	
 	/**************************************
 	 * Section: TextNG Befores & Afters *
@@ -229,26 +228,30 @@ public class AnalyticsTestBase {
 	}
 	
 	/**
-	 * Set the global loadBeacons and beacon variables
+	 * Get the 'click' beacon to test
+	 * @return AnalyticsRequest
 	 */
-	protected void setClickBeacon() {
+	protected AnalyticsRequest getClickBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		beacon = getLastReq(clickBeacons);
+		AnalyticsRequest rtn = getLastReq(clickBeacons);		
 		System.out.println("Click beacon to test: ");
-		System.out.println(beacon.getUrl() + "\n");
+		System.out.println(rtn.getUrl() + "\n");
+		return getLastReq(clickBeacons);
 	}
 	
 	/**
-	 * Set the global clickBeacons and beacon variables
+	 * Get the 'load' beacon to test
+	 * @return AnalyticsRequest
 	 */
-	protected void setLoadBeacon() {
+	protected AnalyticsRequest getLoadBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		beacon = getLastReq(loadBeacons);
+		AnalyticsRequest rtn = getLastReq(loadBeacons);		
 		System.out.println("Load beacon to test: ");
-		System.out.println(beacon.getUrl() + "\n");
-	}
+		System.out.println(rtn.getUrl() + "\n");
+		return getLastReq(loadBeacons);
+	}	
 	
 	/**
 	 * Utility function to get the last element in a list of AnalyticsRequest objects
@@ -260,102 +263,5 @@ public class AnalyticsTestBase {
 		AnalyticsRequest request = (index >= 0) ? requests.get(index) : null;
 		return request;
 	}
-	
-	
-	/*********************************
-	 * Section - Common methods used by tests *
-	 *********************************/
-	/***
-	 * TODO: move these into request class
-	 * TODO: replace "contains' with "matches" where possible
-	 * TODO: add shared click / load tests here
-	 */
-	
-	/**
-	 * Utility function to check for a given suite name
-	 * @return
-	 */
-	public boolean hasSuite() {
-		// TODO: fill this out
-		return false;
-	}
 
-	/**
-	 * Utility function to check for a given channel name
-	 * @return
-	 */
-	public boolean hasChannel() {
-		// TODO: fill this out
-		return false;
-	}
-	
-	/**
-	 * Utility function to check for a link name value within a click beacon.
-	 * @param name
-	 * @return
-	 */
-	public boolean hasLinkName(String name) {
-		if(beacon.getLinkName().equalsIgnoreCase(name)) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Utility function to check for an event value within a click beacon.
-	 * @param evt
-	 * TODO: fix hardcoded values
-	 */
-	public boolean hasEvent(int eventNumber) {
-		String evt = "event" + Integer.toString(eventNumber);
-		for(String event : beacon.getEvents()) {
-			if(evt.equalsIgnoreCase("event47")) {
-				if(event.matches("^event47=\\d+")) {
-					return true;
-				}
-			} 
-			else if(event.equalsIgnoreCase(evt)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Utility function to check for a given prop and value
-	 * @param num
-	 * @param val
-	 * @return
-	 */
-	public boolean hasProp(int num, String val) {
-		String blob = beacon.getProps().toString();
-		if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
-			return true;
-		}
-		return false;
-	}	
-	
-	/**
-	 * Utility function to check for a given eVar and value
-	 * @param num
-	 * @param val
-	 * @return
-	 */
-	public boolean haseVar(int num, String val) {
-		String blob = beacon.getEvars().toString();
-		if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Utility function overload to check for a given eVar 
-	 * @param num
-	 * @return
-	 */
-	public boolean haseVar(int num) {
-		return haseVar(num, "");
-	}
-	
 }

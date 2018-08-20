@@ -249,8 +249,99 @@ public class AnalyticsRequest {
 		return getNumberedParams(paramList, parm, parm);
 	}	
 		
-	/**************** Checks for given values ****************/
+	/**************** Methods to check for given values in a beacon ****************/
+	/*
+	 * TODO: Replace "contains' with "matches" where possible
+	 * TODO: Refactor common key/var logic into util methods
+	 */
+	
+	/**
+	 * Utility function to check for a given suite name
+	 * @return
+	 */
+	public boolean hasSuite() {
+		// TODO: fill this out
+		return false;
+	}
 
+	/**
+	 * Utility function to check for a given channel name
+	 * @return
+	 */
+	public boolean hasChannel() {
+		// TODO: fill this out
+		return false;
+	}
+	
+	/**
+	 * Utility function to check for a link name value within a click beacon.
+	 * @param name
+	 * @return
+	 */
+	public boolean hasLinkName(String name) {
+		if(this.getLinkName().equalsIgnoreCase(name)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Utility function to check for an event value within a click beacon.
+	 * @param evt
+	 * TODO: fix hardcoded values
+	 */
+	public boolean hasEvent(int eventNumber) {
+		String evt = "event" + Integer.toString(eventNumber);
+		for(String event : this.getEvents()) {
+			if(evt.equalsIgnoreCase("event47")) {
+				if(event.matches("^event47=\\d+")) {
+					return true;
+				}
+			} 
+			else if(event.equalsIgnoreCase(evt)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Utility function to check for a given prop and value
+	 * @param num
+	 * @param val
+	 * @return
+	 */
+	public boolean hasProp(int num, String val) {
+		String blob = this.getProps().toString();
+		if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
+			return true;
+		}
+		return false;
+	}	
+	
+	/**
+	 * Utility function to check for a given eVar and value
+	 * @param num
+	 * @param val
+	 * @return
+	 */
+	public boolean haseVar(int num, String val) {
+		String blob = this.getEvars().toString();
+		if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Utility function overload to check for a given eVar 
+	 * @param num
+	 * @return
+	 */
+	public boolean haseVar(int num) {
+		return haseVar(num, "");
+	}	
+	
 	/**
 	 * Utility function to check for a given heirarchy and value
 	 * @param num

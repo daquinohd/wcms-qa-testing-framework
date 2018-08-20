@@ -8,12 +8,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
+import gov.nci.WebAnalytics.AnalyticsRequest;
 import gov.nci.WebAnalytics.Resize;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class Resize_Test extends AnalyticsTestBase {
 	
 	private Resize resize;
+	private AnalyticsRequest beacon;	
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupResize() throws MalformedURLException, UnsupportedEncodingException {
@@ -25,12 +27,12 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void testResizeGeneral() {
 		resize.doAllResizes();
-		setClickBeacon();
+		beacon = getClickBeacon();
 		Assert.assertTrue(clickBeacons.size() > 1);
-		Assert.assertTrue(hasProp(4, "d=pev1"));
-		Assert.assertTrue(hasProp(67, "D=pageName"));
-		Assert.assertTrue(haseVar(2, "English"));
-		Assert.assertFalse(hasEvent(1));
+		Assert.assertTrue(beacon.hasProp(4, "d=pev1"));
+		Assert.assertTrue(beacon.hasProp(67, "D=pageName"));
+		Assert.assertTrue(beacon.haseVar(2, "English"));
+		Assert.assertFalse(beacon.hasEvent(1));
 		logger.log(LogStatus.PASS, "Resize gen value test passed.");		
 	}
 	
@@ -38,9 +40,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 2)
 	public void testResizeToMobile() {
 		resize.toSmall();
-		setClickBeacon();
-		Assert.assertTrue(hasEvent(7));
-		Assert.assertTrue(hasLinkName("ResizedToMobile"));
+		beacon = getClickBeacon();
+		Assert.assertTrue(beacon.hasEvent(7));
+		Assert.assertTrue(beacon.hasLinkName("ResizedToMobile"));
 		logger.log(LogStatus.PASS, "'Resize to mobile' values are correct.");
 	}
 
@@ -48,9 +50,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 3)
 	public void testResizeToTablet() {
 		resize.toMed();
-		setClickBeacon();
-		Assert.assertTrue(hasEvent(7));
-		Assert.assertTrue(hasLinkName("ResizedToTablet"));
+		beacon = getClickBeacon();
+		Assert.assertTrue(beacon.hasEvent(7));
+		Assert.assertTrue(beacon.hasLinkName("ResizedToTablet"));
 		logger.log(LogStatus.PASS, "'Resize to tablet' values are correct.");
 	}
 
@@ -58,9 +60,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 4)
 	public void testResizeToDesktop() {
 		resize.toLarge();
-		setClickBeacon();
-		Assert.assertTrue(hasEvent(7));
-		Assert.assertTrue(hasLinkName("ResizedToDesktop"));
+		beacon = getClickBeacon();
+		Assert.assertTrue(beacon.hasEvent(7));
+		Assert.assertTrue(beacon.hasLinkName("ResizedToDesktop"));
 		logger.log(LogStatus.PASS, "'Resize to desktop' values are correct.");
 	}
 
@@ -68,9 +70,9 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 5)
 	public void testResizeToExtraWide() {
 		resize.toXlarge();
-		setClickBeacon();
-		Assert.assertTrue(hasEvent(7));
-		Assert.assertTrue(hasLinkName("ResizedToExtra wide"));
+		beacon = getClickBeacon();
+		Assert.assertTrue(beacon.hasEvent(7));
+		Assert.assertTrue(beacon.hasLinkName("ResizedToExtra wide"));
 		logger.log(LogStatus.PASS, "'Resize to extra wide' values are correct.");
 	}
 
@@ -78,8 +80,8 @@ public class Resize_Test extends AnalyticsTestBase {
 	@Test(groups = { "Analytics" }, priority = 6)
 	public void testMaximize() {
 		resize.maximize();
-		setClickBeacon();
-		Assert.assertTrue(hasEvent(7));
+		beacon = getClickBeacon();
+		Assert.assertTrue(beacon.hasEvent(7));
 		logger.log(LogStatus.PASS, "Maximize values are correct.");
 	}	
 	

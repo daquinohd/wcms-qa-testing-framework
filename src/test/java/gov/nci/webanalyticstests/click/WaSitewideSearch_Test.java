@@ -12,17 +12,20 @@ import org.testng.Assert;
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
 import gov.nci.Utilities.ExcelManager;
+import gov.nci.WebAnalytics.AnalyticsRequest;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class WaSitewideSearch_Test extends AnalyticsTestBase {
+
+	private SitewideSearchForm swSearchForm;
+	private SitewideSearchResults swSearchResults;
+	private AnalyticsRequest beacon;
 	
 	// TODO: Remove "wa" from class names
 	// TODO: Refactor common asserts after redoing setBeacon() logic
-	
+	// TODO: Add search from error page
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
 	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";	
-	private SitewideSearchForm swSearchForm;
-	private SitewideSearchResults swSearchResults;
 	private String testDataFilePath;
 	
 	@BeforeClass(groups = { "Analytics" }) 
@@ -47,15 +50,15 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		try {
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    setClickBeacon();
+		    beacon = getClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);		    
-			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
-			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
-			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -69,15 +72,15 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			driver.get(config.getPageURL("SpanishPage"));
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    setClickBeacon(); 
+		    beacon = getClickBeacon(); 
 			System.out.println("Sitewide search term: " + searchTerm);		    
-			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
-			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
-			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -90,15 +93,15 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 		try {
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    setClickBeacon();
+		    beacon = getClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);		    
-			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
-			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
-			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -112,20 +115,21 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			driver.get(config.getPageURL("MicroSite"));			
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    setClickBeacon();
+		    beacon = getClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);		    
-			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
-			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
-			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
 		}
-	}	
+	}
+	
 	// Verify analytics click values when searching from sitewide search results page
 	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
 	public void testSearchWithinResults(String searchTerm) {
@@ -135,20 +139,20 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			swSearchResults.doWithinSearch();
 			swSearchResults.setSitewideSearchKeyword(searchTerm);
 		    swSearchResults.clickSearchButton();
-		    setClickBeacon();
+		    beacon = getClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
-			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
-			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");			
-			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
-			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");			
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
 		}
-	}	
+	}
 	
 	// Verify analytics click values when searching from sitewide search results page
 	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
@@ -158,15 +162,15 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			swSearchResults = new SitewideSearchResults(driver);			
 			swSearchResults.setSitewideSearchKeyword(searchTerm);
 		    swSearchResults.clickSearchButton();
-		    setClickBeacon();
+		    beacon = getClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
-			Assert.assertTrue(hasEvent(2), "Event value incorrect.");
-			Assert.assertTrue(hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-			Assert.assertTrue(hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");			
-			Assert.assertTrue(hasProp(14, searchTerm), "Search term value does not match.");
-			Assert.assertTrue(hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-			Assert.assertTrue(haseVar(13), "eVar13 value incorrect.");
-			Assert.assertTrue(haseVar(14, searchTerm), "Search type value incorrect.");
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");			
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
