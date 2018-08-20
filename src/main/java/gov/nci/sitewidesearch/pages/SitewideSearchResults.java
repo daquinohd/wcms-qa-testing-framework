@@ -110,6 +110,7 @@ public class SitewideSearchResults extends PageObjectBase {
 		return btn_sw_res_search;		
 	}
 
+	/**************** Sitewide Search Results Page Actions *****************************/
 	// TODO: refactor single actions into group actions
 	/**
 	 * Select 'New Search' radio button

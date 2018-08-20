@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.commonobjects.SitewideSearchForm;
+import gov.nci.error.pages.PageNotFound;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.WebAnalytics.AnalyticsRequest;
@@ -19,6 +20,7 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
+	private PageNotFound pageNotFound;
 	private AnalyticsRequest beacon;
 	
 	// TODO: Remove "wa" from class names
@@ -162,6 +164,30 @@ public class WaSitewideSearch_Test extends AnalyticsTestBase {
 			swSearchResults = new SitewideSearchResults(driver);			
 			swSearchResults.setSitewideSearchKeyword(searchTerm);
 		    swSearchResults.clickSearchButton();
+		    beacon = getClickBeacon();
+			System.out.println("Sitewide search term: " + searchTerm);
+			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
+			Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
+			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");			
+			Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
+			Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
+			Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
+			Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
+		} catch (Exception e) {
+			Assert.fail("Error submitting sitewide search.");
+			e.printStackTrace();
+		}
+	}
+	
+	// Verify analytics click values when searching from error page
+	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
+	public void testErrorPageSearchEn(String searchTerm) {
+		try {
+			driver.get(config.getPageURL("PageNotFound"));
+			pageNotFound = new PageNotFound(driver);
+			pageNotFound.selectEnglish();
+			pageNotFound.setSitewideSearchKeyword(searchTerm);
+			pageNotFound.clickSearchButton();
 		    beacon = getClickBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
