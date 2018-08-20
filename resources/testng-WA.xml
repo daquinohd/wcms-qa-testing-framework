@@ -22,7 +22,7 @@
 		<classes>
 			<class name="gov.nci.webanalyticstests.load.PageLoad_Test" />
 			<class name="gov.nci.webanalyticstests.click.WaBasicSearch_Test" />
-			<class name="gov.nci.webanalyticstests.click.WaSitewideSearch_Test" />
+			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
 			<class name="gov.nci.webanalyticstests.click.MegaMenu_Test" />
 			<class name="gov.nci.webanalyticstests.click.Sandbox_Test" />
