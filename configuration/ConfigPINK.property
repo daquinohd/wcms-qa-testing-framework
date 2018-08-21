@@ -1,7 +1,8 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/search
-BasicSearchResultsURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+BasicSearchResultsURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
+ResultsPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www-pink-dev.cancer.gov/contact
 DelighterWhatURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www-pink-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
@@ -15,7 +16,6 @@ DriverPath_Win=./resources/drivers/win
 DriverPath_Linux=./resources/drivers/linux
 DriverName_ChromeDriver=chromedriver
 DriverName_FirefoxDriver=geckodriver
-
 
 ***********************Reporting******************************************
 ExtentReports= ./test-output/ExtentReport/
@@ -34,3 +34,14 @@ PDQPage=https://www-pink-dev.cancer.gov/types/breast/patient/breast-prevention-p
 TopicPage=https://www-pink-dev.cancer.gov/grants-training/apply-grant
 SpanishPage=https://www-pink-dev.cancer.gov/espanol
 AppModulePage=https://www-pink-dev.cancer.gov/publications/dictionaries/cancer-terms
+MicroSite= https://www-pink-dev.cancer.gov/sites/nano
+SitewideResultsPage=https://www-pink-dev.cancer.gov/search/results
+PageNotFound=https://www-pink-dev.cancer.gov/i-am-error
+
+***********************Test Data******************************************
+TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx
+SitewideSearchData= ./test-data/sitewide-search.xlsx
+
+***********************External Resources**********************************
+AnalyticsTrackingServer=nci.122.2o7.net

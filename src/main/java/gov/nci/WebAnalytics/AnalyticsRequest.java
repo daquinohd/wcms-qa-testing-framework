@@ -1,6 +1,8 @@
 package gov.nci.WebAnalytics;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
@@ -10,10 +12,25 @@ public class AnalyticsRequest {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods
 	// TODO: build setter/getter for channel? 
+	// TODO: reuse collection method from ParsedURL() instead of the local getList()
 
 	// Constants
 	public static final String STATIC_SERVER = "static.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
+		
+	// Parameter values from URL
+	static final String CHANNEL = "ch";
+	static final String EVENTS = "events";	
+	static final String LINKTYPE = "pe";
+	static final String LINKNAME = "pev2";
+	static final String LINKURL = "pev1";
+	
+	// Partial parameter values. Each prop, eVar, and hier is its own query parameter. 
+	// The getNumberedParams() method handles the logic of appending the number values
+	// to each of these query parameter
+	static final String PROP_PARTIAL = "c";
+	static final String EVAR_PARTIAL = "v";
+	static final String HIER_PARTIAL = "h";		
 	
 	// A request URL
 	private String url;
@@ -58,7 +75,7 @@ public class AnalyticsRequest {
 	 */
 	public void buildParamsList() throws NullPointerException {
 		setUri(createUri(url));
-		setParamsList(AnalyticsParams.getList(uri));		
+		setParamsList(this.getList(uri));		
 	}
 	
 	/**
@@ -102,7 +119,7 @@ public class AnalyticsRequest {
 	 */
 	public String getChannel(List<NameValuePair> parms) {
 		for (NameValuePair param : parms) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.CHANNEL)) {
+			if (param.getName().equalsIgnoreCase(CHANNEL)) {
 				return param.getValue().trim();
 			}
 		}
@@ -117,7 +134,7 @@ public class AnalyticsRequest {
 	public String[] getEvents() {
 		String rtnEvents = "";
 		for (NameValuePair param : paramsList) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.EVENTS)) {
+			if (param.getName().equalsIgnoreCase(EVENTS)) {
 				rtnEvents = param.getValue();
 				break;
 			}
@@ -131,7 +148,7 @@ public class AnalyticsRequest {
 	 * @return
 	 */
 	public List<NameValuePair> getProps() {
-		return getNumberedParams(paramsList, AnalyticsParams.PROP_PARTIAL, "prop");
+		return getNumberedParams(paramsList, PROP_PARTIAL, "prop");
 	}
 	
 	/**
@@ -140,7 +157,7 @@ public class AnalyticsRequest {
 	 * @return
 	 */
 	public List<NameValuePair> getEvars() {
-		return getNumberedParams(paramsList, AnalyticsParams.EVAR_PARTIAL, "eVar");
+		return getNumberedParams(paramsList, EVAR_PARTIAL, "eVar");
 	}
 	
 	/**
@@ -149,7 +166,7 @@ public class AnalyticsRequest {
 	 * @return
 	 */
 	public List<NameValuePair> getHiers(List<NameValuePair> parms) {
-		return getNumberedParams(parms, AnalyticsParams.HIER_PARTIAL, "hier");
+		return getNumberedParams(parms, HIER_PARTIAL, "hier");
 	}
 
 	/**
@@ -158,7 +175,7 @@ public class AnalyticsRequest {
 	 */
 	public String getLinkType() {
 		for (NameValuePair param : paramsList) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKTYPE)) {
+			if (param.getName().equalsIgnoreCase(LINKTYPE)) {
 				return param.getValue().trim();
 			}
 		}
@@ -171,7 +188,7 @@ public class AnalyticsRequest {
 	 */	
 	public String getLinkName() {
 		for (NameValuePair param : paramsList) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKNAME)) {
+			if (param.getName().equalsIgnoreCase(LINKNAME)) {
 				return param.getValue().trim();
 			}
 		}
@@ -184,7 +201,7 @@ public class AnalyticsRequest {
 	 */		
 	public String getLinkUrl() {
 		for (NameValuePair param : paramsList) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKURL)) {
+			if (param.getName().equalsIgnoreCase(LINKURL)) {
 				return param.getValue().trim();
 			}
 		}
@@ -198,7 +215,7 @@ public class AnalyticsRequest {
 	 */
 	public boolean hasLinkType() {
 		for (NameValuePair param : paramsList) {
-			if (param.getName().equalsIgnoreCase(AnalyticsParams.LINKTYPE)) {
+			if (param.getName().equalsIgnoreCase(LINKTYPE)) {
 				return true;
 			}
 		}
@@ -367,4 +384,32 @@ public class AnalyticsRequest {
 		return false;
 	}		
 
+	
+	/**
+	 * Split URI into list of encoded elements
+	 * @param uri
+	 * @return retParams
+	 */
+	@Deprecated
+	public static List<NameValuePair> getList(URI uri) {
+		List<NameValuePair> rtnParams = new ArrayList<NameValuePair>();
+		
+		try {
+			String queries = uri.getRawQuery(); // get encoded query string
+			for(String parm : queries.split("&")) {
+				String[] pair = parm.split("=");
+				String Name = URLDecoder.decode(pair[0], "UTF-8");
+				String value = "";
+				if(pair.length > 1) {
+					value = URLDecoder.decode(pair[1], "UTF-8"); 
+				}
+				rtnParams.add(new BasicNameValuePair(Name, value));				
+			}
+		} 
+		catch (UnsupportedEncodingException ex) {
+			System.out.println("Error decoding URI in WaParams:buildParamsList()");
+		}		
+		return rtnParams;
+	}
+	
 }
