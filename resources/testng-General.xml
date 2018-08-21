@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Page Options" parallel="none">
+	  <test name="NCI - Chrome Testing" preserve-order="true">
+		<!--
+			The browser parameter is set in pom.xml as part of invoking
+			the maven-surefire-plugin.
+
+			<parameter name="browser" value="Chrome" />
+		-->
+		<groups>
+			<run>
+				<include name="Smoke-VE" />
+			</run>
+		</groups>
+		<classes>
+			<class name="gov.nci.general.PageOptions_Test"/>
+		</classes>
+	</test>
+
+</suite>
+

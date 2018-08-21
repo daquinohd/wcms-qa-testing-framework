@@ -39,3 +39,5 @@ AppModulePage=https://www-qa.cancer.gov/publications/dictionaries/cancer-terms
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
+PageOptionsData = ./test-data/page-options.xlsx
+SiteWideSearchData = ./test-data/page-options.xlsx

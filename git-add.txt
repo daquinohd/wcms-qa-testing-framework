@@ -1,0 +1,76 @@
+On branch page-options
+Your branch is ahead of 'origin/page-options' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   .classpath
+	modified:   .gitignore
+	modified:   .project
+	modified:   README.md
+	modified:   configuration/ConfigBLUE.property
+	modified:   configuration/ConfigDT.property
+	modified:   configuration/ConfigPINK.property
+	modified:   configuration/ConfigPROD.property
+	modified:   configuration/ConfigQA.property
+	modified:   configuration/ConfigRED.property
+	modified:   configuration/ConfigSTAGE.property
+	modified:   pom.xml
+	modified:   resources/Log4j2.xml
+	modified:   resources/testanalytics.xml
+	modified:   resources/testng-All.xml
+	modified:   resources/testng-CTS.xml
+	modified:   resources/testng-General.xml
+	modified:   resources/testng-R4R.xml
+	modified:   src/Log4j2.xml
+	modified:   src/main/java/gov/nci/Utilities/BrowserManager.java
+	modified:   src/main/java/gov/nci/Utilities/ConfigReader.java
+	modified:   src/main/java/gov/nci/Utilities/ExcelManager.java
+	modified:   src/main/java/gov/nci/Utilities/ScreenShot.java
+	modified:   src/main/java/gov/nci/Utilities/ScrollUtil.java
+	modified:   src/main/java/gov/nci/WebAnalytics/AnalyticsBase.java
+	modified:   src/main/java/gov/nci/WebAnalytics/MegaMenu.java
+	modified:   src/main/java/gov/nci/WebAnalytics/PageLoad.java
+	modified:   src/main/java/gov/nci/WebAnalytics/Resize.java
+	modified:   src/main/java/gov/nci/WebAnalytics/WANav.java
+	modified:   src/main/java/gov/nci/WebAnalytics/WAParams.java
+	modified:   src/main/java/gov/nci/clinicalTrial/common/ApiReference.java
+	modified:   src/main/java/gov/nci/clinicalTrial/common/Checkbox.java
+	modified:   src/main/java/gov/nci/clinicalTrial/common/Delighter.java
+	modified:   src/main/java/gov/nci/clinicalTrial/common/Delighters.java
+	modified:   src/main/java/gov/nci/clinicalTrial/pages/AdvanceSearch.java
+	modified:   src/main/java/gov/nci/clinicalTrial/pages/AdvanceSearchResults.java
+	modified:   src/main/java/gov/nci/clinicalTrial/pages/BasicSearch.java
+	modified:   src/main/java/gov/nci/clinicalTrial/pages/BasicSearchResults.java
+	modified:   src/main/java/gov/nci/clinicalTrial/pages/ClinicalTrialPageObjectBase.java
+	modified:   src/main/java/gov/nci/clinicalTrial/pages/SuppressChatPromptPageObject.java
+	modified:   src/main/java/gov/nci/commonobjects/Banner.java
+	modified:   src/main/java/gov/nci/commonobjects/BreadCrumb.java
+	modified:   src/main/java/gov/nci/commonobjects/PageOptions.java
+	modified:   src/main/java/gov/nci/commonobjects/Pager.java
+	new file:   src/main/java/gov/nci/commonobjects/SiteSearch.java
+	modified:   src/main/java/gov/nci/framework/AutoSuggestHelper.java
+	modified:   src/main/java/gov/nci/framework/PageObjectBase.java
+	modified:   src/main/java/gov/nci/framework/ParsedURL.java
+	modified:   src/test/java/gov/nci/WebAnalytics/Tests/AnalyticsTestBase.java
+	modified:   src/test/java/gov/nci/WebAnalytics/Tests/MegaMenu_Test.java
+	modified:   src/test/java/gov/nci/WebAnalytics/Tests/PageLoad_Test.java
+	modified:   src/test/java/gov/nci/WebAnalytics/Tests/Resize_Test.java
+	modified:   src/test/java/gov/nci/WebAnalytics/Tests/Sandbox_Test.java
+	modified:   src/test/java/gov/nci/clinicaltrials/AdvanceSearchResults_Test.java
+	modified:   src/test/java/gov/nci/clinicaltrials/AdvanceSearch_Test.java
+	modified:   src/test/java/gov/nci/clinicaltrials/BaseClass.java
+	modified:   src/test/java/gov/nci/clinicaltrials/BasicResultsUIElements_Test.java
+	modified:   src/test/java/gov/nci/clinicaltrials/BasicSearchDelighters_Test.java
+	modified:   src/test/java/gov/nci/clinicaltrials/BasicSearchResults_Test.java
+	modified:   src/test/java/gov/nci/clinicaltrials/BasicSearch_Test.java
+	modified:   src/test/java/gov/nci/general/PageOptions_Test.java
+	modified:   src/test/java/gov/nci/general/SiteWideSearch_Test.java
+	new file:   test-data/page-options.xlsx
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	git-add.txt
+
