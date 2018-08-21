@@ -20,6 +20,7 @@ public class MegaMenu_Test extends AnalyticsTestBase {
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupMegaMenu() throws UnsupportedEncodingException, MalformedURLException {
 		megaMenu = new MegaMenu(driver);
+		driver.get(config.goHome());		
 	}
 	
 	/// Megamenu click returns the expected general/shared values
@@ -46,8 +47,9 @@ public class MegaMenu_Test extends AnalyticsTestBase {
 	/// Spanish menu bar click returns the expected values
 	@Test(groups = { "Analytics" })
 	public void testMMBarEs() {
+		driver.get(config.getPageURL("SpanishPage"));		
 		megaMenu.clickMMBarEs();
-		beacon = getClickBeacon();		
+		beacon = getClickBeacon();
 		Assert.assertTrue(beacon.hasLinkName("MegaMenuClick"));
 		Assert.assertTrue(beacon.hasEvent(26));
 		logger.log(LogStatus.PASS, "MegaMenu Spanish top level click passed.");
@@ -89,7 +91,7 @@ public class MegaMenu_Test extends AnalyticsTestBase {
 	}
 	
 	/// Expanding the desktop megamenu returns the expected values
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testMegaMenuDesktopReveal() {
 		megaMenu.revealMegaMenuDesktop();
 		beacon = getClickBeacon();

@@ -36,9 +36,13 @@ SpanishPage=https://www-stage.cancer.gov/espanol
 AppModulePage=https://www-stage.cancer.gov/publications/dictionaries/cancer-terms
 MicroSite= https://www-stage.cancer.gov/sites/nano
 SitewideResultsPage=https://www-stage.cancer.gov/search/results
-PageNotFound=https://www-stage.cancer.gov/i-am-error
 
-***********************Test Data******************************************
+***********************Error Pages*****************************************
+PageNotFound=https://www-stage.cancer.gov/PageNotFound.html
+ErrorPage=https://www-stage.cancer.gov/PublishedContent/ErrorMessages/Error.html
+ThankYou=https://www-stage.cancer.gov/PublishedContent/ErrorMessages/ThankYou.html
+
+***********************Test Data*******************************************
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx

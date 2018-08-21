@@ -36,9 +36,13 @@ SpanishPage=https://www-red-dev.cancer.gov/espanol
 AppModulePage=https://www-red-dev.cancer.gov/publications/dictionaries/cancer-terms
 MicroSite= https://www-red-dev.cancer.gov/sites/nano
 SitewideResultsPage=https://www-red-dev.cancer.gov/search/results
-PageNotFound=https://www-red-dev.cancer.gov/i-am-error
 
-***********************Test Data******************************************
+***********************Error Pages*****************************************
+PageNotFound=https://www-red-dev.cancer.gov/PageNotFound.html
+ErrorPage=https://www-red-dev.cancer.gov/PublishedContent/ErrorMessages/Error.html
+ThankYou=https://www-red-dev.cancer.gov/PublishedContent/ErrorMessages/ThankYou.html
+
+***********************Test Data*******************************************
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx

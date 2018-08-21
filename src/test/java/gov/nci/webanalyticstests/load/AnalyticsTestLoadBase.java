@@ -8,27 +8,27 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import gov.nci.WebAnalytics.AnalyticsPageLoad;
 import gov.nci.WebAnalytics.AnalyticsRequest;
-import gov.nci.WebAnalytics.PageLoad;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
-public class PageLoad_Test extends AnalyticsTestBase {
+public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 
-	private PageLoad pageLoad;
+	private AnalyticsPageLoad analyticsPageLoad;
 	private AnalyticsRequest beacon;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupPageLoad() throws MalformedURLException, UnsupportedEncodingException {
-		pageLoad = new PageLoad(driver);
+		analyticsPageLoad = new AnalyticsPageLoad(driver);
 	}	
 
 	// TODO: refactor has..() methods
 	// TODO: fix hasEvent() arg
 	// TODO: create generic param test
 	/// Load events have been captured
-	@Test(groups = { "Analytics" }, priority = 1)
+	@Test(groups = { "Analytics" })
 	public void testHarAndBeacons() {
-		pageLoad.gotoMultiplePages();
+		analyticsPageLoad.gotoMultiplePages();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(harUrlList.size() > 0);
 		Assert.assertTrue(loadBeacons.size() > 0);
@@ -37,9 +37,9 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	}
 	
 	/// Event numbers match with their descriptors
-	@Test(groups = { "Analytics" }, priority = 2)
+	@Test(groups = { "Analytics" })
 	public void testLoadGeneral() {
-		pageLoad.gotoMultiplePages();
+		analyticsPageLoad.gotoMultiplePages();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(47));		
 		for(AnalyticsRequest beacon : loadBeacons) {
@@ -50,40 +50,10 @@ public class PageLoad_Test extends AnalyticsTestBase {
 		logger.log(LogStatus.PASS, "Load event values are correct.");				
 	}
 	
-	/// Home-and-back pageload returns expected values
-	@Test(groups = { "Analytics" }, priority = 3)
-	public void testHomeAndBack() throws MalformedURLException {
-		// For debugging purposes only..
-		pageLoad.goHomeAndBack();
-		beacon = getLoadBeacon();
-		AnalyticsRequest firstLoadBeacon = loadBeacons.get(0);
-		String[] evts = firstLoadBeacon.getEvents();
-		// Temporary / debugging tests
-		//Assert.assertTrue(firstLoadBeacon.channel.equals("NCI Homepage") || firstLoadBeacon.channel.contains("Research"));
-		//Assert.assertFalse(firstLoadBeacon.channel.contains("some other string"));
-		Assert.assertTrue(evts[0].contains("1"));
-		logger.log(LogStatus.PASS, "Home-and-back nav values are correct.");	
-	}
-	
-	/// Home pageload returns expected values
-	@Test(groups = { "Analytics" })
-	public void testHomeLoad() {
-		pageLoad.gotoHomePage();
-		beacon = getLoadBeacon();
-		Assert.assertTrue(beacon.hasEvent(1));
-		Assert.assertTrue(beacon.hasEvent(47));
-		Assert.assertTrue(beacon.hasProp(3, "/"));
-		Assert.assertTrue(beacon.hasProp(6, "Comprehensive Cancer Information"));
-		Assert.assertTrue(beacon.hasProp(44, "NCI Homepage"));
-		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/"));
-		Assert.assertTrue(beacon.haseVar(44, "NCI Homepage"));		
-		logger.log(LogStatus.PASS, "Home page nav values are correct.");
-	}	
-	
 	/// Blog post pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testBlogPostLoad() {
-		pageLoad.gotoBlogPostPage();
+		analyticsPageLoad.gotoBlogPostPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
@@ -98,7 +68,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// Blog series pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesLoad() {
-		pageLoad.gotoBlogSeriesPage();
+		analyticsPageLoad.gotoBlogSeriesPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
@@ -111,13 +81,13 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// CTHP patient pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testCTHPPatientLoad() {
-		pageLoad.gotoCTHPPatient();
+		analyticsPageLoad.gotoCTHPPatient();
 		beacon = getLoadBeacon(); 
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(8, "english"));
 		Assert.assertTrue(beacon.hasProp(6, "Bladder cancer"));
-		Assert.assertTrue(beacon.hasProp(10, "Bladder Cancer—Patient Version - National Cancer Institute"));
+		Assert.assertTrue(beacon.hasProp(10, "Bladder Cancerï¿½Patient Version - National Cancer Institute"));
 		Assert.assertTrue(beacon.hasProp(44, "Cancer Types Landing Page"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/types/bladder"));
 		Assert.assertTrue(beacon.haseVar(44, "Cancer Types Landing Page"));
@@ -127,12 +97,12 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// CTHP HP pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testCTHPHPLoad() {
-		pageLoad.gotoCTHPHP();
+		analyticsPageLoad.gotoCTHPHP();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(6, "Breast cancer"));
-		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer—Health Professional Version - National Cancer Institute"));
+		Assert.assertTrue(beacon.hasProp(10, "Breast Cancerï¿½Health Professional Version - National Cancer Institute"));
 		Assert.assertTrue(beacon.hasProp(44, "Cancer Types Landing Page"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/types/breast/hp"));
 		logger.log(LogStatus.PASS, "CTHP HP pageload values are correct.");
@@ -141,7 +111,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// Innerpage load returns expected values
 	@Test(groups = { "Analytics" })
 	public void testInnerPageLoad() {
-		pageLoad.gotoInnerPage();
+		analyticsPageLoad.gotoInnerPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
@@ -157,7 +127,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// Landing pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testLandingPageLoad() {
-		pageLoad.gotoLandingPage();
+		analyticsPageLoad.gotoLandingPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
@@ -174,14 +144,14 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// PDQ pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testPDQPageLoad() {
-		pageLoad.gotoPDQPage();
+		analyticsPageLoad.gotoPDQPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(3, "/types/breast"));
 		Assert.assertTrue(beacon.hasProp(6, "Breast Cancer Prevention"));
 		Assert.assertTrue(beacon.hasProp(7, "patient"));
-		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer Prevention (PDQ®)—Patient Version - National Cancer Institute"));
+		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer Prevention (PDQï¿½)ï¿½Patient Version - National Cancer Institute"));
 		Assert.assertTrue(beacon.hasProp(44, "Cancer Types Landing Page"));
 		//Assert.assertTrue(beacon.hasProp(65, "2"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/types/breast/patient/breast-prevention-pdq"));
@@ -192,7 +162,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// Topic page load returns expected values
 	@Test(groups = { "Analytics" })
 	public void testTopicPageLoad() {
-		pageLoad.gotoTopicPage();
+		analyticsPageLoad.gotoTopicPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
@@ -205,12 +175,12 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// Spanish page load returns expected values
 	@Test(groups = { "Analytics" })
 	public void testSpanishPageLoad() {
-		pageLoad.gotoSpanishPage();
+		analyticsPageLoad.gotoSpanishPage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(3, "/espanol"));
-		Assert.assertTrue(beacon.hasProp(6, "Cáncer en español"));
+		Assert.assertTrue(beacon.hasProp(6, "Cï¿½ncer en espaï¿½ol"));
 		Assert.assertTrue(beacon.hasProp(8, "Spanish"));
 		Assert.assertTrue(beacon.hasProp(44, "NCI Home - Spanish"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/espanol"));
@@ -222,7 +192,7 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	/// Appmodule pageload returns expected values
 	//@Test(groups = { "Analytics" })
 	public void testAppModulePageLoad1() {
-		pageLoad.gotoAppModulePage();
+		analyticsPageLoad.gotoAppModulePage();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));

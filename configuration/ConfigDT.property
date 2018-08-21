@@ -36,9 +36,13 @@ SpanishPage=https://www-dt-qa.cancer.gov/espanol
 AppModulePage=https://www-dt-qa.cancer.gov/publications/dictionaries/cancer-terms
 MicroSite= https://www-dt-qa.cancer.gov/sites/nano
 SitewideResultsPage=https://www-dt-qa.cancer.gov/search/results
-PageNotFound=https://www-dt-qa.cancer.gov/i-am-error
 
-***********************Test Data******************************************
+***********************Error Pages*****************************************
+PageNotFound=https://www-dt-qa.cancer.gov/PageNotFound.html
+ErrorPage=https://www-dt-qa.cancer.gov/PublishedContent/ErrorMessages/Error.html
+ThankYou=https://www-dt-qa.cancer.gov/PublishedContent/ErrorMessages/ThankYou.html
+
+***********************Test Data*******************************************
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx
