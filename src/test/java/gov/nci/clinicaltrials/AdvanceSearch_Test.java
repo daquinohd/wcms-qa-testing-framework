@@ -36,12 +36,12 @@ public class AdvanceSearch_Test extends BaseClass {
 	String testDataFilePath;
 
 	@BeforeClass(groups = { "Smoke", "current" })
-	@Parameters({ "browser" })
-	public void setup(String browser) throws MalformedURLException {
+	@Parameters({ "browser", "environment" })
+	public void setup(String browser, String environment) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("AdvanceSearchPageURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
 			SuppressChatPromptPageObject chatBlock = new SuppressChatPromptPageObject(driver, null);

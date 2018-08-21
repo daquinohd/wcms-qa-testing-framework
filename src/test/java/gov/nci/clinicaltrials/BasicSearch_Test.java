@@ -54,7 +54,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
 			// Create search page with chat prompt suppressed.

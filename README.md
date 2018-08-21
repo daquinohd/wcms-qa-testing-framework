@@ -12,6 +12,23 @@ To run the default test suite, execute the command
 
     mvn test
 
+### Specifying the environment
+
+If no environment is specified, the default is QA.
+
+To use a different environment, on the maven commmand line, specify
+`-Denvironment=<environment_name>`
+
+    Valid values are:
+      blue-dev
+      red-dev
+      pink-dev
+      qa
+      dt-qa
+
+
+### Specifying a test suite.
+
 To execute a specific test suite, execute the command
 
     mvn test -Dsurefire.suiteXmlFiles=<testfile>
@@ -20,6 +37,8 @@ Where `<testfile>` is the test suite file and path.  Multiple test suites may be
 with commas. e.g.
 
     mvn test -Dsurefire.suiteXmlFiles=resources\testng-CTS.xml,resources\testng-R4R.xml
+
+### Specifying the browser
 
 Tests default to running in Chrome Headless. To use a different browser, include the arguement -Dbrowser=<browser>
 

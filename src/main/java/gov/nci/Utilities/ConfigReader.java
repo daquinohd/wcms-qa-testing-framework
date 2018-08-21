@@ -2,16 +2,28 @@ package gov.nci.Utilities;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import org.apache.commons.lang3.SystemUtils;
 
 /*To read the Property file*/
 public class ConfigReader {
 	Properties properties;
+	String hostName;
 
-	public ConfigReader() {
+	/**
+	 * Constructor.
+	 * 
+	 * @param environment String containing the environment name. Valid values are:
+	 *                    qa dt blue red pink stage For production, pass the empty
+	 *                    string.
+	 * 
+	 */
+	public ConfigReader(String environment) {
 		try {
+			SetHostName(environment);
 			File file = new File("./configuration/ConfigQA.property");
 			FileInputStream fis = new FileInputStream(file);
 			properties = new Properties();
@@ -19,8 +31,32 @@ public class ConfigReader {
 		} catch (Exception e) {
 			System.out.println("Exception:" + e.getMessage());
 		}
-
 	}
+
+
+	/**
+	 * Map of environment names to host names.
+	 */
+	private static final Map<String, String> environmentHostMap = new TreeMap<String, String>(
+			String.CASE_INSENSITIVE_ORDER) {
+		private static final long serialVersionUID = 1L;
+		{
+			put("", "www");
+			put("qa", "www-qa");
+			put("dt", "www-dt-qa");
+			put("blue", "www-blue-dev");
+			put("red", "www-red-dev");
+			put("pink", "www-pink-dev");
+			put("stage", "www-stage");
+		}
+	};
+
+	private void SetHostName(String environment) {
+		if (environment == null)
+			environment = "";
+		hostName = environmentHostMap.get(environment.trim());
+	}
+
 
 	public String getPageURL(String pageURL) {
 		return properties.getProperty(pageURL);

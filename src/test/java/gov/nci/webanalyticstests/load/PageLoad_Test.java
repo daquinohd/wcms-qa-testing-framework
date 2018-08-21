@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import gov.nci.WebAnalytics.AnalyticsRequest;
@@ -17,9 +18,10 @@ public class PageLoad_Test extends AnalyticsTestBase {
 	private PageLoad pageLoad;
 	private AnalyticsRequest beacon;
 	
-	@BeforeMethod(groups = { "Analytics" }) 
-	public void setupPageLoad() throws MalformedURLException, UnsupportedEncodingException {
-		pageLoad = new PageLoad(driver);
+	@BeforeMethod(groups = { "Analytics" })
+	@Parameters({ "environment" })
+	public void setupPageLoad(String environment) throws MalformedURLException, UnsupportedEncodingException {
+		pageLoad = new PageLoad(driver, environment);
 	}	
 
 	// TODO: refactor has..() methods

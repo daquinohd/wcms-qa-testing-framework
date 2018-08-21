@@ -26,7 +26,7 @@ public class BasicSearchDelighters_Test extends BaseClass {
 
         // TODO: Make pageURL a local instance variable.
         pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
-        this.driver = BrowserManager.startBrowser(browser, pageURL);
+        this.driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
             // Create search page with chat prompt suppressed.

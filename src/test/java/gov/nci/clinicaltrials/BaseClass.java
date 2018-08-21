@@ -28,24 +28,22 @@ public class BaseClass {
 	protected static ExtentTest logger;
 	protected WebDriver driver;
 	protected String pageURL; // TODO: Get rid of pageURL from BaseClass.
-	protected ConfigReader config = new ConfigReader();
+	protected ConfigReader config;
 
-	@BeforeTest(groups = { "Smoke", "current" })
-	@Parameters
-	public void beforeTest() {
-		// log.info("Starting a new test");
+	@BeforeClass(alwaysRun = true)
+	@Parameters({ "environment" })
+	public void beforeClass(String environment) {
+
+		config = new ConfigReader(environment);
+
 		System.out.println(this.getClass().getSimpleName());
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath);
-		// report = new ExtentReports(extentReportPath + ".html");
+
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
 		System.out.println("Report Path: " + report);
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
-	}
-
-	@BeforeClass(groups = { "Smoke", "current" })
-	public void beforeClass() {
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
 

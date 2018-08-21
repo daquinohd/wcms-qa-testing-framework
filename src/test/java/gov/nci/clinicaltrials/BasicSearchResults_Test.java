@@ -27,7 +27,7 @@ public class BasicSearchResults_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("BasicSearchResultsURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
 			// Create search page with chat prompt suppressed.

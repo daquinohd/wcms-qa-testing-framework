@@ -46,9 +46,7 @@ public class BrowserManager {
 	 * @param url URL to open
 	 * @return WebDriver driver
 	 */
-	public static WebDriver startBrowser(String browserName, String url) {
-
-		ConfigReader config = new ConfigReader();
+	public static WebDriver startBrowser(String browserName, ConfigReader config, String url) {
 
 		if (browserName.equalsIgnoreCase("Chrome")) {
 			System.out.println("");
@@ -132,7 +130,7 @@ public class BrowserManager {
 		}
 
 		// Allow up to a one second delay for elements to become available.
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		return driver;
 	}
@@ -147,9 +145,8 @@ public class BrowserManager {
 	 * TODO: create headless Chrome driver
 	 * TODO: reuse startBrowser where possible
 	 */
-	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy bmp) {
+	public static WebDriver startProxyBrowser(String browserName, ConfigReader config, String url, BrowserMobProxy bmp) {
 		
-		ConfigReader config = new ConfigReader();
 		ChromeOptions chromeOptions = new ChromeOptions();
 		FirefoxOptions firefoxOptions = new FirefoxOptions();			
 		

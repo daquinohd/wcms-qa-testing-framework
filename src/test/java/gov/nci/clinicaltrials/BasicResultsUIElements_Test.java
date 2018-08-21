@@ -12,6 +12,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import gov.nci.Utilities.BrowserManager;
+import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.clinicalTrial.pages.BasicSearchResults;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 
@@ -31,7 +32,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
         logger = report.startTest(this.getClass().getSimpleName());
         pageURL = config.getPageURL("BasicSearchResultsURL");
         System.out.println("PageURL: " + pageURL);
-        driver = BrowserManager.startBrowser(browser, pageURL);
+        driver = BrowserManager.startBrowser(browser, config, pageURL);
 
         System.out.println("Basic search results setup done");
         testDataFilePath = config.getProperty("ClinicalTrialData");
