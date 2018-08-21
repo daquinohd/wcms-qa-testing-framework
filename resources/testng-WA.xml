@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="QA Environment" parallel="none">
+	<test name="NCI Web Analytics Testing" >
+		<!--
+			The browser parameter is set in pom.xml as part of invoking
+			the maven-surefire-plugin.
+		-->
+		<!--
+			<parameter name="browser" value="Chrome" />
+			<parameter name="browser" value="ChromeHeadless" />
+			<parameter name="browser" value="Firefox" />
+			<parameter name="browser" value="GeckoHeadless" />
+			<parameter name="browser" value="iPhone6" />
+			<parameter name="browser" value="iPad" />
+		-->
+		<groups>
+			<run>
+				<include name="Analytics" />
+			</run>
+		</groups>
+		<classes>
+			<class name="gov.nci.webanalyticstests.load.PageLoad_Test" />
+			<class name="gov.nci.webanalyticstests.click.WaBasicSearch_Test" />
+			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
+			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
+			<class name="gov.nci.webanalyticstests.click.MegaMenu_Test" />
+		</classes>
+	</test>
+</suite>

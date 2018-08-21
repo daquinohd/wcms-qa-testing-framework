@@ -1,7 +1,7 @@
 ************************Environment URLs***********************************
 BasicClinicalTrialSearchURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search
-BasicSearchResultsURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 AdvanceSearchPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
+BasicSearchResultsURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
 ResultsPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://www.cancer.gov/contact
 DelighterWhatURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
@@ -34,7 +34,14 @@ PDQPage=https://www.cancer.gov/types/breast/patient/breast-prevention-pdq
 TopicPage=https://www.cancer.gov/grants-training/apply-grant
 SpanishPage=https://www.cancer.gov/espanol
 AppModulePage=https://www.cancer.gov/publications/dictionaries/cancer-terms
+MicroSite= https://www.cancer.gov/sites/nano
+SitewideResultsPage=https://www.cancer.gov/search/results
+PageNotFound=https://www.cancer.gov/i-am-error
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
+SitewideSearchData= ./test-data/sitewide-search.xlsx
+
+***********************External Resources**********************************
+AnalyticsTrackingServer=nci.122.2o7.net
