@@ -87,7 +87,8 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(8, "english"));
 		Assert.assertTrue(beacon.hasProp(6, "Bladder cancer"));
-		Assert.assertTrue(beacon.hasProp(10, "Bladder Cancer�Patient Version - National Cancer Institute"));
+		// "\u2014" is an emdash
+		Assert.assertTrue(beacon.hasProp(10, "Bladder Cancer\u2014Patient Version - National Cancer Institute"));
 		Assert.assertTrue(beacon.hasProp(44, "Cancer Types Landing Page"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/types/bladder"));
 		Assert.assertTrue(beacon.haseVar(44, "Cancer Types Landing Page"));
@@ -102,7 +103,8 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(6, "Breast cancer"));
-		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer�Health Professional Version - National Cancer Institute"));
+		// "\u2014" is an emdash
+		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer\u2014Health Professional Version - National Cancer Institute"));
 		Assert.assertTrue(beacon.hasProp(44, "Cancer Types Landing Page"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/types/breast/hp"));
 		logger.log(LogStatus.PASS, "CTHP HP pageload values are correct.");
@@ -151,7 +153,9 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.hasProp(3, "/types/breast"));
 		Assert.assertTrue(beacon.hasProp(6, "Breast Cancer Prevention"));
 		Assert.assertTrue(beacon.hasProp(7, "patient"));
-		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer Prevention (PDQ�)�Patient Version - National Cancer Institute"));
+		// "\u2014" is an emdash
+		// "\u00ae" is the registered mark.
+		Assert.assertTrue(beacon.hasProp(10, "Breast Cancer Prevention (PDQ\u00ae)\u2014Patient Version - National Cancer Institute"));
 		Assert.assertTrue(beacon.hasProp(44, "Cancer Types Landing Page"));
 		//Assert.assertTrue(beacon.hasProp(65, "2"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/types/breast/patient/breast-prevention-pdq"));
@@ -180,7 +184,9 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
 		Assert.assertTrue(beacon.hasProp(3, "/espanol"));
-		Assert.assertTrue(beacon.hasProp(6, "C�ncer en espa�ol"));
+		// "\u00e1" is lower-case 'a' with acute accent.
+		// "\u00f1" is lower-case 'n' with tilde.
+		Assert.assertTrue(beacon.hasProp(6, "C\u00e1ncer en espa\u00f1ol"));
 		Assert.assertTrue(beacon.hasProp(8, "Spanish"));
 		Assert.assertTrue(beacon.hasProp(44, "NCI Home - Spanish"));
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/espanol"));
