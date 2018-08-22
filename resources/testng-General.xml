@@ -10,7 +10,8 @@
 		-->
 		<groups>
 			<run>
-				<include name="Smoke-VE" />
+				<include name="PageOptions" />
+				<include name="PageOptions-button" />
 			</run>
 		</groups>
 		<classes>

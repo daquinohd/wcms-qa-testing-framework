@@ -36,18 +36,16 @@ public class PageOptions extends PageObjectBase {
         List<WebElement> elementExists = getButtonControl(buttonSelector);
 
         if (elementExists.size() > 0) {
-            WebElement poc2Element = elementExists.get(0);
-            // System.out.println(poc2Element.getCssValue("display"));
-            return poc2Element.isDisplayed();
+            WebElement pocButton = elementExists.get(0);
+            return pocButton.isDisplayed();
         }
         return false;
     }
 
     private List<WebElement> getPageOptionsControl() {
             List<WebElement> pocControls = getBrowser().findElements(By.cssSelector("#PageOptionsControl1"));
-            int controlCount = pocControls.size();
-            // boolean controlExists = false;
-            System.out.println("   Size = " + controlCount);
+            // int controlCount = pocControls.size();
+            // System.out.println("   Size = " + controlCount);
 
             return pocControls;
     }
@@ -55,40 +53,9 @@ public class PageOptions extends PageObjectBase {
     private List<WebElement> getButtonControl(String buttonSelector) {
             List<WebElement> buttonControls = getBrowser().findElements(By.cssSelector("li." +
                                                                                         buttonSelector));
-            int controlCount = buttonControls.size();
-            // boolean controlExists = false;
-            System.out.println("   Size = " + controlCount);
+            // int controlCount = buttonControls.size();
+            // System.out.println("   Size = " + controlCount);
 
             return buttonControls;
     }
-    // /*
-    //  * Testing if the PageOptionsControl exists on page and is visible
-    //  */
-    // public boolean IsVisible() {
-    //     Object[] elementExists = testPageOptionsControl();
-    //     boolean pocExists = (boolean)elementExists[0];
-    //     WebElement pocElement = (WebElement)elementExists[1];
-
-    //     if (pocExists) {
-    //         return pocElement.isDisplayed();
-    //     }
-    //     return false;
-    // }
-
-    // private Object[] testPageOptionsControl() {
-    //         List<WebElement> controls = getBrowser().findElements(By.cssSelector("#PageOptionsControl1"));
-    //         int controlCount = controls.size();
-    //         WebElement control = null;
-    //         boolean controlExists = false;
-    //         System.out.println("   Size = " + controlCount);
-
-    //         if (controlCount > 0) {
-    //             control = controls.get(0);
-    //             controlExists = true;
-    //         }
-    //         Object arr[] = new Object[2];
-    //         arr[0] = controlExists;
-    //         arr[1] = control;
-    //         return arr;
-    // }
 }
