@@ -178,7 +178,7 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 	 * @throws UnsupportedEncodingException
 	 * @throws MalformedURLException
 	 */
-	public BasicSearchResults clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults clickSearchButton() throws MalformedURLException, UnsupportedEncodingException {
 
 		// Make the search button visible so it can be clicked.
 		ScrollUtil.scrollIntoview(this.browser, btn_Search);
@@ -187,7 +187,7 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 			btn_Search.click();
 		});
 
-		BasicSearchResults result = new BasicSearchResults(this.browser);
+		SearchResults result = new SearchResults(this.browser);
 		return result;
 	}
 
@@ -199,13 +199,13 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 	 * @throws UnsupportedEncodingException
 	 * @throws MalformedURLException
 	 */
-	public BasicSearchResults pressEnterOnKeywordField() throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults pressEnterOnKeywordField() throws MalformedURLException, UnsupportedEncodingException {
 
 		expectUrlChange(() -> {
 			txt_CancerType.sendKeys(Keys.RETURN);
 		});
 
-		BasicSearchResults result = new BasicSearchResults(this.browser);
+		SearchResults result = new SearchResults(this.browser);
 		return result;
 	}
 
@@ -217,13 +217,13 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 	 * @throws UnsupportedEncodingException
 	 * @throws MalformedURLException
 	 */
-	public BasicSearchResults pressEnterOnAgeField() throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults pressEnterOnAgeField() throws MalformedURLException, UnsupportedEncodingException {
 
 		expectUrlChange(() -> {
 			txt_Age.sendKeys(Keys.RETURN);
 		});
 
-		BasicSearchResults result = new BasicSearchResults(this.browser);
+		SearchResults result = new SearchResults(this.browser);
 		return result;
 	}
 
@@ -235,13 +235,13 @@ public class BasicSearch extends ClinicalTrialPageObjectBase {
 	 * @throws UnsupportedEncodingException
 	 * @throws MalformedURLException
 	 */
-	public BasicSearchResults pressEnterOnZipCodeField() throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults pressEnterOnZipCodeField() throws MalformedURLException, UnsupportedEncodingException {
 
 		expectUrlChange(() -> {
 			txt_Zipcode.sendKeys(Keys.RETURN);
 		});
 
-		BasicSearchResults result = new BasicSearchResults(this.browser);
+		SearchResults result = new SearchResults(this.browser);
 		return result;
 	}
 

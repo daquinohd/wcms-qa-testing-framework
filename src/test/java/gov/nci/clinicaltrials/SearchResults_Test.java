@@ -11,14 +11,18 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import gov.nci.Utilities.BrowserManager;
-import gov.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.clinicalTrial.pages.SearchResults;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 
 import com.relevantcodes.extentreports.LogStatus;
 
-public class BasicSearchResults_Test extends BaseClass {
+/**
+ * Tests for the Clinical Trial Search results page.
+ * NOTE: Basic and advanced search use the same results page, so there's only one class.
+ */
+public class SearchResults_Test extends BaseClass {
 
-	BasicSearchResults basicSearchResults;
+	SearchResults basicSearchResults;
 	String testDataFilePath;
 
 	@BeforeClass(groups = { "Smoke" })
@@ -32,7 +36,7 @@ public class BasicSearchResults_Test extends BaseClass {
 		try {
 			// Create search page with chat prompt suppressed.
 			SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
-			basicSearchResults = new BasicSearchResults(driver, chatPrompt);
+			basicSearchResults = new SearchResults(driver, chatPrompt);
 		} catch (Exception e) {
 			basicSearchResults = null;
 			logger.log(LogStatus.ERROR, "Error creating Basic Search results page.");

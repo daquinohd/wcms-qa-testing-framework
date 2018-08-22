@@ -20,7 +20,7 @@ import gov.nci.framework.ParsedURL;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.clinicalTrial.pages.BasicSearch;
-import gov.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.clinicalTrial.pages.SearchResults;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.commonobjects.Banner;
@@ -185,7 +185,7 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke", "current" })
 	public void searchDefault() {
 		try {
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -211,7 +211,7 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke", "current" })
 	public void pressEnterOnKeywordField() {
 		try {
-			BasicSearchResults result = basicSearch.pressEnterOnKeywordField();
+			SearchResults result = basicSearch.pressEnterOnKeywordField();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -237,7 +237,7 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke", "current" })
 	public void pressEnterOnAgeField() {
 		try {
-			BasicSearchResults result = basicSearch.pressEnterOnAgeField();
+			SearchResults result = basicSearch.pressEnterOnAgeField();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -263,7 +263,7 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke", "current" })
 	public void pressEnterOnZipCodeField() {
 		try {
-			BasicSearchResults result = basicSearch.pressEnterOnZipCodeField();
+			SearchResults result = basicSearch.pressEnterOnZipCodeField();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -291,7 +291,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		try {
 			basicSearch.setSearchKeyword(cancerType);
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -320,7 +320,7 @@ public class BasicSearch_Test extends BaseClass {
 		try {
 			// Search for the exact cancer type
 			basicSearch.setExactCancerType(cancerType);
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -347,7 +347,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		try{
 			basicSearch.setSearchAge(age);
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -388,7 +388,7 @@ public class BasicSearch_Test extends BaseClass {
 
 		try{
 			basicSearch.setSearchZip(zipCode);
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -444,7 +444,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchAge(age);
 			basicSearch.setSearchZip(zipCode);
 
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -474,7 +474,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchAge(age);
 			basicSearch.setSearchKeyword(keyword);
 
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -504,7 +504,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchZip(zipCode);
 			basicSearch.setSearchKeyword(keyword);
 
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
@@ -535,7 +535,7 @@ public class BasicSearch_Test extends BaseClass {
 			basicSearch.setSearchZip(zipCode);
 			basicSearch.setSearchKeyword(keyword);
 
-			BasicSearchResults result = basicSearch.clickSearchButton();
+			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();

@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +13,11 @@ import org.openqa.selenium.support.PageFactory;
 import gov.nci.clinicalTrial.common.Checkbox;
 import gov.nci.commonobjects.Pager;
 
-public class BasicSearchResults extends ClinicalTrialPageObjectBase {
+/**
+ * Represents the Clinicial Trial Search results page.
+ * NOTE: Basic and advanced search use the same results page, so there's only one class.
+ */
+public class SearchResults extends ClinicalTrialPageObjectBase {
 
 	// UI Elements
 	@FindBy(how = How.CSS, using = ".cts-results-label")
@@ -33,11 +36,11 @@ public class BasicSearchResults extends ClinicalTrialPageObjectBase {
 
 	private Pager pagerControl;
 
-	public BasicSearchResults(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
 		this(browser, null);
 	}
 
-	public BasicSearchResults(WebDriver browser, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults(WebDriver browser, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException {
 		super(browser, decorator);
 		PageFactory.initElements(browser, this);
 
