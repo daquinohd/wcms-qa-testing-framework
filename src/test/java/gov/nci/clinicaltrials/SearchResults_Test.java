@@ -30,7 +30,9 @@ public class SearchResults_Test extends BaseClass {
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("BasicSearchResultsURL");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("PageURL: " + pageURL);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {

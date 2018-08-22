@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ScrollUtil {
 
-	static final int MAX_SCROLL_DELAY = 5;
+	static final int MAX_SCROLL_DELAY = 10;
 
 	public static void scrollIntoview(WebDriver driver, WebElement element) {
 

@@ -72,27 +72,33 @@ public class AnalyticsTestBase {
 	**/
 
 	@BeforeTest(groups = { "Analytics" })
-	@Parameters({ "browser", "environment" })
-	public void beforeTest(String browser, String environment) throws MalformedURLException {
+	@Parameters({ "browser" })
+	public void beforeTest(String browser) throws MalformedURLException {
 		// Start the BrowserMob proxy on the site homepage
-		String initUrl = config.goHome();
-		config = new ConfigReader(environment);
+		String initUrl = "https://wwww.cancer.gov";
 		System.out.println("=== Starting BrowserMobProxy ===");
 		this.initializeProxy(initUrl);
-
-		// Initialize driver and open browser
-		System.out.println("=== Starting Driver ===");
-		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
-    	System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
-		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 	}
 
-	@BeforeClass(groups = { "Analytics" })
-	public void beforeClass() {
+	@BeforeClass( alwaysRun = true )
+	@Parameters({ "browser", "environment" })
+	public void beforeClass(String browser, String environment) {
+
+		config = new ConfigReader(environment);
+
 		String testClass = this.getClass().getSimpleName();
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 
+		String initUrl = config.goHome();
+
+		// Initialize driver and open browser
+		System.out.println("=== Starting Driver ===");
+		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
+		System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
+		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
+
+		// Initialize reports
 		System.out.println(testClass);
 		System.out.println("Logger Path:" + extentReportPath + "\n");
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
@@ -123,12 +129,12 @@ public class AnalyticsTestBase {
 	public void afterClass() {
 		report.endTest(logger);
 		report.flush();
+		System.out.println("=== Quitting Driver ===");
+		driver.quit();
 	}
 
 	@AfterTest(groups = { "Analytics"})
 	public void afterTest() {
-		System.out.println("=== Quitting Driver ===");
-		driver.quit();
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
 	}

@@ -2,6 +2,8 @@ package gov.nci.Utilities;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
@@ -24,7 +26,7 @@ public class ConfigReader {
 	public ConfigReader(String environment) {
 		try {
 			SetHostName(environment);
-			File file = new File("./configuration/ConfigQA.property");
+			File file = new File("./configuration/config.properties");
 			FileInputStream fis = new FileInputStream(file);
 			properties = new Properties();
 			properties.load(fis);
@@ -42,6 +44,7 @@ public class ConfigReader {
 		private static final long serialVersionUID = 1L;
 		{
 			put("", "www");
+			put("prod", "www");
 			put("qa", "www-qa");
 			put("dt", "www-dt-qa");
 			put("blue", "www-blue-dev");
@@ -54,12 +57,26 @@ public class ConfigReader {
 	private void SetHostName(String environment) {
 		if (environment == null)
 			environment = "";
-		hostName = environmentHostMap.get(environment.trim());
+		hostName = environmentHostMap.get(environment.trim()) + ".cancer.gov";
 	}
 
 
+	/**
+	 * Retrieves the identified URL from the configuration file and
+	 * returns a version modified to reflect the current environment.
+	 * 
+	 * @param pageURL Identifier for a specific page URL.
+	 */
 	public String getPageURL(String pageURL) {
-		return properties.getProperty(pageURL);
+
+		String configUrl = properties.getProperty(pageURL);
+		try {
+			URL oldUrl = new URL(configUrl);
+			URL modifiedURl = new URL(oldUrl.getProtocol(), hostName, oldUrl.getFile());
+			return modifiedURl.toString();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException( String.format("Config entry '%s' does not contain a valid URL. Found: '%s'.", pageURL, configUrl) );
+		}
 	}
 
 	// Whey didn't you just go home? 
