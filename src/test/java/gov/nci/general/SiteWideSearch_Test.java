@@ -1,20 +1,16 @@
 package gov.nci.general;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -26,7 +22,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import gov.nci.framework.ParsedURL;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ExcelManager;
