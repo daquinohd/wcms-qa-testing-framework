@@ -46,6 +46,7 @@ ThankYou=https://www.cancer.gov/PublishedContent/ErrorMessages/ThankYou.html
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx
+AnalyticsPageLoadData= ./test-data/webanalytics-pageload.xlsx
 
 ***********************External Resources**********************************
 AnalyticsTrackingServer=nci.122.2o7.net

@@ -11,13 +11,20 @@ import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class HomePage_Test extends AnalyticsTestBase {
 
-	private AnalyticsRequest beacon;
-
-	/// Home pageload returns expected values
 	// TODO: add other values, heir, channel, suite
 	// TODO: verify has() logic in AnalyticsRequest
 	// TODO: tests for engagement & event47
 	// TODO: regexes for dynamic values
+	private AnalyticsRequest beacon;
+	
+	/**
+	 * The following page / content types are covered by this test class:
+	 * - Site homepage
+	 * - Spanish homepage
+	 * - Microsite homepage
+	 */
+
+	/// Home pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testSiteHomeLoad() {
 		try {
@@ -68,9 +75,10 @@ public class HomePage_Test extends AnalyticsTestBase {
 			driver.get(config.getPageURL("SpanishPage"));
 			beacon = getLoadBeacon();
 			AssertCommon();
-			Assert.assertTrue(beacon.hasProp(1, "https://www.cancer.gov/espanol"));
 			Assert.assertTrue(beacon.hasProp(3, "/espanol"));
-			Assert.assertTrue(beacon.hasProp(6, "Cáncer en español"));
+			// "\u00e1" is lower-case 'a' with acute accent.
+			// "\u00f1" is lower-case 'n' with tilde.
+			Assert.assertTrue(beacon.hasProp(6, "C\u00e1ncer en espa\u00f1ol"));
 			Assert.assertTrue(beacon.hasProp(8, "spanish"));
 			Assert.assertTrue(beacon.hasProp(44, "NCI Home - Spanish"));
 			Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/espanol"));
@@ -112,6 +120,7 @@ public class HomePage_Test extends AnalyticsTestBase {
 	private void AssertCommon() {
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));
+		Assert.assertTrue(beacon.hasProp(1, driver.getCurrentUrl()));
 	}
 	
 }

@@ -110,22 +110,6 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		logger.log(LogStatus.PASS, "CTHP HP pageload values are correct.");
 	}
 	
-	/// Innerpage load returns expected values
-	@Test(groups = { "Analytics" })
-	public void testInnerPageLoad() {
-		analyticsPageLoad.gotoInnerPage();
-		beacon = getLoadBeacon();
-		Assert.assertTrue(beacon.hasEvent(1));
-		Assert.assertTrue(beacon.hasEvent(47));
-		Assert.assertTrue(beacon.hasProp(6, "Visitor information"));
-		Assert.assertTrue(beacon.hasProp(10, "Visitor Information - National Cancer Institute"));
-		Assert.assertTrue(beacon.hasProp(42, "Normal"));
-		Assert.assertTrue(beacon.hasProp(44, "Visitor information"));
-		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/about-nci/visit"));
-		Assert.assertTrue(beacon.haseVar(44, "Visitor information"));
-		logger.log(LogStatus.PASS, "Inner page load values are correct.");
-	}
-	
 	/// Landing pageload returns expected values
 	@Test(groups = { "Analytics" })
 	public void testLandingPageLoad() {
@@ -174,25 +158,6 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/grants-training/apply-grant"));
 		Assert.assertTrue(beacon.haseVar(44, "NCI Grants Process"));
 		logger.log(LogStatus.PASS, "Topioc page load values are correct.");
-	}
-	
-	/// Spanish page load returns expected values
-	@Test(groups = { "Analytics" })
-	public void testSpanishPageLoad() {
-		analyticsPageLoad.gotoSpanishPage();
-		beacon = getLoadBeacon();
-		Assert.assertTrue(beacon.hasEvent(1));
-		Assert.assertTrue(beacon.hasEvent(47));
-		Assert.assertTrue(beacon.hasProp(3, "/espanol"));
-		// "\u00e1" is lower-case 'a' with acute accent.
-		// "\u00f1" is lower-case 'n' with tilde.
-		Assert.assertTrue(beacon.hasProp(6, "C\u00e1ncer en espa\u00f1ol"));
-		Assert.assertTrue(beacon.hasProp(8, "Spanish"));
-		Assert.assertTrue(beacon.hasProp(44, "NCI Home - Spanish"));
-		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/espanol"));
-		Assert.assertTrue(beacon.haseVar(2, "Spanish"));
-		Assert.assertTrue(beacon.haseVar(44, "NCI Home - Spanish"));		
-		logger.log(LogStatus.PASS, "Spanish home page load values are correct.");		
 	}
 
 	/// Appmodule pageload returns expected values

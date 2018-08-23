@@ -21,6 +21,7 @@
 		</groups>
 		<classes>
 			<class name="gov.nci.webanalyticstests.load.HomePage_Test" />
+			<class name="gov.nci.webanalyticstests.load.InnerPage_Test" />
 			<class name="gov.nci.webanalyticstests.click.WaBasicSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
