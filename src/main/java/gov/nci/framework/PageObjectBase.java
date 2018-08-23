@@ -4,8 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * This is the root base class for all page objects. If a page object class
@@ -25,7 +27,7 @@ public class PageObjectBase {
     /**
      * Interface for passing actions which will cause the page to change. Used with
      * expectUrlChange.
-     * 
+     *
      * @see expectUrlChange
      */
     public interface IPageChangeAction {
@@ -34,7 +36,7 @@ public class PageObjectBase {
 
     /**
      * Construtor
-     * 
+     *
      * @param browser An instance of WebDriver representing the browser at the time the
      * constructor is fired.
      */
@@ -50,10 +52,10 @@ public class PageObjectBase {
 
     private ParsedURL pageUrl;
     private String pageTitle;
-    
+
     /**
      * Gets a URL object representing the current page's URL.
-     * 
+     *
      * @return an instance of ParsedURL representing the page URL at the
      * time the page object was instantiated.
      * @throws UnsupportedEncodingException
@@ -81,13 +83,13 @@ public class PageObjectBase {
      * In practice, the action parameter is an anonymous method, taking no
      * parameters and returning no result. The actual code to trigger the event goes
      * in the method body. e.g.
-     * 
+     *
      * <pre>
      *      expectUrlChange(() -> {
      *          form_Search.submit();
      *      })
      * </pre>
-     * 
+     *
      * @param action A function taking no parameters with no return value.
      */
     public void expectUrlChange(IPageChangeAction action) {
