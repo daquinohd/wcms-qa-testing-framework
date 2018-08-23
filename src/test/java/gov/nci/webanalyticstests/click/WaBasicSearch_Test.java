@@ -7,13 +7,13 @@ import org.testng.Assert;
 
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class WaBasicSearch_Test extends AnalyticsTestBase {
 
 	private BasicSearch basicSearch;
-	private AnalyticsRequest beacon;
+	private Beacon beacon;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	// TODO: add wait() to capture begin / abandon events

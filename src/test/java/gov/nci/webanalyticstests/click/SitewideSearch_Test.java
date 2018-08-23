@@ -13,7 +13,7 @@ import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.error.pages.PageNotFound;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class SitewideSearch_Test extends AnalyticsTestBase {
@@ -21,7 +21,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
 	private PageNotFound pageNotFound;
-	private AnalyticsRequest beacon;
+	private Beacon beacon;
 	
 	private final String TESTDATA_SHEET_NAME = "SitewideSearch";	
 	private final String TESTDATA_SHEET_NAME_ES = "SitewideSearchEs";	

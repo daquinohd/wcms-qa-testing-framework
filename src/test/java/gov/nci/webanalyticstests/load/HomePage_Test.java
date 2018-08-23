@@ -6,7 +6,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class HomePage_Test extends AnalyticsTestBase {
@@ -15,7 +15,7 @@ public class HomePage_Test extends AnalyticsTestBase {
 	// TODO: verify has() logic in AnalyticsRequest
 	// TODO: tests for engagement & event47
 	// TODO: regexes for dynamic values
-	private AnalyticsRequest beacon;
+	private Beacon beacon;
 	
 	/**
 	 * The following page / content types are covered by this test class:

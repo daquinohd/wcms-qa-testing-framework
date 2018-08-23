@@ -8,14 +8,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.WebAnalytics.Resize;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class Resize_Test extends AnalyticsTestBase {
 	
 	private Resize resize;
-	private AnalyticsRequest beacon;	
+	private Beacon beacon;	
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupResize() throws MalformedURLException, UnsupportedEncodingException {

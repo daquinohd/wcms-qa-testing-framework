@@ -11,7 +11,7 @@ import org.testng.Assert;
 
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.WebAnalytics.AnalyticsPageLoad;
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class InnerPage_Test extends AnalyticsTestBase {
@@ -43,7 +43,7 @@ public class InnerPage_Test extends AnalyticsTestBase {
 		Hierarchy: 1 www-qa.cancer.gov|about-nci|visit
 	 */
 	private AnalyticsPageLoad analyticsPageLoad;
-	private AnalyticsRequest beacon;	
+	private Beacon beacon;	
 	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "InnerPage";
 	

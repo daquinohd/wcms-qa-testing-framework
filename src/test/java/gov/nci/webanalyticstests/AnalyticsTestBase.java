@@ -26,7 +26,7 @@ import org.testng.annotations.Parameters;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 
 public class AnalyticsTestBase {
 
@@ -48,8 +48,8 @@ public class AnalyticsTestBase {
 	protected ConfigReader config = new ConfigReader();	
 	
 	protected List<String> harUrlList;	
-	protected List<AnalyticsRequest> loadBeacons;
-	protected List<AnalyticsRequest> clickBeacons;
+	protected List<Beacon> loadBeacons;
+	protected List<Beacon> clickBeacons;
 	
 	/**************************************
 	 * Section: TextNG Befores & Afters *
@@ -82,7 +82,7 @@ public class AnalyticsTestBase {
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, initUrl, proxy);
-    	System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
+    	System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
 		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 	}
 	
@@ -178,7 +178,7 @@ public class AnalyticsTestBase {
     	// Build a list of requests to the analytics tracking server from the HAR
 	    for (HarEntry entry : entries) {
 	    	String result = entry.getRequest().getUrl();
-	    	if(result.contains(AnalyticsRequest.TRACKING_SERVER))
+	    	if(result.contains(Beacon.TRACKING_SERVER))
 	    	{
 	    		harUrlList.add(result);
 	    	}
@@ -201,14 +201,14 @@ public class AnalyticsTestBase {
 	protected void setBeaconLists(List<String> urlList) {
 		
 		// Reset beacon lists
-		loadBeacons = new ArrayList<AnalyticsRequest>();
-		clickBeacons = new ArrayList<AnalyticsRequest>();		
+		loadBeacons = new ArrayList<Beacon>();
+		clickBeacons = new ArrayList<Beacon>();		
 		
 		// For each server URL, check if it is an analytics click
 		// or load event, then add it to the correct list
 		for(String url : urlList)
 		{  
-			AnalyticsRequest request = new AnalyticsRequest(url);
+			Beacon request = new Beacon(url);
 			request.buildParamsList();
 			
 			// Populate the beacon lists
@@ -231,10 +231,10 @@ public class AnalyticsTestBase {
 	 * Get the 'click' beacon to test
 	 * @return AnalyticsRequest
 	 */
-	protected AnalyticsRequest getClickBeacon() {
+	protected Beacon getClickBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		AnalyticsRequest rtn = getLastReq(clickBeacons);		
+		Beacon rtn = getLastReq(clickBeacons);		
 		System.out.println("Click beacon to test: ");
 		System.out.println(rtn.getUrl() + "\n");
 		return getLastReq(clickBeacons);
@@ -244,10 +244,10 @@ public class AnalyticsTestBase {
 	 * Get the 'load' beacon to test
 	 * @return AnalyticsRequest
 	 */
-	protected AnalyticsRequest getLoadBeacon() {
+	protected Beacon getLoadBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		AnalyticsRequest rtn = getLastReq(loadBeacons);		
+		Beacon rtn = getLastReq(loadBeacons);		
 		System.out.println("Load beacon to test: ");
 		System.out.println(rtn.getUrl() + "\n");
 		return getLastReq(loadBeacons);
@@ -258,9 +258,9 @@ public class AnalyticsTestBase {
 	 * @param requests
 	 * @return the last AnalyticsRequest object
 	 */
-	private static AnalyticsRequest getLastReq(List<AnalyticsRequest> requests) {
+	private static Beacon getLastReq(List<Beacon> requests) {
 		int index = requests.size() - 1;
-		AnalyticsRequest request = (index >= 0) ? requests.get(index) : null;
+		Beacon request = (index >= 0) ? requests.get(index) : null;
 		return request;
 	}
 

@@ -9,13 +9,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import gov.nci.WebAnalytics.AnalyticsPageLoad;
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 
 	private AnalyticsPageLoad analyticsPageLoad;
-	private AnalyticsRequest beacon;
+	private Beacon beacon;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupPageLoad() throws MalformedURLException, UnsupportedEncodingException {
@@ -42,7 +42,7 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		analyticsPageLoad.gotoMultiplePages();
 		beacon = getLoadBeacon();
 		Assert.assertTrue(beacon.hasEvent(47));		
-		for(AnalyticsRequest beacon : loadBeacons) {
+		for(Beacon beacon : loadBeacons) {
 			String[] evts = beacon.getEvents();	
 			Assert.assertTrue(evts[0].contains("event1"));
 			Assert.assertTrue(evts[1].contains("event47"));

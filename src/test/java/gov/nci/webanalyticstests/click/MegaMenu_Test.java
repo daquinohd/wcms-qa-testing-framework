@@ -8,14 +8,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import gov.nci.WebAnalytics.AnalyticsRequest;
+import gov.nci.WebAnalytics.Beacon;
 import gov.nci.commonobjects.MegaMenu;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class MegaMenu_Test extends AnalyticsTestBase {
 	
 	private MegaMenu megaMenu;
-	private AnalyticsRequest beacon;
+	private Beacon beacon;
 
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupMegaMenu() throws UnsupportedEncodingException, MalformedURLException {

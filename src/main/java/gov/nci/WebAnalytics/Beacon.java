@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 
-public class AnalyticsRequest {
+public class Beacon {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods
 	// TODO: build setter/getter for channel? 
@@ -63,7 +63,7 @@ public class AnalyticsRequest {
 	 * Constructor with 'url' arg
 	 * @param url
 	 */
-	public AnalyticsRequest(String url) {
+	public Beacon(String url) {
 		setUrl(url);
 		setUri(null);
 		setParamsList(new ArrayList<NameValuePair>());
