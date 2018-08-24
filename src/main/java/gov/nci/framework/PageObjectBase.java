@@ -29,7 +29,7 @@ public class PageObjectBase {
     /**
      * Interface for passing actions which will cause the page to change. Used with
      * expectUrlChange.
-     * 
+     *
      * @see expectUrlChange
      */
     public interface IPageChangeAction {
@@ -38,7 +38,7 @@ public class PageObjectBase {
 
     /**
      * Construtor
-     * 
+     *
      * @param browser An instance of WebDriver representing the browser at the time the
      * constructor is fired.
      */
@@ -50,10 +50,10 @@ public class PageObjectBase {
 
     private ParsedURL pageUrl;
     private String pageTitle;
-    
+
     /**
      * Gets a URL object representing the current page's URL.
-     * 
+     *
      * @return an instance of ParsedURL representing the page URL at the
      * time the page object was instantiated.
      * @throws UnsupportedEncodingException
@@ -81,13 +81,13 @@ public class PageObjectBase {
      * In practice, the action parameter is an anonymous method, taking no
      * parameters and returning no result. The actual code to trigger the event goes
      * in the method body. e.g.
-     * 
+     *
      * <pre>
      *      expectUrlChange(() -> {
      *          form_Search.submit();
      *      })
      * </pre>
-     * 
+     *
      * @param action A function taking no parameters with no return value.
      */
     public void expectUrlChange(IPageChangeAction action) {
@@ -106,6 +106,13 @@ public class PageObjectBase {
         // event to fire.
         new WebDriverWait(this.browser, MAX_PAGE_LOAD_DELAY).until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
-    }    
-    
+    }
+
+    /**
+     * Getter for the WebDriver instance.
+     */
+    protected WebDriver GetBrowserInstance() {
+        return this.browser;
+    }
+
 }

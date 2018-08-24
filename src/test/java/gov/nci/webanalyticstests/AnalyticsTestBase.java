@@ -101,8 +101,8 @@ public class AnalyticsTestBase {
 		// Initialize reports
 		System.out.println(testClass);
 		System.out.println("Logger Path:" + extentReportPath + "\n");
-		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		report.addSystemInfo("Environment", config.getProperty("Environment"));
+		report = new ExtentReports(extentReportPath + environment + "-" + fileName + ".html");
+		report.addSystemInfo("Environment", environment);
 		logger = report.startTest(testClass);
 	}
 

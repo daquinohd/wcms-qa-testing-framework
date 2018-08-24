@@ -1,5 +1,6 @@
 package gov.nci.clinicaltrials;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,7 +11,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
 import com.relevantcodes.extentreports.ExtentReports;
@@ -41,24 +41,24 @@ public class BaseClass {
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath);
 
-		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
+		report = new ExtentReports(extentReportPath + environment + "-" + fileName + ".html");
 		System.out.println("Report Path: " + report);
-		report.addSystemInfo("Environment", config.getProperty("Environment"));
+		report.addSystemInfo("Environment", environment);
 		logger = report.startTest(this.getClass().getSimpleName());
 	}
 
 
-	@BeforeMethod(groups = { "Smoke", "current" })
-	public void beforeMethod() {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeMethod(Method method) {
+
+		System.out.println(String.format("Executing %s.%s()", method.getDeclaringClass().getName(), method.getName()));
 
 		// Force the page to load fresh before each test.
-		// TODO: explicitly load the page in each test.
+		// TODO: Move this to those test classes where it makes sense.
 		driver.get(pageURL);
-
-		//((JavascriptExecutor) driver).executeScript("scroll(0, -100);");
 	}
 
-	@AfterMethod(groups = { "Smoke", "current" })
+	@AfterMethod(alwaysRun = true)
 	public void tearDown(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
@@ -71,13 +71,13 @@ public class BaseClass {
 
 	}
 
-	@AfterClass(groups = { "Smoke", "current" })
+	@AfterClass(alwaysRun = true)
 	public void afterClass() {
 		driver.quit();
 		report.endTest(logger);
 	}
 
-	@AfterTest(groups = { "Smoke", "current" })
+	@AfterTest(alwaysRun = true)
 	public void afterTest() {
 		report.flush();
 	}
