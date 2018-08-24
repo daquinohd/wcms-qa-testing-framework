@@ -39,32 +39,26 @@ public class PageOptions_Test {
 	protected WebDriver driver;
 	protected ConfigReader config = new ConfigReader();
 
-	@BeforeSuite(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@BeforeSuite( alwaysRun = true)
 	public void suiteHeader() {
 		System.out.println("\n********************* START ***********************\n");
 	}
 
-	@BeforeTest(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@BeforeTest( alwaysRun = true)
 	@Parameters
 	public void beforeTest() {
-		// log.info("Starting a new test");
-		System.out.println("Running " + this.getClass().getSimpleName());
+		System.out.println("*** Running " + this.getClass().getSimpleName() + "***");
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
 		System.out.println("   Logger Path: " + extentReportPath);
-		// report = new ExtentReports(extentReportPath + ".html");
+
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment")
 													+ "-" + fileName + ".html");
 		System.out.println("   Report Path: " + report + "\n");
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
 
-	// @BeforeClass(groups = { "PageOptions", "PageOptions-buttons", "current" })
-	// public void beforeClass() {
-	// 	logger = report.startTest(this.getClass().getSimpleName());
-	// }
-
-	@BeforeClass(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@BeforeClass( alwaysRun = true)
 	@Parameters({ "browser" })
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -72,7 +66,7 @@ public class PageOptions_Test {
 		TESTDATA_PATH = config.getProperty("PageOptionsData");
 	}
 
-	@AfterMethod(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@AfterMethod( alwaysRun = true)
 	public void tearDown(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			logger.log(LogStatus.FAIL, result.getName());
@@ -87,24 +81,24 @@ public class PageOptions_Test {
 		}
 	}
 
-	@AfterClass(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@AfterClass( alwaysRun = true)
 	public void afterClass() {
 		driver.quit();
 		report.endTest(logger);
 	}
 
-	@AfterTest(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@AfterTest( alwaysRun = true)
 	public void afterTest() {
 		report.flush();
 		System.out.println("*** End PageOptions Tests ***\n");
 	}
 
-	@AfterSuite(groups = { "PageOptions", "PageOptions-buttons", "current" })
+	@AfterSuite( alwaysRun = true)
 	public void suiteFooter() {
 		System.out.println("\n***************** END **********************\n");
 	}
 
-/*  ***************************** Data Provider *********************************************** */
+/*  ***************************** Test Methods *********************************************** */
 	// The page options container is visible on most pages.  Testing that
 	// it's shown on those pages.
 	// ------------------------------------------------------------------------------
@@ -487,6 +481,24 @@ public class PageOptions_Test {
 	}
 
 
+	private String AddHostname(String path) {
+		String tier = "QA";
+		String host;
+
+		switch (tier.toUpperCase()) {
+			case "PROD": host = "www.cancer.gov";
+					     break;
+			case "DEV":  host = "www-blue-dev.cancer.gov";
+					     break;
+			case "QA":   host = "www-qa.cancer.gov";
+					     break;
+			case "DT":   host = "www-dt-qa.cancer.gov";
+					     break;
+            default:     host = "www-qa.cancer.gov";
+		}
+		return "https://" + host + path;
+	}
+
 
 /*  ***************************** Test Methods *********************************************** */
 
@@ -502,13 +514,12 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			                  									"Hostname", rowNum);
 			String pageOptionsPath   = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			                  									"PageOptions Link", rowNum);
 			String pageOptionsType   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			                  									"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+																"PageOptions Type", rowNum);
+
+			String url = AddHostname(pageOptionsPath);
 
 			if (!pageOptionsType.equals("none")) {
 				Object ob[] = { url };
@@ -531,43 +542,13 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			                  									"Hostname", rowNum);
 			String pageOptionsPath   = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			                  									"PageOptions Link", rowNum);
 			String pageOptionsType   = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			                  									"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (pageOptionsType.equals("none")) {
-				Object ob[] = { url };
-				myObjects.add(ob);
-			}
-		}
-		return myObjects.iterator();
-	}
-
-
-	// DataProvider to read the Excel spreadsheet with data containing URLs to be checked
-	// Using worksheet indicating URLs without Page Options
-	// ----------------------------------------------------------------------------------
-	@DataProvider(name = "loadDefaultButtonsListXXX")
-	public Iterator<Object[]> loadDefaultButtonsListXXX() {
-		String TESTDATA_SHEET_NAME = "All Pages";
-		ExcelManager excelReader = new ExcelManager(TESTDATA_PATH);
-
-		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			                  									"Hostname", rowNum);
-			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			                  									"PageOptions Link", rowNum);
-			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
-																"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
-
-			if (pageOptionsType.equals("default")) {
 				Object ob[] = { url };
 				myObjects.add(ob);
 			}
@@ -584,13 +565,11 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			"Hostname", rowNum);
 			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Link", rowNum);
 			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (pageOptionsType.equals("all") || pageOptionsType.equals("default")
 											  || pageOptionsType.equals("r4r")) {
@@ -610,13 +589,11 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			"Hostname", rowNum);
 			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Link", rowNum);
 			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (pageOptionsType.equals("all") || pageOptionsType.equals("default")) {
 				Object ob[] = { url };
@@ -635,13 +612,11 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			"Hostname", rowNum);
 			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Link", rowNum);
 			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (pageOptionsType.equals("r4r") || pageOptionsType.equals("none")) {
 				Object ob[] = { url };
@@ -660,13 +635,11 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			"Hostname", rowNum);
 			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Link", rowNum);
 			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (pageOptionsType.equals("all")) {
 				Object ob[] = { url };
@@ -685,14 +658,12 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			"Hostname", rowNum);
 			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Link", rowNum);
 			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			"PageOptions Type", rowNum);
 
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (!pageOptionsType.equals("all")) {
 				Object ob[] = { url };
@@ -711,13 +682,11 @@ public class PageOptions_Test {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-			                  									"Hostname", rowNum);
 			String pageOptionsPath    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 			                  									"PageOptions Link", rowNum);
 			String pageOptionsType    = excelReader.getCellData(TESTDATA_SHEET_NAME,
 																"PageOptions Type", rowNum);
-			String url = pageOptionsHost + pageOptionsPath;
+			String url = AddHostname(pageOptionsPath);
 
 			if (pageOptionsType.equals("r4r")) {
 				Object ob[] = { url };
