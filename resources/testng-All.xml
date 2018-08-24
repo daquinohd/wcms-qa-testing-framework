@@ -5,9 +5,9 @@
   <suite-files>
   <!--
     <suite-file path="resources/testanalytics.xml" />
+      -->
     <suite-file path="resources/testng-CTS.xml" />
     <suite-file path="resources/testng-R4R.xml" />
-  -->
     <suite-file path="resources/testng-Common.xml" />
   </suite-files>
 </suite>
