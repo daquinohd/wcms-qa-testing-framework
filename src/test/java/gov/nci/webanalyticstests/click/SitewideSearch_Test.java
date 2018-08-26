@@ -12,11 +12,11 @@ import org.testng.Assert;
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.error.pages.PageNotFound;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
+import gov.nci.webanalytics.adobe.Beacon;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.WebAnalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
-public class SitewideSearch_Test extends AnalyticsTestBase {
+public class SitewideSearch_Test extends AnalyticsTestClickBase {
 	
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
@@ -45,7 +45,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			swSearchForm = new SitewideSearchForm(driver);
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    beacon = getClickBeacon();
+		    beacon = getBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -63,7 +63,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			swSearchForm = new SitewideSearchForm(driver);			
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    beacon = getClickBeacon(); 
+		    beacon = getBeacon(); 
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(8, "spanish"), "Prop language value incorrect.");
@@ -84,7 +84,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			swSearchForm = new SitewideSearchForm(driver);
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    beacon = getClickBeacon();
+		    beacon = getBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -103,7 +103,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			swSearchForm = new SitewideSearchForm(driver);			
 		    swSearchForm.setSitewideSearchKeyword(searchTerm);
 		    swSearchForm.clickSearchButton();
-		    beacon = getClickBeacon();
+		    beacon = getBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
@@ -123,7 +123,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			swSearchResults.doWithinSearch();
 			swSearchResults.setSitewideSearchKeyword(searchTerm);
 		    swSearchResults.clickSearchButton();
-		    beacon = getClickBeacon();
+		    beacon = getBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");
@@ -142,7 +142,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			swSearchResults = new SitewideSearchResults(driver);			
 			swSearchResults.setSitewideSearchKeyword(searchTerm);
 		    swSearchResults.clickSearchButton();
-		    beacon = getClickBeacon();
+		    beacon = getBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");
@@ -162,7 +162,7 @@ public class SitewideSearch_Test extends AnalyticsTestBase {
 			pageNotFound.setSitewideSearchKeyword(searchTerm);
 			pageNotFound.selectEnglish();
 			pageNotFound.clickSearchButton();
-		    beacon = getClickBeacon();
+		    beacon = getBeacon();
 			System.out.println("Sitewide search term: " + searchTerm);
 			AssertCommon(searchTerm);
 			Assert.assertTrue(beacon.hasProp(11, "pagenotfoundsearch"), "Search type value incorrect.");			

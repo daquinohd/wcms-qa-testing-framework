@@ -10,11 +10,11 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.WebAnalytics.AnalyticsPageLoad;
-import gov.nci.WebAnalytics.Beacon;
+import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.adobe.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
-public class InnerPage_Test extends AnalyticsTestBase {
+public class InnerPage_Test extends AnalyticsTestLoadBase {
 
 	/**
 	 * The following page / content types are covered by this test class:
@@ -59,7 +59,7 @@ public class InnerPage_Test extends AnalyticsTestBase {
 			// Go to our load URL
 			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			beacon = getLoadBeacon();
+			beacon = getBeacon();
 			System.out.println(contentType + " page load (" + analyticsPageLoad.getLanguageName() + "):");
 			
 			// Do assertions			

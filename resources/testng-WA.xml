@@ -5,6 +5,8 @@
 		<!--
 			The browser parameter is set in pom.xml as part of invoking
 			the maven-surefire-plugin.
+
+			mvn test -Dsurefire.suiteXmlFiles=resources\testng-WA.xml -Dbrowser=geckoheadless			
 		-->
 		<!--
 			<parameter name="browser" value="Chrome" />

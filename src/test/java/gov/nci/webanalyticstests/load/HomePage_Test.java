@@ -6,10 +6,10 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import gov.nci.WebAnalytics.Beacon;
+import gov.nci.webanalytics.adobe.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
-public class HomePage_Test extends AnalyticsTestBase {
+public class HomePage_Test extends AnalyticsTestLoadBase {
 
 	// TODO: add other values, heir, channel, suite
 	// TODO: verify has() logic in AnalyticsRequest
@@ -30,7 +30,7 @@ public class HomePage_Test extends AnalyticsTestBase {
 		try {
 			System.out.println("Home page load event:");
 			driver.get(config.goHome());
-			beacon = getLoadBeacon();
+			beacon = getBeacon();
 			AssertCommon();
 			Assert.assertTrue(beacon.hasProp(3, "/"));
 			Assert.assertTrue(beacon.hasProp(6, "Comprehensive Cancer Information"));
@@ -53,7 +53,7 @@ public class HomePage_Test extends AnalyticsTestBase {
 			driver.get(config.goHome());
 			driver.get(config.getPageURL("SpanishPage"));
 			driver.get(config.goHome());
-			beacon = getLoadBeacon();
+			beacon = getBeacon();
 			AssertCommon();
 			Assert.assertTrue(beacon.hasProp(3, "/"));
 			Assert.assertTrue(beacon.hasProp(6, "Comprehensive Cancer Information"));
@@ -73,7 +73,7 @@ public class HomePage_Test extends AnalyticsTestBase {
 		try {
 			System.out.println("Spanish home page load event:");
 			driver.get(config.getPageURL("SpanishPage"));
-			beacon = getLoadBeacon();
+			beacon = getBeacon();
 			AssertCommon();
 			Assert.assertTrue(beacon.hasProp(3, "/espanol"));
 			// "\u00e1" is lower-case 'a' with acute accent.
@@ -98,7 +98,7 @@ public class HomePage_Test extends AnalyticsTestBase {
 		try {
 			System.out.println("Microsite home load event:");
 			driver.get(config.getPageURL("MicroSite"));
-			beacon = getLoadBeacon();
+			beacon = getBeacon();
 			AssertCommon();
 			Assert.assertTrue(beacon.hasProp(3, "/sites/nano"));
 			Assert.assertTrue(beacon.hasProp(6, "Nanodelivery Systems and Devices Branch"));
