@@ -8,7 +8,7 @@ Automated test framework using Se WebDriver, TestNG and Maven written in Java.
 
 ## Command line execution:
 
-To run the default test suite, execute the command 
+To run the default test suite (all tests), execute the command 
 
     mvn test
 
