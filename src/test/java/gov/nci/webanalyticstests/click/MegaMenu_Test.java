@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import gov.nci.commonobjects.MegaMenu;
-import gov.nci.webanalytics.adobe.Beacon;
+import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class MegaMenu_Test extends AnalyticsTestClickBase {

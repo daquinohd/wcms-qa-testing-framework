@@ -7,7 +7,7 @@ import org.testng.Assert;
 
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
-import gov.nci.webanalytics.adobe.Beacon;
+import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class WaBasicSearch_Test extends AnalyticsTestClickBase {

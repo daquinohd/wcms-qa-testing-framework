@@ -1,11 +1,10 @@
-package gov.nci.webanalytics.adobe;
+package gov.nci.webanalytics;
 
 import java.net.URI;
 import java.util.List;
 import org.apache.http.NameValuePair;
 
-import gov.nci.webanalytics.AnalyticsRequest;
-
+// Represents a single Adobe Analytics request beacon with query parameters
 public class Beacon extends AnalyticsRequest {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods

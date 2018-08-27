@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.commonobjects.Resize;
-import gov.nci.webanalytics.adobe.Beacon;
+import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class Resize_Test extends AnalyticsTestClickBase {

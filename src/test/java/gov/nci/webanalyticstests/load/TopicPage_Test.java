@@ -12,48 +12,26 @@ import org.testng.Assert;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
-import gov.nci.webanalyticstests.AnalyticsTestBase;
 
-public class InnerPage_Test extends AnalyticsTestLoadBase {
+public class TopicPage_Test extends AnalyticsTestLoadBase {
 
 	/**
-	 * The following page / content types are covered by this test class:
-	 * - Article (English and Spanish)
-	 * - General (English and Spanish)
-	 */		
-	
-	// TODO: more test cases
-	// TODO: create URLs
-	// TODO: handle these: 
-	/***
-	 * Other values needed:
-	 *  Example from General=https://www-qa.cancer.gov/about-nci/visit:
-		channel: about NCI
-		suites: ncidevelopment, ncienterprise-dev
-		prop25: 01/01/1980
-		prop26: 2018|8|22|15
-		prop29: 3:02 PM|Wednesday
-		prop42: Normal
-		prop48: 12pct|12pct|3796px|/
-		prop61: www.cancer.gov/
-		prop64: 12|0
-		prop65: 3
-		eVar1: www.cancer.gov/about-nci/visit
-		eVar5: Extra wide
-		Hierarchy: 1 www-qa.cancer.gov|about-nci|visit
+	 * The following page types / content are covered by this test class:
+	 * - Topic (English and Spanish)
 	 */
+	
 	private AnalyticsPageLoad analyticsPageLoad;
 	private Beacon beacon;	
 	private String testDataFilePath;
-	private final String TESTDATA_SHEET_NAME = "InnerPage";
+	private final String TESTDATA_SHEET_NAME = "TopicPage";
 	
 	@BeforeClass(groups = { "Analytics" }) 
 	public void setup() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
 	
-	/// Inner page loads return expected values
-	@Test(dataProvider = "InnerPageLoad", groups = { "Analytics" })
+	/// Topic page loads return expected values
+	@Test(dataProvider = "TopicPageLoad", groups = { "Analytics" })
 	public void testHomePageLoad(String path, String contentType) {
 		try {
 			driver.get(config.goHome() + path);
@@ -69,8 +47,8 @@ public class InnerPage_Test extends AnalyticsTestLoadBase {
 		}
 	}
 
-	@DataProvider(name = "InnerPageLoad")
-	public Iterator<Object[]> getInnerPageLoadData() {
+	@DataProvider(name = "TopicPageLoad")
+	public Iterator<Object[]> getTopicPageLoadData() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
@@ -80,6 +58,6 @@ public class InnerPage_Test extends AnalyticsTestLoadBase {
 			myObjects.add(ob);
 		}		
 		return myObjects.iterator();
-	}	
+	}
 	
 }

@@ -12,7 +12,7 @@ import org.testng.Assert;
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.error.pages.PageNotFound;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
-import gov.nci.webanalytics.adobe.Beacon;
+import gov.nci.webanalytics.Beacon;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 

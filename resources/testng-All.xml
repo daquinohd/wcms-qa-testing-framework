@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="NCI Automation - All Test Cases" parallel="none">
-	  <test name="NCI - Chrome Testing" preserve-order="true">
-		<!--
-			The browser parameter is set in pom.xml as part of invoking
-			the maven-surefire-plugin.
-
-			<parameter name="browser" value="Chrome" />
-		-->
-		<groups>
-			<run>
-				<include name="Smoke" />
-			</run>
-		</groups>
-		<classes> 	
-			  <class name="gov.nci.clinicaltrials.BasicSearch_Test" />
-			  <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" /> 
-			  <!-- <class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> 
-			  <class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 
-			  <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" />
-			  <class name="gov.nci.CommonObjects.Tests.LanguageBar_Test" />
-			  <class name="gov.nci.CommonObjects.Tests.UtilityNav_Test" /> 
-			   
-			  <class name="gov.nci.clinicaltrials.BasicSearchResults_Test" />
-			  --> 
-		</classes>
-	</test> 
-
+  <!-- This suite should simply be a list of all the feature-level suites. -->
+  <suite-files>
+  
+    <suite-file path="resources/testng-WA.xml" />
+    <suite-file path="resources/testng-CTS.xml" />
+    <suite-file path="resources/testng-R4R.xml" />
+    <!-- TODO: Evaluate the tests in nci.gov.CommonObjects and determine which ones should be reinstated. -->
+    <!-- <suite-file path="resources/testng-Common.xml" /> -->
+  </suite-files>
 </suite>
 

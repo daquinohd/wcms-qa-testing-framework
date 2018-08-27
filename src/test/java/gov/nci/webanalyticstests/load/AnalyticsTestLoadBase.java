@@ -3,11 +3,19 @@ package gov.nci.webanalyticstests.load;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.nci.webanalytics.adobe.Beacon;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class AnalyticsTestLoadBase extends AnalyticsTestBase {
-		
+	
+	// TODO: refactor has..() methods
+	// TODO: fix hasEvent() arg
+	// TODO: create generic param test
+	
 	/**
 	 * Get the 'load' beacon for testing.
 	 * @return Beacon
@@ -19,7 +27,7 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		System.out.println("Load beacon to test: ");
 		System.out.println(beacon.url  + "\n");
 		return beacon;
-	}	
+	}
 	
 	/**
 	 * Create a list of load Beacon objects. 
@@ -53,10 +61,27 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		
 		return loadBeacons;		
 	}
+	
+	/**
+	 * Shared Assert() calls for all pageLoad tracking beacons.
+	 * @param beacon
+	 * @param analyticsPageLoad
+	 * @param path
+	 */
+	protected void DoCommonLoadAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String path) {
+		Assert.assertTrue(beacon.hasEvent(1));
+		Assert.assertTrue(beacon.hasEvent(47));
+		Assert.assertTrue(beacon.hasProp(1, driver.getCurrentUrl()));
+		Assert.assertTrue(beacon.hasProp(3, path));
+		Assert.assertTrue(beacon.hasProp(6, analyticsPageLoad.getMetaTitle()));
+		Assert.assertTrue(beacon.hasProp(8, analyticsPageLoad.getLanguageName()));
+		Assert.assertTrue(beacon.hasProp(10, analyticsPageLoad.getPageTitle()));
+		Assert.assertTrue(beacon.hasProp(44, analyticsPageLoad.getMetaIsPartOf()));
+		Assert.assertTrue(beacon.haseVar(2, analyticsPageLoad.getLanguageName()));
+		Assert.assertTrue(beacon.haseVar(44, analyticsPageLoad.getMetaIsPartOf()));
+	}
+	
 
-	// TODO: refactor has..() methods
-	// TODO: fix hasEvent() arg
-	// TODO: create generic param test
 	/// Load events have been captured
 //	@Test(groups = { "Analytics" })
 //	public void testHarAndBeacons() {
@@ -68,18 +93,6 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 //		logger.log(LogStatus.PASS, "Load events have been captured.");
 //	}
 //	
-//	/// Event numbers match with their descriptors
-//	public void testLoadGeneral() {
-//		analyticsPageLoad.gotoMultiplePages();
-//		beacon = getLoadBeacon();
-//		Assert.assertTrue(beacon.hasEvent(47));		
-//		for(Beacon beacon : loadBeacons) {
-//			String[] evts = beacon.getEvents();	
-//			Assert.assertTrue(evts[0].contains("event1"));
-//			Assert.assertTrue(evts[1].contains("event47"));
-//		}		
-//		logger.log(LogStatus.PASS, "Load event values are correct.");				
-//	}
 //	
 //	/// Blog post pageload returns expected values
 //	public void testBlogPostLoad() {
@@ -137,21 +150,6 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 //		logger.log(LogStatus.PASS, "CTHP HP pageload values are correct.");
 //	}
 //	
-//	/// Landing pageload returns expected values
-//	public void testLandingPageLoad() {
-//		analyticsPageLoad.gotoLandingPage();
-//		beacon = getLoadBeacon();
-//		Assert.assertTrue(beacon.hasEvent(1));
-//		Assert.assertTrue(beacon.hasEvent(47));
-//		Assert.assertTrue(beacon.hasProp(3, "/research"));
-//		Assert.assertTrue(beacon.hasProp(6, "Cancer Research"));
-//		Assert.assertTrue(beacon.hasProp(10, "Cancer Research - National Cancer Institute"));
-//		Assert.assertTrue(beacon.hasProp(42, "Normal"));
-//		Assert.assertTrue(beacon.hasProp(44, "Research Landing Page"));
-//		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/research"));
-//		Assert.assertTrue(beacon.haseVar(44, "Research Landing Page"));
-//		logger.log(LogStatus.PASS, "Landing page load values are correct.");
-//	}
 //	
 //	/// PDQ pageload returns expected values
 //	@Test(groups = { "Analytics" })
@@ -173,18 +171,6 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 //		logger.log(LogStatus.PASS, "PDQ page load values are correct.");
 //	}
 //	
-//	/// Topic page load returns expected values
-//	@Test(groups = { "Analytics" })
-//	public void testTopicPageLoad() {
-//		analyticsPageLoad.gotoTopicPage();
-//		beacon = getLoadBeacon();
-//		Assert.assertTrue(beacon.hasEvent(1));
-//		Assert.assertTrue(beacon.hasEvent(47));
-//		Assert.assertTrue(beacon.hasProp(44, "NCI Grants Process"));
-//		Assert.assertTrue(beacon.haseVar(1, "www.cancer.gov/grants-training/apply-grant"));
-//		Assert.assertTrue(beacon.haseVar(44, "NCI Grants Process"));
-//		logger.log(LogStatus.PASS, "Topioc page load values are correct.");
-//	}
 //
 //	/// Appmodule pageload returns expected values
 //	//@Test(groups = { "Analytics" })
@@ -242,6 +228,5 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 //		Assert.assertTrue((2 + 2) == 4);
 //		/** more **/
 //	}
-
 	
 }
