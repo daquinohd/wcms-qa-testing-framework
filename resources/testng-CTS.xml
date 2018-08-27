@@ -14,7 +14,12 @@
 			<class name="gov.nci.clinicaltrials.BasicResultsUIElements_Test" />
 			<class name="gov.nci.clinicaltrials.SearchResults_Test" />
 
-			<!-- <class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
+			<!--
+
+			These tests are not currently working and need to be repaired
+			before being reinstated.
+			
+			<class name="gov.nci.clinicaltrials.AdvanceSearch_Test" />
 			<class name="gov.nci.clinicaltrials.AdvanceSearchResults_Test" /> -->
 			    
 		</classes>

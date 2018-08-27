@@ -24,7 +24,8 @@ public class PageObjectBase {
 
     WebDriver browser;
 
-    static final int MAX_PAGE_LOAD_DELAY = 10;
+    // Allow for a 20 second delay.  Because network delays can be insane.
+    static final int MAX_PAGE_LOAD_DELAY = 20;
 
     /**
      * Interface for passing actions which will cause the page to change. Used with
