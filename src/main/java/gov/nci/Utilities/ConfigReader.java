@@ -12,7 +12,7 @@ public class ConfigReader {
 
 	public ConfigReader() {
 		try {
-			File file = new File("./configuration/ConfigPROD.property");
+			File file = new File("./configuration/ConfigQA.property");
 			FileInputStream fis = new FileInputStream(file);
 			properties = new Properties();
 			properties.load(fis);
