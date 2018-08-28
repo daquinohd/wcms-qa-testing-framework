@@ -101,7 +101,7 @@ public class Resources4ResearchersResourceDetailPage {
 	/*
 	 * Get Back to Results link
 	 */
-	public WebElement getBacktoResult() {
+	public WebElement getBacktoResultlink() {
 		return lnk_BacktoSearchResults;
 	}
 
@@ -222,4 +222,19 @@ public class Resources4ResearchersResourceDetailPage {
 	public List<WebElement> getRelatedResources() {
 		return relatedResourcesItems;
 	}
+
+	/*
+	 * Get Email icon
+	 */
+	public WebElement getEmailIcon() {
+		return lnk_ShareEmail;
+	}
+
+	/*
+	 * Get Twitter icon
+	 */
+	public WebElement getTwitterIcon() {
+		return lnk_ShareTwitter;
+	}
+
 }
