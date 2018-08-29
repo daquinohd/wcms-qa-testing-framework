@@ -1,6 +1,6 @@
 package gov.nci.webanalytics;
 
-import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
 
@@ -8,12 +8,11 @@ import org.apache.http.NameValuePair;
 public class Beacon extends AnalyticsRequest {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods
-	// TODO: build setter/getter for channel? 
 	// TODO: reuse collection method from ParsedURL() instead of the local getList()
 
 	// Constants
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
-		
+	
 	// Parameter values from URL
 	static final String CHANNEL = "ch";
 	static final String EVENTS = "events";
@@ -28,37 +27,48 @@ public class Beacon extends AnalyticsRequest {
 	static final String EVAR_PARTIAL = "v";
 	static final String HIER_PARTIAL = "h";
 	
+	// Testable variable names
+	public String[] suites; // s.account or s_account
+	public String[] events; // events
+	public String channels; // s.channel
+	public List<String> props; // props, aka "Traffic Variables"
+	public List<String> eVars; // eVars, aka "Conversion Variables"
+	public List<String> hiers; // Hierarchy variables
+	
 	// This class represents an Adobe Analytics request beacon
 	public Beacon(String url) {
 		super(url);
-	}	
-	
-	/**
-	 * Get the reporting suites (s_account) value
-	 * as an array of strings
-	 * @param uri
-	 * @return
-	 */
-	/// TODO: change arg type
-	protected String[] getSuites(URI uri) {
-		try {
-			String[] path = uri.getPath().split("/");
-			String[] rtnSuites = path[3].split(",");
-			return rtnSuites;
-		} 
-		catch(ArrayIndexOutOfBoundsException ex) {
-			System.out.println("Invalid URI path: \"" + uri.getPath() + "\\\" at AnalyticsBase:getSuitesI()");			
-			return null;
-		}
+		
+		// Set our variables
+		this.suites = getSuites();
+		this.channels = getChannels();
+		this.events = getEvents();
+		this.props = getPropList();
+		this.eVars = geteVarList();
+		this.hiers = getHierList();
 	}
 	
 	/**
-	 * Get channel value 
-	 * @param parms
-	 * @return
+	 * Get an array of suites (s.account) values from the URL path.
+	 * @return suites (String[])
 	 */
-	public String getChannel(List<NameValuePair> parms) {
-		for (NameValuePair param : parms) {
+	private String[] getSuites() {
+		try {
+			String[] path = this.url.split("/");
+			String[] suites = path[5].split(",");
+			return suites;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Could not locate suite values in URL: " + url + "\nin Beacon: GetSuites()");
+			return null;
+		}
+	}
+
+	/**
+	 * Get channel parameter value. 
+	 * @return channel (String)
+	 */
+	private String getChannels() {
+		for (NameValuePair param : this.paramsList) {
 			if (param.getName().equalsIgnoreCase(CHANNEL)) {
 				return param.getValue().trim();
 			}
@@ -83,6 +93,33 @@ public class Beacon extends AnalyticsRequest {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	private List<String> getPropList() {
+		List <String> rtn = getNumParams(PROP_PARTIAL, paramsList, 75);
+		return rtn;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private List<String> geteVarList() {
+		List <String> rtn = getNumParams(EVAR_PARTIAL, paramsList, 75);
+		return rtn;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private List<String> getHierList() {
+		List <String> rtn = getNumParams(HIER_PARTIAL, paramsList, 2);
+		return rtn;
+	}
+
+	/**
 	 * Get list of props ('c' values in request)
 	 * @param parms
 	 * @return
@@ -98,15 +135,6 @@ public class Beacon extends AnalyticsRequest {
 	 */
 	public List<NameValuePair> getEvars() {
 		return getNumberedParams(paramsList, EVAR_PARTIAL, "eVar");
-	}
-	
-	/**
-	 * Get list of hierarchy values ("h" values in request)
-	 * @param parms
-	 * @return
-	 */
-	public List<NameValuePair> getHiers(List<NameValuePair> parms) {
-		return getNumberedParams(parms, HIER_PARTIAL, "hier");
 	}
 
 	/**
@@ -186,15 +214,6 @@ public class Beacon extends AnalyticsRequest {
 	 * @return
 	 */
 	public boolean hasSuite() {
-		// TODO: fill this out
-		return false;
-	}
-
-	/**
-	 * Utility function to check for a given channel name
-	 * @return
-	 */
-	public boolean hasChannel() {
 		// TODO: fill this out
 		return false;
 	}
@@ -281,5 +300,45 @@ public class Beacon extends AnalyticsRequest {
 		}
 		return false;
 	}
+
+	/******************** Utility methods ****************************************/	
+	
+	/**
+	 * Initialize a numbered list of empty elements. 
+	 * @param size
+	 * @return rtnList List<String>
+	 */
+	private List<String> initNumberedArrayList(int size) {		
+		List<String> myList = new ArrayList<String>();
+		while(myList.size() <= size) {
+			myList.add(null);
+		}
+		return myList;
+	}
+	
+	/**
+	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
+	 * @param myParam
+	 * @param myList
+	 * @param total
+	 * @return List of values (String)
+	 */
+	protected List<String> getNumParams(String myParam, List<NameValuePair> myList, int total) {
+		// Create a list with x names and null values
+		List<String> rtnList = initNumberedArrayList(total);
 		
+		// Go through the list of populated parameter values and add those to the return list 
+		// where the number matches
+		for(NameValuePair pair : myList) {
+			String name = pair.getName();
+			String val = pair.getValue();
+			// Regex: parameter name followed by 1 or more digits, starting with 1-9 only
+			if(name.matches("^" + myParam + "[1-9]\\d*$")) {
+				int index = Integer.parseInt(name.replace(myParam, ""));
+				rtnList.set(index, val);
+			}
+		}
+		return rtnList;
+	}
+	
 }

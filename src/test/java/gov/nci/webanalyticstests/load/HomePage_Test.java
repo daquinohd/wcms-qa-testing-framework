@@ -1,7 +1,6 @@
 package gov.nci.webanalyticstests.load;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -10,7 +9,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import gov.nci.Utilities.ExcelManager;
 import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 
@@ -48,8 +46,8 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 
 			// Set page and request beacon objects
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			beacon = getBeacon();
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
+			beacon = getBeacon();
 
 			// Do assertions
 			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
@@ -70,8 +68,8 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 			driver.get(config.goHome());
 			driver.navigate().refresh();
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			beacon = getBeacon();
 			System.out.println("Home refresh load event (" + analyticsPageLoad.getLanguageName() + "):");
+			beacon = getBeacon();
 			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			logger.log(LogStatus.PASS, "Home-refresh load values are correct.");
 		}
@@ -91,8 +89,8 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 			driver.get(config.getPageURL("SpanishPage"));
 			driver.get(config.goHome());
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			beacon = getBeacon();
 			System.out.println("Home page and back load event: ");
+			beacon = getBeacon();
 			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			logger.log(LogStatus.PASS, "Home-and-back load values are correct.");
 		}
@@ -116,15 +114,7 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 		
 	@DataProvider(name = "HomePageLoad")
 	public Iterator<Object[]> getHomePageLoadData() {
-		ExcelManager excelReader = new ExcelManager(testDataFilePath);
-		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String path = excelReader.getCellData(TESTDATA_SHEET_NAME, "Path", rowNum);
-			String contentType = excelReader.getCellData(TESTDATA_SHEET_NAME, "ContentType", rowNum);
-			Object ob[] = { path, contentType };
-			myObjects.add(ob);
-		}		
-		return myObjects.iterator();
+		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 	
 }

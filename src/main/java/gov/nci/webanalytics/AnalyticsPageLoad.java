@@ -71,9 +71,9 @@ public class AnalyticsPageLoad extends PageObjectBase {
 	public String getLanguageName() {
 		String lang = this.getMetaLanguage();
 		switch(lang) {
-			case "en" : return "English";
-			case "es" : return "Spanish";
-			default: return "English";				
+			case "en" : return "english";
+			case "es" : return "spanish";
+			default: return "english";				
 		}
 	}
 	
