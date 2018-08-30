@@ -1,101 +1,36 @@
 package gov.nci.general;
 
-import java.text.SimpleDateFormat;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.ITestResult;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import gov.nci.Utilities.BrowserManager;
-import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.Utilities.ScreenShot;
+import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.commonobjects.PageOptions;
 
-public class PageOptions_Test {
+public class PageOptions_Test extends BaseClass {
 
 	private String TESTDATA_PATH;
 
-	protected static ExtentReports report;
-	protected static ExtentTest logger;
-	protected WebDriver driver;
-	protected ConfigReader config = new ConfigReader();
-
-	@BeforeSuite( alwaysRun = true)
-	public void suiteHeader() {
-		System.out.println("\n********************* START ***********************\n");
-	}
-
-	@BeforeTest( alwaysRun = true)
-	@Parameters
-	public void beforeTest() {
-		System.out.println("*** Running " + this.getClass().getSimpleName() + "***");
-		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
-		String extentReportPath = config.getExtentReportPath();
-		System.out.println("   Logger Path: " + extentReportPath);
-
-		report = new ExtentReports(extentReportPath + config.getProperty("Environment")
-													+ "-" + fileName + ".html");
-		System.out.println("   Report Path: " + report + "\n");
-		report.addSystemInfo("Environment", config.getProperty("Environment"));
-	}
-
-	@BeforeClass( alwaysRun = true)
-	@Parameters({ "browser" })
+	@BeforeClass(alwaysRun = true )
+	@Parameters({"browser"})
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
 		driver = BrowserManager.startBrowser(browser, "about:blank");
+		// System.out.println(this.getClass().getSimpleName());
+		// int uLine = this.getClass().getSimpleName().lastIndexOf("_");
+		// System.out.println(this.getClass().getSimpleName().substring(0, uLine));
 		TESTDATA_PATH = config.getProperty("PageOptionsData");
-	}
-
-	@AfterMethod( alwaysRun = true)
-	public void tearDown(ITestResult result) {
-		if (result.getStatus() == ITestResult.FAILURE) {
-			logger.log(LogStatus.FAIL, result.getName());
-			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
-			String image = logger.addScreenCapture(screenshotPath);
-
-			logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
-		} else if (result.getStatus() == ITestResult.SKIP) {
-			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
-		} else {
-			logger.log(LogStatus.PASS, result.getName());
-		}
-	}
-
-	@AfterClass( alwaysRun = true)
-	public void afterClass() {
-		driver.quit();
-		report.endTest(logger);
-	}
-
-	@AfterTest( alwaysRun = true)
-	public void afterTest() {
-		report.flush();
-		System.out.println("*** End PageOptions Tests ***\n");
-	}
-
-	@AfterSuite( alwaysRun = true)
-	public void suiteFooter() {
-		System.out.println("\n***************** END **********************\n");
+		System.out.println("    Test data path: " + TESTDATA_PATH);
 	}
 
 /*  ***************************** Test Methods *********************************************** */
@@ -106,7 +41,7 @@ public class PageOptions_Test {
 	public void IsVisible(String url) {
 
 		System.out.println("\nTesting PO IsVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -130,7 +65,7 @@ public class PageOptions_Test {
 	public void NotVisible(String url) {
 
 		System.out.println("\nTesting PO NotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 		// logger.log(LogStatus.PASS, url);
 
@@ -154,7 +89,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadButtonOnEachPageList", groups = { "PageOptions-button" })
 	public void EmailVisible(String url) {
 		System.out.println("\nTesting EmailVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -178,7 +113,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNotVisiblePageOptionsList", groups = { "PageOptions-button" })
 	public void EmailNotVisible(String url) {
 		System.out.println("\nTesting EmailNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -202,7 +137,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadButtonOnEachPageList", groups = { "PageOptions-button" })
 	public void TwitterVisible(String url) {
 		System.out.println("\nTesting TwitterVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 		// logger.log(LogStatus.FAIL, url);
 
@@ -227,7 +162,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNotVisiblePageOptionsList", groups = { "PageOptions-button" })
 	public void TwitterNotVisible(String url) {
 		System.out.println("\nTesting TwitterNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 		// logger.log(LogStatus.FAIL, url);
 
@@ -252,7 +187,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadFontResizeList", groups = { "PageOptions-button" })
 	public void FontVisible(String url) {
 		System.out.println("\nTesting FontVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -275,7 +210,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNoFontResizeList", groups = { "PageOptions-button" })
 	public void FontNotVisible(String url) {
 		System.out.println("\nTesting FontNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -299,7 +234,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadDefaultButtonsList", groups = { "PageOptions-button" })
 	public void PrintVisible(String url) {
 		System.out.println("\nTesting PrintVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -322,7 +257,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNoDefaultButtonsList", groups = { "PageOptions-button" })
 	public void PrintNotVisible(String url) {
 		System.out.println("\nTesting PrintNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -346,7 +281,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadDefaultButtonsList", groups = { "PageOptions-button" })
 	public void FacebookVisible(String url) {
 		System.out.println("\nTesting FacebookVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -369,7 +304,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNoDefaultButtonsList", groups = { "PageOptions-button" })
 	public void FacebookNotVisible(String url) {
 		System.out.println("\nTesting FacebookNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -393,7 +328,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadDefaultButtonsList", groups = { "PageOptions-button" })
 	public void GoogleplusVisible(String url) {
 		System.out.println("\nTesting GoogleVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -416,7 +351,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNoDefaultButtonsList", groups = { "PageOptions-button" })
 	public void GoogleplusNotVisible(String url) {
 		System.out.println("\nTesting GoogleNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -440,7 +375,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadDefaultButtonsList", groups = { "PageOptions-button" })
 	public void PinterestVisible(String url) {
 		System.out.println("\nTesting PinterestVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
@@ -463,7 +398,7 @@ public class PageOptions_Test {
 	@Test(dataProvider = "loadNoDefaultButtonsList", groups = { "PageOptions-button" })
 	public void PinterestNotVisible(String url) {
 		System.out.println("\nTesting PinterestNotVisible()");
-		System.out.println("   " + url);
+		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
