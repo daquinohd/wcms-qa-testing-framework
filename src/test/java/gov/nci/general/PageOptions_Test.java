@@ -480,9 +480,10 @@ public class PageOptions_Test {
 		}
 	}
 
-
+	// Method to create URL for data provider to be tested
+	// ---------------------------------------------------
 	private String AddHostname(String path) {
-		String tier = "QA";
+		String tier = "QA";         // Hard-code string for environment/host used
 		String host;
 
 		switch (tier.toUpperCase()) {
