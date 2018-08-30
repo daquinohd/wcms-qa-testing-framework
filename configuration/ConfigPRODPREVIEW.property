@@ -1,8 +1,9 @@
 ************************Environment URLs***********************************
+HomePageURL=https://preview.cancer.gov/
 BasicClinicalTrialSearchURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
-BasicSearchResultsURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C4016&a=60&z=20105&rl=1
-ResultsPageURL=https://preview.cancer.gov/treatment/clinical-trials/search/r?t=C4872&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
+BasicSearchResultsURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
+ResultsPageURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/search/r?t=C3167&a=&q=&loc=0&tt=&tp=&tid=&in=&lo=&rl=2
 DelighterLiveHelpURL=https://preview.cancer.gov/contact
 DelighterWhatURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
@@ -20,7 +21,7 @@ DriverName_FirefoxDriver=geckodriver
 ***********************Reporting******************************************
 ExtentReports= ./test-output/ExtentReport/
 ScreenShots= ./test-output/Screenshots/
-Environment= PRODEnvironment
+Environment= PRODPREVIEWEnvironment
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx

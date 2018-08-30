@@ -21,9 +21,9 @@ import gov.nci.Resources4Researchers.Resources4ResearchersSearchResult;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
+import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
@@ -73,6 +73,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" })
 	public void verifyResources4ResearchersHomeLink() {
+		Assert.assertTrue(r4rSearchResult.getr4rHomeLink().isDisplayed());
 		r4rSearchResult.clickResources4ResearchersHome();
 		Assert.assertTrue(FunctionLibrary.waitURLToBe(driver, r4rSearchResult.R4R_HOME_PAGE_URL));
 		driver.navigate().back();
@@ -162,6 +163,8 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			System.out.println("Your Selection Filter: " + toolType.getText());
 			Assert.assertTrue(toolType.getText().equals(toolTypeNameAsString.get(i - 1)));
 
+			// Verify that Your Selection field displays Clear All link
+
 			// Verify that Result Count text contains the same number as present
 			// in the Tool Type Option
 			String resultCount = driver.findElement(By.xpath("//div[@class='r4r-pager__count  r4r-DEFAULT']"))
@@ -250,7 +253,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			// Verify that Research Area box displays the Research Area filter
 			// as checked
 			WebElement researchAreaFilter = driver.findElement(By
-					.xpath("(//h4[@class='facet__title  r4r-DEFAULT' and contains(text(),'Research Areas')]/following-sibling::label[@class='facet__filter  r4r-DEFAULT'])["
+					.xpath("(//h4[@class='facet__title r4r-DEFAULT' and contains(text(),'Research Areas')]/following-sibling::label[@class='facet__filter r4r-DEFAULT'])["
 							+ i + "]"));
 
 			researchAreaFilter.getAttribute("aria-checked").equals("true");
@@ -291,7 +294,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		for (int i = 1; i <= researchTypeOptions.size(); i++) {
 
-			// Clicking on Research Area option
+			// Clicking on Research Type option
 			String researchTypeOption = researchTypeOptions.get(i - 1).getText();
 			System.out.println("RESEARCH TYPE OPTION: " + researchTypeOption);
 
@@ -387,7 +390,16 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			break;
 
 		}
+		for (int i = 1; i <= toolSubTypeItems.size(); i++) {
+			toolSubTypeItems.get(i).click();
+			System.out.println("TOOL SUB TYPE CLICKED: " + toolSubTypeItems.get(i - 1).getText());
+			WebElement toolSubType = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
+			WebElement clearAll = driver.findElement(By.cssSelector(".selected-filters__clear>p"));
+			System.out.println("Your Selection Filter: " + toolSubType.getText());
+			Assert.assertTrue(toolSubType.getText().equals(toolSubTypeItems.get(i - 1)));
+			Assert.assertTrue(clearAll.isDisplayed());
 
+		}
 		driver.navigate().back();
 		logger.log(LogStatus.PASS,
 				"Verify that Tool Sub-Types box is present, Title of the box is Tool Sub-Type and names of Tool Sub-Types are as displayed in Tool Sub-Type Box ");

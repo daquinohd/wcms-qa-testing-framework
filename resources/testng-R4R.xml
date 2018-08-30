@@ -14,19 +14,19 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test">
+			<!-- class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test"> 
 				<methods>
-					<!-- These tests do not currently work and must be repaired before being reinstated. -->
+					 These tests do not currently work and must be repaired before being reinstated. 
 					<exclude name="verifyViewAllResources" />
 					<exclude name="verifyLearnMoreAboutR4RLink" />
 					<exclude name="searchByToolTypesOptions" />
 					<exclude name="searchByResearchAreaOptions" />
 				</methods>
-			</class>
+			</class> -->
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test">
 				<methods>
 					<!-- These tests do not currently work and must be repaired before being reinstated. -->
-					<exclude name="verifyToolSubTypesOptions" />
+					<!--<exclude name="verifyToolSubTypesOptions" />
 					<exclude name="verifyToolTypesOptions" />
 					<exclude name="verifyResources4ResearchersHomeLink" />
 					<exclude name="verifyResearchAreaOptions" />
@@ -35,18 +35,18 @@
 					<exclude name="verifyLearnMoreAboutR4RLink" />
 					<exclude name="searchByToolTypesOptions" />
 					<exclude name="verifyResearchTypesOptions" />
-					<exclude name="searchByResearchTypeOptions" />
+					<exclude name="searchByResearchTypeOptions" /> -->
 					
 				</methods>
 			</class>
-			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" >
+			<!-- <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" >
 				<methods>
-					<!-- These tests do not currently work and must be repaired before being reinstated. -->
+					 These tests do not currently work and must be repaired before being reinstated. 
 					<exclude name="verifySearchbyClick" />
 					<exclude name="verifySearchbyENTER" />
 					<exclude name="verifyBackToResult" />
 				</methods>
-			</class>
+			</class> -->
 		</classes>
 	</test>
 
