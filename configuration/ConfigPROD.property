@@ -1,4 +1,5 @@
 ************************Environment URLs***********************************
+HomePageURL=https://www.cancer.gov/
 BasicClinicalTrialSearchURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search
 AdvanceSearchPageURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/advanced-search
 BasicSearchResultsURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/r?q=&t=&a=&z=&rl=1
@@ -7,6 +8,9 @@ DelighterLiveHelpURL=https://www.cancer.gov/contact
 DelighterWhatURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
 DelighterFeedbackURL=https://www.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+Resources4ResearchersHomeURL=https://www-qa.cancer.gov/research/resources
+Resources4ResearchersSearchResultURL=https://www-qa.cancer.gov/research/resources/search?from=0
+Resources4ResearchersResourceDetailPageURL=https://www-qa.cancer.gov/research/resources/resource/144
 
 ************************Drivers Path***************************************
 ChromeDriver=./resources/drivers/chromedriver.exe
@@ -40,8 +44,7 @@ PageNotFound=https://www.cancer.gov/i-am-error
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
-ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx
-
+TestDataR4R= ./test-data/TestData_R4R.xlsx
 ***********************External Resources**********************************
 AnalyticsTrackingServer=nci.122.2o7.net
