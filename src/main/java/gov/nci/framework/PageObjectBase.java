@@ -49,6 +49,10 @@ public class PageObjectBase {
         pageTitle = browser.getTitle().trim();
     }
 
+    protected WebDriver getBrowser(){
+	return this.browser;
+    }
+
     private ParsedURL pageUrl;
     private String pageTitle;
 
