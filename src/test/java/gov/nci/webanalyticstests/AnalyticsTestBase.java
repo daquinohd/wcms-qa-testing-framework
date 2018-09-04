@@ -38,7 +38,7 @@ public abstract class AnalyticsTestBase {
 	protected static BrowserMobProxy proxy;
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
-	protected ConfigReader config = new ConfigReader();
+	protected ConfigReader config;
 	
 	/**************************************
 	 * Section: TextNG Befores & Afters *
@@ -61,8 +61,8 @@ public abstract class AnalyticsTestBase {
 	**/
 
 	@BeforeTest(groups = { "Analytics" })
-	@Parameters({ "browser" })
-	public void beforeTest(String browser) throws MalformedURLException {
+	@Parameters({ "browser", "environment" })
+	public void beforeTest(String browser, String environment) throws MalformedURLException {
 		// Start the BrowserMob proxy on the site homepage
 		String initUrl = "https://wwww.cancer.gov";
 		System.out.println("=== Starting BrowserMobProxy ===");
@@ -70,7 +70,8 @@ public abstract class AnalyticsTestBase {
 		
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
-		driver = BrowserManager.startProxyBrowser(browser, initUrl, proxy);
+		config = new ConfigReader(environment);
+		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
     	System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
 		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 	}
@@ -90,7 +91,7 @@ public abstract class AnalyticsTestBase {
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
-		System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
+		System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
 		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 
 		// Initialize reports
