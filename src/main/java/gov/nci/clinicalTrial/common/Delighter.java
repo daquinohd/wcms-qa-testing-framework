@@ -1,5 +1,8 @@
 package gov.nci.clinicalTrial.common;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,9 +32,21 @@ public class Delighter {
         return theDelighter.isDisplayed();
     }
 
-    public String getLinkUrl() {
+    /**
+     * Reports the path portion of the delighter's URL.
+     */
+    public String getLinkPath() {
         WebElement link = theDelighter.findElement(By.cssSelector("a"));
-        return link.getAttribute("href");
+        String linkString = link.getAttribute("href");
+
+        URL parsedUrl;
+		try {
+			parsedUrl = new URL(linkString);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(String.format("Delighter link '%s' is not a valid URL.", linkString));
+		}
+
+        return parsedUrl.getFile();
     }
 
 }

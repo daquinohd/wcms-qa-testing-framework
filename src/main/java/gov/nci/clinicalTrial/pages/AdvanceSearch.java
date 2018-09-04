@@ -190,9 +190,11 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 	}
 
 	public void defaultSearch() {
-		ScrollUtil.scrollIntoview(driver, box_LeadOrganization);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		btn_Search.click();
+		ScrollUtil.scrollIntoview(driver, btn_Search);
+
+		expectUrlChange( () -> {
+			btn_Search.click();
+		});
 	}
 
 	public void getCancerType(String cancerType) throws InterruptedException {

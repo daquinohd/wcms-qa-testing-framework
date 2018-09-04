@@ -21,13 +21,18 @@ public class MegaMenu extends PageObjectBase{
 	private WebDriver driver;	
 	private Actions action;
 	private WebDriverWait wait;
+
+	private Nav Nav;
 	
 	// Constructor to initialize the page object
-	public MegaMenu(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+	public MegaMenu(WebDriver driver, String environment) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		this.driver = driver;
 		action = new Actions(driver);
-		wait = new WebDriverWait(driver, 5);		
+		wait = new WebDriverWait(driver, 5);
+		
+		Nav = new Nav(environment);
+
 		PageFactory.initElements(driver, this);
 		System.out.print("MegaMenu PageFactory initialized: ");
 	}

@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import gov.nci.WebAnalytics.AnalyticsRequest;
@@ -18,8 +19,9 @@ public class MegaMenu_Test extends AnalyticsTestBase {
 	private AnalyticsRequest beacon;
 
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void setupMegaMenu() throws UnsupportedEncodingException, MalformedURLException {
-		megaMenu = new MegaMenu(driver);
+	@Parameters({ "environment" })
+	public void setupMegaMenu(String environment) throws UnsupportedEncodingException, MalformedURLException {
+		megaMenu = new MegaMenu(driver, environment);
 	}
 	
 	/// Megamenu click returns the expected general/shared values

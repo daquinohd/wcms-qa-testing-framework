@@ -12,7 +12,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import gov.nci.Utilities.BrowserManager;
-import gov.nci.clinicalTrial.pages.BasicSearchResults;
+import gov.nci.clinicaltrials.BaseClass;
+import gov.nci.clinicalTrial.pages.SearchResults;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 
 /**
@@ -31,7 +32,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
         logger = report.startTest(this.getClass().getSimpleName());
         pageURL = config.getPageURL("BasicSearchResultsURL");
         System.out.println("PageURL: " + pageURL);
-        driver = BrowserManager.startBrowser(browser, pageURL);
+        driver = BrowserManager.startBrowser(browser, config, pageURL);
 
         System.out.println("Basic search results setup done");
         testDataFilePath = config.getProperty("ClinicalTrialData");
@@ -40,11 +41,11 @@ public class BasicResultsUIElements_Test extends BaseClass {
     /**
      * Common routine for retriving the basic search results page.
      */
-    private BasicSearchResults getResultsPage(String pageUrl) throws MalformedURLException, UnsupportedEncodingException{
+    private SearchResults getResultsPage(String pageUrl) throws MalformedURLException, UnsupportedEncodingException{
         // Create search page with chat prompt suppressed.
         driver.get(pageURL);
         SuppressChatPromptPageObject chatBlock = new SuppressChatPromptPageObject(driver, null);
-        BasicSearchResults results = new BasicSearchResults(driver, chatBlock);
+        SearchResults results = new SearchResults(driver, chatBlock);
         return results;
     }
 
@@ -57,7 +58,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
         try {
 
             // Load results for empty search critera.
-            BasicSearchResults page = getResultsPage(pageURL);
+            SearchResults page = getResultsPage(pageURL);
 
             Assert.assertTrue(page.getResultsCountVisible(), "Results count not visible.");
             Assert.assertTrue(page.getResultsCountText().startsWith("Results 1-10 of"), "Result text not as expected");
@@ -78,7 +79,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
         try {
 
             // Load results for empty search critera.
-            BasicSearchResults page = getResultsPage(pageURL);
+            SearchResults page = getResultsPage(pageURL);
 
             Assert.assertEquals("Clinical Trials Search Results - National Cancer Institute", page.getPageTitle(), "Page title mismatch");
 
@@ -97,7 +98,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
         try {
 
             // Load results for empty search critera.
-            BasicSearchResults page = getResultsPage(pageURL);
+            SearchResults page = getResultsPage(pageURL);
 
             Assert.assertTrue(page.getPager().IsVisible(), "Pager not displayed!");
 
@@ -115,7 +116,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
 
         try {
             // Load results for empty search critera.
-            BasicSearchResults page = getResultsPage(pageURL);
+            SearchResults page = getResultsPage(pageURL);
 
             Assert.assertTrue(page.getResultsListIsVisible(), "Result list not displayed!");
 
@@ -140,7 +141,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
 
         try {
             // Load results for empty search critera.
-            BasicSearchResults page = getResultsPage(pageURL);
+            SearchResults page = getResultsPage(pageURL);
 
             Assert.assertTrue(page.getUpperSelectAll().IsVisible(), "Top Select All not displayed!");
 
@@ -159,7 +160,7 @@ public class BasicResultsUIElements_Test extends BaseClass {
         try {
 
             // Load results for empty search critera.
-            BasicSearchResults page = getResultsPage(pageURL);
+            SearchResults page = getResultsPage(pageURL);
 
             Assert.assertTrue(page.getLowerSelectAll().IsVisible(), "Lower Select All not displayed!");
 

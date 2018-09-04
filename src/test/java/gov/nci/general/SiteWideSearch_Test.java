@@ -26,15 +26,15 @@ import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.ScreenShot;
+import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.commonobjects.PageOptions;
 
-public class SiteWideSearch_Test {
+public class SiteWideSearch_Test extends BaseClass{
 		private final String TESTDATA_SHEET_NAME = "Sheet1";
 
 		protected static ExtentReports report;
 		protected static ExtentTest logger;
 		protected WebDriver driver;
-		protected ConfigReader config = new ConfigReader();
 		private String testDataFilePath;
 
 		@BeforeTest(groups = { "Smoke", "current" })
@@ -91,7 +91,7 @@ public class SiteWideSearch_Test {
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
 
-		driver = BrowserManager.startBrowser(browser, "about:blank");
+		driver = BrowserManager.startBrowser(browser, config, "about:blank");
 
 		System.out.println("Page Options setup done");
 		System.out.println("");

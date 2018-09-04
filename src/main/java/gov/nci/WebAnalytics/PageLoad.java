@@ -11,11 +11,16 @@ public class PageLoad extends PageObjectBase {
 
 	// Local driver object
 	public WebDriver driver;
+
+	private Nav Nav;
 	
 	// Constructor to initialize the page object	
-	public PageLoad(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+	public PageLoad(WebDriver driver, String environment) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		this.driver = driver;
+
+		Nav = new Nav(environment);
+
 		PageFactory.initElements(driver, this);
 		System.out.print("PageFactory initialized for load events: ");
 	}
