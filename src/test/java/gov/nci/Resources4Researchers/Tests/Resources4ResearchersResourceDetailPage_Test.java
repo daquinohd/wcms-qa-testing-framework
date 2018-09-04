@@ -43,7 +43,7 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getProperty("Resources4ResearchersResourceDetailPageURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		r4rResourceDetail = new Resources4ResearchersResourceDetailPage(driver, logger);
 		System.out.println("R4R ResourceDetail Page setup done");

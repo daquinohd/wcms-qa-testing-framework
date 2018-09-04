@@ -26,7 +26,7 @@ public class AZList_Test extends BaseClass {
 	@Parameters({"browser"})
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
-		driver = BrowserManager.startBrowser(browser, "about:blank");
+		driver = BrowserManager.startBrowser(browser, config, "about:blank");
 		TESTDATA_PATH = config.getProperty("AZListData");
 		System.out.println("    Test data path: " + TESTDATA_PATH);
 	}
