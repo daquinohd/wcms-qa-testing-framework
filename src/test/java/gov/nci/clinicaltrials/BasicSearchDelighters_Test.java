@@ -26,7 +26,7 @@ public class BasicSearchDelighters_Test extends BaseClass {
 
         // TODO: Make pageURL a local instance variable.
         pageURL = config.getPageURL("BasicClinicalTrialSearchURL");
-        this.driver = BrowserManager.startBrowser(browser, pageURL);
+        this.driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
             // Create search page with chat prompt suppressed.
@@ -68,10 +68,10 @@ public class BasicSearchDelighters_Test extends BaseClass {
         BasicSearch page = LoadSearchPage();
 
         Delighter delighter = page.getLiveHelpDelighter();
-        String expectedUrl = config.getProperty("DelighterLiveHelpURL");
+        String expectedUrl = config.getProperty("CTSLiveHelpDelighterPath");
 
         Assert.assertTrue(delighter.isDisplayed(), "Live Help delighter is not displayed.");
-        Assert.assertEquals(delighter.getLinkUrl(), expectedUrl, "Link URL mismatch.");
+        Assert.assertEquals(delighter.getLinkPath(), expectedUrl, "Link URL mismatch.");
     }
 
     /**
@@ -83,10 +83,10 @@ public class BasicSearchDelighters_Test extends BaseClass {
         BasicSearch page = LoadSearchPage();
 
         Delighter delighter = page.getWhatAreDelighter();
-        String expectedUrl = config.getProperty("DelighterWhatURL");
+        String expectedUrl = config.getProperty("CTSWhatAreTrialsDelighterPath");
 
         Assert.assertTrue(delighter.isDisplayed(), "What Are Clinical Trials delighter is not displayed.");
-        Assert.assertEquals(delighter.getLinkUrl(), expectedUrl, "Link URL mismatch.");
+        Assert.assertEquals(delighter.getLinkPath(), expectedUrl, "Link URL mismatch.");
     }
 
     /**
@@ -98,10 +98,10 @@ public class BasicSearchDelighters_Test extends BaseClass {
         BasicSearch page = LoadSearchPage();
 
         Delighter delighter = page.getWhichTrialDelighter();
-        String expectedUrl = config.getProperty("DelighterWhichURL");
+        String expectedUrl = config.getProperty("CTSWhichTrialsDelighterPath");
 
         Assert.assertTrue(delighter.isDisplayed(), "What Are Clinical Trials delighter is not displayed.");
-        Assert.assertEquals(delighter.getLinkUrl(), expectedUrl, "Link URL mismatch.");
+        Assert.assertEquals(delighter.getLinkPath(), expectedUrl, "Link URL mismatch.");
     }
 
 }

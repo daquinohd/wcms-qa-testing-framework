@@ -8,7 +8,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class ScreenShot {
-	ConfigReader config = new ConfigReader();
 
 	public static String captureScreenshot(WebDriver driver, String screenShotName) {
 		try {
@@ -32,7 +31,3 @@ public class ScreenShot {
 	}
 
 }
-
-// String dest =
-// "C:\\nci_workspace\\nci\\test-output\\Screenshots\\" +
-// screenShotName + ".png";

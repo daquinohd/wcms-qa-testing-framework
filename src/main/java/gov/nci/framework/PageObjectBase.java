@@ -24,10 +24,13 @@ public class PageObjectBase {
 
     WebDriver browser;
 
+    // Allow for a 20 second delay.  Because network delays can be insane.
+    static final int MAX_PAGE_LOAD_DELAY = 20;
+
     /**
      * Interface for passing actions which will cause the page to change. Used with
      * expectUrlChange.
-     * 
+     *
      * @see expectUrlChange
      */
     public interface IPageChangeAction {
@@ -36,7 +39,7 @@ public class PageObjectBase {
 
     /**
      * Construtor
-     * 
+     *
      * @param browser An instance of WebDriver representing the browser at the time the
      * constructor is fired.
      */
@@ -46,12 +49,16 @@ public class PageObjectBase {
         pageTitle = browser.getTitle().trim();
     }
 
+    protected WebDriver getBrowser(){
+	return this.browser;
+    }
+
     private ParsedURL pageUrl;
     private String pageTitle;
-    
+
     /**
      * Gets a URL object representing the current page's URL.
-     * 
+     *
      * @return an instance of ParsedURL representing the page URL at the
      * time the page object was instantiated.
      * @throws UnsupportedEncodingException
@@ -79,13 +86,13 @@ public class PageObjectBase {
      * In practice, the action parameter is an anonymous method, taking no
      * parameters and returning no result. The actual code to trigger the event goes
      * in the method body. e.g.
-     * 
+     *
      * <pre>
      *      expectUrlChange(() -> {
      *          form_Search.submit();
      *      })
      * </pre>
-     * 
+     *
      * @param action A function taking no parameters with no return value.
      */
     public void expectUrlChange(IPageChangeAction action) {
@@ -96,14 +103,21 @@ public class PageObjectBase {
         action.operation();
 
         // Wait for the page URL to change.
-        new WebDriverWait(this.browser, 5).until(driver -> {
+        new WebDriverWait(this.browser, MAX_PAGE_LOAD_DELAY).until(driver -> {
             return !driver.getCurrentUrl().equals(oldURL);
         });
 
         // Wait for the page initialization to complete and the document.ready
         // event to fire.
-        new WebDriverWait(this.browser, 5).until(webDriver -> ((JavascriptExecutor) webDriver)
+        new WebDriverWait(this.browser, MAX_PAGE_LOAD_DELAY).until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
-    }    
-    
+    }
+
+    /**
+     * Getter for the WebDriver instance.
+     */
+    protected WebDriver GetBrowserInstance() {
+        return this.browser;
+    }
+
 }
