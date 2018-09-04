@@ -25,7 +25,8 @@ public class PageOptions_Test extends BaseClass {
 	@Parameters({"browser"})
 	public void setup(String browser) {
 		logger = report.startTest(this.getClass().getSimpleName());
-		driver = BrowserManager.startBrowser(browser, config, "about:blank");
+		pageURL = "about:blank";
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 		// System.out.println(this.getClass().getSimpleName());
 		// int uLine = this.getClass().getSimpleName().lastIndexOf("_");
 		// System.out.println(this.getClass().getSimpleName().substring(0, uLine));
