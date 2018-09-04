@@ -20,7 +20,7 @@ import org.openqa.selenium.WebDriver;
 public class BrowserManager {
 
 	static WebDriver driver;
-	
+
 	/**
 	 * @param config
 	 * @param driver
@@ -81,6 +81,7 @@ public class BrowserManager {
 			System.out.println("Chrome Driver Path: " + driverFullPath);
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("headless");
+			options.addArguments("window-size=1200x600");  // Testing large screens: Breakpoint 1024px
 			driver = new ChromeDriver(options);
 			driver.manage().window().maximize();
 			driver.get(url);
@@ -136,7 +137,7 @@ public class BrowserManager {
 
 		return driver;
 	}
-	
+
 
 	/**
 	 * Create a proxy web driver for a given browser and URL.<br/>
@@ -148,14 +149,15 @@ public class BrowserManager {
 	 * TODO: reuse startBrowser where possible
 	 */
 	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy bmp) {
-		
+
 		ConfigReader config = new ConfigReader();
 		ChromeOptions chromeOptions = new ChromeOptions();
-		FirefoxOptions firefoxOptions = new FirefoxOptions();			
-		
+		FirefoxOptions firefoxOptions = new FirefoxOptions();
+
 	    // Get the Selenium proxy object and configure it as a desired capability
 	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(bmp);
-		
+	    DesiredCapabilities capabilities = new DesiredCapabilities();
+
 		if(browserName.equalsIgnoreCase("Chrome")) {
 			System.out.println("Chrome browser");
 			String driverFullPath = getDriverPath(config, "ChromeDriver");
@@ -172,7 +174,7 @@ public class BrowserManager {
 			String driverFullPath = getDriverPath(config, "FirefoxDriver");
 			System.setProperty("webdriver.gecko.driver", driverFullPath);
 			System.out.println("Firefox Driver Path: " + driverFullPath);
-			
+
 			firefoxOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
 			driver = new FirefoxDriver(firefoxOptions);
 			driver.manage().window().maximize();
@@ -184,7 +186,7 @@ public class BrowserManager {
 			String driverFullPath = getDriverPath(config, "FirefoxDriver");
 			System.setProperty("webdriver.gecko.driver", driverFullPath);
 			System.out.println("Gecko Driver Path: " + driverFullPath);
-			
+
 			FirefoxBinary firefoxBinary = new FirefoxBinary();
 			firefoxBinary.addCommandLineOptions("--headless");
 			firefoxOptions.setBinary(firefoxBinary);
@@ -196,8 +198,8 @@ public class BrowserManager {
 		else {
 			throw new IllegalArgumentException("Invalid browser type; check configuration settings.");
 		}
-		
+
 		return driver;
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 # Allow developers to have a local script for their desired configuration
 /run.bat
+/runno.bat
 /run.cmd
 /run.sh
 
