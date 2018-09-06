@@ -11,33 +11,36 @@ import org.testng.Assert;
 import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 
-public class CthpPage_Test extends AnalyticsTestLoadBase {
+public class PdqPage_Test extends AnalyticsTestLoadBase {
 
 	/**
-	 * The following page types / content are covered by this test class:
-	 * - CTHP Patient (English and Spanish)
-	 * - CTHP Health Professional (English and Spanish)
-	 */
+	 * The following page / content types are covered by this test class:
+	 * - PDQ Cancer Info Summary (English and Spanish)
+	 * - PDQ Cancer Info Summary section URLs (English and Spanish)
+	 * - PDQ Cancer Info Summary link URLs(English and Spanish)
+	 */		
 	
 	private AnalyticsPageLoad analyticsPageLoad;
 	private Beacon beacon;	
 	private String testDataFilePath;
-	private final String TESTDATA_SHEET_NAME = "CTHPPage";
+	private final String TESTDATA_SHEET_NAME = "PDQPage";
 	
 	@BeforeClass(groups = { "Analytics" }) 
 	public void setup() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
 	
-	/// CTHP page loads return expected values
-	@Test(dataProvider = "CTHPPageLoad", groups = { "Analytics" })
-	public void testCthpPageLoad(String path, String contentType) {
+	/// PDQ page loads return expected values
+	@Test(dataProvider = "PDQPageLoad", groups = { "Analytics" })
+	public void testPdqPageLoad(String path, String contentType) {
 		try {
 			driver.get(config.goHome() + path);
+			driver.navigate().refresh();
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			String[] pathNoQuery = path.split("#");
+			DoCommonLoadAssertions(beacon, analyticsPageLoad, pathNoQuery[0]);
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		}
 		catch (Exception e) {
@@ -46,8 +49,8 @@ public class CthpPage_Test extends AnalyticsTestLoadBase {
 		}
 	}
 
-	@DataProvider(name = "CTHPPageLoad")
-	public Iterator<Object[]> getCTHPPageLoadData() {
+	@DataProvider(name = "PDQPageLoad")
+	public Iterator<Object[]> getPDQPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 	

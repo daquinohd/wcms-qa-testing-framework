@@ -51,7 +51,7 @@ public class InnerPage_Test extends AnalyticsTestLoadBase {
 	
 	/// Inner page loads return expected values
 	@Test(dataProvider = "InnerPageLoad", groups = { "Analytics" })
-	public void testHomePageLoad(String path, String contentType) {
+	public void testInnerPageLoad(String path, String contentType) {
 		try {
 			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);

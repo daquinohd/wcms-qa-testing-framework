@@ -12,22 +12,36 @@
 			<parameter name="browser" value="Chrome" />
 			<parameter name="browser" value="ChromeHeadless" />
 			<parameter name="browser" value="Firefox" />
+			<parameter name="browser" value="GeckoHeadless" />
 			<parameter name="browser" value="iPhone6" />
 			<parameter name="browser" value="iPad" />
+			<parameter name="environment" value="prod" />		
 		-->
-			<parameter name="browser" value="GeckoHeadless" />
-		
+		<parameter name="browser" value="GeckoHeadless" />
 		<groups>
 			<run>
 				<include name="Analytics" />
 			</run>
 		</groups>
 		<classes>
+			<class name="gov.nci.webanalyticstests.load.BlogPostPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.BlogSeriesPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.CthpPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.HomePage_Test" />
 			<class name="gov.nci.webanalyticstests.load.InnerPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.LandingPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.PdqPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.TopicPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsSearchPages_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.DictionaryPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.DynamicListingPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.SwsResultsPage_Test" />
+			
+			<!-- Runs successfully, but with test failures
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsViewPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsResultsPage_Test" />
+			-->
+
 			<class name="gov.nci.webanalyticstests.click.WaBasicSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.Resize_Test" />

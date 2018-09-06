@@ -11,27 +11,26 @@ import org.testng.Assert;
 import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 
-public class CthpPage_Test extends AnalyticsTestLoadBase {
+public class BlogSeriesPage_Test extends AnalyticsTestLoadBase {
 
 	/**
-	 * The following page types / content are covered by this test class:
-	 * - CTHP Patient (English and Spanish)
-	 * - CTHP Health Professional (English and Spanish)
+	 * The following page / content types are covered by this test class:
+	 * - Blog Series Page (English and Spanish)
 	 */
 	
 	private AnalyticsPageLoad analyticsPageLoad;
 	private Beacon beacon;	
 	private String testDataFilePath;
-	private final String TESTDATA_SHEET_NAME = "CTHPPage";
+	private final String TESTDATA_SHEET_NAME = "BlogSeriesPage";
 	
 	@BeforeClass(groups = { "Analytics" }) 
 	public void setup() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
 	
-	/// CTHP page loads return expected values
-	@Test(dataProvider = "CTHPPageLoad", groups = { "Analytics" })
-	public void testCthpPageLoad(String path, String contentType) {
+	/// BlogSeries page loads return expected values
+	@Test(dataProvider = "BlogSeriesPageLoad", groups = { "Analytics" })
+	public void testBlogSeriesPageLoad(String path, String contentType) {
 		try {
 			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
@@ -46,8 +45,8 @@ public class CthpPage_Test extends AnalyticsTestLoadBase {
 		}
 	}
 
-	@DataProvider(name = "CTHPPageLoad")
-	public Iterator<Object[]> getCTHPPageLoadData() {
+	@DataProvider(name = "BlogSeriesPageLoad")
+	public Iterator<Object[]> getBlogSeriesPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 	

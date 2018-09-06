@@ -14,7 +14,6 @@ import gov.nci.error.pages.PageNotFound;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class SitewideSearch_Test extends AnalyticsTestClickBase {
 	
