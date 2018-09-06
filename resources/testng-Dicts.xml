@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Dictionary" parallel="none">
+  <test name="NCI - Testing Dictionaries" preserve-order="true">
+  <!--
+  The browser parameter is set in pom.xml as part of invoking
+  the maven-surefire-plugin.
+
+  <parameter name="browser" value="Chrome" />
+  -->
+  <classes>
+  <!--
+    <class name="gov.nci.dictionary.DictDrugs_Test" />
+    <class name="gov.nci.dictionary.DictGenetics_Test" />
+  -->
+    <class name="gov.nci.dictionary.DictTerms_Test" />
+    <class name="gov.nci.dictionary.DictTermsES_Test" />
+  </classes>
+  </test>
+  <!--
+  <test name="NCI - Testing AZ-List" preserve-order="true">
+    <classes>
+      <class name="gov.nci.general.AZList_Test">
+        <methods>
+          <include name="IsVisible"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+  -->
+</suite>
+
