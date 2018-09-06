@@ -18,6 +18,7 @@
 			<parameter name="environment" value="prod" />		
 		-->
 		<parameter name="browser" value="GeckoHeadless" />
+		<parameter name="environment" value="dt" />
 		<groups>
 			<run>
 				<include name="Analytics" />
