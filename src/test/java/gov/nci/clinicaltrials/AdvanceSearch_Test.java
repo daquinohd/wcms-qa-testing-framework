@@ -36,12 +36,12 @@ public class AdvanceSearch_Test extends BaseClass {
 	String testDataFilePath;
 
 	@BeforeClass(groups = { "Smoke", "current" })
-	@Parameters({ "browser" })
-	public void setup(String browser) throws MalformedURLException {
+	@Parameters({ "browser", "environment" })
+	public void setup(String browser, String environment) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getPageURL("AdvanceSearchPageURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
 			SuppressChatPromptPageObject chatBlock = new SuppressChatPromptPageObject(driver, null);
@@ -103,7 +103,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterLiveHelp() {
 		Assert.assertTrue(delighter.getLiveHelpDelighter().isDisplayed());
-		String expectedPageUrl = config.getProperty("DelighterLiveHelpURL");
+		String expectedPageUrl = config.getProperty("CTSLiveHelpDelighterPath");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterLiveHelp();
 		// Checking the end page URL
@@ -119,7 +119,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhat() {
 		Assert.assertTrue(delighter.getWhatAreDelighter().isDisplayed());
-		String expectedPageUrl = config.getProperty("DelighterWhatURL");
+		String expectedPageUrl = config.getProperty("CTSWhatAreTrialsDelighterPath");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhat();
 		// Checking the end page URL
@@ -135,7 +135,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	@Test(groups = { "Smoke" }, priority = 2)
 	public void verifyDelighterWhich() {
 		Assert.assertTrue(delighter.getWhichTrialDelighter().isDisplayed());
-		String expectedPageUrl = config.getProperty("DelighterWhichURL");
+		String expectedPageUrl = config.getProperty("CTSWhichTrialsDelighterPath");
 		// Verifying the LiveHelp Delighter
 		delighter.verifyDelighterWhich();
 		// Checking the end page URL

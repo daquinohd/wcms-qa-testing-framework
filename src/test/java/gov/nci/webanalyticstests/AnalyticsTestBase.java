@@ -33,72 +33,79 @@ public class AnalyticsTestBase {
 	/**
 	* TODO: Set default URLs at test level, not base
 	* 	- URL may need to be used as a param
-	* TODO: Move has/is methods back into AnalyticsRequest 
+	* TODO: Move has/is methods back into AnalyticsRequest
 	*  - Handle null exceptions in has() methods
 	*  - Create 'catch-all' Contains() method
 	* TODO: Clean up setters / getters
 	* TODO: Refactor setBeacon() methods
 	* TODO: Create timer
 	* TODO: Move "Logger Path" output up one level
-	**/	
+	**/
 	public static WebDriver driver;
     public static BrowserMobProxy proxy;
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
-	protected ConfigReader config = new ConfigReader();	
-	
-	protected List<String> harUrlList;	
+	protected ConfigReader config;
+
+	protected List<String> harUrlList;
 	protected List<AnalyticsRequest> loadBeacons;
 	protected List<AnalyticsRequest> clickBeacons;
-	
+
 	/**************************************
 	 * Section: TextNG Befores & Afters *
 	 **************************************/
-	
+
 	/**
-	* Configuration information for a TestNG class (http://testng.org/doc/documentation-main.html): 
-	* @BeforeSuite: The annotated method will be run before all tests in this suite have run. 
-	* @AfterSuite: The annotated method will be run after all tests in this suite have run. 
-	* @BeforeTest: The annotated method will be run before any test method belonging to the classes inside the <test> tag is run. 
-	* @AfterTest: The annotated method will be run after all the test methods belonging to the classes inside the <test> tag have run. 
-	* @BeforeGroups: The list of groups that this configuration method will run before. 
-	* 				 This method is guaranteed to run shortly before the first test method that belongs to any of these groups is invoked. 
-	* @AfterGroups: The list of groups that this configuration method will run after. 
-	* 				This method is guaranteed to run shortly after the last test method that belongs to any of these groups is invoked. 
-	* @BeforeClass: The annotated method will be run before the first test method in the current class is invoked. 
-	* @AfterClass: The annotated method will be run after all the test methods in the current class have been run. 
-	* @BeforeMethod: The annotated method will be run before each test method. 
+	* Configuration information for a TestNG class (http://testng.org/doc/documentation-main.html):
+	* @BeforeSuite: The annotated method will be run before all tests in this suite have run.
+	* @AfterSuite: The annotated method will be run after all tests in this suite have run.
+	* @BeforeTest: The annotated method will be run before any test method belonging to the classes inside the <test> tag is run.
+	* @AfterTest: The annotated method will be run after all the test methods belonging to the classes inside the <test> tag have run.
+	* @BeforeGroups: The list of groups that this configuration method will run before.
+	* 				 This method is guaranteed to run shortly before the first test method that belongs to any of these groups is invoked.
+	* @AfterGroups: The list of groups that this configuration method will run after.
+	* 				This method is guaranteed to run shortly after the last test method that belongs to any of these groups is invoked.
+	* @BeforeClass: The annotated method will be run before the first test method in the current class is invoked.
+	* @AfterClass: The annotated method will be run after all the test methods in the current class have been run.
+	* @BeforeMethod: The annotated method will be run before each test method.
 	* @AfterMethod: The annotated method will be run after each test method.
 	**/
-	
+
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters({ "browser" })
 	public void beforeTest(String browser) throws MalformedURLException {
 		// Start the BrowserMob proxy on the site homepage
-		String initUrl = config.goHome();
+		String initUrl = "https://wwww.cancer.gov";
 		System.out.println("=== Starting BrowserMobProxy ===");
 		this.initializeProxy(initUrl);
-		
-		// Initialize driver and open browser
-		System.out.println("=== Starting Driver ===");
-		driver = BrowserManager.startProxyBrowser(browser, initUrl, proxy);
-    	System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
-		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 	}
-	
-	@BeforeClass(groups = { "Analytics" })
-	public void beforeClass() {
+
+	@BeforeClass( alwaysRun = true )
+	@Parameters({ "browser", "environment" })
+	public void beforeClass(String browser, String environment) {
+
+		config = new ConfigReader(environment);
+
 		String testClass = this.getClass().getSimpleName();
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
-		
+
+		String initUrl = config.goHome();
+
+		// Initialize driver and open browser
+		System.out.println("=== Starting Driver ===");
+		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
+		System.out.println("Requests to " + AnalyticsRequest.TRACKING_SERVER + " will be tested.");
+		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
+
+		// Initialize reports
 		System.out.println(testClass);
 		System.out.println("Logger Path:" + extentReportPath + "\n");
-		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		report.addSystemInfo("Environment", config.getProperty("Environment"));
+		report = new ExtentReports(extentReportPath + environment + "-" + fileName + ".html");
+		report.addSystemInfo("Environment", environment);
 		logger = report.startTest(testClass);
 	}
-	
+
 	@BeforeMethod(groups = { "Analytics" })
 	public void beforeMethod() throws RuntimeException {
 		// Reset our browser to full screen before each method
@@ -117,25 +124,25 @@ public class AnalyticsTestBase {
 			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
 		}
 	}
-	
+
 	@AfterClass(groups = { "Analytics" })
 	public void afterClass() {
 		report.endTest(logger);
 		report.flush();
-	}
-	
-	@AfterTest(groups = { "Analytics"})
-	public void afterTest() {
 		System.out.println("=== Quitting Driver ===");
 		driver.quit();
+	}
+
+	@AfterTest(groups = { "Analytics"})
+	public void afterTest() {
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
 	}
-	
+
 	/******************************************************
 	 * Section: Initialize BMP and request beacon objects *
 	 ******************************************************/
-	
+
 	/**
 	 * Start and configure BrowserMob Proxy for Selenium.<br/>
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
@@ -152,26 +159,26 @@ public class AnalyticsTestBase {
 	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
 	    // Create a new HAR with a label matching the hostname
-	    proxy.newHar(url);	    
+	    proxy.newHar(url);
 		System.out.println("== Started BrowserMobProxy successfully ==");
 	}
-	
+
 	/**
-	 * Build the list of HAR (HTTP archive) request URLs 
+	 * Build the list of HAR (HTTP archive) request URLs
 	 * TODO: refactor into har Url list and tracking server list
 	 * TODO: only print tested URL
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 * @throws IllegalArgumentException
 	 */
-	protected void setHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {		
+	protected void setHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {
 
-		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
-		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
+		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data.
+		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content,
 	    // and export performance data as a HAR file object.
 	    Har har = proxy.getHar();
 	    List<HarEntry> entries = har.getLog().getEntries();
-    	
+
     	// Reset HAR URL list
     	harUrlList = new ArrayList<String>();
 
@@ -183,34 +190,34 @@ public class AnalyticsTestBase {
 	    		harUrlList.add(result);
 	    	}
 	    }
-	    
+
 	    // Debug size of HAR list
     	System.out.println("Total HAR entries: " + entries.size());
-		
+
 		// The HAR list has been created; clear the log for next pass
-		har.getLog().getEntries().clear();		
+		har.getLog().getEntries().clear();
 		// For further reading, see https://en.wiktionary.org/wiki/hardy_har_har
 	}
-	
+
 	/**
 	 * Set create lists of AnalyticsRequest objects for load and click events
-	 * loadBeacons -> a list of analytics request URLs fired off by an analytics load event, ie s.tl() 
-	 * clickBeacons -> a list of analytics request URLs fired off by an analytics load event, ie s.t() 			 * 
+	 * loadBeacons -> a list of analytics request URLs fired off by an analytics load event, ie s.tl()
+	 * clickBeacons -> a list of analytics request URLs fired off by an analytics load event, ie s.t() 			 *
 	 * @param urlList
 	 */
 	protected void setBeaconLists(List<String> urlList) {
-		
+
 		// Reset beacon lists
 		loadBeacons = new ArrayList<AnalyticsRequest>();
-		clickBeacons = new ArrayList<AnalyticsRequest>();		
-		
+		clickBeacons = new ArrayList<AnalyticsRequest>();
+
 		// For each server URL, check if it is an analytics click
 		// or load event, then add it to the correct list
 		for(String url : urlList)
-		{  
+		{
 			AnalyticsRequest request = new AnalyticsRequest(url);
 			request.buildParamsList();
-			
+
 			// Populate the beacon lists
 			if(request.isClickTypeEvent()) {
 				clickBeacons.add(request);
@@ -222,11 +229,11 @@ public class AnalyticsTestBase {
 
 	    // Debug analytics beacon counts
 		System.out.println("Total analytics requests: " + urlList.size()
-			+ " (load: " + loadBeacons.size() 
+			+ " (load: " + loadBeacons.size()
 			+ ", click: " + clickBeacons.size() + ")"
 		);
 	}
-	
+
 	/**
 	 * Get the 'click' beacon to test
 	 * @return AnalyticsRequest
@@ -234,12 +241,12 @@ public class AnalyticsTestBase {
 	protected AnalyticsRequest getClickBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		AnalyticsRequest rtn = getLastReq(clickBeacons);		
+		AnalyticsRequest rtn = getLastReq(clickBeacons);
 		System.out.println("Click beacon to test: ");
 		System.out.println(rtn.getUrl() + "\n");
 		return getLastReq(clickBeacons);
 	}
-	
+
 	/**
 	 * Get the 'load' beacon to test
 	 * @return AnalyticsRequest
@@ -247,12 +254,12 @@ public class AnalyticsTestBase {
 	protected AnalyticsRequest getLoadBeacon() {
 		setHarUrlList(proxy);
 		setBeaconLists(harUrlList);
-		AnalyticsRequest rtn = getLastReq(loadBeacons);		
+		AnalyticsRequest rtn = getLastReq(loadBeacons);
 		System.out.println("Load beacon to test: ");
 		System.out.println(rtn.getUrl() + "\n");
 		return getLastReq(loadBeacons);
-	}	
-	
+	}
+
 	/**
 	 * Utility function to get the last element in a list of AnalyticsRequest objects
 	 * @param requests

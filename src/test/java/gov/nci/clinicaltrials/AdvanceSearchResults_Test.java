@@ -28,7 +28,7 @@ public class AdvanceSearchResults_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getProperty("ResultsPageURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 
 		try {
 			SuppressChatPromptPageObject chatBlock = new SuppressChatPromptPageObject(driver, null);

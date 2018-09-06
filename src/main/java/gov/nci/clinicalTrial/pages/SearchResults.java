@@ -12,9 +12,15 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.clinicalTrial.common.Checkbox;
+import gov.nci.clinicalTrial.common.CriteriaList;
 import gov.nci.commonobjects.Pager;
+import gov.nci.framework.ElementChange;
 
-public class BasicSearchResults extends ClinicalTrialPageObjectBase {
+/**
+ * Represents the Clinicial Trial Search results page.
+ * NOTE: Basic and advanced search use the same results page, so there's only one class.
+ */
+public class SearchResults extends ClinicalTrialPageObjectBase {
 
 	// UI Elements
 	@FindBy(how = How.CSS, using = ".cts-results-label")
@@ -26,6 +32,12 @@ public class BasicSearchResults extends ClinicalTrialPageObjectBase {
 	@FindBy(how = How.CSS, using = "checkAllLower")
 	WebElement bottomSelectAll;
 
+	// Toggle button for display of the search criteria.
+	@FindBy(how = How.CSS, using = "#ctscb")
+	WebElement SearchCriteriaDisplayToggle;
+
+	@FindBy(how = How.CSS, using = ".clinicaltrials-results-criteria-display")
+	WebElement SearchCriteria;
 
 	// Results List display area
 	@FindBy(how = How.CSS, using = ".cts-results-container")
@@ -33,11 +45,52 @@ public class BasicSearchResults extends ClinicalTrialPageObjectBase {
 
 	private Pager pagerControl;
 
-	public BasicSearchResults(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
+	public SearchResults(WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
 		this(browser, null);
 	}
 
-	public BasicSearchResults(WebDriver browser, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException {
+	/**
+	 * Simulates a click on the search criteria show/hide toggle.
+	 */
+	public void ShowSearchCriteria() {
+		SearchCriteriaDisplayToggle.click();
+		ElementChange.WaitForText(GetBrowserInstance(), SearchCriteriaDisplayToggle, "Hide Search Criteria");
+	}
+
+	public CriteriaList GetSearchCriteria() {
+
+		/**
+		 * Build up a list of labels and criteria.
+		 * 
+		 * This is based on the assumption that the markup is structured as:
+		 * 
+		 * <table class="table no-auto-enlarge" style="width: 100%;">
+		 *   <thead>
+		 *     <tr> <!-- Header row ommitted --> </tr>
+		 *   </thead>
+		 *   <tbody>
+		 *     <tr>
+		 *       <td><strong> LABEL </strong></td>
+		 *       <td> Criterion text </td>
+		 *     </tr>
+		 *   </tbody>
+		 * </table>
+		 * 
+		 */
+		CriteriaList criteria = new CriteriaList();
+		int i = 1;
+		List<WebElement> list = SearchCriteria.findElements(By.cssSelector("tbody tr"));
+		for (WebElement entry : list) {
+			List<WebElement> item = entry.findElements(By.cssSelector("td"));
+			String label = item.get(0).getText();
+			String text = item.get(1).getText();
+			criteria.Add(label, text);
+		}
+
+		return criteria;
+	}
+
+	public SearchResults(WebDriver browser, ClinicalTrialPageObjectBase decorator) throws MalformedURLException, UnsupportedEncodingException {
 		super(browser, decorator);
 		PageFactory.initElements(browser, this);
 

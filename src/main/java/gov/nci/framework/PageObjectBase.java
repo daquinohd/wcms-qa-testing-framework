@@ -24,6 +24,9 @@ public class PageObjectBase {
 
     WebDriver browser;
 
+    // Allow for a 20 second delay.  Because network delays can be insane.
+    static final int MAX_PAGE_LOAD_DELAY = 20;
+
     /**
      * Interface for passing actions which will cause the page to change. Used with
      * expectUrlChange.
@@ -100,13 +103,21 @@ public class PageObjectBase {
         action.operation();
 
         // Wait for the page URL to change.
-        new WebDriverWait(this.browser, 5).until(driver -> {
+        new WebDriverWait(this.browser, MAX_PAGE_LOAD_DELAY).until(driver -> {
             return !driver.getCurrentUrl().equals(oldURL);
         });
 
         // Wait for the page initialization to complete and the document.ready
         // event to fire.
-        new WebDriverWait(this.browser, 5).until(webDriver -> ((JavascriptExecutor) webDriver)
+        new WebDriverWait(this.browser, MAX_PAGE_LOAD_DELAY).until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
+
+    /**
+     * Getter for the WebDriver instance.
+     */
+    protected WebDriver GetBrowserInstance() {
+        return this.browser;
+    }
+
 }
