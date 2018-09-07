@@ -15,10 +15,10 @@
 			<parameter name="browser" value="GeckoHeadless" />
 			<parameter name="browser" value="iPhone6" />
 			<parameter name="browser" value="iPad" />
-			<parameter name="environment" value="prod" />		
+			<parameter name="environment" value="prod" />
 		-->
 		<parameter name="browser" value="GeckoHeadless" />
-		<parameter name="environment" value="dt" />
+		<parameter name="environment" value="prod" />
 		<groups>
 			<run>
 				<include name="Analytics" />
@@ -43,10 +43,11 @@
 			<class name="gov.nci.webanalyticstests.load.appmodule.CtsResultsPage_Test" />
 			-->
 
-			<class name="gov.nci.webanalyticstests.click.WaBasicSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
 			<class name="gov.nci.webanalyticstests.click.MegaMenu_Test" />
+			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvancedSearch_Test" />
+			<class name="gov.nci.webanalyticstests.click.appmodule.CtsBasicSearch_Test" />
 		</classes>
 	</test>
 </suite>

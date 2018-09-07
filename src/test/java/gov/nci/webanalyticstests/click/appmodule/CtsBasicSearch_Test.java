@@ -1,4 +1,4 @@
-package gov.nci.webanalyticstests.click;
+package gov.nci.webanalyticstests.click.appmodule;
 
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeMethod;
@@ -8,9 +8,9 @@ import org.testng.Assert;
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.webanalytics.Beacon;
-import gov.nci.webanalyticstests.AnalyticsTestBase;
+import gov.nci.webanalyticstests.click.AnalyticsTestClickBase;
 
-public class WaBasicSearch_Test extends AnalyticsTestClickBase {
+public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 
 	private BasicSearch basicSearch;
 	private Beacon beacon;
