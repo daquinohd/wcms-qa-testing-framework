@@ -79,9 +79,11 @@ public class ConfigReader {
 		}
 	}
 
-	// Whey didn't you just go home? 
-	// That's your home. 
-	// Are you too good for your home? Answer me!
+	/**
+	 * Whey didn't you just go home? That's your home!
+	 * Are you too good for your home? Answer me!
+	 * @return homePage URL (String)
+	 */
 	public String goHome() {
 		return getPageURL("HomePage");
 	}
