@@ -20,14 +20,14 @@ public class DictDrugs_Test extends BaseClass {
 
 	private String TESTDATA_PATH;
 
-	@BeforeClass(alwaysRun = true )
-	@Parameters({"browser"})
-	public void setup(String browser) {
-		logger = report.startTest(this.getClass().getSimpleName());
-		driver = BrowserManager.startBrowser(browser, "about:blank");
-		// TESTDATA_PATH = config.getProperty("AZListData");
-		// System.out.println("    Test data path: " + TESTDATA_PATH);
-	}
+	// @BeforeClass(alwaysRun = true )
+	// @Parameters({"browser"})
+	// public void setup(String browser) {
+	// 	logger = report.startTest(this.getClass().getSimpleName());
+	// 	driver = BrowserManager.startBrowser(browser, config, "about:blank");
+	// 	// TESTDATA_PATH = config.getProperty("AZListData");
+	// 	// System.out.println("    Test data path: " + TESTDATA_PATH);
+	// }
 
 /*  ***************************** Test Methods ****************************************** */
 	// The page options container is visible on most pages.  Testing that
@@ -35,21 +35,22 @@ public class DictDrugs_Test extends BaseClass {
 	// ------------------------------------------------------------------------------
 	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
 	public void TitleVisible(String url) {
+		HeaderElements dict;
 
-		System.out.println("\nTesting Drug Dictionary TitleVisible()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Drug Dictionary TitleVisible()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
 
-		HeaderElements dict;
-
 		try {
 			dict = new HeaderElements(driver);
 			boolean titleVisible = dict.TitleVisible();
-			Assert.assertTrue(titleVisible, "*** Error: Drug Distionary Header Not Found ***");
+			Assert.assertTrue(titleVisible,
+			                  "*** Error: Drug Distionary Header Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in TitleVisible() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
@@ -61,26 +62,7 @@ public class DictDrugs_Test extends BaseClass {
 	// ----------------------------------------------------------------------------------
 	@DataProvider(name = "DrugDictionary")
 	public Iterator<Object[]> loadAZList() {
-		// String TESTDATA_SHEET_NAME = "Visible Page Options";
-		// String TESTDATA_SHEET_NAME = "AZ-List";
-		// ExcelManager excelReader = new ExcelManager(TESTDATA_PATH);
-
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-
-		// for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-		// 	String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-		// 	                  									"Hostname", rowNum);
-		// 	String pageOptionsPath   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-		// 	                  									"AZ Link", rowNum);
-		// 	String pageOptionsType   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-		// 	                  									"PageOptions Type", rowNum);
-		// 	String url = pageOptionsHost + pageOptionsPath;
-
-		// 	if (!pageOptionsType.equals("none")) {
-		// 		Object ob[] = { url };
-		// 		myObjects.add(ob);
-		// 	}
-	// }
 
         String url = AddHostname("/publications/dictionaries/cancer-drug");
         Object ob[] = { url };

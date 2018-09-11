@@ -20,14 +20,12 @@ public class DictTerms_Test extends BaseClass {
 
 	private String TESTDATA_PATH;
 
-	@BeforeClass(alwaysRun = true )
-	@Parameters({"browser"})
-	public void setup(String browser) {
-		logger = report.startTest(this.getClass().getSimpleName());
-		driver = BrowserManager.startBrowser(browser, "about:blank");
-		// TESTDATA_PATH = config.getProperty("AZListData");
-		// System.out.println("    Test data path: " + TESTDATA_PATH);
-	}
+	// @BeforeClass(alwaysRun = true )
+	// @Parameters({"browser"})
+	// public void setup(String browser) {
+	// 	// logger = report.startTest(this.getClass().getSimpleName());
+	// 	driver = BrowserManager.startBrowser(browser, config, "about:blank");
+	// }
 
 /*  ***************************** Test Methods ****************************************** */
 	// The page options container is visible on most pages.  Testing that
@@ -37,12 +35,12 @@ public class DictTerms_Test extends BaseClass {
 	public void TitleVisible(String url) {
 		HeaderElements page;
 
-		System.out.println("\nTesting Glossary TitleVisible()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Glossary TitleVisible()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
-
 
 		try {
 			page = new HeaderElements(driver);
@@ -50,7 +48,7 @@ public class DictTerms_Test extends BaseClass {
 			Assert.assertTrue(titleVisible,
 			                  "*** Error: Term Dictionary Header Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in TitleVisible() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
@@ -60,12 +58,12 @@ public class DictTerms_Test extends BaseClass {
 	public void WidgetLinkVisible(String url) {
 		HeaderElements dict;
 
-		System.out.println("\nTesting Term Dictionary WidgetLinkVisible()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary WidgetLinkVisible()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
-
 
 		try {
 			dict = new HeaderElements(driver);
@@ -73,7 +71,7 @@ public class DictTerms_Test extends BaseClass {
 			Assert.assertTrue(linkVisible,
 			                  "*** Error: Term Dictionary Widget Link Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in WidgetLinkVisible() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
@@ -85,7 +83,8 @@ public class DictTerms_Test extends BaseClass {
 		HeaderElements dict;
 		String language = "EN";
 
-		System.out.println("\nTesting Term Dictionary ClickWidgetLink()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary ClickWidgetLink()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
@@ -97,7 +96,7 @@ public class DictTerms_Test extends BaseClass {
 			Assert.assertTrue(foundWidgetPage,
 			                  "*** Error: Term Dictionary Click Widget Page Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in ClickWidgetLink() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
@@ -107,9 +106,9 @@ public class DictTerms_Test extends BaseClass {
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void RadioVisible(String url) {
 		HeaderElements dict;
-		String language = "EN";
 
-		System.out.println("\nTesting Term Dictionary RadioVisible()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary RadioVisible()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
@@ -121,7 +120,7 @@ public class DictTerms_Test extends BaseClass {
 			Assert.assertTrue(radioVisible,
 			                  "*** Error: Term Dictionary Radio Button Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in RadioVisible() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
@@ -131,9 +130,9 @@ public class DictTerms_Test extends BaseClass {
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void RadioStartsWithSelected(String url) {
 		HeaderElements dict;
-		String language = "EN";
 
-		System.out.println("\nTesting Term Dictionary RadioStartsWithSelected()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary RadioStartsWithSelected()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
@@ -145,7 +144,83 @@ public class DictTerms_Test extends BaseClass {
 			Assert.assertTrue(radioStartsWith,
 			                  "*** Error: Term Dictionary Radio Button Default Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in RadioStartsWithSelected() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the search input field is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "Glossary", groups = { "dictionary" })
+	public void InputFieldVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.dictionary-search-input";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary Input Field Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the Search button is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "Glossary", groups = { "dictionary" })
+	public void SearchBtnVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.button";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary " + curMethod);
+
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary SearchButton Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the A-Z list is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "Glossary", groups = { "dictionary" })
+	public void AZListVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "div.az-list";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary A-Z List Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 

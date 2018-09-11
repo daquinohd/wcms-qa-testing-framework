@@ -11,6 +11,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Parameters;
 
@@ -20,6 +22,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import gov.nci.Utilities.ConfigReader;
 import gov.nci.Utilities.ScreenShot;
+import gov.nci.Utilities.BrowserManager;
 
 public class BaseClass {
 
@@ -31,34 +34,63 @@ public class BaseClass {
 	protected String pageURL; // TODO: Get rid of pageURL from BaseClass.
 	protected ConfigReader config;
 
-	@BeforeClass(alwaysRun = true)
-	@Parameters({ "environment" })
-	public void beforeClass(String environment) {
-
-		config = new ConfigReader(environment);
-
-		System.out.println(this.getClass().getSimpleName());
-		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
-		String extentReportPath = config.getExtentReportPath();
-		System.out.println("Logger Path:" + extentReportPath);
-
-		report = new ExtentReports(extentReportPath + environment + "-" + fileName + ".html");
-		System.out.println("Report Path: " + report);
-		report.addSystemInfo("Environment", environment);
-		logger = report.startTest(this.getClass().getSimpleName());
+	@BeforeSuite( alwaysRun = true )
+	public void suiteHeader() {
+		System.out.println("\n***************** START Suite **********************");
 	}
 
+	@BeforeTest( alwaysRun = true )
+	@Parameters({ "environment", "browser" })
+	public void beforeTest(String environment, String browser) {
+		System.out.println("*** START Test");
+		config = new ConfigReader(environment);
 
+		System.out.println("\n    Environment: " + environment.toUpperCase());
+		String dateTime = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
+		String extentReportPath = config.getExtentReportPath();
+		String fileName =  environment.toUpperCase() + "-" + dateTime + ".html";
+		System.out.println("    Logger Path: " + extentReportPath + fileName);
+
+		report = new ExtentReports(extentReportPath + fileName);
+		System.out.println("    Report Path: " + report);
+		report.addSystemInfo("Environment", environment);
+	}
+
+	// Setting up path and filename for the log file
+	// Printing location of log file and environment variables
+	// -------------------------------------------------------
+	@BeforeClass(alwaysRun = true)
+	@Parameters({ "environment", "browser" })
+	public void beforeClass(String environment, String browser) {
+
+		System.out.println("\n    ===========  ");
+		System.out.println("    Class Name:  " + this.getClass().getSimpleName());
+		System.out.println("    ===========  ");
+
+		config = new ConfigReader(environment);
+		driver = BrowserManager.startBrowser(browser, config, "about:blank");
+
+		logger = report.startTest(this.getClass().getSimpleName());
+		logger.assignAuthor("Volker");
+	}
+
+	// Printing out the name of the method before each is run
+	// ------------------------------------------------------
 	@BeforeMethod(alwaysRun = true)
-	public void beforeMethod(Method method) {
+	@Parameters({ "browser" })
+	public void beforeMethod(Method method, String browser) {
 
-		System.out.println(String.format("Executing %s.%s()", method.getDeclaringClass().getName(), method.getName()));
+		System.out.println(String.format("\nExecuting %s.%s()",
+											method.getDeclaringClass().getName(),
+											method.getName()));
 
 		// Force the page to load fresh before each test.
 		// TODO: Move this to those test classes where it makes sense.
-		driver.get(pageURL);
+		// driver.get("about:blank");
 	}
 
+	// If a method failed log the result and take a screenshot of the page
+	// -------------------------------------------------------------------
 	@AfterMethod(alwaysRun = true)
 	public void tearDown(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
@@ -68,24 +100,27 @@ public class BaseClass {
 			logger.log(LogStatus.FAIL, image + "Fail => " + result.getName());
 		} else if (result.getStatus() == ITestResult.SKIP) {
 			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
+		} else {
+			logger.log(LogStatus.PASS, "Passed => " + result.getName());
 		}
-
+		report.flush();
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void afterClass() {
+		System.out.println("*** END Class");
 		driver.quit();
 		report.endTest(logger);
 	}
 
 	@AfterTest(alwaysRun = true)
 	public void afterTest() {
-		report.flush();
+		System.out.println("*** END Test");
 	}
 
 	@AfterSuite( alwaysRun = true )
 	public void suiteFooter() {
-		System.out.println("\n***************** END **********************\n");
+		System.out.println("\n***************** END Suite **********************\n");
 	}
 
 	// Returns the URL for the host currently used for testing

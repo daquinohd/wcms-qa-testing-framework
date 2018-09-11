@@ -7,7 +7,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.GetAllWindowHandles;
+// import org.openqa.selenium.remote.server.handler.GetAllWindowHandles;
 import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.framework.PageObjectBase;
@@ -37,7 +37,6 @@ public class HeaderElements extends PageObjectBase {
     // ---------------------------------------------------------------------
     public boolean LinkVisible() {
         List<WebElement> elementExists = getWidgetLink();
-        System.out.println(elementExists.size());
 
         if (elementExists.size() > 0) {
             WebElement title = elementExists.get(0);
@@ -70,7 +69,7 @@ public class HeaderElements extends PageObjectBase {
             }
 
             if ( driver.getTitle().equals(widgetTitle) ) {
-                System.out.println("Widget " + lang + " Found");
+                System.out.println("    Widget " + lang + " Found");
                 return true;
             }
             System.out.println("*** Error: Widget Page NOT Found");
@@ -117,34 +116,45 @@ public class HeaderElements extends PageObjectBase {
         return false;
     }
 
+    public boolean FieldVisible(String elementSelector) {
+        List<WebElement> elementExists = getElementControl(elementSelector);
+
+        if (elementExists.size() > 0) {
+            WebElement element = elementExists.get(0);
+            return element.isDisplayed();
+        }
+        return false;
+    }
+
     private List<WebElement> getTitle() {
             List<WebElement> pageTitle = getBrowser().findElements(By.cssSelector("h1"));
-
             return pageTitle;
     }
 
     private List<WebElement> getWidgetLink() {
             List<WebElement> widgetLink = getBrowser().findElements(
                                            By.cssSelector("div.last-SI p > a"));
-
             return widgetLink;
     }
 
     private List<WebElement> getButtonControl(String buttonSelector) {
             List<WebElement> buttonControls = getBrowser().findElements(By.cssSelector("li." +
                                                                                         buttonSelector));
-
             return buttonControls;
     }
 
     private List<WebElement> getRadioControl() {
             List<WebElement> radioControls = getBrowser().findElements(By.cssSelector("div span.radio" ));
-
             return radioControls;
     }
+
     private List<WebElement> getRadioDefault() {
             List<WebElement> radioControls = getBrowser().findElements(By.cssSelector("#radioStarts" ));
-
             return radioControls;
+    }
+
+    private List<WebElement> getElementControl(String selector) {
+            List<WebElement> elementControls = getBrowser().findElements(By.cssSelector(selector));
+            return elementControls;
     }
 }

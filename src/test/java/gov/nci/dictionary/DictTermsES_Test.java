@@ -19,67 +19,75 @@ import gov.nci.clinicaltrials.BaseClass;
 public class DictTermsES_Test extends BaseClass {
 
 	private String TESTDATA_PATH;
+	private String language = "ES";
 
-	@BeforeClass(alwaysRun = true )
-	@Parameters({"browser"})
-	public void setup(String browser) {
-		logger = report.startTest(this.getClass().getSimpleName());
-		driver = BrowserManager.startBrowser(browser, "about:blank");
-		// TESTDATA_PATH = config.getProperty("AZListData");
-		// System.out.println("    Test data path: " + TESTDATA_PATH);
-	}
+	// @BeforeClass(alwaysRun = true )
+	// @Parameters({"browser"})
+	// public void setup(String browser) {
+	// 	// logger = report.startTest(this.getClass().getSimpleName());
+	// 	driver = BrowserManager.startBrowser(browser, config, "about:blank");
+	// 	// TESTDATA_PATH = config.getProperty("AZListData");
+	// 	// System.out.println("    Test data path: " + TESTDATA_PATH);
+	// }
 
 /*  ***************************** Test Methods ****************************************** */
 	// The page options container is visible on most pages.  Testing that
 	// it's shown on those pages.
 	// ------------------------------------------------------------------------------
 	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
-	public void TitleVisible(String url) {
+	public void TitleVisibleES(String url) {
+		HeaderElements page;
 
-		System.out.println("\nTesting Glossary ES TitleVisible()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Glossary ES TitleVisible()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
-
-		HeaderElements page;
 
 		try {
 			page = new HeaderElements(driver);
 			boolean titleVisible = page.TitleVisible();
-			Assert.assertTrue(titleVisible, "*** Error: Term (ES) Distionary Header Not Found ***");
+			Assert.assertTrue(titleVisible,
+			                  "*** Error: Term (ES) Distionary Header Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in TitleVisible() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
+	//
+	// --------------------------------------------------------------------
 	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
-	public void WidgetLinkESVisible(String url) {
+	public void WidgetLinkVisibleES(String url) {
+		HeaderElements dict;
 
-		System.out.println("\nTesting Glossary ES WidgetLinkESVisible()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Glossary ES WidgetLinkESVisible()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
 		driver.get(url);
 
-		HeaderElements dict;
-
 		try {
 			dict = new HeaderElements(driver);
 			boolean linkVisible = dict.LinkVisible();
-			Assert.assertTrue(linkVisible, "*** Error: Term Distionary ES Widget Link Not Found ***");
+			Assert.assertTrue(linkVisible,
+			                  "*** Error: Term Distionary ES Widget Link Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in WidgetLinkESVisible() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
 	// Finding the link for the Glossary Widget and testing that the page
 	// exists.
+	// ------------------------------------------------------------------
 	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
 	public void ClickWidgetLinkES(String url) {
+		HeaderElements dict;
 		String language = "ES";
 
-		System.out.println("\nTesting Glossary ES ClickWidgetLinkES()");
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Glossary ES ClickWidgetLinkES()");
 		System.out.println("    " + url);
 		logger.log(LogStatus.INFO, "Testing url: " + url);
 
@@ -87,44 +95,147 @@ public class DictTermsES_Test extends BaseClass {
 		// System.out.println("    WindowHandle");
 		// System.out.println("    " + driver.getWindowHandle());
 
-		HeaderElements dict;
-
 		try {
 			dict = new HeaderElements(driver);
 			boolean foundWidgetPage = dict.LinksToWidgetPage(driver, language);
-			Assert.assertTrue(foundWidgetPage, "*** Error: Terms Distionary ES Widget Page Not Found ***");
+			Assert.assertTrue(foundWidgetPage,
+			                  "*** Error: Terms Distionary ES Widget Page Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in ClickWidgetLinkES() ***");
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the "Starts with"/"Contains" radio buttons are displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+	public void RadioVisibleES(String url) {
+		HeaderElements dict;
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary RadioVisible()");
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.RadioBtnVisible();
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary ES Radio Button Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the "Starts with" radio button is selected by default
+	// ----------------------------------------------------------------
+	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+	public void RadioStartsWithSelectedES(String url) {
+		HeaderElements dict;
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary RadioStartsWithSelected()");
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioStartsWith = dict.RadioDefault();
+			Assert.assertTrue(radioStartsWith,
+			                  "*** Error: Term Dictionary ES Radio Button Default Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the search input field is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+	public void InputFieldVisibleES(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.dictionary-search-input";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary ES Input Field Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the Search button is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+	public void SearchBtnVisibleES(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.button";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary " + curMethod);
+
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary SearchButton Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the A-Z list is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+	public void AZListVisibleES(String url) {
+		HeaderElements dict;
+		String cssSelector = "div.az-list";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Term Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Term Dictionary A-Z List Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
 	}
 
 /*  ***************************** Data Provider *********************************************** */
-
 	// DataProvider to read the Excel spreadsheet with data containing URLs to be checked
 	// Using worksheet indicating URLs with Page Options that are visible.
 	// ----------------------------------------------------------------------------------
 	@DataProvider(name = "GlossaryES")
 	public Iterator<Object[]> loadAZList() {
-		// String TESTDATA_SHEET_NAME = "Visible Page Options";
-		// String TESTDATA_SHEET_NAME = "AZ-List";
-		// ExcelManager excelReader = new ExcelManager(TESTDATA_PATH);
-
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-
-		// for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-		// 	String pageOptionsHost   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-		// 	                  									"Hostname", rowNum);
-		// 	String pageOptionsPath   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-		// 	                  									"AZ Link", rowNum);
-		// 	String pageOptionsType   = excelReader.getCellData(TESTDATA_SHEET_NAME,
-		// 	                  									"PageOptions Type", rowNum);
-		// 	String url = pageOptionsHost + pageOptionsPath;
-
-		// 	if (!pageOptionsType.equals("none")) {
-		// 		Object ob[] = { url };
-		// 		myObjects.add(ob);
-		// 	}
-		// }
 
 		String url = AddHostname("/espanol/publicaciones/diccionario");
 		Object ob[] = { url };
