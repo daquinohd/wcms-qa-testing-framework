@@ -1,4 +1,4 @@
-package gov.nci.webanalyticstests.click;
+package gov.nci.webanalyticstests.click.appmodule;
 
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeMethod;
@@ -7,13 +7,13 @@ import org.testng.Assert;
 
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
-import gov.nci.WebAnalytics.AnalyticsRequest;
-import gov.nci.webanalyticstests.AnalyticsTestBase;
+import gov.nci.webanalytics.Beacon;
+import gov.nci.webanalyticstests.click.AnalyticsTestClickBase;
 
-public class WaBasicSearch_Test extends AnalyticsTestBase {
+public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 
 	private BasicSearch basicSearch;
-	private AnalyticsRequest beacon;
+	private Beacon beacon;
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	// TODO: add wait() to capture begin / abandon events
@@ -36,7 +36,7 @@ public class WaBasicSearch_Test extends AnalyticsTestBase {
 		basicSearch.setSearchKeyword("stomatitis");
 		
 		/* Get our beacon object **/ 
-		beacon = getClickBeacon();
+		beacon = getBeacon();
 		
 		/* Do assertions and log result */ 
 		Assert.assertTrue(beacon.hasEvent(38));
@@ -51,7 +51,7 @@ public class WaBasicSearch_Test extends AnalyticsTestBase {
 		/* Enter a keyword field, then abandon the form by navigating away  **/ 
 		basicSearch.setSearchKeyword("liver");
 		driver.navigate().to(config.getPageURL("HomePage"));
-		beacon = getClickBeacon();
+		beacon = getBeacon();
 
 		/* Verify that the expected values are tracked */
 		Assert.assertTrue(beacon.hasEvent(40));
@@ -65,7 +65,7 @@ public class WaBasicSearch_Test extends AnalyticsTestBase {
 		/* Enter an age field, then abandon the form by navigating away  **/ 
 		basicSearch.setSearchAge("55");
 		driver.navigate().to(config.getPageURL("HomePage"));
-		beacon = getClickBeacon();
+		beacon = getBeacon();
 
 		/* Verify that the expected values are tracked */
 		Assert.assertTrue(beacon.hasEvent(40));

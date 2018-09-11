@@ -1,26 +1,21 @@
-package gov.nci.WebAnalytics;
+package gov.nci.webanalytics;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
 
-public class AnalyticsRequest {
+// Represents a single Adobe Analytics request beacon with query parameters
+public class Beacon extends AnalyticsRequest {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods
-	// TODO: build setter/getter for channel? 
 	// TODO: reuse collection method from ParsedURL() instead of the local getList()
 
 	// Constants
-	public static final String STATIC_SERVER = "static.cancer.gov";
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
-		
+	
 	// Parameter values from URL
 	static final String CHANNEL = "ch";
-	static final String EVENTS = "events";	
+	static final String EVENTS = "events";
 	static final String LINKTYPE = "pe";
 	static final String LINKNAME = "pev2";
 	static final String LINKURL = "pev1";
@@ -30,95 +25,50 @@ public class AnalyticsRequest {
 	// to each of these query parameter
 	static final String PROP_PARTIAL = "c";
 	static final String EVAR_PARTIAL = "v";
-	static final String HIER_PARTIAL = "h";		
+	static final String HIER_PARTIAL = "h";
 	
-	// A request URL
-	private String url;
-	public String getUrl() {
-		return url;
+	// Testable variable names
+	public String[] suites; // s.account or s_account
+	public String[] events; // events
+	public String channels; // s.channel
+	public List<String> props; // props, aka "Traffic Variables"
+	public List<String> eVars; // eVars, aka "Conversion Variables"
+	public List<String> hiers; // Hierarchy variables
+	
+	// This class represents an Adobe Analytics request beacon
+	public Beacon(String url) {
+		super(url);
+		
+		// Set our variables
+		this.suites = getSuites();
+		this.channels = getChannels();
+		this.events = getEvents();
+		this.props = getPropList();
+		this.eVars = geteVarList();
+		this.hiers = getHierList();
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	
+	/**
+	 * Get an array of suites (s.account) values from the URL path.
+	 * @return suites (String[])
+	 */
+	private String[] getSuites() {
+		try {
+			String[] path = this.url.split("/");
+			String[] suites = path[5].split(",");
+			return suites;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Could not locate suite values in URL: " + url + "\nin Beacon: GetSuites()");
+			return null;
+		}
 	}
 
-	// A request URI
-	private URI uri;	
-	public URI getUri() {
-		return uri;
-	}
-	public void setUri(URI uri) {
-		this.uri = uri;
-	}
-	
-	// A list of query parameters
-	private List<NameValuePair> paramsList;
-	public List<NameValuePair> getParamsList() {
-		return paramsList;
-	}
-	public void setParamsList(List<NameValuePair> paramsList) {
-		this.paramsList = paramsList;
-	}
-		
 	/**
-	 * Constructor with 'url' arg
-	 * @param url
+	 * Get channel parameter value. 
+	 * @return channel (String)
 	 */
-	public AnalyticsRequest(String url) {
-		setUrl(url);
-		setUri(null);
-		setParamsList(new ArrayList<NameValuePair>());
-	}
-	
-	/**
-	 * Build the 
-	 * @throws NullPointerException
-	 */
-	public void buildParamsList() throws NullPointerException {
-		setUri(createUri(url));
-		setParamsList(this.getList(uri));		
-	}
-	
-	/**
-	 * Create URI object from a given URL string
-	 * @param url
-	 * @return
-	 */
-	private static URI createUri(String url) {
-		try {
-			URI rtnUri = URI.create(url);
-			return rtnUri;
-		} catch (IllegalArgumentException ex) {
-			System.out.println("Invalid request URL \"" + url + 
-					"\\\" at AnalyticsRequest:createURI()");
-			return null;
-		}
-	}
-	
-	/**
-	 * Get the reporting suites (s_account) value
-	 * as an array of strings
-	 * @param uri
-	 * @return
-	 */
-	protected String[] getSuites(URI uri) {
-		try {
-			String[] path = uri.getPath().split("/");
-			String[] rtnSuites = path[3].split(",");
-			return rtnSuites;
-		} 
-		catch(ArrayIndexOutOfBoundsException ex) {
-			System.out.println("Invalid URI path: \"" + uri.getPath() + "\\\" at AnalyticsBase:getSuitesI()");			
-			return null;
-		}
-	}
-	
-	/**
-	 * Get channel value 
-	 * @param parms
-	 * @return
-	 */
-	public String getChannel(List<NameValuePair> parms) {
-		for (NameValuePair param : parms) {
+	private String getChannels() {
+		for (NameValuePair param : this.paramsList) {
 			if (param.getName().equalsIgnoreCase(CHANNEL)) {
 				return param.getValue().trim();
 			}
@@ -143,6 +93,33 @@ public class AnalyticsRequest {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	private List<String> getPropList() {
+		List <String> rtn = getNumParams(PROP_PARTIAL, paramsList, 75);
+		return rtn;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private List<String> geteVarList() {
+		List <String> rtn = getNumParams(EVAR_PARTIAL, paramsList, 75);
+		return rtn;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private List<String> getHierList() {
+		List <String> rtn = getNumParams(HIER_PARTIAL, paramsList, 2);
+		return rtn;
+	}
+
+	/**
 	 * Get list of props ('c' values in request)
 	 * @param parms
 	 * @return
@@ -158,15 +135,6 @@ public class AnalyticsRequest {
 	 */
 	public List<NameValuePair> getEvars() {
 		return getNumberedParams(paramsList, EVAR_PARTIAL, "eVar");
-	}
-	
-	/**
-	 * Get list of hierarchy values ("h" values in request)
-	 * @param parms
-	 * @return
-	 */
-	public List<NameValuePair> getHiers(List<NameValuePair> parms) {
-		return getNumberedParams(parms, HIER_PARTIAL, "hier");
 	}
 
 	/**
@@ -234,37 +202,6 @@ public class AnalyticsRequest {
 			return true;
 		}
 	}
-
-	/**
-	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
-	 * @param paramList
-	 * @param parm
-	 * @param replacement
-	 * @return
-	 */
-	private static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm, String replacement) {
-		List<NameValuePair> rtnList = new ArrayList<>();
-		for (NameValuePair param : paramList) {
-			// Regex: parameter name followed by 1 or more digits, starting with 1-9 only
-			if(param.getName().matches("^" + parm + "[1-9]\\d*$")) {
-				String rtnName = param.getName().replace(parm, replacement);
-				String rtnValue = param.getValue();
-				rtnList.add(new BasicNameValuePair(rtnName, rtnValue));
-			}
-		}
-		return rtnList;
-	}
-	
-	/**
-	 * Overload for getNumberedParams
-	 * Can be used for cases where the parameter name and analytics variable name match 
-	 * @param paramList
-	 * @param parm
-	 * @return
-	 */
-	private static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm) {
-		return getNumberedParams(paramList, parm, parm);
-	}	
 		
 	/**************** Methods to check for given values in a beacon ****************/
 	/*
@@ -277,15 +214,6 @@ public class AnalyticsRequest {
 	 * @return
 	 */
 	public boolean hasSuite() {
-		// TODO: fill this out
-		return false;
-	}
-
-	/**
-	 * Utility function to check for a given channel name
-	 * @return
-	 */
-	public boolean hasChannel() {
 		// TODO: fill this out
 		return false;
 	}
@@ -372,44 +300,45 @@ public class AnalyticsRequest {
 		}
 		return false;
 	}
-	
-	/**
-	 * Utility function to check for a user-specified analytics variable and value
-	 * @param name
-	 * @param value
-	 * @return bool
-	 */
-	public boolean hasVariable(String name, String value) {
-		// TODO: fill this out
-		return false;
-	}		
 
+	/******************** Utility methods ****************************************/	
 	
 	/**
-	 * Split URI into list of encoded elements
-	 * @param uri
-	 * @return retParams
+	 * Initialize a numbered list of empty elements. 
+	 * @param size
+	 * @return rtnList List<String>
 	 */
-	@Deprecated
-	public static List<NameValuePair> getList(URI uri) {
-		List<NameValuePair> rtnParams = new ArrayList<NameValuePair>();
+	private List<String> initNumberedArrayList(int size) {		
+		List<String> myList = new ArrayList<String>();
+		while(myList.size() <= size) {
+			myList.add(null);
+		}
+		return myList;
+	}
+	
+	/**
+	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
+	 * @param myParam
+	 * @param myList
+	 * @param total
+	 * @return List of values (String)
+	 */
+	protected List<String> getNumParams(String myParam, List<NameValuePair> myList, int total) {
+		// Create a list with x names and null values
+		List<String> rtnList = initNumberedArrayList(total);
 		
-		try {
-			String queries = uri.getRawQuery(); // get encoded query string
-			for(String parm : queries.split("&")) {
-				String[] pair = parm.split("=");
-				String Name = URLDecoder.decode(pair[0], "UTF-8");
-				String value = "";
-				if(pair.length > 1) {
-					value = URLDecoder.decode(pair[1], "UTF-8"); 
-				}
-				rtnParams.add(new BasicNameValuePair(Name, value));				
+		// Go through the list of populated parameter values and add those to the return list 
+		// where the number matches
+		for(NameValuePair pair : myList) {
+			String name = pair.getName();
+			String val = pair.getValue();
+			// Regex: parameter name followed by 1 or more digits, starting with 1-9 only
+			if(name.matches("^" + myParam + "[1-9]\\d*$")) {
+				int index = Integer.parseInt(name.replace(myParam, ""));
+				rtnList.set(index, val);
 			}
-		} 
-		catch (UnsupportedEncodingException ex) {
-			System.out.println("Error decoding URI in WaParams:buildParamsList()");
-		}		
-		return rtnParams;
+		}
+		return rtnList;
 	}
 	
 }

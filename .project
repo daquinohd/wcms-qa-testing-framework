@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>nci</name>
-	<comment></comment>
+	<comment>Automated test framework using Se WebDriver, TestNG and Maven.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
