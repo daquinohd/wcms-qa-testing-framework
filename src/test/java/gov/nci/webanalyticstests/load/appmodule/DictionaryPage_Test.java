@@ -23,8 +23,8 @@ public class DictionaryPage_Test extends AnalyticsTestLoadBase {
 	
 	// TODO: genetics/drug defintiions
 	// TODO: pageload from dictionary search
-	// TODO: fix test failures
 	// TODO: handle prop/eVar16 logic:
+	// TODO: prop / evar16
 	/***
 	 * Other values needed:
 		prop16 / eVar 16:
@@ -48,7 +48,9 @@ public class DictionaryPage_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			
+			path = getDictionaryPath(path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			//Assert.assertTrue(beacon.props.get(16).length() > 0);
 			//Assert.assertTrue(beacon.eVars.get(16).length() > 0);			
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
@@ -62,6 +64,26 @@ public class DictionaryPage_Test extends AnalyticsTestLoadBase {
 	@DataProvider(name = "DictionaryPageLoad")
 	public Iterator<Object[]> getDictionaryPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
+	}
+	
+	/**
+	 * Clean up paths for expected dictionary analytics values
+	 * @param path
+	 * @return
+	 */
+	private String getDictionaryPath(String path) {
+		if(path.contains("/def/")) {
+			return path.split("/def/")[0];
+		}
+		else if(path.contains("/search?")) {
+			return path.split("/search?")[0];
+		}
+		else if(path.contains("?")) {
+			return path.split("\\?")[0];
+		}
+		else {
+			return path;
+		}
 	}
 	
 }

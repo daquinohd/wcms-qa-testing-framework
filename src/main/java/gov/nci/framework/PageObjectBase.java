@@ -75,6 +75,14 @@ public class PageObjectBase {
     public String getPageTitle() {
         return pageTitle;
     }
+    
+    /**
+     * Sets the current page's title.
+     * @param pageTitle
+     */
+    public void setPageTitle(String pageTitle) {
+    	this.pageTitle = pageTitle;
+    }
 
     /**
      * Performs an action which causes navigation, resulting in the browser moving

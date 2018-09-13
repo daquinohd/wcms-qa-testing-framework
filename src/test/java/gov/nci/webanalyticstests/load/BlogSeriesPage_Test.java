@@ -36,7 +36,8 @@ public class BlogSeriesPage_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			
+			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		}
 		catch (Exception e) {

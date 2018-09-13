@@ -32,7 +32,6 @@ public abstract class AnalyticsTestBase {
 
 	/**
 	* TODO: Create timer
-	* TODO: Fix configuration reader issues
 	**/	
 	protected static WebDriver driver;
 	protected static BrowserMobProxy proxy;
@@ -193,6 +192,21 @@ public abstract class AnalyticsTestBase {
 		int index = requests.size() - 1;
 		Beacon request = (index >= 0) ? requests.get(index) : null;
 		return request;
+	}
+
+	/**
+	 * Utility function to get an element from a given index in a list of AnalyticsRequest objects.
+	 * @param requests
+	 * @param posFromEnd
+	 * @return the specified AnalyticsRequest object
+	 */
+	protected static Beacon getReqFromPosition(List<Beacon> requests, int index) {
+		try {
+			return requests.get(index);			
+		} 
+		catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 	
 	/****************************** Abstract methods ******************************/

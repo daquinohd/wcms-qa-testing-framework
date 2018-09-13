@@ -50,7 +50,7 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 			beacon = getBeacon();
 
 			// Do assertions
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		}
 		catch (Exception e) {
@@ -70,7 +70,7 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println("Home refresh load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			logger.log(LogStatus.PASS, "Home-refresh load values are correct.");
 		}
 		catch (Exception e) {
@@ -91,7 +91,7 @@ public class HomePage_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println("Home page and back load event: ");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
 			logger.log(LogStatus.PASS, "Home-and-back load values are correct.");
 		}
 		catch (Exception e) {

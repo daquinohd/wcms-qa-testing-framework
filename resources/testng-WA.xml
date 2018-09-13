@@ -17,14 +17,15 @@
 			<parameter name="browser" value="iPad" />
 			<parameter name="environment" value="prod" />
 		-->
-		<parameter name="browser" value="GeckoHeadless" />
-		<parameter name="environment" value="prod" />
+		<parameter name="environment" value="dt" />
 		<groups>
 			<run>
 				<include name="Analytics" />
 			</run>
 		</groups>
 		<classes>
+
+			<!-- Load tracking events -->
 			<class name="gov.nci.webanalyticstests.load.BlogPostPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.BlogSeriesPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.CthpPage_Test" />
@@ -33,21 +34,22 @@
 			<class name="gov.nci.webanalyticstests.load.LandingPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.PdqPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.TopicPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsSearchPages_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvBasicSearchPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvancedResultsPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsBasicResultsPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsViewPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.DictionaryPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.DynamicListingPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.SwsResultsPage_Test" />
-			
-			<!-- Runs successfully, but with test failures
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsViewPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsResultsPage_Test" />
-			-->
 
+			<!-- Click tracking events -->
 			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
 			<class name="gov.nci.webanalyticstests.click.MegaMenu_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvancedSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsBasicSearch_Test" />
+			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicResults_Test" />
+
 		</classes>
 	</test>
 </suite>

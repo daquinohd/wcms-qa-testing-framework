@@ -9,7 +9,9 @@ public class Beacon extends AnalyticsRequest {
 	// TODO: move server strings into config	
 	// TODO: remove unused methods
 	// TODO: reuse collection method from ParsedURL() instead of the local getList()
-
+	//	TODO: Handle null exceptions in has() methods
+	//	TODO: Create 'catch-all' Contains() method		
+	
 	// Constants
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
 	
@@ -26,7 +28,7 @@ public class Beacon extends AnalyticsRequest {
 	static final String PROP_PARTIAL = "c";
 	static final String EVAR_PARTIAL = "v";
 	static final String HIER_PARTIAL = "h";
-	
+
 	// Testable variable names
 	public String[] suites; // s.account or s_account
 	public String[] events; // events
@@ -34,6 +36,7 @@ public class Beacon extends AnalyticsRequest {
 	public List<String> props; // props, aka "Traffic Variables"
 	public List<String> eVars; // eVars, aka "Conversion Variables"
 	public List<String> hiers; // Hierarchy variables
+	public String linkName;
 	
 	// This class represents an Adobe Analytics request beacon
 	public Beacon(String url) {
@@ -46,7 +49,14 @@ public class Beacon extends AnalyticsRequest {
 		this.props = getPropList();
 		this.eVars = geteVarList();
 		this.hiers = getHierList();
+		this.linkName = getLinkName();
 	}
+	
+	/**************** Methods to check for given values in a beacon ****************/
+	/*
+	 * TODO: Replace "contains' with "matches" where possible
+	 * TODO: Refactor common key/var logic into util methods
+	 */
 	
 	/**
 	 * Get an array of suites (s.account) values from the URL path.
@@ -119,23 +129,6 @@ public class Beacon extends AnalyticsRequest {
 		return rtn;
 	}
 
-	/**
-	 * Get list of props ('c' values in request)
-	 * @param parms
-	 * @return
-	 */
-	public List<NameValuePair> getProps() {
-		return getNumberedParams(paramsList, PROP_PARTIAL, "prop");
-	}
-	
-	/**
-	 * Get list of eVars ('v' values in request)
-	 * @param parms
-	 * @return
-	 */
-	public List<NameValuePair> getEvars() {
-		return getNumberedParams(paramsList, EVAR_PARTIAL, "eVar");
-	}
 
 	/**
 	 * Get "Link Type" value (pe)(
@@ -177,20 +170,6 @@ public class Beacon extends AnalyticsRequest {
 	}
 	
 	/**
-	 * Check for parameters to verify that this is a link event
-	 * @param paramList
-	 * @return
-	 */
-	public boolean hasLinkType() {
-		for (NameValuePair param : paramsList) {
-			if (param.getName().equalsIgnoreCase(LINKTYPE)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Check for parameters to verify that this is a click-type/link event
 	 * @param paramList
 	 * @return
@@ -202,38 +181,12 @@ public class Beacon extends AnalyticsRequest {
 			return true;
 		}
 	}
-		
-	/**************** Methods to check for given values in a beacon ****************/
-	/*
-	 * TODO: Replace "contains' with "matches" where possible
-	 * TODO: Refactor common key/var logic into util methods
-	 */
 	
 	/**
-	 * Utility function to check for a given suite name
+	 * Check for an event value within a click beacon.
+	 * 
+	 * @param eventNumber
 	 * @return
-	 */
-	public boolean hasSuite() {
-		// TODO: fill this out
-		return false;
-	}
-	
-	/**
-	 * Utility function to check for a link name value within a click beacon.
-	 * @param name
-	 * @return
-	 */
-	public boolean hasLinkName(String name) {
-		if(this.getLinkName().equalsIgnoreCase(name)) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Utility function to check for an event value within a click beacon.
-	 * @param evt
-	 * TODO: fix hardcoded values
 	 */
 	public boolean hasEvent(int eventNumber) {
 		String evt = "event" + Integer.toString(eventNumber);
@@ -242,7 +195,12 @@ public class Beacon extends AnalyticsRequest {
 				if(event.matches("^event47=\\d+")) {
 					return true;
 				}
-			} 
+			}
+			else if(evt.equalsIgnoreCase("event92")) {
+				if(event.matches("^event92=\\d+")) {
+					return true;
+				}
+			}			
 			else if(event.equalsIgnoreCase(evt)) {
 				return true;
 			}
@@ -250,56 +208,6 @@ public class Beacon extends AnalyticsRequest {
 		return false;
 	}
 	
-	/**
-	 * Utility function to check for a given prop and value
-	 * @param num
-	 * @param val
-	 * @return
-	 */
-	public boolean hasProp(int num, String val) {
-		String blob = this.getProps().toString();
-		if(blob.toLowerCase().contains("prop" + Integer.toString(num) + "=" + val.toLowerCase())) {
-			return true;
-		}
-		return false;
-	}	
-	
-	/**
-	 * Utility function to check for a given eVar and value
-	 * @param num
-	 * @param val
-	 * @return
-	 */
-	public boolean haseVar(int num, String val) {
-		String blob = this.getEvars().toString();
-		if(blob.toLowerCase().contains("evar" + Integer.toString(num) + "=" + val.toLowerCase())) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Utility function overload to check for a given eVar 
-	 * @param num
-	 * @return
-	 */
-	public boolean haseVar(int num) {
-		return haseVar(num, "");
-	}	
-	
-	/**
-	 * Utility function to check for a given heirarchy and value
-	 * @param num
-	 * @param val
-	 * @return
-	 */
-	public boolean hasHier(int num, String val) {
-		String blob = this.getEvars().toString();
-		if(blob.toLowerCase().contains("hier" + Integer.toString(num) + "=" + val.toLowerCase())) {
-			return true;
-		}
-		return false;
-	}
 
 	/******************** Utility methods ****************************************/	
 	
@@ -340,5 +248,15 @@ public class Beacon extends AnalyticsRequest {
 		}
 		return rtnList;
 	}
-	
+
+	/**
+	 * Utility function to check for a user-specified variable and value
+	 * @param name
+	 * @param value
+	 * @return bool
+	 */
+	protected boolean hasVariable(String name, String value) {
+		// TODO: fill this out
+		return false;
+	}
 }

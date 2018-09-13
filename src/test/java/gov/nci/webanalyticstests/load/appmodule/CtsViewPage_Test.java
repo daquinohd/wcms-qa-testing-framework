@@ -35,14 +35,18 @@ public class CtsViewPage_Test extends AnalyticsTestLoadBase {
 	}
 	
 	/// CTSView page loads return expected values
-	@Test(dataProvider = "CTSViewPageLoad", groups = { "Analytics" })
-	public void testCTSViewPageLoad(String path, String contentType) {
+	@Test(dataProvider = "CTSAdvancedViewPage", groups = { "Analytics" })
+	public void testCTSAdvancedViewPageLoad(String path, String contentType) {
 		try {
 			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			
+			String[] pathNoQuery = path.split("\\?");
+			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoQuery[0]);
+			Assert.assertEquals(beacon.props.get(62), "Clinical Trials: Advanced");
+			Assert.assertEquals(beacon.eVars.get(62), "Clinical Trials: Advanced");
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		}
 		catch (Exception e) {
@@ -51,9 +55,61 @@ public class CtsViewPage_Test extends AnalyticsTestLoadBase {
 		}
 	}
 
-	@DataProvider(name = "CTSViewPageLoad")
-	public Iterator<Object[]> getCTSViewPageLoadData() {
-		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
+	/// CTSView page loads return expected values
+	@Test(dataProvider = "CTSBasicViewPage", groups = { "Analytics" })
+	public void testCTSBasicViewPageLoad(String path, String contentType) {
+		try {
+			driver.get(config.goHome() + path);
+			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
+			beacon = getBeacon();
+			
+			String[] pathNoQuery = path.split("\\?");
+			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoQuery[0]);
+			Assert.assertEquals(beacon.props.get(62), "Clinical Trials: Basic");
+			Assert.assertEquals(beacon.eVars.get(62), "Clinical Trials: Basic");
+			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+		}
+		catch (Exception e) {
+			Assert.fail("Error loading " + contentType);
+			e.printStackTrace();
+		}
+	}
+	
+	/// CTSView page loads return expected values
+	@Test(dataProvider = "CTSCustomViewPage", groups = { "Analytics" })
+	public void testCTSCustomViewPageLoad(String path, String contentType) {
+		try {
+			driver.get(config.goHome() + path);
+			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
+			beacon = getBeacon();
+			
+			String[] pathNoQuery = path.split("\\?");
+			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoQuery[0]);
+			Assert.assertEquals(beacon.props.get(62), "Clinical Trials: Custom");
+			Assert.assertEquals(beacon.eVars.get(62), "Clinical Trials: Custom");
+			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+		}
+		catch (Exception e) {
+			Assert.fail("Error loading " + contentType);
+			e.printStackTrace();
+		}
+	}
+	
+	@DataProvider(name = "CTSAdvancedViewPage")
+	public Iterator<Object[]> getAdvancedViewPageLoadData() {
+		return getFilteredPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME, "SearchType", "Advanced");
+	}
+	
+	@DataProvider(name = "CTSBasicViewPage")
+	public Iterator<Object[]> getBasicViewPageLoadData() {
+		return getFilteredPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME, "SearchType", "Basic");
+	}
+
+	@DataProvider(name = "CTSCustomViewPage")
+	public Iterator<Object[]> getCustomViewPageLoadData() {
+		return getFilteredPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME, "SearchType", "Custom");
 	}
 	
 }

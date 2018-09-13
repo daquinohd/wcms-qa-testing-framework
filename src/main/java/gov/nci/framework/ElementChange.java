@@ -1,5 +1,6 @@
 package gov.nci.framework;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,7 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ElementChange {
 
     static final int MAX_TRANSITION_DELAY = 15;
-
+	static JavascriptExecutor javaScript;
+    
     /**
      * Pause for up to MAX_TRANSITION_DELAY seconds to allow the text of a page
      * element to change to a new value.
@@ -28,4 +30,28 @@ public class ElementChange {
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 
+    /**
+     * Change an element's "href" attribute value to an empty string. 
+     * 
+     * @param driver A WebDriver instance representing the browser, currently displaying
+     * the page where the change will take place.
+     * 
+     * @param selector The Javascript queryselector string
+     */
+    public static void removeHref (WebDriver driver, String selector) {
+    	javaScript = (JavascriptExecutor) driver;
+    	javaScript.executeScript("document.querySelector('" + selector + "').setAttribute('href','')");
+    }
+    
+    /**
+     * Uncheck all checkboxes on a page.
+     * @param driver A WebDriver instance representing the browser, currently displaying
+     * the page where the change will take place.
+     */
+    public static void uncheckAll (WebDriver driver) {
+    	javaScript = (JavascriptExecutor) driver;
+    	javaScript.executeScript("for(var checkboxes=document.getElementsByTagName('input'),x=0;x<checkboxes.length;x++)" 
+    	                       + "'checkbox'==checkboxes[x].type&&(checkboxes[x].checked=!1);");
+    }
+    
 }

@@ -39,8 +39,9 @@ public class PdqPage_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			String[] pathNoQuery = path.split("#");
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, pathNoQuery[0]);
+			
+			String[] pathNoId = path.split("#");
+			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoId[0]);
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		}
 		catch (Exception e) {

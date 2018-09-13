@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import gov.nci.framework.ElementChange;
+
 public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 	public static final String SEARCH_RESULT_PAGE_TITLE = "Clinical Trials Search Results";
 	public static final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information\nFind NCI-Supported Clinical Trials";
@@ -62,6 +64,15 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 		return box_SearchCriteria;
 	}
 
+	public void clickStartOverNoNav() {
+		ElementChange.removeHref(driver, ".cts-start-over a");
+		lnk_StartOver.click();
+	}
+
+	public void clickStartOver() {
+		lnk_StartOver.click();
+	}
+	
 	public void clickOnSelectAllCheckBox() {
 		cbox_CheckAllTop.click();
 	}
@@ -84,13 +95,33 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", checkBoxes.get(0));
 		System.out.println("Checkboxes: " + checkBoxes.get(1));
-
 	}
 
+	public void selectCheckboxByIndex(int index) {
+		try {
+			System.out.println("Selected list item #" + index);
+			checkBoxes.get(index).click();
+		} catch (IndexOutOfBoundsException ex) {
+			System.out.println("Invalid arraylist index: " + index);
+		}
+	}
+	
+	public void clearCheckBoxes() {
+		ElementChange.uncheckAll(driver);
+	}
+	
 	public List<WebElement> getResultsLinks() {
 		System.out.println("First result link: " + lnk_resultLink.get(0).getText());
 		System.out.println("Number of result links: " + lnk_resultLink.size());
 		return lnk_resultLink;
 	}
 
+	public void clickResultLinkByIndex(int index) {
+		try {
+			lnk_resultLink.get(index).click();
+		} catch (IndexOutOfBoundsException ex) {
+			System.out.println("Invalid arraylist index: " + index);
+		}
+	}
+	
 }

@@ -8,7 +8,7 @@ import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.load.AnalyticsTestLoadBase;
 
-public class CtsSearchPages_Test extends AnalyticsTestLoadBase {
+public class CtsAdvBasicSearchPage_Test extends AnalyticsTestLoadBase {
 
 	/**
 	 * This test class covers Clinical Trial Basic and Advanced Search pages
@@ -28,7 +28,8 @@ public class CtsSearchPages_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(ADV_CONTENT_TYPE + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, ADV_PATH);
+			
+			doCommonLoadAssertions(beacon, analyticsPageLoad, ADV_PATH);
 			Assert.assertEquals(beacon.props.get(62), ADV_CONTENT_TYPE);
 			Assert.assertEquals(beacon.eVars.get(62), ADV_CONTENT_TYPE);
 			logger.log(LogStatus.PASS, ADV_CONTENT_TYPE + " load values are correct.");
@@ -47,7 +48,8 @@ public class CtsSearchPages_Test extends AnalyticsTestLoadBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println(BASIC_CONTENT_TYPE + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			beacon = getBeacon();
-			DoCommonLoadAssertions(beacon, analyticsPageLoad, BASIC_PATH);
+			
+			doCommonLoadAssertions(beacon, analyticsPageLoad, BASIC_PATH);
 			Assert.assertEquals(beacon.props.get(62), BASIC_CONTENT_TYPE);
 			Assert.assertEquals(beacon.eVars.get(62), BASIC_CONTENT_TYPE);
 			logger.log(LogStatus.PASS, BASIC_CONTENT_TYPE + " load values are correct.");

@@ -33,6 +33,7 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	public void setupTestMethod() {
+		/// TODO: get results count
 		/// Do these before each test
 	}
 
@@ -46,8 +47,9 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		    swSearchForm.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(11), "sitewide");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -64,11 +66,12 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		    swSearchForm.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon(); 
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(8, "spanish"), "Prop language value incorrect.");
-			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(beacon.haseVar(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(beacon.haseVar(2, "spanish"), "eVar language value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(8), "spanish");
+			Assert.assertEquals(beacon.props.get(11), "sitewide_spanish");
+			Assert.assertEquals(beacon.eVars.get(11), "sitewide_spanish");
+			Assert.assertEquals(beacon.eVars.get(2), "spanish");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -85,9 +88,10 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		    swSearchForm.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(beacon.haseVar(11, "sitewide"), "Search type value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(11), "sitewide");
+			Assert.assertEquals(beacon.eVars.get(11), "sitewide");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -104,9 +108,10 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		    swSearchForm.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(11, "sitewide"), "Search type value incorrect.");
-			Assert.assertTrue(beacon.haseVar(11, "sitewide"), "Search type value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(11), "sitewide");
+			Assert.assertEquals(beacon.eVars.get(11), "sitewide");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -124,9 +129,10 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		    swSearchResults.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");
-			Assert.assertTrue(beacon.haseVar(11, "sitewide_bottom_withinresults"), "Search type value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_withinresults");
+			Assert.assertEquals(beacon.eVars.get(11), "sitewide_bottom_withinresults");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -143,9 +149,10 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		    swSearchResults.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(11, "sitewide_bottom_new"), "Search type value incorrect.");
-			Assert.assertTrue(beacon.haseVar(11, "sitewide_bottom_new"), "Search type value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_new");
+			Assert.assertEquals(beacon.eVars.get(11), "sitewide_bottom_new");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -163,23 +170,14 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 			pageNotFound.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
-			AssertCommon(searchTerm);
-			Assert.assertTrue(beacon.hasProp(11, "pagenotfoundsearch"), "Search type value incorrect.");			
-			Assert.assertTrue(beacon.haseVar(11, "pagenotfoundsearch"), "Search type value incorrect.");
+		    
+			doCommonClassAssertions(searchTerm);
+			Assert.assertEquals(beacon.props.get(11), "pagenotfoundsearch");
+			Assert.assertEquals(beacon.eVars.get(11), "pagenotfoundsearch");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
 		}
-	}
-
-	// Do common assertions
-	private void AssertCommon(String searchTerm) {
-		Assert.assertTrue(beacon.hasEvent(2), "Event value incorrect.");
-		Assert.assertTrue(beacon.hasProp(4, "d=pev1"), "Value of prop4 incorrect.");
-		Assert.assertTrue(beacon.hasProp(14, searchTerm), "Search term value does not match.");
-		Assert.assertTrue(beacon.hasProp(67, "D=pageName"), "Dynamic pageName value incorrect.");
-		Assert.assertTrue(beacon.haseVar(13), "eVar13 value incorrect.");
-		Assert.assertTrue(beacon.haseVar(14, searchTerm), "Search type value incorrect.");
 	}
 	
 	/******************** Data Providers ****************/
@@ -220,4 +218,18 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		}
 		return myObjects.iterator();
 	}
+	
+	/**
+	 * Shared Assert() calls for SitewideSearch_Test
+	 * @param searchTerm
+	 */
+	private void doCommonClassAssertions(String searchTerm) {
+		Assert.assertTrue(beacon.hasEvent(2));
+		Assert.assertEquals(beacon.props.get(4), "D=pev1");
+		Assert.assertEquals(beacon.props.get(14), searchTerm.toLowerCase());
+		Assert.assertEquals(beacon.props.get(67), "D=pageName");
+		//Assert.assertEquals(beacon.eVars.get(13), "eVar13 value incorrect.");
+		Assert.assertEquals(beacon.eVars.get(14), searchTerm.toLowerCase());
+	}
+	
 }
