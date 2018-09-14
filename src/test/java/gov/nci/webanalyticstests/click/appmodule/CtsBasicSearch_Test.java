@@ -19,8 +19,6 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	private BasicSearch basicSearch;
 	private Beacon beacon;
 	private Actions action;	
-	// TODO: fix action.pause() hanging issue
-	// TODO: try/catches around tests, rename methods for basic
 	
 	@BeforeMethod(groups = { "Analytics" }) 
 	// Run before each test method in this class
@@ -77,7 +75,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	}
 	
 	@Test(groups = { "Analytics" })
-	public void testKeywordMatch() throws MalformedURLException, UnsupportedEncodingException {
+	public void testBasicKeywordMatch() throws MalformedURLException, UnsupportedEncodingException {
 		System.out.println("CTS \"Complete\" click event with keyword match:");
 		basicSearch.setSearchKeyword("Ampulla of Vater Cancer");		
 		basicSearch.clickSearchButton();
@@ -91,7 +89,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	}	
 	
 	@Test(groups = { "Analytics" })
-	public void testAbandonKeyword() {
+	public void testBasicAbandonKeyword() {
 		/* Enter the keyword field, then abandon the form by navigating away. **/ 
 		System.out.println("CTS \"Abandon\" click event for keyword:");
 		basicSearch.setSearchKeyword("Liver");
@@ -106,7 +104,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	}
 	
 	@Test(groups = { "Analytics" })
-	public void testAbandonAge() {
+	public void testBasicAbandonAge() {
 		/* Enter the age field, then abandon the form by navigating away. **/ 
 		System.out.println("CTS \"Abandon\" click event for age:");
 		basicSearch.setSearchAge("55");
@@ -121,7 +119,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	}
 	
 	@Test(groups = { "Analytics" })
-	public void testAbandonZip() {
+	public void testBasicAbandonZip() {
 		/* Enter the zip field, then abandon the form by navigating away. **/ 
 		System.out.println("CTS \"Abandon\" click event for zip:");
 		basicSearch.setSearchZip("20001");
@@ -136,7 +134,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	}
 
 	@Test(groups = { "Analytics" })
-	public void testErrorAge() {
+	public void testBasicErrorAge() {
 		System.out.println("CTS \"Error\" click event for age:");
 		basicSearch.setSearchAge("abc");
 		basicSearch.setSearchKeyword("");
@@ -150,7 +148,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 	}
 	
 	@Test(groups = { "Analytics" })
-	public void testErrorZip() {
+	public void testBasicErrorZip() {
 		System.out.println("CTS \"Error\" click event for zip:");
 		basicSearch.setSearchZip("abcde");
 		basicSearch.setSearchKeyword("");
@@ -165,7 +163,7 @@ public class CtsBasicSearch_Test extends AnalyticsTestClickBase {
 
 	// TODO: fix Selenium TimeoutException on this test
 	// @Test(groups = { "Analytics" })
-	public void testErrorSubmit() throws MalformedURLException, UnsupportedEncodingException {
+	public void testBasicErrorSubmit() throws MalformedURLException, UnsupportedEncodingException {
 		System.out.println("CTS \"Error\" submit button click:");
 		basicSearch.setSearchZip("abcde");
 		basicSearch.clickSearchButton();

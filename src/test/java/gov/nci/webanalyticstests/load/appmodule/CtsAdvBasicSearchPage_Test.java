@@ -13,14 +13,15 @@ public class CtsAdvBasicSearchPage_Test extends AnalyticsTestLoadBase {
 	/**
 	 * This test class covers Clinical Trial Basic and Advanced Search pages
 	 */
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;
+	
 	private final String ADV_PATH = "/about-cancer/treatment/clinical-trials/advanced-search";
 	private final String BASIC_PATH = "/about-cancer/treatment/clinical-trials/search";
 	private final String ADV_CONTENT_TYPE = "Clinical Trials: Advanced";
 	private final String BASIC_CONTENT_TYPE = "Clinical Trials: Basic";
-	
-	/// CTS Advanced Search page loads return expected values
+
+	private AnalyticsPageLoad analyticsPageLoad;
+	private Beacon beacon;
+
 	@Test(groups = { "Analytics" })
 	public void testCTSAdvancedSearchPageLoad() {
 		try {
@@ -40,7 +41,6 @@ public class CtsAdvBasicSearchPage_Test extends AnalyticsTestLoadBase {
 		}
 	}
 	
-	/// CTS Basic Search page loads return expected values
 	@Test(groups = { "Analytics" })
 	public void testCTSBasicSearchPageLoad() {
 		try {

@@ -17,7 +17,7 @@ public class CtsAdvBasicResults_Test extends AnalyticsTestClickBase {
 	private final String ADVANCED_PAGE_1ST = "?rl=2";
 	private final String ADVANCED_PAGE_2ND = "?loc=0&rl=2&pn=2&ni=10";
 	
-	// Don't see an exisiting BasicSearchResultsPage, so I'm reusing advanced for all instances
+	// Don't see an existing BasicSearchResultsPage, so I'm reusing advanced for all instances
 	private AdvanceSearchResults searchResults;
 	private Beacon beacon;
 		

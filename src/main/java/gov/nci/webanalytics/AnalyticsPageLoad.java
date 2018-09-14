@@ -10,14 +10,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import gov.nci.framework.PageObjectBase;
-import gov.nci.Utilities.ConfigReader;
 
 public class AnalyticsPageLoad extends PageObjectBase {
 
 	public WebDriver driver;
-	//protected ConfigReader config = new ConfigReader();	
 
-	/**************** Sitewide Search Results Page Elements *****************************/
+	/**************** Common meta and data elements for all CancerGov pages *****************************/
 	@FindBy(how = How.XPATH, using = "//meta[@property='og:title']")
 	WebElement meta_title;
 	@FindBy(how = How.XPATH, using = "//meta[@name='content-language']")
@@ -39,7 +37,6 @@ public class AnalyticsPageLoad extends PageObjectBase {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
-	
 	
 	public String getMetaTitle() {
 		return meta_title.getAttribute("content");
@@ -68,7 +65,6 @@ public class AnalyticsPageLoad extends PageObjectBase {
 	public String getDynamiListingTotal() {
 		return txt_dlp_total.getText();
 	}
-	
 	
 	/**
 	 * Get full name for content language.

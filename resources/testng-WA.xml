@@ -37,7 +37,7 @@
 			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvBasicSearchPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvancedResultsPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.CtsBasicResultsPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsViewPage_Test" />
+			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvBasicViewPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.DictionaryPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.DynamicListingPage_Test" />
 			<class name="gov.nci.webanalyticstests.load.appmodule.SwsResultsPage_Test" />
@@ -49,6 +49,7 @@
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvancedSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsBasicSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicResults_Test" />
+			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicView_Test" />
 
 		</classes>
 	</test>
