@@ -4,21 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.error.pages.PageNotFound;
-import gov.nci.sitewidesearch.pages.SitewideSearchResults;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.Utilities.ExcelManager;
 
-public class SitewideSearch_Test extends AnalyticsTestClickBase {
+public class SwsForm_Test extends AnalyticsTestClickBase {
 	
 	private SitewideSearchForm swSearchForm;
-	private SitewideSearchResults swSearchResults;
 	private PageNotFound pageNotFound;
 	private Beacon beacon;
 	
@@ -31,24 +28,18 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		testDataFilePath = config.getProperty("SitewideSearchData");
 	}
 	
-	@BeforeMethod(groups = { "Analytics" }) 
-	public void setupTestMethod() {
-		/// TODO: get results count
-		/// Do these before each test
-	}
-
 	// Verify analytics click values for sitewide cancer term search
 	@Test(dataProvider = "CancerTerms", groups = { "Analytics" })
 	public void testSitewideSearch(String searchTerm) {
 		try {
 			driver.get(config.goHome());
 			swSearchForm = new SitewideSearchForm(driver);
-		    swSearchForm.setSitewideSearchKeyword(searchTerm);
-		    swSearchForm.clickSearchButton();
+			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
 		    
-			doCommonClassAssertions(searchTerm);
+			doCommonClassAssertions(beacon, searchTerm);
+			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
@@ -61,17 +52,15 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 	public void testSitewideSearchEspanol(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("SpanishPage"));
-			swSearchForm = new SitewideSearchForm(driver);			
-		    swSearchForm.setSitewideSearchKeyword(searchTerm);
-		    swSearchForm.clickSearchButton();
+			swSearchForm = new SitewideSearchForm(driver);
+			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon(); 
 		    
-			doCommonClassAssertions(searchTerm);
+			doCommonClassAssertions(beacon, searchTerm);
+			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(8), "spanish");
 			Assert.assertEquals(beacon.props.get(11), "sitewide_spanish");
-			Assert.assertEquals(beacon.eVars.get(11), "sitewide_spanish");
-			Assert.assertEquals(beacon.eVars.get(2), "spanish");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -84,14 +73,13 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 		try {
 			driver.get(config.goHome());
 			swSearchForm = new SitewideSearchForm(driver);
-		    swSearchForm.setSitewideSearchKeyword(searchTerm);
-		    swSearchForm.clickSearchButton();
+			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
 		    
-			doCommonClassAssertions(searchTerm);
+			doCommonClassAssertions(beacon, searchTerm);
+			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
-			Assert.assertEquals(beacon.eVars.get(11), "sitewide");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -103,56 +91,14 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 	public void testMicroSitewideSearch(String searchTerm) {
 		try {
 			driver.get(config.getPageURL("MicroSite"));
-			swSearchForm = new SitewideSearchForm(driver);			
-		    swSearchForm.setSitewideSearchKeyword(searchTerm);
-		    swSearchForm.clickSearchButton();
+			swSearchForm = new SitewideSearchForm(driver);
+			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
 		    
-			doCommonClassAssertions(searchTerm);
+			doCommonClassAssertions(beacon, searchTerm);
+			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
-			Assert.assertEquals(beacon.eVars.get(11), "sitewide");
-		} catch (Exception e) {
-			Assert.fail("Error submitting sitewide search.");
-			e.printStackTrace();
-		}
-	}
-	
-	// Verify analytics click values when searching from sitewide search results page
-	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
-	public void testSearchWithinResults(String searchTerm) {
-		try {
-			driver.get(config.getPageURL("SitewideResultsPage"));
-			swSearchResults = new SitewideSearchResults(driver);
-			swSearchResults.doWithinSearch();
-			swSearchResults.setSitewideSearchKeyword(searchTerm);
-		    swSearchResults.clickSearchButton();
-			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon();
-		    
-			doCommonClassAssertions(searchTerm);
-			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_withinresults");
-			Assert.assertEquals(beacon.eVars.get(11), "sitewide_bottom_withinresults");
-		} catch (Exception e) {
-			Assert.fail("Error submitting sitewide search.");
-			e.printStackTrace();
-		}
-	}
-	
-	// Verify analytics click values when searching from sitewide search results page
-	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
-	public void testSearchNewFromResults(String searchTerm) {
-		try {
-			driver.get(config.getPageURL("SitewideResultsPage"));
-			swSearchResults = new SitewideSearchResults(driver);			
-			swSearchResults.setSitewideSearchKeyword(searchTerm);
-		    swSearchResults.clickSearchButton();
-			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon();
-		    
-			doCommonClassAssertions(searchTerm);
-			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_new");
-			Assert.assertEquals(beacon.eVars.get(11), "sitewide_bottom_new");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -171,9 +117,9 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 			System.out.println("Sitewide search term: " + searchTerm);
 		    beacon = getBeacon();
 		    
-			doCommonClassAssertions(searchTerm);
+			doCommonClassAssertions(beacon, searchTerm);
+			Assert.assertEquals(beacon.linkName, "PageNotFound");
 			Assert.assertEquals(beacon.props.get(11), "pagenotfoundsearch");
-			Assert.assertEquals(beacon.eVars.get(11), "pagenotfoundsearch");
 		} catch (Exception e) {
 			Assert.fail("Error submitting sitewide search.");
 			e.printStackTrace();
@@ -223,13 +169,14 @@ public class SitewideSearch_Test extends AnalyticsTestClickBase {
 	 * Shared Assert() calls for SitewideSearch_Test
 	 * @param searchTerm
 	 */
-	private void doCommonClassAssertions(String searchTerm) {
+	private void doCommonClassAssertions(Beacon beacon, String searchTerm) {
+		doCommonClickAssertions(beacon);
 		Assert.assertTrue(beacon.hasEvent(2));
-		Assert.assertEquals(beacon.props.get(4), "D=pev1");
 		Assert.assertEquals(beacon.props.get(14), searchTerm.toLowerCase());
-		Assert.assertEquals(beacon.props.get(67), "D=pageName");
-		//Assert.assertEquals(beacon.eVars.get(13), "eVar13 value incorrect.");
-		Assert.assertEquals(beacon.eVars.get(14), searchTerm.toLowerCase());
+		Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));		
+		Assert.assertTrue(beacon.eVars.get(13).matches("^\\+\\d{1,2}$"));
+		Assert.assertEquals(beacon.eVars.get(14), beacon.props.get(14));
+		
 	}
 	
 }

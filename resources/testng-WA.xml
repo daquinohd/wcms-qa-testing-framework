@@ -43,13 +43,14 @@
 			<class name="gov.nci.webanalyticstests.load.appmodule.SwsResultsPage_Test" />
 
 			<!-- Click tracking events -->
-			<class name="gov.nci.webanalyticstests.click.SitewideSearch_Test" />
+			<class name="gov.nci.webanalyticstests.click.SwsForm_Test" />
 			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
 			<class name="gov.nci.webanalyticstests.click.MegaMenu_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvancedSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsBasicSearch_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicResults_Test" />
 			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicView_Test" />
+			<class name="gov.nci.webanalyticstests.click.appmodule.SwsResults_Test" />
 
 		</classes>
 	</test>

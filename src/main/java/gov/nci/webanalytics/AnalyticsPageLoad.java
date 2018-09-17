@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -28,8 +29,6 @@ public class AnalyticsPageLoad extends PageObjectBase {
 	WebElement meta_is_part_of;
 	@FindBy(how = How.XPATH, using = "//meta[@name='dcterms.issued']")
 	WebElement meta_issued;
-	@FindBy(how = How.XPATH, using = "//span[@data-basiccts-searchparam='n']")
-	WebElement txt_dlp_total;
 	
 	// Constructor to initialize the page object	
 	public AnalyticsPageLoad(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
@@ -61,10 +60,25 @@ public class AnalyticsPageLoad extends PageObjectBase {
 	public String getMetaIssued() {
 		return meta_issued.getAttribute("content");
 	}
-
-	public String getDynamiListingTotal() {
-		return txt_dlp_total.getText();
+	
+	public WebElement getElementFromCss(String selector) {
+		WebElement element = driver.findElement(By.cssSelector(selector));
+		return element;
 	}
+
+	public String getElementTextFromCss(String selector) {
+		return getElementFromCss(selector).getText();
+	}
+	
+	public WebElement getElementFromXpath(String expression) {
+		WebElement element = driver.findElement(By.xpath(expression));
+		return element;
+	}
+
+	public String getElementTextFromXpath(String expression) {
+		return getElementFromXpath(expression).getText();
+	}
+	
 	
 	/**
 	 * Get full name for content language.

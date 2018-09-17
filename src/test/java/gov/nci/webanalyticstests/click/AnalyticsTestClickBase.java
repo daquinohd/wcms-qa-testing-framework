@@ -3,6 +3,8 @@ package gov.nci.webanalyticstests.click;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.testng.Assert;
+
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestBase;
 
@@ -33,25 +35,40 @@ public class AnalyticsTestClickBase extends AnalyticsTestBase {
 		
 		// For each server URL, check if it is an analytics click
 		// or load event, then add it to the correct list
-		for(String url : urlList)
-		{
+		for(String url : urlList) {
 			// Populate the beacon lists
 			Beacon beacon = new Beacon(url);
 			if(beacon.isClickTypeEvent()) {
 				clickBeacons.add(beacon);
-			}
-			else {
+			} else {
 				++loadBeacons;
 			}
 		}
 
 	    // Debug analytics beacon counts
-		System.out.println("Total analytics requests: " + urlList.size()
-			+ " (load: " + loadBeacons
-			+ ", click: " + clickBeacons.size() + ")"
+		System.out.println("Total analytics requests: " + urlList.size() 
+		    + " (load: " + loadBeacons + ", click: " + clickBeacons.size() + ")"
 		);
 		
 		return clickBeacons;
+	}
+	
+	/**
+	 * Shared Assert() calls for all click tracking beacons.
+	 * @param beacon
+	 */
+	protected void doCommonClickAssertions(Beacon beacon) {
+		
+		// Suites
+		String currUrl = driver.getCurrentUrl();
+		Assert.assertTrue(beacon.hasSuite("nciglobal", currUrl));
+		
+		// Props
+		Assert.assertEquals(beacon.props.get(4), "D=pev1");
+		Assert.assertEquals(beacon.props.get(67), "D=pageName");
+		
+		// Evars
+		Assert.assertEquals(beacon.eVars.get(2), beacon.props.get(8));
 	}
 	
 }

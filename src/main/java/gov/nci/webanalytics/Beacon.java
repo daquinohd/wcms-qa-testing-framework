@@ -1,19 +1,26 @@
 package gov.nci.webanalytics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.http.NameValuePair;
 
+import gov.nci.Utilities.ExcelManager;
+
 // Represents a single Adobe Analytics request beacon with query parameters
 public class Beacon extends AnalyticsRequest {
-	// TODO: move server strings into config	
-	// TODO: remove unused methods
-	// TODO: reuse collection method from ParsedURL() instead of the local getList()
-	//	TODO: Handle null exceptions in has() methods
-	//	TODO: Create 'catch-all' Contains() method		
+	// TODO: Handle null exceptions in has() methods
+	// TODO: Create 'catch-all' Contains() method	
+	// TODO: Comments for uncommented methods
+	// TODO: Replace "contains' with "matches" where possible
+	// TODO: Refactor common key/var logic into util methods
+	
 	
 	// Constants
 	public static final String TRACKING_SERVER = "nci.122.2o7.net";
+	public static final String CGOV_PAGENAME = "www.cancer.gov";
+	protected static final String DATA_FILEPATH = "./test-data/webanalytics-suitemap.xlsx";
+	protected static final String DATA_SHEETNAME = "CancerGov";
 	
 	// Parameter values from URL
 	static final String CHANNEL = "ch";
@@ -53,10 +60,6 @@ public class Beacon extends AnalyticsRequest {
 	}
 	
 	/**************** Methods to check for given values in a beacon ****************/
-	/*
-	 * TODO: Replace "contains' with "matches" where possible
-	 * TODO: Refactor common key/var logic into util methods
-	 */
 	
 	/**
 	 * Get an array of suites (s.account) values from the URL path.
@@ -208,7 +211,42 @@ public class Beacon extends AnalyticsRequest {
 		return false;
 	}
 	
+	/**
+	 * Check for a suite (s_accout/s.account) string value in a Beacon object.
+	 * @param suite
+	 * @param currentUrl
+	 * @return
+	 */
+	public boolean hasSuite(String suite, String currentUrl) {
+		boolean isProd = currentUrl.contains(CGOV_PAGENAME);
+		String mappedSuite = getMappedSuite(suite, isProd);
+		return Arrays.asList(this.suites).contains(mappedSuite);
+	}
 
+	/**
+	 * Given a suite name and environment, return corresponding suite name from the map.
+	 * 
+	 * @param mySuite
+	 * @param isProd
+	 * @return
+	 */
+	private String getMappedSuite(String mySuite, boolean isProd) {
+		String mappedSuite = "";
+		// The mapped suite name is pulled from the webanalytics-suitemap spreadsheet in test-data
+		ExcelManager excelReader = new ExcelManager(DATA_FILEPATH);
+		String row = (isProd == true) ? "ProdSuite" : "DevSuite";
+		
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(DATA_SHEETNAME); rowNum++) {
+			String suiteOriginal = excelReader.getCellData(DATA_SHEETNAME, "Suite", rowNum);
+			if(suiteOriginal.equalsIgnoreCase(mySuite)) {
+				mappedSuite = excelReader.getCellData(DATA_SHEETNAME, row, rowNum);
+				break;
+			}
+		}
+		return mappedSuite;		
+	}
+
+	
 	/******************** Utility methods ****************************************/	
 	
 	/**

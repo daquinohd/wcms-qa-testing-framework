@@ -216,11 +216,10 @@ public class CtsAdvancedSearch_Test extends AnalyticsTestClickBase {
 	 * @param beacon
 	 */
 	private void doCommonClassAssertions(Beacon beacon) {
+		doCommonClickAssertions(beacon);
 		Assert.assertTrue(beacon.suites.length > 0);
 		Assert.assertTrue(beacon.channels.length() > 0);
-		Assert.assertEquals(beacon.props.get(4), "D=pev1");
 		Assert.assertEquals(beacon.props.get(8), "english");
-		Assert.assertEquals(beacon.props.get(67), "D=pageName");
 		Assert.assertEquals(beacon.eVars.get(2), "english");
 		Assert.assertEquals(beacon.eVars.get(47), "clinicaltrials_advanced");
 	}

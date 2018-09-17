@@ -1,5 +1,7 @@
 package gov.nci.webanalyticstests.load;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,8 +48,7 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		
 		// For each server URL, check if it is an analytics click
 		// or load event, then add it to the correct list
-		for(String url : urlList)
-		{
+		for(String url : urlList) {
 			// Populate the beacon lists
 			Beacon beacon = new Beacon(url);
 			if(!beacon.isClickTypeEvent()) {
@@ -71,10 +72,13 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 	 * @param analyticsPageLoad
 	 * @param path
 	 */
-	protected void doCommonLoadAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String path) {
-		
-		String currUrl = driver.getCurrentUrl();
+	protected void doCommonLoadAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String path) {		
 
+		String currUrl = driver.getCurrentUrl();
+		
+		// Common Suites
+		Assert.assertTrue(beacon.hasSuite("nciglobal", currUrl));
+		
 		// Common events
 		Assert.assertTrue(beacon.hasEvent(1));
 		Assert.assertTrue(beacon.hasEvent(47));		
@@ -98,7 +102,10 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.eVars.get(1).contains("www.cancer.gov"));
 		Assert.assertEquals(beacon.eVars.get(2), analyticsPageLoad.getLanguageName());
 		Assert.assertTrue(beacon.eVars.get(5).matches(REGEX_BROWSER_SIZE));
-		Assert.assertEquals(beacon.eVars.get(44), analyticsPageLoad.getMetaIsPartOf());		
+		Assert.assertEquals(beacon.eVars.get(44), analyticsPageLoad.getMetaIsPartOf());
+		
+		// HIer
+		Assert.assertEquals(beacon.hiers.get(1), buildHier1(currUrl));
 
 	}
 	
@@ -142,5 +149,25 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 			}
 		}
 		return myObjects.iterator();
-	}	
+	}
+	
+	/**
+	 * Recreate the "Hierarchy 1" variable from a URL.
+	 * @param myUrl
+	 * @return formatted hier1 string
+	 */
+	private String buildHier1(String myUrl) {
+		try {
+			URL url = new URL(myUrl);
+			String hier = url.getHost() + url.getPath();
+			if(hier.charAt(hier.length() - 1) == '/') {
+				hier = hier.substring(0, hier.length() - 1);
+			}
+			return hier.replaceAll("/", "|");
+		} catch (MalformedURLException ex) {
+			ex.printStackTrace();
+			return "";
+		}
+	}
+	
 }

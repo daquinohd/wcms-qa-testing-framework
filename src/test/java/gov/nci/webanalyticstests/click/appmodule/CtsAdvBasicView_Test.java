@@ -91,7 +91,7 @@ public class CtsAdvBasicView_Test extends AnalyticsTestClickBase {
 		doCommonClassAssertions(beacon);
 	}
 
-	@Test(groups = { "Analytics" })
+	//@Test(groups = { "Analytics" })
 	public void testTrialViewEmailClick() {
 		System.out.println("CTS View - Email click: ");
 		getTrialDetailView(FROM_CT_REDIRECT);
@@ -123,11 +123,10 @@ public class CtsAdvBasicView_Test extends AnalyticsTestClickBase {
 	 * @param beacon
 	 */
 	private void doCommonClassAssertions(Beacon beacon) {
+		doCommonClickAssertions(beacon);
 		Assert.assertTrue(beacon.suites.length > 0);
 		Assert.assertEquals(beacon.channels, "About Cancer");
-		Assert.assertEquals(beacon.props.get(4), "D=pev1");
 		Assert.assertEquals(beacon.props.get(8), "english");
-		Assert.assertEquals(beacon.props.get(67), "D=pageName");
 		Assert.assertEquals(beacon.eVars.get(2), beacon.props.get(8));
 	}
 	

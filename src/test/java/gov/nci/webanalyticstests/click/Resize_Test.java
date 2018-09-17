@@ -4,91 +4,100 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
 import com.relevantcodes.extentreports.LogStatus;
+
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.commonobjects.Resize;
 import gov.nci.webanalytics.Beacon;
-import gov.nci.webanalyticstests.AnalyticsTestBase;
 
 public class Resize_Test extends AnalyticsTestClickBase {
 	
 	private Resize resize;
 	private Beacon beacon;	
 	
+	@BeforeClass(groups = { "Analytics" }) 
+	public void setupResizeTestClass() {
+		driver.get(config.goHome());
+	}
+
 	@BeforeMethod(groups = { "Analytics" }) 
-	public void setupResize() throws MalformedURLException, UnsupportedEncodingException {
+	public void setupResizeTestMehod() throws MalformedURLException, UnsupportedEncodingException {
 		resize = new Resize(driver);
 	}
-
-	// TODO: Fix random failure errors (this may be doing the resizes too quickly - set timeout if needed)
-	/// Correct click events have been captured on resize
-	@Test(groups = { "Analytics" }, priority = 1)
-	public void testResizeGeneral() {
-		resize.doAllResizes();
-		beacon = getBeacon();
-
-		Assert.assertFalse(beacon.hasEvent(1));
-		Assert.assertEquals(beacon.props.get(4), "D=pev1");
-		Assert.assertEquals(beacon.props.get(67), "D=pageName");
-		Assert.assertEquals(beacon.props.get(8), "english");
-		Assert.assertEquals(beacon.eVars.get(2), "english");
-		logger.log(LogStatus.PASS, "Resize gen value test passed.");		
-	}
 	
-	/// Correct linkName captured on small resize
-	@Test(groups = { "Analytics" }, priority = 2)
+	@Test(groups = { "Analytics" })
 	public void testResizeToMobile() {
+		System.out.println("Test resize to small: ");
+		resize.toXlarge();
 		resize.toSmall();
 		beacon = getBeacon();
 		
-		Assert.assertTrue(beacon.hasEvent(7));
-		Assert.assertEquals(beacon.linkName, "ResizedToMobile");	
+		doCommonClassAssertions(beacon, "Mobile");
 		logger.log(LogStatus.PASS, "'Resize to mobile' values are correct.");
 	}
 
-	/// Correct linkName captured on medium resize
-	@Test(groups = { "Analytics" }, priority = 3)
+	@Test(groups = { "Analytics" })
 	public void testResizeToTablet() {
+		System.out.println("Test resize to medium: ");
+		resize.toXlarge();
 		resize.toMed();
 		beacon = getBeacon();
 		
-		Assert.assertTrue(beacon.hasEvent(7));
-		Assert.assertEquals(beacon.linkName, "ResizedToTablet");
+		doCommonClassAssertions(beacon, "Tablet");
 		logger.log(LogStatus.PASS, "'Resize to tablet' values are correct.");
 	}
 
-	/// Correct linkName captured on large resize
-	@Test(groups = { "Analytics" }, priority = 4)
+	@Test(groups = { "Analytics" })
 	public void testResizeToDesktop() {
+		System.out.println("Test resize to large: ");
+		resize.toSmall();
 		resize.toLarge();
 		beacon = getBeacon();
 		
-		Assert.assertTrue(beacon.hasEvent(7));
-		Assert.assertEquals(beacon.linkName, "ResizedToDesktop");
+		doCommonClassAssertions(beacon, "Desktop");
 		logger.log(LogStatus.PASS, "'Resize to desktop' values are correct.");
 	}
 
-	/// Correct linkName captured on XL resize
-	@Test(groups = { "Analytics" }, priority = 5)
+	@Test(groups = { "Analytics" })
 	public void testResizeToExtraWide() {
+		System.out.println("Test resize to x-large: ");
+		resize.toSmall();
 		resize.toXlarge();
 		beacon = getBeacon();
 		
-		Assert.assertTrue(beacon.hasEvent(7));
-		Assert.assertEquals(beacon.linkName, "ResizedToExtra wide");
+		doCommonClassAssertions(beacon, "Extra wide");
 		logger.log(LogStatus.PASS, "'Resize to extra wide' values are correct.");
 	}
 
 	/// Correct event on maximize
-	@Test(groups = { "Analytics" }, priority = 6)
+	@Test(groups = { "Analytics" })
 	public void testMaximize() {
+		System.out.println("Test maximize: ");
+		resize.toSmall();
 		resize.maximize();
 		beacon = getBeacon();
 		
-		Assert.assertTrue(beacon.hasEvent(7));
+		doCommonClickAssertions(beacon);
+		Assert.assertFalse(beacon.hasEvent(1));
 		logger.log(LogStatus.PASS, "Maximize values are correct.");
-	}	
+	}
+	
+	
+	/**
+	 * Shared Assert() calls for Resize_Test
+	 * 
+	 * @param beacon
+	 * @param linkName
+	 */
+	private void doCommonClassAssertions(Beacon beacon, String linkName) {
+		doCommonClickAssertions(beacon);
+		Assert.assertTrue(beacon.hasEvent(7));
+		Assert.assertEquals(beacon.linkName, "ResizedTo" + linkName);
+		Assert.assertEquals(beacon.props.get(8), "english");
+		Assert.assertEquals(beacon.eVars.get(5), linkName);
+	}
 	
 }

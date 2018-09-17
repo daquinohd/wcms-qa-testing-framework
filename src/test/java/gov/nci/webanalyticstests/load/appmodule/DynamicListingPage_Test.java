@@ -28,6 +28,7 @@ public class DynamicListingPage_Test extends AnalyticsTestLoadBase {
 	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "DynamicListingPage";
 	private final String REGEX_ITEMS_PER_PAGE = "^\\d{1,4}$";
+	private final String XPATH_ITEM_TOTAL = "//span[@data-basiccts-searchparam='n']";
 	
 	@BeforeClass(groups = { "Analytics" }) 
 	public void setup() {
@@ -123,7 +124,7 @@ public class DynamicListingPage_Test extends AnalyticsTestLoadBase {
 	 * @param path
 	 */
 	private void doCommonClassAssertions(String path, String filterInfo) {
-		String total = analyticsPageLoad.getDynamiListingTotal();
+		String total = analyticsPageLoad.getElementTextFromXpath(XPATH_ITEM_TOTAL);
 		
 		doCommonLoadAssertions(beacon, analyticsPageLoad, path);
 		Assert.assertTrue(beacon.hasEvent(2));
