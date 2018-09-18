@@ -54,6 +54,130 @@ public class DictDrugs_Test extends BaseClass {
 		}
 	}
 
+	//
+	// Confirming the "Starts with"/"Contains" radio buttons are displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void RadioVisible(String url) {
+		HeaderElements dict;
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Drug Dictionary RadioVisible()");
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.RadioBtnVisible();
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Drug Dictionary Radio Button Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the "Starts with" radio button is selected by default
+	// ----------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void RadioStartsWithSelected(String url) {
+		HeaderElements dict;
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Drug Dictionary RadioStartsWithSelected()");
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioStartsWith = dict.RadioDefault();
+			Assert.assertTrue(radioStartsWith,
+			                  "*** Error: Drug Dictionary Radio Button Default Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the search input field is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void InputFieldVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.dictionary-search-input";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Drug Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Drug Dictionary Input Field Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the Search button is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SearchBtnVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.button";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Drug Dictionary " + curMethod);
+
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Drug Dictionary SearchButton Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the A-Z list is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void AZListVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "div.az-list";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Drug Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Drug Dictionary A-Z List Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
 
 /*  ***************************** Data Provider *********************************************** */
 

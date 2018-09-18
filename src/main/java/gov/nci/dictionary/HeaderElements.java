@@ -5,10 +5,14 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 // import org.openqa.selenium.remote.server.handler.GetAllWindowHandles;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import gov.nci.framework.PageObjectBase;
 
@@ -33,9 +37,41 @@ public class HeaderElements extends PageObjectBase {
         return false;
     }
 
+    // Testing if the H1 title text is correct
+    // ---------------------------------------
+    public WebElement getTitleText() {
+        List<WebElement> elementExists = getTitle();
+        WebElement text_TitleText = elementExists.get(0);
+
+        return text_TitleText;
+    }
+
+    // Testing if the input field is correct
+    // ---------------------------------------
+    public WebElement SearchResultHeader(String selector) {
+        List<WebElement> elementExists = getBrowser().findElements(By.cssSelector(selector));
+        WebElement text_TitleText = elementExists.get(0);
+        // System.out.println(elementExists);
+        // System.out.println(text_TitleText.getText());
+        // System.out.println("\n");
+
+        return text_TitleText;
+    }
+
+    // Testing if the input field is correct
+    // ---------------------------------------
+    public List<WebElement> SearchResultList(String selector) {
+        List<WebElement> resultList = getBrowser().findElements(By.cssSelector(selector));
+        // System.out.println(elementExists);
+        // System.out.println(text_TitleText.getText());
+        // System.out.println("\n");
+
+        return resultList;
+    }
+
     // Testing if the anchor link for the glossary widget exists on the page
     // ---------------------------------------------------------------------
-    public boolean LinkVisible() {
+    public boolean WidgetLinkVisible() {
         List<WebElement> elementExists = getWidgetLink();
 
         if (elementExists.size() > 0) {
@@ -54,18 +90,12 @@ public class HeaderElements extends PageObjectBase {
 
         if (followLink.size() > 0) {
             WebElement widgetLink = followLink.get(0);
-
             widgetLink.click();
 
-            // System.out.println(driver.getWindowHandles());
-            // String winHandleBefore = driver.getWindowHandle();
-
-            // Note:  This is looking for the HTML title element, NOT for
-            //        the H1 title element
             if (lang.equals("ES")){
                 widgetTitle = "Widget del Diccionario del NCI - National Cancer Institute";
             } else {
-                 widgetTitle = "NCI Dictionary Widget - National Cancer Institute";
+                widgetTitle = "NCI Dictionary Widget - National Cancer Institute";
             }
 
             if ( driver.getTitle().equals(widgetTitle) ) {
@@ -73,18 +103,30 @@ public class HeaderElements extends PageObjectBase {
                 return true;
             }
             System.out.println("*** Error: Widget Page NOT Found");
-
-            // for (String winHandle : driver.getWindowHandles()){
-                // driver.switchTo().window(winHandle);
-            // }
-            // System.out.println(driver.getWindowHandles());
-            // Perform action on new window
-            // driver.close();
-
-            // driver.switchTo().window(winHandleBefore);
         }
         return false;
     }
+
+    // Find the anchor link for the dictionary widget and click the link
+    // Ensure we're seeing the correct page
+    // -----------------------------------------------------------------
+    public boolean AZListSelect(WebDriver driver, String elementSelector) {
+        // String lang = "EN";
+        Integer numberResultsB = 374;   // Results on PROD: 378
+        List<WebElement> followLink = getElementControl(elementSelector);
+
+        if (followLink.size() > 0) {
+            WebElement widgetLink = followLink.get(1);
+            widgetLink.click();
+
+            List<WebElement> letterResults = driver.findElements(By.cssSelector("dt dfn"));
+            if (letterResults.size() == numberResultsB ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public boolean RadioBtnVisible() {
         List<WebElement> radioExists = getRadioControl();
@@ -126,6 +168,14 @@ public class HeaderElements extends PageObjectBase {
         return false;
     }
 
+    public void SubmitSearchTerm(String inputSelector, String searchTerm) {
+        List<WebElement> searchField = getElementControl(inputSelector);
+        searchField.get(0).sendKeys(searchTerm);
+        searchField.get(0).sendKeys(Keys.RETURN);
+
+        // return true;
+    }
+
     private List<WebElement> getTitle() {
             List<WebElement> pageTitle = getBrowser().findElements(By.cssSelector("h1"));
             return pageTitle;
@@ -156,5 +206,16 @@ public class HeaderElements extends PageObjectBase {
     private List<WebElement> getElementControl(String selector) {
             List<WebElement> elementControls = getBrowser().findElements(By.cssSelector(selector));
             return elementControls;
+    }
+
+    public void selectStartsWith() {
+            List<WebElement> searchType = getBrowser().findElements(By.cssSelector("#lblStarts"));
+            searchType.get(0).click();
+    }
+
+    public void selectContains() {
+            List<WebElement> searchType = getBrowser().findElements(By.cssSelector("#lblContains"));
+            // System.out.println("*** in selectContains ***");
+            searchType.get(0).click();
     }
 }

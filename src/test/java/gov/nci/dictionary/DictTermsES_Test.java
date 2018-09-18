@@ -70,7 +70,7 @@ public class DictTermsES_Test extends BaseClass {
 
 		try {
 			dict = new HeaderElements(driver);
-			boolean linkVisible = dict.LinkVisible();
+			boolean linkVisible = dict.WidgetLinkVisible();
 			Assert.assertTrue(linkVisible,
 			                  "*** Error: Term Distionary ES Widget Link Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {

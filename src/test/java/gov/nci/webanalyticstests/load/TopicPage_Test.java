@@ -17,17 +17,17 @@ public class TopicPage_Test extends AnalyticsTestLoadBase {
 	 * The following page types / content are covered by this test class:
 	 * - Topic (English and Spanish)
 	 */
-	
+
 	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;	
+	private Beacon beacon;
 	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "TopicPage";
-	
-	@BeforeClass(groups = { "Analytics" }) 
+
+	@BeforeClass(groups = { "Analytics" })
 	public void setup() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
-	
+
 	/// Topic page loads return expected values
 	@Test(dataProvider = "TopicPageLoad", groups = { "Analytics" })
 	public void testHomePageLoad(String path, String contentType) {
@@ -49,5 +49,5 @@ public class TopicPage_Test extends AnalyticsTestLoadBase {
 	public Iterator<Object[]> getTopicPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
-	
+
 }

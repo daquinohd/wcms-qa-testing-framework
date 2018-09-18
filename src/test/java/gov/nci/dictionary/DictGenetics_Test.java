@@ -35,7 +35,7 @@ public class DictGenetics_Test extends BaseClass {
 	// ------------------------------------------------------------------------------
 	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
 	public void TitleVisible(String url) {
-		HeaderElements page;
+		HeaderElements dict;
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		// System.out.println("\nTesting Gentics Dictionary TitleVisible()");
@@ -45,10 +45,134 @@ public class DictGenetics_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			page = new HeaderElements(driver);
-			boolean titleVisible = page.TitleVisible();
+			dict = new HeaderElements(driver);
+			boolean titleVisible = dict.TitleVisible();
 			Assert.assertTrue(titleVisible,
 			                  "*** Error: Genetics Distionary Header Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the "Starts with"/"Contains" radio buttons are displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+	public void RadioVisible(String url) {
+		HeaderElements dict;
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Genetics Dictionary RadioVisible()");
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.RadioBtnVisible();
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Genetics Dictionary Radio Button Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the "Starts with" radio button is selected by default
+	// ----------------------------------------------------------------
+	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+	public void RadioStartsWithSelected(String url) {
+		HeaderElements dict;
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Genetics Dictionary RadioStartsWithSelected()");
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioStartsWith = dict.RadioDefault();
+			Assert.assertTrue(radioStartsWith,
+			                  "*** Error: Genetics Dictionary Radio Button Default Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the search input field is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+	public void InputFieldVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.dictionary-search-input";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Genetics Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Genetics Dictionary Input Field Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the Search button is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+	public void SearchBtnVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "input.button";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Genetics Dictionary " + curMethod);
+
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Genetics Dictionary SearchButton Not Found ***");
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming the A-Z list is displayed
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+	public void AZListVisible(String url) {
+		HeaderElements dict;
+		String cssSelector = "div.az-list";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+		// System.out.println("\nTesting Genetics Dictionary " + curMethod);
+		System.out.println("    " + url);
+		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new HeaderElements(driver);
+			boolean radioVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(radioVisible,
+			                  "*** Error: Genetics Dictionary A-Z List Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
