@@ -25,36 +25,46 @@
 		</groups>
 		<classes>
 
-			<!-- Load tracking events -->
-			<class name="gov.nci.webanalyticstests.load.BlogPostPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.BlogSeriesPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.CthpPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.HomePage_Test" />
-			<class name="gov.nci.webanalyticstests.load.InnerPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.LandingPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.PdqPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.TopicPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvBasicSearchPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvancedResultsPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsBasicResultsPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.CtsAdvBasicViewPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.DictionaryPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.DynamicListingPage_Test" />
-			<class name="gov.nci.webanalyticstests.load.appmodule.SwsResultsPage_Test" />
+			<!-- Blog tracking -->
+			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostLoad_Test" />
+			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostClick_Test" />
+			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesLoad_Test" />
+			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesClick_Test" />
 
-			<!-- Click tracking events -->
+			<!-- Clinical Trials tracking -->
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsLoad_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchLoad_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsLoad_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchLoad_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.DynamicListingLoad_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.TrialDetailViewClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.TrialDetailViewLoad_Test" />
+
+			<!-- Sitewide Search tracking -->
+			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsLoad_Test" />
+			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsClick_Test" />
+
+			<!-- Dictionary tracking -->
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictionaryLoad_Test" />
+
+			<!-- Common component tracking -->
+			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
-			<class name="gov.nci.webanalyticstests.click.BlogPost_Test" />
-			<class name="gov.nci.webanalyticstests.click.BlogSeries_Test" />
-			<class name="gov.nci.webanalyticstests.click.SwsForm_Test" />
-			<class name="gov.nci.webanalyticstests.click.Resize_Test" />
-			<class name="gov.nci.webanalyticstests.click.MegaMenu_Test" />
-			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvancedSearch_Test" />
-			<class name="gov.nci.webanalyticstests.click.appmodule.CtsBasicSearch_Test" />
-			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicResults_Test" />
-			<class name="gov.nci.webanalyticstests.click.appmodule.CtsAdvBasicView_Test" />
-			<class name="gov.nci.webanalyticstests.click.appmodule.SwsResults_Test" />
+			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" />
+			<class name="gov.nci.webanalyticstests.commonobjects.SwsFormClick_Test" />
+
+			<!-- All other page load tracking -->
+			<class name="gov.nci.webanalyticstests.cthp.pages.CthpLoad_Test" />
+			<class name="gov.nci.webanalyticstests.home.pages.HomeLoad_Test" />
+			<class name="gov.nci.webanalyticstests.inner.pages.InnerLoad_Test" />
+			<class name="gov.nci.webanalyticstests.landing.pages.LandingLoad_Test" />
+			<class name="gov.nci.webanalyticstests.pdq.pages.PdqLoad_Test" />
+			<class name="gov.nci.webanalyticstests.topic.pages.TopicLoad_Test" />
 
 		</classes>
 	</test>

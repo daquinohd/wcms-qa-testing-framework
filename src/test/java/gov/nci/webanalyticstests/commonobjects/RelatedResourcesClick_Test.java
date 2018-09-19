@@ -6,7 +6,7 @@ import org.testng.Assert;
 
 import gov.nci.commonobjects.RelatedResources;
 import gov.nci.webanalytics.Beacon;
-import gov.nci.webanalyticstests.click.AnalyticsTestClickBase;
+import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
 public class RelatedResourcesClick_Test extends AnalyticsTestClickBase {
 
