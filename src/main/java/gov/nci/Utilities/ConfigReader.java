@@ -17,11 +17,11 @@ public class ConfigReader {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param environment String containing the environment name. Valid values are:
 	 *                    qa dt blue red pink stage For production, pass the empty
 	 *                    string.
-	 * 
+	 *
 	 */
 	public ConfigReader(String environment) {
 		try {
@@ -43,13 +43,13 @@ public class ConfigReader {
 			String.CASE_INSENSITIVE_ORDER) {
 		private static final long serialVersionUID = 1L;
 		{
-			put("", "www");
-			put("prod", "www");
-			put("qa", "www-qa");
-			put("dt", "www-dt-qa");
-			put("blue", "www-blue-dev");
-			put("red", "www-red-dev");
-			put("pink", "www-pink-dev");
+			put("",      "www");
+			put("prod",  "www");
+			put("qa",    "www-qa");
+			put("dt",    "www-dt-qa");
+			put("blue",  "www-blue-dev");
+			put("red",   "www-red-dev");
+			put("pink",  "www-pink-dev");
 			put("stage", "www-stage");
 		}
 	};
@@ -64,7 +64,7 @@ public class ConfigReader {
 	/**
 	 * Retrieves the identified URL from the configuration file and
 	 * returns a version modified to reflect the current environment.
-	 * 
+	 *
 	 * @param pageURL Identifier for a specific page URL.
 	 */
 	public String getPageURL(String pageURL) {
@@ -94,7 +94,7 @@ public class ConfigReader {
 
 	/**
 	 * Gets the base driver path from the configuration properties file
-	 * 
+	 *
 	 * @return The base path for the drivers
 	 */
 	public String getDriverBasePath() {
@@ -112,7 +112,7 @@ public class ConfigReader {
 	/**
 	 * Gets the driver name (geckodriver) based on the selected driver
 	 * (FirefoxDriver)
-	 * 
+	 *
 	 * @param driver
 	 * @return
 	 */

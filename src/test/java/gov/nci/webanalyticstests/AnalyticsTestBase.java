@@ -38,11 +38,11 @@ public abstract class AnalyticsTestBase {
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
 	protected ConfigReader config;
-	
+
 	/**************************************
 	 * Section: TextNG Befores & Afters *
 	 **************************************/
-	
+
 	/**
 	* Configuration information for a TestNG class (http://testng.org/doc/documentation-main.html):
 	* @BeforeSuite: The annotated method will be run before all tests in this suite have run.
@@ -58,40 +58,40 @@ public abstract class AnalyticsTestBase {
 	* @BeforeMethod: The annotated method will be run before each test method.
 	* @AfterMethod: The annotated method will be run after each test method.
 	**/
-	
+
 	@BeforeTest(groups = { "Analytics" })
 	@Parameters({ "browser", "environment" })
 	public void beforeTest(String browser, String environment) throws MalformedURLException {
-		config = new ConfigReader(environment);		
-		
+		config = new ConfigReader(environment);
+
 		// Start the BrowserMob proxy on the site homepage
 		String initUrl = config.goHome();
 		System.out.println("=== Starting BrowserMobProxy ===");
 		this.initializeProxy(initUrl);
-		
+
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
 		System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
 		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
-		
+
 		// Get path and configure extent reports
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
-		String extentReportPath = config.getExtentReportPath();		
+		String extentReportPath = config.getExtentReportPath();
 		System.out.println("Logger Path:" + extentReportPath + "\n");
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
-		report.addSystemInfo("Environment", config.getProperty("Environment"));		
+		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
-	
+
 	@BeforeClass(groups = { "Analytics" })
-	@Parameters({ "environment" })	
+	@Parameters({ "environment" })
 	public void beforeClass(String environment) {
 		config = new ConfigReader(environment);
-		String testClass = this.getClass().getSimpleName();		
+		String testClass = this.getClass().getSimpleName();
 		System.out.println("~~ " + testClass + " ~~\n");
 		logger = report.startTest(testClass);
 	}
-	
+
 	@BeforeMethod(groups = { "Analytics" })
 	public void beforeMethod() throws RuntimeException {
 		// Reset our browser to full screen before each method
@@ -110,12 +110,12 @@ public abstract class AnalyticsTestBase {
 			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
 		}
 	}
-	
+
 	@AfterClass(groups = { "Analytics" })
 	public void afterClass() {
 		report.endTest(logger);
 	}
-	
+
 	@AfterTest(groups = { "Analytics"})
 	public void afterTest() {
 		System.out.println("=== Quitting Driver ===");
@@ -124,9 +124,9 @@ public abstract class AnalyticsTestBase {
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
 	}
-	
+
 	/************************* Initialize BMP and request beacon objects *************************/
-	
+
 	/**
 	 * Start and configure BrowserMob Proxy for Selenium.<br/>
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
@@ -142,18 +142,18 @@ public abstract class AnalyticsTestBase {
 		// Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
 		proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
-		// Create a new HAR with a label matching the hostname
-		proxy.newHar(url);		
+	    // Create a new HAR with a label matching the hostname
+	    proxy.newHar(url);
 		System.out.println("== Started BrowserMobProxy successfully ==");
 	}
-	
+
 	/**
 	 * Build the list of HAR (HTTP archive) request URLs.
 	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
 	 * @throws RuntimeException
 	 * @throws IllegalArgumentException
 	 */
-	protected List<String> getHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {		
+	protected List<String> getHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {
 
 		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
 		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
@@ -177,12 +177,12 @@ public abstract class AnalyticsTestBase {
 		System.out.println("Total HAR entries: " + entries.size());
 		
 		// The HAR list has been created; clear the log for next pass
-		har.getLog().getEntries().clear();		
+		har.getLog().getEntries().clear();
 		// For further reading, see https://en.wiktionary.org/wiki/hardy_har_har
-		
+
 		return harUrlList;
 	}
-	
+
 	/**
 	 * Utility function to get the last element in a list of AnalyticsRequest objects
 	 * @param requests
@@ -210,18 +210,18 @@ public abstract class AnalyticsTestBase {
 	}
 	
 	/****************************** Abstract methods ******************************/
-	
+
 	/**
 	 * Get a single Beacon object for testing.
 	 * @return beacon (Beacon)
 	 */
 	protected abstract Beacon getBeacon();
-	
+
 	/**
 	 * Get a list of Beacon objects.
 	 * @param urlList (List<String>)
 	 * @return List of Beacon objects
 	 */
-	protected abstract List<Beacon> getBeaconList(List<String> urlList);	
+	protected abstract List<Beacon> getBeaconList(List<String> urlList);
 
 }

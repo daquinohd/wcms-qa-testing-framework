@@ -12,7 +12,7 @@ public class AnalyticsRequest {
 	public String url;
 	public String path;
 	public List<NameValuePair> paramsList;
-	
+
 	public AnalyticsRequest(String url) {
 		try {
 			this.url = url;

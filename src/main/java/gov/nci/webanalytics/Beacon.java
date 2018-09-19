@@ -28,8 +28,8 @@ public class Beacon extends AnalyticsRequest {
 	static final String LINKTYPE = "pe";
 	static final String LINKNAME = "pev2";
 	static final String LINKURL = "pev1";
-	
-	// Partial parameter values. Each prop, eVar, and hier is its own query parameter. 
+
+	// Partial parameter values. Each prop, eVar, and hier is its own query parameter.
 	// The getNumberedParams() method handles the logic of appending the number values
 	// to each of these query parameter
 	static final String PROP_PARTIAL = "c";
@@ -48,7 +48,7 @@ public class Beacon extends AnalyticsRequest {
 	// This class represents an Adobe Analytics request beacon
 	public Beacon(String url) {
 		super(url);
-		
+
 		// Set our variables
 		this.suites = getSuites();
 		this.channels = getChannels();
@@ -77,7 +77,7 @@ public class Beacon extends AnalyticsRequest {
 	}
 
 	/**
-	 * Get channel parameter value. 
+	 * Get channel parameter value.
 	 * @return channel (String)
 	 */
 	private String getChannels() {
@@ -88,7 +88,7 @@ public class Beacon extends AnalyticsRequest {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Get array of event values
 	 * @param parms
@@ -104,9 +104,9 @@ public class Beacon extends AnalyticsRequest {
 		}
 		return rtnEvents.split(",");
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private List<String> getPropList() {
@@ -115,7 +115,7 @@ public class Beacon extends AnalyticsRequest {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private List<String> geteVarList() {
@@ -124,14 +124,13 @@ public class Beacon extends AnalyticsRequest {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private List<String> getHierList() {
 		List <String> rtn = getNumParams(HIER_PARTIAL, paramsList, 2);
 		return rtn;
 	}
-
 
 	/**
 	 * Get "Link Type" value (pe)(
@@ -149,7 +148,7 @@ public class Beacon extends AnalyticsRequest {
 	/**
 	 * Get "Link Name" value (pev2)(
 	 * @return
-	 */	
+	 */
 	public String getLinkName() {
 		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(LINKNAME)) {
@@ -162,7 +161,7 @@ public class Beacon extends AnalyticsRequest {
 	/**
 	 * Get "Link URL" value (pev1)(
 	 * @return
-	 */		
+	 */
 	public String getLinkUrl() {
 		for (NameValuePair param : paramsList) {
 			if (param.getName().equalsIgnoreCase(LINKURL)) {
@@ -171,7 +170,7 @@ public class Beacon extends AnalyticsRequest {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Check parameters to verify that this is a click-type event (s.tl).
 	 * @return boolean
@@ -193,7 +192,7 @@ public class Beacon extends AnalyticsRequest {
 	public boolean isExitClickTypeEvent() {
 		return getLinkType().equalsIgnoreCase("lnk_e");
 	}
-	
+
 	/**
 	 * Check for an event value within a click beacon.
 	 * 
@@ -219,7 +218,7 @@ public class Beacon extends AnalyticsRequest {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Check for a suite (s_accout/s.account) string value in a Beacon object.
 	 * @param suite
@@ -255,22 +254,21 @@ public class Beacon extends AnalyticsRequest {
 		return mappedSuite;		
 	}
 
-	
-	/******************** Utility methods ****************************************/	
-	
+	/******************** Utility methods ****************************************/
+
 	/**
-	 * Initialize a numbered list of empty elements. 
+	 * Initialize a numbered list of empty elements.
 	 * @param size
 	 * @return rtnList List<String>
 	 */
-	private List<String> initNumberedArrayList(int size) {		
+	private List<String> initNumberedArrayList(int size) {
 		List<String> myList = new ArrayList<String>();
 		while(myList.size() <= size) {
 			myList.add(null);
 		}
 		return myList;
 	}
-	
+
 	/**
 	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
 	 * @param myParam
@@ -281,8 +279,8 @@ public class Beacon extends AnalyticsRequest {
 	protected List<String> getNumParams(String myParam, List<NameValuePair> myList, int total) {
 		// Create a list with x names and null values
 		List<String> rtnList = initNumberedArrayList(total);
-		
-		// Go through the list of populated parameter values and add those to the return list 
+
+		// Go through the list of populated parameter values and add those to the return list
 		// where the number matches
 		for(NameValuePair pair : myList) {
 			String name = pair.getName();

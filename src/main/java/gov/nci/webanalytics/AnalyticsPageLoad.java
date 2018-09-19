@@ -44,7 +44,7 @@ public class AnalyticsPageLoad extends PageObjectBase {
 	public String getMetaLanguage() {
 		return meta_language.getAttribute("content");
 	}
-	
+
 	public String getMetaCoverage() {
 		return meta_coverage.getAttribute("content");
 	}
@@ -89,7 +89,7 @@ public class AnalyticsPageLoad extends PageObjectBase {
 		switch(lang) {
 			case "en" : return "english";
 			case "es" : return "spanish";
-			default: return "english";				
+			default: return "english";
 		}
 	}
 	
