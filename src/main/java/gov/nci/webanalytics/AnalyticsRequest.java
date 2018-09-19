@@ -9,12 +9,12 @@ import org.apache.http.NameValuePair;
 import gov.nci.framework.ParsedURL;
 
 public class AnalyticsRequest {
-	
+
 	//	TODO: Handle null exceptions in has() methods
-	//	TODO: Create 'catch-all' Contains() method		
+	//	TODO: Create 'catch-all' Contains() method
 	public String url;
 	public List<NameValuePair> paramsList;
-	
+
 	public AnalyticsRequest(String url) {
 		try {
 			this.url = url;
@@ -24,7 +24,7 @@ public class AnalyticsRequest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/******************** Utility functions ****************************************/
 	/**
 	 * Utility function to check for a user-specified variable and value
@@ -36,7 +36,7 @@ public class AnalyticsRequest {
 		// TODO: fill this out
 		return false;
 	}
-	
+
 	/**
 	 * Get a list of numbered parameters and their values (e.g. [prop1="www.cancer.gov", prop2="/home", prop3="NCI"])
 	 * @param paramList
@@ -56,16 +56,16 @@ public class AnalyticsRequest {
 		}
 		return rtnList;
 	}
-	
+
 	/**
 	 * Overload for getNumberedParams
-	 * Can be used for cases where the parameter name and analytics variable name match 
+	 * Can be used for cases where the parameter name and analytics variable name match
 	 * @param paramList
 	 * @param parm
 	 * @return
 	 */
 	protected static List<NameValuePair> getNumberedParams(List<NameValuePair> paramList, String parm) {
 		return getNumberedParams(paramList, parm, parm);
-	}	
-	
+	}
+
 }

@@ -418,23 +418,23 @@ public class PageOptions_Test extends BaseClass {
 
 	// Method to create URL for data provider to be tested
 	// ---------------------------------------------------
-	private String AddHostname(String path) {
-		String tier = "QA";         // Hard-code string for environment/host used
-		String host;
+	// private String AddHostname(String path) {
+	// 	String tier = "QA";         // Hard-code string for environment/host used
+	// 	String host;
 
-		switch (tier.toUpperCase()) {
-			case "PROD": host = "www.cancer.gov";
-					     break;
-			case "DEV":  host = "www-blue-dev.cancer.gov";
-					     break;
-			case "QA":   host = "www-qa.cancer.gov";
-					     break;
-			case "DT":   host = "www-dt-qa.cancer.gov";
-					     break;
-            default:     host = "www-qa.cancer.gov";
-		}
-		return "https://" + host + path;
-	}
+	// 	switch (tier.toUpperCase()) {
+	// 		case "PROD": host = "www.cancer.gov";
+	// 				     break;
+	// 		case "DEV":  host = "www-blue-dev.cancer.gov";
+	// 				     break;
+	// 		case "QA":   host = "www-qa.cancer.gov";
+	// 				     break;
+	// 		case "DT":   host = "www-dt-qa.cancer.gov";
+	// 				     break;
+    //         default:     host = "www-qa.cancer.gov";
+	// 	}
+	// 	return "https://" + host + path;
+	// }
 
 
 /*  ***************************** Test Methods *********************************************** */
