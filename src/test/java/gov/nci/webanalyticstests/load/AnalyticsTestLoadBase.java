@@ -58,7 +58,7 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 			}
 		}
 
-	    // Debug analytics beacon counts
+		// Debug analytics beacon counts
 		System.out.println("Total analytics requests: " + urlList.size()
 			+ " (load: " + loadBeacons.size() + ", click: " + clickBeacons + ")"
 		);

@@ -173,16 +173,25 @@ public class Beacon extends AnalyticsRequest {
 	}
 	
 	/**
-	 * Check for parameters to verify that this is a click-type/link event
-	 * @param paramList
-	 * @return
+	 * Check parameters to verify that this is a click-type event (s.tl).
+	 * @return boolean
 	 */
 	public boolean isClickTypeEvent() {
 		if(getLinkType().isEmpty() && getLinkName().isEmpty() && getLinkUrl().isEmpty()) {
 			return false;
+		} else if(getLinkType().equalsIgnoreCase("lnk_e")) {
+			return false;
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * Check parameters to verify that this is an exit link click.
+	 * @return boolean
+	 */
+	public boolean isExitClickTypeEvent() {
+		return getLinkType().equalsIgnoreCase("lnk_e");
 	}
 	
 	/**

@@ -72,7 +72,7 @@ public abstract class AnalyticsTestBase {
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
-    	System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
+		System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
 		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
 		
 		// Get path and configure extent reports
@@ -136,14 +136,14 @@ public abstract class AnalyticsTestBase {
 
 		// New BrowserMobProxy instance - this is needed to create the HAR (HTTP archive) object
 		proxy = new BrowserMobProxyServer();
-	    proxy.start(0);
+		proxy.start(0);
 
-	    // Selenium proxy object, capabilities, and WebDriver instantiation are handled in BrowserManager:startProxyBrowser()
-	    // Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
-	    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
+		// Selenium proxy object, capabilities, and WebDriver instantiation are handled in BrowserManager:startProxyBrowser()
+		// Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
+		proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
-	    // Create a new HAR with a label matching the hostname
-	    proxy.newHar(url);	    
+		// Create a new HAR with a label matching the hostname
+		proxy.newHar(url);		
 		System.out.println("== Started BrowserMobProxy successfully ==");
 	}
 	
@@ -157,24 +157,24 @@ public abstract class AnalyticsTestBase {
 
 		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
 		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
-	    // and export performance data as a HAR file object.
-	    Har har = proxy.getHar();
-	    List<HarEntry> entries = har.getLog().getEntries();
-    	
-    	// Reset HAR URL list
+		// and export performance data as a HAR file object.
+		Har har = proxy.getHar();
+		List<HarEntry> entries = har.getLog().getEntries();
+		
+		// Reset HAR URL list
 		List<String> harUrlList = new ArrayList<String>();
 
-    	// Build a list of requests to the analytics tracking server from the HAR
-	    for (HarEntry entry : entries) {
-	    	String result = entry.getRequest().getUrl();
-	    	if(result.contains(Beacon.TRACKING_SERVER))
-	    	{
-	    		harUrlList.add(result);
-	    	}
-	    }
-	    
-	    // Debug size of HAR list
-    	System.out.println("Total HAR entries: " + entries.size());
+		// Build a list of requests to the analytics tracking server from the HAR
+		for (HarEntry entry : entries) {
+			String result = entry.getRequest().getUrl();
+			if(result.contains(Beacon.TRACKING_SERVER))
+			{
+				harUrlList.add(result);
+			}
+		}
+		
+		// Debug size of HAR list
+		System.out.println("Total HAR entries: " + entries.size());
 		
 		// The HAR list has been created; clear the log for next pass
 		har.getLog().getEntries().clear();		

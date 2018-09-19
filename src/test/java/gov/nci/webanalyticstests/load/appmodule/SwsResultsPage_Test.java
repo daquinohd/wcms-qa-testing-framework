@@ -29,12 +29,12 @@ public class SwsResultsPage_Test extends AnalyticsTestLoadBase {
 			driver.get(config.goHome());
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			swSearchForm = new SitewideSearchForm(driver);
-		    swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
-		    swSearchForm.clickSearchButton();
-		    beacon = getBeacon();
-		    
-		    analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");
-		    doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_EN);
+			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
+			swSearchForm.clickSearchButton();
+			beacon = getBeacon();
+			
+			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");
+			doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_EN);
 			logger.log(LogStatus.PASS, "English results load values are correct.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting English sitewide search.");
@@ -50,12 +50,12 @@ public class SwsResultsPage_Test extends AnalyticsTestLoadBase {
 			driver.get(config.goHome() + "/espanol");
 			analyticsPageLoad = new AnalyticsPageLoad(driver);			
 			swSearchForm = new SitewideSearchForm(driver);
-		    swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
-		    swSearchForm.clickSearchButton();
-		    beacon = getBeacon();
-		    
-		    analyticsPageLoad.setPageTitle("Resultados - National Cancer Institute");
-		    doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_ES);
+			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
+			swSearchForm.clickSearchButton();
+			beacon = getBeacon();
+			
+			analyticsPageLoad.setPageTitle("Resultados - National Cancer Institute");
+			doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_ES);
 			logger.log(LogStatus.PASS, "Spanish results load values are correct.");
 		} catch (Exception e) {
 			Assert.fail("Error submitting Spanish sitewide search.");
@@ -69,10 +69,10 @@ public class SwsResultsPage_Test extends AnalyticsTestLoadBase {
 		try {
 			System.out.println("Direct navigation to results page");			
 			driver.get(config.goHome() + RESULTS_PATH_EN);
-		    beacon = getBeacon();
-		    
-		    analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");		    
-		    doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_EN);
+			beacon = getBeacon();
+			
+			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");			
+			doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_EN);
 			logger.log(LogStatus.PASS, "Sitewide search direct navigation values are correct.");
 		} catch (Exception e) {
 			Assert.fail("Error on sitewide search direct navigation.");

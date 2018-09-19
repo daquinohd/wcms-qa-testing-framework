@@ -17,7 +17,8 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 	public static final String SEARCH_RESULT_PAGE_TITLE = "Clinical Trials Search Results";
 	public static final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information\nFind NCI-Supported Clinical Trials";
 	public static final String H1_TITLE = "Clinical Trials Search Results";
-
+	public static final String SEL_START_OVER = ".cts-start-over a";
+	
 	WebDriver driver;
 
 	/*************** Advance Search Page WebElements **********************/
@@ -65,7 +66,7 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 	}
 
 	public void clickStartOverNoNav() {
-		ElementChange.removeHref(driver, ".cts-start-over a");
+		ElementChange.removeHref(driver, SEL_START_OVER);
 		lnk_StartOver.click();
 	}
 

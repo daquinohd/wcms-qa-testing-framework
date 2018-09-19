@@ -25,11 +25,11 @@ public class SwsResults_Test extends AnalyticsTestClickBase {
 			swSearchForm.doSitewideSearch(SEARCH_TERM);
 			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.clickBestBets();
-		    beacon = getBeacon();
-		    
-		    Assert.assertEquals(beacon.props.get(12), "best_bets");
-		    Assert.assertEquals(beacon.props.get(13), "1");
-		    Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
+			beacon = getBeacon();
+			
+			Assert.assertEquals(beacon.props.get(12), "best_bets");
+			Assert.assertEquals(beacon.props.get(13), "1");
+			Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
 			logger.log(LogStatus.PASS, "Best Bet click values are correct.");
 		} catch (Exception e) {
 			Assert.fail("Error getting Best Bet click values.");
@@ -46,11 +46,11 @@ public class SwsResults_Test extends AnalyticsTestClickBase {
 			swSearchForm.doSitewideSearch(SEARCH_TERM);
 			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.clickListItem(2);
-		    beacon = getBeacon();
-		    
-		    Assert.assertEquals(beacon.props.get(12), "generic");
-		    Assert.assertEquals(beacon.props.get(13), "2");
-		    Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
+			beacon = getBeacon();
+			
+			Assert.assertEquals(beacon.props.get(12), "generic");
+			Assert.assertEquals(beacon.props.get(13), "2");
+			Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
 			logger.log(LogStatus.PASS, "Result item click values are correct.");
 		} catch (Exception e) {
 			Assert.fail("Error getting result item click values.");
@@ -66,9 +66,9 @@ public class SwsResults_Test extends AnalyticsTestClickBase {
 			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.selectWithinResults();
 			swSearchResults.setSitewideSearchKeyword(SEARCH_TERM);
-		    swSearchResults.clickSearchButton();
-		    beacon = getBeacon();
-		    
+			swSearchResults.clickSearchButton();
+			beacon = getBeacon();
+			
 			doCommonClickAssertions(beacon);
 			Assert.assertEquals(beacon.linkName, "SiteWideSearchResultsSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_withinresults");
@@ -90,9 +90,9 @@ public class SwsResults_Test extends AnalyticsTestClickBase {
 			driver.get(config.getPageURL("SitewideResultsPage"));
 			swSearchResults = new SitewideSearchResults(driver);			
 			swSearchResults.setSitewideSearchKeyword(SEARCH_TERM);
-		    swSearchResults.clickSearchButton();
-		    beacon = getBeacon();
-		    
+			swSearchResults.clickSearchButton();
+			beacon = getBeacon();
+			
 			doCommonClickAssertions(beacon);
 			Assert.assertEquals(beacon.linkName, "SiteWideSearchResultsSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_new");

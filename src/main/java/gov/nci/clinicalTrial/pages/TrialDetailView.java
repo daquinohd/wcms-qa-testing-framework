@@ -19,6 +19,8 @@ import gov.nci.framework.ElementChange;
 
 public class TrialDetailView extends ClinicalTrialPageObjectBase {
 
+	public static final String SEL_START_OVER = ".cts-start-over a";
+	
 	WebDriver driver;
 	Actions action;
 
@@ -27,7 +29,7 @@ public class TrialDetailView extends ClinicalTrialPageObjectBase {
 	private WebElement text_HeaderText;
 	@FindBy(how = How.CSS, using = ".cts-results-info a")
 	private WebElement lnk_backToResults;
-	@FindBy(how = How.CSS, using = ".cts-start-over a")
+	@FindBy(how = How.CSS, using = SEL_START_OVER)
 	private WebElement lnk_startOver;
 	@FindBy(how = How.CSS, using = ".accordion-controls .open-all")
 	private WebElement btn_openAll;
@@ -63,7 +65,7 @@ public class TrialDetailView extends ClinicalTrialPageObjectBase {
 	}
 
 	public void clickStartOverNoNav() {
-		ElementChange.removeHref(driver, ".cts-start-over a");
+		ElementChange.removeHref(driver, SEL_START_OVER);
 		clickStartOver();
 	}
 	

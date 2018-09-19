@@ -36,8 +36,8 @@ public class SwsForm_Test extends AnalyticsTestClickBase {
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon();
-		    
+			beacon = getBeacon();
+			
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
@@ -55,8 +55,8 @@ public class SwsForm_Test extends AnalyticsTestClickBase {
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon(); 
-		    
+			beacon = getBeacon(); 
+			
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(8), "spanish");
@@ -75,8 +75,8 @@ public class SwsForm_Test extends AnalyticsTestClickBase {
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon();
-		    
+			beacon = getBeacon();
+			
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
@@ -94,8 +94,8 @@ public class SwsForm_Test extends AnalyticsTestClickBase {
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon();
-		    
+			beacon = getBeacon();
+			
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.linkName, "SiteWideSearch");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
@@ -115,8 +115,8 @@ public class SwsForm_Test extends AnalyticsTestClickBase {
 			pageNotFound.selectEnglish();
 			pageNotFound.clickSearchButton();
 			System.out.println("Sitewide search term: " + searchTerm);
-		    beacon = getBeacon();
-		    
+			beacon = getBeacon();
+			
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.linkName, "PageNotFound");
 			Assert.assertEquals(beacon.props.get(11), "pagenotfoundsearch");
