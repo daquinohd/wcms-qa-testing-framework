@@ -8,10 +8,10 @@ import java.util.List;
 
 import com.relevantcodes.extentreports.LogStatus;
 
+import org.testng.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -20,13 +20,14 @@ import gov.nci.clinicaltrials.BaseClass;
 public class DictTerms_Test extends BaseClass {
 
 	private String TESTDATA_PATH;
+	private String language = "EN";
 
 /*  ***************************** Test Methods ****************************************** */
 	// Testing to confirm the page title "NCI Dictionary of Cancer Terms" is displayed
 	// --------------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void TitleVisible(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String dictTitle = "NCI Dictionary of Cancer Terms";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -36,7 +37,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean titleVisible = dict.TitleVisible();
 			WebElement titleText = dict.getTitleText();
 
@@ -54,7 +55,7 @@ public class DictTerms_Test extends BaseClass {
 	// -----------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void WidgetLinkVisible(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		System.out.println("    " + url);
@@ -63,7 +64,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean linkVisible = dict.WidgetLinkVisible();
 			Assert.assertTrue(linkVisible,
 			                  "*** Error: Term Dictionary Widget Link Not Found ***");
@@ -77,7 +78,7 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void ClickWidgetLink(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String language = "EN";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -87,7 +88,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean foundWidgetPage = dict.LinksToWidgetPage(driver, language);
 			Assert.assertTrue(foundWidgetPage,
 			                  "*** Error: Term Dictionary Click Widget Page Not Found ***");
@@ -101,7 +102,7 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void RadioVisible(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		System.out.println("    " + url);
@@ -110,7 +111,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean radioVisible = dict.RadioBtnVisible();
 			Assert.assertTrue(radioVisible,
 			                  "*** Error: Term Dictionary Radio Button Not Found ***");
@@ -124,7 +125,7 @@ public class DictTerms_Test extends BaseClass {
 	// ----------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void RadioStartsWithSelected(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		System.out.println("    " + url);
@@ -133,7 +134,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean radioStartsWith = dict.RadioDefault();
 			Assert.assertTrue(radioStartsWith,
 			                  "*** Error: Term Dictionary Radio Button Default Not Found ***");
@@ -147,7 +148,7 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void InputFieldVisible(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -157,7 +158,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean radioVisible = dict.FieldVisible(cssSelector);
 			Assert.assertTrue(radioVisible,
 			                  "*** Error: Term Dictionary Input Field Not Found ***");
@@ -171,7 +172,7 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void SearchBtnVisible(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "input.button";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -181,9 +182,9 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
-			boolean radioVisible = dict.FieldVisible(cssSelector);
-			Assert.assertTrue(radioVisible,
+			dict = new DictObjectBase(driver);
+			boolean searchBtnVisible = dict.FieldVisible(cssSelector);
+			Assert.assertTrue(searchBtnVisible,
 			                  "*** Error: Term Dictionary SearchButton Not Found ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
@@ -195,7 +196,7 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void AZListVisible(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "div.az-list";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -205,7 +206,7 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			boolean radioVisible = dict.FieldVisible(cssSelector);
 			Assert.assertTrue(radioVisible,
 			                  "*** Error: Term Dictionary A-Z List Not Found ***");
@@ -219,7 +220,7 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void AZListSelect(String url) {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "div.az-list ul li a";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -229,8 +230,9 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
-			boolean displayOK = dict.AZListSelect(driver, cssSelector);
+			dict = new DictObjectBase(driver);
+			Integer numDefs = NumberOfDefinitions("dict", language);
+			boolean displayOK = dict.AZListSelect(driver, cssSelector, language, numDefs);
 			Assert.assertTrue(displayOK,
 			                  "*** Error: Dictionary List for specified letter incorrect ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -245,7 +247,7 @@ public class DictTerms_Test extends BaseClass {
 	 */
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void KeyWordStartsWith(String url) throws InterruptedException {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
 		String drug = "bevacizumab";
 		String drug4 = drug.substring(0, 4);
@@ -257,15 +259,13 @@ public class DictTerms_Test extends BaseClass {
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			dict.SubmitSearchTerm(cssSelector, drug4);
 
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			boolean pageFound = wait.until(
 				ExpectedConditions.urlContains("/publications/dictionaries/cancer-terms/def/" + drug)
 			);
-
-			// Thread.sleep(5000);
 
 			String pageNotFound = "Page for drug " + drug + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
@@ -281,31 +281,28 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void KeyWordContains(String url) throws InterruptedException {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String drug = "bevacizumab";
-		String drug4 = drug.substring(0, 4);
+		String term = "bevacizumab";
+		String term4 = term.substring(0, 4);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+		logger.log(LogStatus.INFO, "Testing contains: " + term4);
 
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 		    dict.selectContains();
-			dict.SubmitSearchTerm(cssSelector, drug4);
+			dict.SubmitSearchTerm(cssSelector, term4);
 
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			boolean pageFound = wait.until(
 				ExpectedConditions.urlContains("/publications/dictionaries/cancer-terms/search")
 			);
 
-			// Thread.sleep(2000);
-			// WebElement dada = dict.getBrowser().findElement(By.cssSelector(cssSelector));
-
-			String pageNotFound = "Page for drug " + drug + " not found";
+			String pageNotFound = "Page for term " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -319,21 +316,21 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void KeyWordContainsReturnHeader(String url) throws InterruptedException {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String drug = "bevacizumab";
-		String drug4 = drug.substring(0, 4);
+		String term = "bevacizumab";
+		String term4 = term.substring(0, 4);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+		logger.log(LogStatus.INFO, "Testing contains result header: " + url);
 
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 		    dict.selectContains();
-			dict.SubmitSearchTerm(cssSelector, drug4);
+			dict.SubmitSearchTerm(cssSelector, term4);
 
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			boolean searchResult = wait.until(
@@ -344,7 +341,7 @@ public class DictTerms_Test extends BaseClass {
 			WebElement searchHeader = dict.SearchResultHeader("div.dictionary-search-results-header");
 
 			String searchHeaderExpected = "5 results found for: beva";
-			String pageNotFound = "List of drugs containing " + drug + " not found";
+			String pageNotFound = "List of terms containing " + term + " not found";
 			Assert.assertEquals(searchHeader.getText(), searchHeaderExpected, pageNotFound);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -358,21 +355,21 @@ public class DictTerms_Test extends BaseClass {
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Glossary", groups = { "dictionary" })
 	public void KeyWordContainsReturnList(String url) throws InterruptedException {
-		HeaderElements dict;
+		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String drug = "bevacizumab";
-		String drug4 = drug.substring(0, 4);
+		String term = "bevacizumab";
+		String term4 = term.substring(0, 4);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+		logger.log(LogStatus.INFO, "Testing contains result list: " + term4);
 
 		driver.get(url);
 
 		try {
-			dict = new HeaderElements(driver);
+			dict = new DictObjectBase(driver);
 			dict.selectContains();
-			dict.SubmitSearchTerm(cssSelector, drug4);
+			dict.SubmitSearchTerm(cssSelector, term4);
 
 			WebDriverWait wait = new WebDriverWait(driver, 2);
 			boolean searchResult = wait.until(
@@ -382,7 +379,7 @@ public class DictTerms_Test extends BaseClass {
 
 			List<WebElement> resultList = dict.SearchResultList("dt > dfn");
 
-			String pageNotFound = "List of drugs containing " + drug + " not found";
+			String pageNotFound = "List of terms containing " + term + " not found";
 			Assert.assertEquals(resultList.size(), 5, pageNotFound);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -391,8 +388,7 @@ public class DictTerms_Test extends BaseClass {
 	}
 
 
-
-/*  ***************************** Data Provider *********************************************** */
+	/*  ***************************** Data Provider *********************************************** */
 
 	// DataProvider to read the Excel spreadsheet with data containing URLs to be checked
 	// Using worksheet indicating URLs with Page Options that are visible.

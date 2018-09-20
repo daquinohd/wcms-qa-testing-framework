@@ -6,15 +6,15 @@
   The browser parameter is set in pom.xml as part of invoking
   the maven-surefire-plugin.
 
-  -->
   <parameter name="browser" value="Chrome" />
-  <classes>
-    <class name="gov.nci.dictionary.DictTerms_Test" />
-  <!--
-    <class name="gov.nci.dictionary.DictTermsES_Test" />
-    <class name="gov.nci.dictionary.DictDrugs_Test" />
-    <class name="gov.nci.dictionary.DictGenetics_Test" />
   -->
+  <classes>
+  <!--
+  -->
+    <class name="gov.nci.dictionary.DictTerms_Test" />
+    <class name="gov.nci.dictionary.DictDrugs_Test" />
+    <class name="gov.nci.dictionary.DictTermsES_Test" />
+    <class name="gov.nci.dictionary.DictGenetics_Test" />
   </classes>
   </test>
   <!--

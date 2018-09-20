@@ -3,6 +3,8 @@ package gov.nci.clinicaltrials;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
@@ -123,10 +125,41 @@ public class BaseClass {
 		System.out.println("\n***************** END Suite **********************\n");
 	}
 
+	// Setting the tier as a class variable
+	public static String tier = "QA";         // Hard-code string for environment/host used
+
+	/*
+	 *  Method to return
+	 */
+	public Integer NumberOfDefinitions(String dictionary, String language) {
+		// These values are for the letter "B". Change the numbers if using a different letter
+		Map<String, Integer> results = new HashMap<String, Integer>() {{
+			put("b-prod-dict", 378);
+			put("b-prod-dict-es", 232);
+			put("b-prod-drug", 267);
+			put("b-prod-genetics", 3);
+			put("b-qa-dict", 374);
+			put("b-qa-dict-es", 229);
+			put("b-qa-drug", 259);
+			put("b-qa-genetics", 3);
+		}};
+
+		// Need to add "-es" to the key value for the Spanish dictionary
+		String lang = "";
+		if (language.toLowerCase().equals("es")){
+			lang = "-es";
+		}
+
+		String mapKey = "b-" + tier.toLowerCase() + "-" + dictionary + lang;
+		// System.out.println(mapKey);
+
+		return results.get(mapKey);
+	}
+
+
 	// Returns the URL for the host currently used for testing
 	// -------------------------------------------------------
 	public String AddHostname(String path) {
-		String tier = "QA";         // Hard-code string for environment/host used
 		String host;
 
 		switch (tier.toUpperCase()) {
