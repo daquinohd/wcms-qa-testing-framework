@@ -18,7 +18,7 @@ public class OnThisPageClick_Test extends AnalyticsTestClickBase {
 	private final String PATH_PDQ = "/about-cancer/screening/patient-screening-overview-pdq#section/all";
 
 	@BeforeMethod(groups = { "Analytics" })
-	public void setupBlogPost() {
+	public void setupOtpTest() {
 		try {
 			this.otp = new OnThisPage(driver);
 		} catch (Exception e) {

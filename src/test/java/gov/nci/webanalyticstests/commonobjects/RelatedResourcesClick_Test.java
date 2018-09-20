@@ -22,7 +22,7 @@ public class RelatedResourcesClick_Test extends AnalyticsTestClickBase {
 	private final String PATH_ARTICLE = "/about-cancer/understanding/what-is-cancer";
 
 	@BeforeMethod(groups = { "Analytics" })
-	public void setupBlogPost() {
+	public void setupRelatedResourcesTest() {
 		try {
 			this.relatedResources = new RelatedResources(driver);
 		} catch (Exception e) {

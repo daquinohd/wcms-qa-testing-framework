@@ -51,7 +51,12 @@
 			<!-- Dictionary tracking -->
 			<class name="gov.nci.webanalyticstests.dictionary.pages.DictionaryLoad_Test" />
 
+			<!-- CTHP tracking -->
+			<class name="gov.nci.webanalyticstests.cthp.pages.CthpLoad_Test" />
+			<class name="gov.nci.webanalyticstests.cthp.common.CthpCardClick_Test" />
+
 			<!-- Common component tracking -->
+			<class name="gov.nci.webanalyticstests.commonobjects.CardClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
@@ -59,7 +64,6 @@
 			<class name="gov.nci.webanalyticstests.commonobjects.SwsFormClick_Test" />
 
 			<!-- All other page load tracking -->
-			<class name="gov.nci.webanalyticstests.cthp.pages.CthpLoad_Test" />
 			<class name="gov.nci.webanalyticstests.home.pages.HomeLoad_Test" />
 			<class name="gov.nci.webanalyticstests.inner.pages.InnerLoad_Test" />
 			<class name="gov.nci.webanalyticstests.landing.pages.LandingLoad_Test" />
