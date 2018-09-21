@@ -3,6 +3,8 @@ package gov.nci.clinicaltrials;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
@@ -108,7 +110,7 @@ public class BaseClass {
 
 	@AfterClass(alwaysRun = true)
 	public void afterClass() {
-		System.out.println("*** END Class");
+		System.out.println("\n*** END Class");
 		driver.quit();
 		report.endTest(logger);
 	}
@@ -123,10 +125,12 @@ public class BaseClass {
 		System.out.println("\n***************** END Suite **********************\n");
 	}
 
+	/**  Setting the tier as a class variable */
+	public static String tier = "QA";         // Hard-code string for environment/host used
+
 	// Returns the URL for the host currently used for testing
 	// -------------------------------------------------------
 	public String AddHostname(String path) {
-		String tier = "QA";         // Hard-code string for environment/host used
 		String host;
 
 		switch (tier.toUpperCase()) {
