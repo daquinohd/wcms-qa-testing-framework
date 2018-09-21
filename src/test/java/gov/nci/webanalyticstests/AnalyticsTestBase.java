@@ -31,8 +31,8 @@ import gov.nci.webanalytics.Beacon;
 public abstract class AnalyticsTestBase {
 
 	/**
-	* TODO: Create timer
-	**/	
+	 * TODO: Create timer
+	 **/
 	protected static WebDriver driver;
 	protected static BrowserMobProxy proxy;
 	protected static ExtentReports report;
@@ -102,12 +102,10 @@ public abstract class AnalyticsTestBase {
 	public void afterMethod(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			logger.log(LogStatus.FAIL, "Fail => " + result.getName());
-		}
-		else if (result.getStatus() == ITestResult.SKIP) {
+		} else if (result.getStatus() == ITestResult.SKIP) {
 			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
-		}
-		else {
-			logger.log(LogStatus.PASS, "Pass => "+ result.getName());
+		} else {
+			logger.log(LogStatus.PASS, "Pass => " + result.getName());
 		}
 	}
 
@@ -116,7 +114,7 @@ public abstract class AnalyticsTestBase {
 		report.endTest(logger);
 	}
 
-	@AfterTest(groups = { "Analytics"})
+	@AfterTest(groups = { "Analytics" })
 	public void afterTest() {
 		System.out.println("=== Quitting Driver ===");
 		report.flush();
@@ -125,57 +123,69 @@ public abstract class AnalyticsTestBase {
 		proxy.stop();
 	}
 
-	/************************* Initialize BMP and request beacon objects *************************/
+	/*************************
+	 * Initialize BMP and request beacon objects
+	 *************************/
 
 	/**
 	 * Start and configure BrowserMob Proxy for Selenium.<br/>
-	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * Modified from
+	 * https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * 
+	 * @param starting URL 
 	 * @throws RuntimeException
 	 */
 	protected void initializeProxy(String url) throws RuntimeException {
 
-		// New BrowserMobProxy instance - this is needed to create the HAR (HTTP archive) object
+		// New BrowserMobProxy instance - this is needed to create the HAR (HTTP
+		// archive) object
 		proxy = new BrowserMobProxyServer();
 		proxy.start(0);
 
-		// Selenium proxy object, capabilities, and WebDriver instantiation are handled in BrowserManager:startProxyBrowser()
-		// Enable more detailed HAR capture, if desired (see CaptureType for the complete list)
+		// Selenium proxy object, capabilities, and WebDriver instantiation are handled
+		// in BrowserManager:startProxyBrowser()
+		// Enable more detailed HAR capture, if desired (see CaptureType for the
+		// complete list)
 		proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
 
-	    // Create a new HAR with a label matching the hostname
-	    proxy.newHar(url);
+		// Create a new HAR with a label matching the hostname
+		proxy.newHar(url);
 		System.out.println("== Started BrowserMobProxy successfully ==");
 	}
 
 	/**
-	 * Build the list of HAR (HTTP archive) request URLs.
-	 * Modified from https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * Build the list of HAR (HTTP archive) request URLs. Modified from
+	 * https://github.com/lightbody/browsermob-proxy#using-with-selenium
+	 * 
+	 * @param proxy (BrowserMobProxy object)
+	 * @return list of URLs
 	 * @throws RuntimeException
 	 * @throws IllegalArgumentException
 	 */
 	protected List<String> getHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {
 
-		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring tools to export collected data. 
-		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture HTTP content, 
+		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring
+		// tools to export collected data.
+		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture
+		// HTTP content,
 		// and export performance data as a HAR file object.
 		Har har = proxy.getHar();
 		List<HarEntry> entries = har.getLog().getEntries();
-		
+
 		// Reset HAR URL list
 		List<String> harUrlList = new ArrayList<String>();
 
 		// Build a list of requests to the analytics tracking server from the HAR
 		for (HarEntry entry : entries) {
 			String result = entry.getRequest().getUrl();
-			if(result.contains(Beacon.TRACKING_SERVER))
-			{
+			if (result.contains(Beacon.TRACKING_SERVER)) {
 				harUrlList.add(result);
 			}
 		}
-		
+
 		// Debug size of HAR list
 		System.out.println("Total HAR entries: " + entries.size());
-		
+
 		// The HAR list has been created; clear the log for next pass
 		har.getLog().getEntries().clear();
 		// For further reading, see https://en.wiktionary.org/wiki/hardy_har_har
@@ -184,9 +194,11 @@ public abstract class AnalyticsTestBase {
 	}
 
 	/**
-	 * Utility function to get the last element in a list of AnalyticsRequest objects
-	 * @param requests
-	 * @return the last AnalyticsRequest object
+	 * Utility function to get the last element in a list of AnalyticsRequest
+	 * objects
+	 * 
+	 * @param list of analytics request objects
+	 * @return the last analytics request object
 	 */
 	protected static Beacon getLastReq(List<Beacon> requests) {
 		int index = requests.size() - 1;
@@ -195,30 +207,33 @@ public abstract class AnalyticsTestBase {
 	}
 
 	/**
-	 * Utility function to get an element from a given index in a list of AnalyticsRequest objects.
-	 * @param requests
-	 * @param posFromEnd
-	 * @return the specified AnalyticsRequest object
+	 * Utility function to get an element from a given index in a list of
+	 * AnalyticsRequest objects.
+	 * 
+	 * @param list of analytics request objects
+	 * @param index 
+	 * @return analytics request object at that position
 	 */
 	protected static Beacon getReqFromPosition(List<Beacon> requests, int index) {
 		try {
-			return requests.get(index);			
-		} 
-		catch (IndexOutOfBoundsException e) {
+			return requests.get(index);
+		} catch (IndexOutOfBoundsException e) {
 			return null;
 		}
 	}
-	
+
 	/****************************** Abstract methods ******************************/
 
 	/**
 	 * Get a single Beacon object for testing.
+	 * 
 	 * @return beacon (Beacon)
 	 */
 	protected abstract Beacon getBeacon();
 
 	/**
 	 * Get a list of Beacon objects.
+	 * 
 	 * @param urlList (List<String>)
 	 * @return List of Beacon objects
 	 */
