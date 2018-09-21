@@ -15,9 +15,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import gov.nci.clinicaltrials.BaseClass;
-
-public class DictGenetics_Test extends BaseClass {
+public class DictGenetics_Test extends DictBaseClass {
 
 	private String language = "EN";
 

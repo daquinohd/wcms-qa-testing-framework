@@ -15,11 +15,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import gov.nci.clinicaltrials.BaseClass;
+public class DictTerms_Test extends DictBaseClass {
 
-public class DictTerms_Test extends BaseClass {
-
-	private String TESTDATA_PATH;
 	private String language = "EN";
 
 /*  ***************************** Test Methods ****************************************** */
