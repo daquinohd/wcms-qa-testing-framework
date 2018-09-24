@@ -28,6 +28,7 @@ public class Beacon extends AnalyticsRequest {
 	static final String LINKTYPE = "pe";
 	static final String LINKNAME = "pev2";
 	static final String LINKURL = "pev1";
+	static final String PAGETYPE = "pageType";
 
 	// Partial parameter values. Each prop, eVar, and hier is its own query parameter.
 	// The getNumberedParams() method handles the logic of appending the number values
@@ -44,6 +45,7 @@ public class Beacon extends AnalyticsRequest {
 	public List<String> eVars; // eVars, aka "Conversion Variables"
 	public List<String> hiers; // Hierarchy variables
 	public String linkName;
+	public String pageType;
 	
 	// This class represents an Adobe Analytics request beacon
 	public Beacon(String url) {
@@ -57,6 +59,7 @@ public class Beacon extends AnalyticsRequest {
 		this.eVars = geteVarList();
 		this.hiers = getHierList();
 		this.linkName = getLinkName();
+		this.pageType = getPageType();
 	}
 	
 	/**************** Methods to check for given values in a beacon ****************/
@@ -159,7 +162,7 @@ public class Beacon extends AnalyticsRequest {
 	}
 
 	/**
-	 * Get "Link URL" value (pev1)(
+	 * Get "Link URL" value (pev1)
 	 * @return
 	 */
 	public String getLinkUrl() {
@@ -172,13 +175,27 @@ public class Beacon extends AnalyticsRequest {
 	}
 
 	/**
+	 * Get the Page Type param value (pageType).
+	 * 
+	 * @return string representing page type
+	 */
+	public String getPageType() {
+		for (NameValuePair param : paramsList) {
+			if (param.getName().equalsIgnoreCase(PAGETYPE)) {
+				return param.getValue().trim();
+			}
+		}
+		return "";
+	}
+	
+	/**
 	 * Check parameters to verify that this is a click-type event (s.tl).
 	 * @return boolean
 	 */
 	public boolean isClickTypeEvent() {
 		if(getLinkType().isEmpty() && getLinkName().isEmpty() && getLinkUrl().isEmpty()) {
 			return false;
-		} else if(getLinkType().equalsIgnoreCase("lnk_e")) {
+		} else if(isExitClickTypeEvent() == true) {
 			return false;
 		} else {
 			return true;
