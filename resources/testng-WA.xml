@@ -75,6 +75,7 @@
 			<class name="gov.nci.webanalyticstests.commonobjects.SwsFormClick_Test" />
 
 			<!-- All other page load tracking -->
+			<class name="gov.nci.webanalyticstests.error.pages.ErrorLoad_Test" />
 			<class name="gov.nci.webanalyticstests.home.pages.HomeLoad_Test" />
 			<class name="gov.nci.webanalyticstests.inner.pages.InnerLoad_Test" />
 			<class name="gov.nci.webanalyticstests.landing.pages.LandingLoad_Test" />

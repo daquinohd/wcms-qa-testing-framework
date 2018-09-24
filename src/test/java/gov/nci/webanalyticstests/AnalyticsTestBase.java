@@ -30,9 +30,6 @@ import gov.nci.webanalytics.Beacon;
 
 public abstract class AnalyticsTestBase {
 
-	/**
-	 * TODO: Create timer
-	 **/
 	protected static WebDriver driver;
 	protected static BrowserMobProxy proxy;
 	protected static ExtentReports report;
