@@ -49,15 +49,22 @@
 			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsClick_Test" />
 
 			<!-- Dictionary tracking -->
-			<class name="gov.nci.webanalyticstests.dictionary.pages.DictionaryLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictDefinitionLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictTermsEnLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictTermsEsLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictDrugsLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictGeneticsLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.pages.DictPopupLoad_Test" />
+			<class name="gov.nci.webanalyticstests.dictionary.common.DictSearchClick_Test" />
 
 			<!-- CTHP tracking -->
 			<class name="gov.nci.webanalyticstests.cthp.pages.CthpLoad_Test" />
 			<class name="gov.nci.webanalyticstests.cthp.common.CthpCardClick_Test" />
 
 			<!-- PDQ tracking -->
-			<class name="gov.nci.webanalyticstests.pdq.pages.PdqClick_Test" />
-			<class name="gov.nci.webanalyticstests.pdq.pages.PdqLoad_Test" />
+			<class name="gov.nci.webanalyticstests.pdq.pages.PdqCisClick_Test" />
+			<class name="gov.nci.webanalyticstests.pdq.pages.PdqCisLoad_Test" />
+			<class name="gov.nci.webanalyticstests.pdq.pages.PdqDrugLoad_Test" />
 
 			<!-- Common component tracking -->
 			<class name="gov.nci.webanalyticstests.commonobjects.CardClick_Test" />

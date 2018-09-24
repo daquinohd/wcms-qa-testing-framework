@@ -17,7 +17,7 @@ import gov.nci.pdq.pages.PdqPage;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
-public class PdqClick_Test extends AnalyticsTestClickBase {
+public class PdqCisClick_Test extends AnalyticsTestClickBase {
 
 	private PdqPage pdqPage;
 	private PdqRightNav pdqRightNav;

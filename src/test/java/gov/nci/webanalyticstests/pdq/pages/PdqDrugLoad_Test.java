@@ -12,13 +12,11 @@ import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
-public class PdqLoad_Test extends AnalyticsTestLoadBase {
+public class PdqDrugLoad_Test extends AnalyticsTestLoadBase {
 
 	/**
 	 * The following page / content types are covered by this test class: 
-	 * - PDQ Cancer Info Summary (English and Spanish)
-	 * - PDQ Cancer Info Summary section URLs (English and Spanish)
-	 * - PDQ Cancer Info Summary link URLs(English and Spanish)
+	 * - PDQ Drug Info Summary
 	 */
 
 	private AnalyticsPageLoad analyticsPageLoad;
@@ -29,7 +27,6 @@ public class PdqLoad_Test extends AnalyticsTestLoadBase {
 		testDataFilePath = config.getProperty("AnalyticsPDQData");
 	}
 
-	/// PDQ page loads return expected values
 	@Test(dataProvider = "PDQPageLoad", groups = { "Analytics" })
 	public void testPdqPageLoad(String path, String contentType) {
 		try {
@@ -39,8 +36,7 @@ public class PdqLoad_Test extends AnalyticsTestLoadBase {
 			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			Beacon beacon = getBeacon();
 
-			String[] pathNoId = path.split("#");
-			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoId[0]);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, path.toLowerCase());
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		} catch (Exception e) {
 			Assert.fail("Error loading " + contentType);
@@ -50,7 +46,7 @@ public class PdqLoad_Test extends AnalyticsTestLoadBase {
 
 	@DataProvider(name = "PDQPageLoad")
 	public Iterator<Object[]> getPDQPageLoadData() {
-		return getPathContentTypeData(testDataFilePath, "PDQPage");
+		return getPathContentTypeData(testDataFilePath, "PDQDrugPage");
 	}
 
 }
