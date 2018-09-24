@@ -87,7 +87,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 			// Go away from home then back
 			String path = "/";
 			driver.get(config.goHome());
-			driver.get(config.getPageURL("SpanishPage"));
+			driver.get(config.getPageURL("SpanishHome"));
 			driver.get(config.goHome());
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			System.out.println("Home page and back load event: ");

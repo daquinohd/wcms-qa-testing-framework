@@ -52,7 +52,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	@Test(dataProvider = "CancerTermsEs", groups = { "Analytics" })
 	public void testSitewideSearchEspanol(String searchTerm) {
 		try {
-			driver.get(config.getPageURL("SpanishPage"));
+			driver.get(config.getPageURL("SpanishHome"));
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(searchTerm);
 			System.out.println("Sitewide search term: " + searchTerm);

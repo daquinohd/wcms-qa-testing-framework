@@ -49,7 +49,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Spanish menu bar click returns the expected values
 	@Test(groups = { "Analytics" })
 	public void testMMBarEs() {
-		driver.get(config.getPageURL("SpanishPage"));		
+		driver.get(config.getPageURL("SpanishHome"));		
 		megaMenu.clickMMBarEs();
 		beacon = getBeacon();
 
