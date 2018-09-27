@@ -39,7 +39,7 @@ public class ErrorLoad_Test extends AnalyticsTestLoadBase {
 			Assert.assertTrue(beacon.hasSuite("nciglobal", currUrl), "Incorrect suite value.");
 			Assert.assertTrue(beacon.hasEvent(47), "event47 is missing.");
 			Assert.assertEquals(beacon.channels, "Error Pages");
-			Assert.assertEquals(beacon.pageType, "errorPage");
+			Assert.assertEquals(beacon.getPageType(), "errorPage");
 			Assert.assertEquals(beacon.eVars.get(2), beacon.props.get(8));
 			logger.log(LogStatus.PASS, contentType + " load values are correct.");
 		} catch (Exception e) {

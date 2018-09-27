@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import gov.nci.Utilities.ScrollUtil;
 import gov.nci.framework.ElementChange;
 
 public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
@@ -79,6 +80,7 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 	}
 
 	public void clickPrintButton() {
+		ScrollUtil.scrollIntoview(driver, btn_Print);
 		btn_Print.click();
 	}
 
@@ -96,19 +98,6 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", checkBoxes.get(0));
 		System.out.println("Checkboxes: " + checkBoxes.get(1));
-	}
-
-	public void selectCheckboxByIndex(int index) {
-		try {
-			System.out.println("Selected list item #" + index);
-			checkBoxes.get(index).click();
-		} catch (IndexOutOfBoundsException ex) {
-			System.out.println("Invalid arraylist index: " + index);
-		}
-	}
-	
-	public void clearCheckBoxes() {
-		ElementChange.uncheckAll(driver);
 	}
 	
 	public List<WebElement> getResultsLinks() {

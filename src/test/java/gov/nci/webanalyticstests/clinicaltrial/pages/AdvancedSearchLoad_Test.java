@@ -10,33 +10,30 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class AdvancedSearchLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * This test class covers Clinical Trial Advanced Search pages
-	 */
+	private final String PATH = "/about-cancer/treatment/clinical-trials/advanced-search";
+	private final String SEARCH_TYPE = "Clinical Trials: Advanced";
+
+	// ==================== Test methods ==================== //
 	
-	private final String ADV_PATH = "/about-cancer/treatment/clinical-trials/advanced-search";
-	private final String ADV_CONTENT_TYPE = "Clinical Trials: Advanced";
-
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;
-
+	/// Test CTS Advanced Search page load
 	@Test(groups = { "Analytics" })
 	public void testCTSAdvancedSearchPageLoad() {
+		System.out.println("Test " + SEARCH_TYPE + " page load:");
+		driver.get(config.goHome() + PATH);
+
 		try {
-			driver.get(config.goHome() + ADV_PATH);
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(ADV_CONTENT_TYPE + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
-			
-			doCommonLoadAssertions(beacon, analyticsPageLoad, ADV_PATH);
-			Assert.assertEquals(beacon.props.get(62), ADV_CONTENT_TYPE);
-			Assert.assertEquals(beacon.eVars.get(62), ADV_CONTENT_TYPE);
-			logger.log(LogStatus.PASS, ADV_CONTENT_TYPE + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + ADV_CONTENT_TYPE);
-			e.printStackTrace();
+			AnalyticsPageLoad analyticsPageLoad = new AnalyticsPageLoad(driver);
+			Beacon beacon = getBeacon();
+
+			doCommonLoadAssertions(beacon, analyticsPageLoad, PATH);
+			Assert.assertEquals(beacon.props.get(62), SEARCH_TYPE);
+			Assert.assertEquals(beacon.eVars.get(62), beacon.props.get(62));
+			logger.log(LogStatus.PASS, SEARCH_TYPE + " page load values passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
-	
+
 }

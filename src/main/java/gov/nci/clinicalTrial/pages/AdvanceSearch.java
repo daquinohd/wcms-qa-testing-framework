@@ -266,6 +266,15 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		// Thread.sleep(500);
 	}
 
+	/* Fill out the zipcode field without submitting */
+	public void enterZipCode(String zip) {
+		ScrollUtil.scrollIntoview(driver, lgd_location);
+		rbtn_zipcode.click();
+		txt_zipcode.click();
+		txt_zipcode.clear();
+		txt_zipcode.sendKeys(zip);
+	}
+	
 	public void advSearch_Zipcode(String zip) throws InterruptedException {
 		ScrollUtil.scrollIntoview(driver, lgd_location);
 		rbtn_zipcode.click();
@@ -510,4 +519,5 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		defaultSearch();
 	}
 
+	
 }

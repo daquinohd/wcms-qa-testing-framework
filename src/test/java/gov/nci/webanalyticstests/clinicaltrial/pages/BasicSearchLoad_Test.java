@@ -10,33 +10,30 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class BasicSearchLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * This test class covers Clinical Trial Basic Search pages
-	 */
-	
-	private final String BASIC_PATH = "/about-cancer/treatment/clinical-trials/search";
-	private final String BASIC_CONTENT_TYPE = "Clinical Trials: Basic";
+	private final String PATH = "/about-cancer/treatment/clinical-trials/search";
+	private final String SEARCH_TYPE = "Clinical Trials: Basic";
 
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;
-	
+	// ==================== Test methods ==================== //
+
+	/// Test CTS Advanced Search page load
 	@Test(groups = { "Analytics" })
-	public void testCTSBasicSearchPageLoad() {
+	public void testCTSAdvancedSearchPageLoad() {
+		System.out.println("Test " + SEARCH_TYPE + " page load:");
+		driver.get(config.goHome() + PATH);
+
 		try {
-			driver.get(config.goHome() + BASIC_PATH);
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(BASIC_CONTENT_TYPE + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
-			
-			doCommonLoadAssertions(beacon, analyticsPageLoad, BASIC_PATH);
-			Assert.assertEquals(beacon.props.get(62), BASIC_CONTENT_TYPE);
-			Assert.assertEquals(beacon.eVars.get(62), BASIC_CONTENT_TYPE);
-			logger.log(LogStatus.PASS, BASIC_CONTENT_TYPE + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + BASIC_CONTENT_TYPE);
-			e.printStackTrace();
+			AnalyticsPageLoad analyticsPageLoad = new AnalyticsPageLoad(driver);
+			Beacon beacon = getBeacon();
+
+			doCommonLoadAssertions(beacon, analyticsPageLoad, PATH);
+			Assert.assertEquals(beacon.props.get(62), SEARCH_TYPE);
+			Assert.assertEquals(beacon.eVars.get(62), beacon.props.get(62));
+			logger.log(LogStatus.PASS, SEARCH_TYPE + " page load values passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
-	
+
 }

@@ -43,6 +43,7 @@
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.DynamicListingLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.TrialDetailViewClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.TrialDetailViewLoad_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.TrialPrintLoad_Test" />
 
 			<!-- Sitewide Search tracking -->
 			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsLoad_Test" />

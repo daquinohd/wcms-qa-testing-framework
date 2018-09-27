@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -84,10 +85,18 @@ public class TrialDetailView extends ClinicalTrialPageObjectBase {
 		section.click();
 	}
 	
+	public void clickComponent(String selector) {
+		WebElement element = driver.findElement(By.cssSelector(selector));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
+	}
+	
 	public void clickPrintLink() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;		
+		js.executeScript("window.print=function(){};");		
+
 		ScrollUtil.scrollIntoview(this.driver, lnk_print);
 		lnk_print.click();
-		action.keyDown(Keys.ESCAPE).perform();
 	}
 	
 	public void clickEmailLink() {
