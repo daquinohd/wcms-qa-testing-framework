@@ -1,121 +1,119 @@
 package gov.nci.webanalyticstests.home.pages;
 
-import java.net.MalformedURLException;
 import java.util.Iterator;
 
 import com.relevantcodes.extentreports.LogStatus;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
-// TODO: add other values, heir, channel, suite
-// TODO: verify has() logic in AnalyticsRequest
-// TODO: tests for engagement & event47
-// TODO: regexes for dynamic values
-// TODO: common asserts
-// TODO: re-use iterator in load base
-public class HomeLoad_Test extends AnalyticsTestLoadBase {	
-	
-	/**
-	 * The following page / content types are covered by this test class:
-	 * - Site home (English)
-	 * - Spanish homepage
-	 * - Microsite homepage
-	 */
-	
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;
-	private String testDataFilePath;
+public class HomeLoad_Test extends AnalyticsTestLoadBase {
+
 	private final String TESTDATA_SHEET_NAME = "HomePage";
-	
-	@BeforeClass(groups = { "Analytics" }) 
-	public void setup() {
+	private final String SITEHOME_PATH = "/";
+
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
+	@BeforeClass(groups = { "Analytics" })
+	public void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
-	
-	/// Homepage load events return expected values
+
+	// ==================== Test methods ==================== //
+
+	/// Test Home Page load event
 	@Test(dataProvider = "HomePageLoad", groups = { "Analytics" })
 	public void testHomePageLoad(String path, String contentType) {
+		System.out.println("Test Home Page load event (" + contentType + "):");
+		driver.get(config.goHome() + path);
+
 		try {
-			// Go to our load URL
-			driver.get(config.goHome() + path);
-
-			// Set page and request beacon objects
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
+			Beacon beacon = getBeacon();
 
-			// Do assertions
 			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			logger.log(LogStatus.PASS, "Test Home Page load event (" + contentType + ") passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
-	
-	/// Homepage refresh load event returns expected values
+
+	/// Test Home-refresh load event
 	@Test(groups = { "Analytics" })
-	public void testRefresh() throws MalformedURLException {
+	public void testRefresh() {
+		System.out.println("Test Home-refresh load event:");
+		driver.get(config.goHome());
+		driver.navigate().refresh();
+
 		try {
-			// Go home and refresh
-			String path = "/";
-			driver.get(config.goHome());
-			driver.navigate().refresh();
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println("Home refresh load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, "Home-refresh load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading Home-page-and-back.");
-			e.printStackTrace();
-		}
-	}	
-	
-	/// Home-and-back pageload returns expected values
-	@Test(groups = { "Analytics" })
-	public void testHomeAndBack() throws MalformedURLException {
-		try {
-			// Go away from home then back
-			String path = "/";
-			driver.get(config.goHome());
-			driver.get(config.getPageURL("SpanishHome"));
-			driver.get(config.goHome());
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println("Home page and back load event: ");
-			beacon = getBeacon();
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, "Home-and-back load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading Home-page-and-back.");
-			e.printStackTrace();
+			Beacon beacon = getBeacon();
+
+			doCommonLoadAssertions(beacon, analyticsPageLoad, SITEHOME_PATH);
+			logger.log(LogStatus.PASS, "Test Home-refresh load event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
-	
-	/// Home-and-back pageload returns expected values
+
+	/// Test Home-and-back load event
+	@Test(groups = { "Analytics" })
+	public void testHomeAndBack() {
+		System.out.println("Test Home-and-back load event:");
+		driver.get(config.goHome());
+		driver.get(config.getPageURL("SpanishHome"));
+		driver.navigate().back();
+
+		try {
+			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			Beacon beacon = getBeacon();
+
+			doCommonLoadAssertions(beacon, analyticsPageLoad, SITEHOME_PATH);
+			logger.log(LogStatus.PASS, "Test Home-and-back load event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
+		}
+	}
+
+	/// Test engagement tracking on page load
 	// @Test(groups = { "Analytics" })
-	public void testEngagement() throws MalformedURLException {
+	public void testEngagement() {
+		System.out.println("Test engagement tracking on page load:");
+		driver.get(config.goHome());
+
 		try {
 			// TODO
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading Home-page-and-back.");
-			e.printStackTrace();
+			// Click and scroll around page
+			// Refresh
+			Beacon beacon = getBeacon();
+			doCommonLoadAssertions(beacon, analyticsPageLoad, SITEHOME_PATH);
+			logger.log(LogStatus.PASS, "Test engagement tracking on page load passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
-		
+
+	// ==================== Data providers ==================== //
+
 	@DataProvider(name = "HomePageLoad")
 	public Iterator<Object[]> getHomePageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
-	
+
 }

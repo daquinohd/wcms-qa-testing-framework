@@ -14,42 +14,44 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class LandingLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * The following page types / content are covered by this test class:
-	 * - Landing (English and Spanish)
-	 * - News and Events page (English and Spanish)
-	 */
-	
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;	
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "LandingPage";
-	
-	@BeforeClass(groups = { "Analytics" }) 
-	public void setup() {
+
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
+	@BeforeClass(groups = { "Analytics" })
+	public void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
-	
-	/// Landing page loads return expected values
+
+	// ==================== Test methods ==================== //
+
+	/// Test Landing Page load event
 	@Test(dataProvider = "LandingPageLoad", groups = { "Analytics" })
-	public void testHomePageLoad(String path, String contentType) {
+	public void testLandingPageLoad(String path, String contentType) {
+		System.out.println("Test Landing Page load event:");
+		driver.get(config.goHome() + path);
+
 		try {
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
+			Beacon beacon = getBeacon();
+
 			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			logger.log(LogStatus.PASS, "Test Landing Page load event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
+
+	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "LandingPageLoad")
 	public Iterator<Object[]> getLandingPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
-	
+
 }

@@ -13,34 +13,44 @@ import gov.nci.webanalytics.Beacon;
 
 public class DictTermsEsLoad_Test extends DictionaryBase {
 
-	private AnalyticsPageLoad analyticsPageLoad;
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "TermsPageSpanish";
 
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsDictData");
 	}
 
+	// ==================== Test methods ==================== //
+
+	/// Test Spanish Dictionary Page load event
 	@Test(dataProvider = "DictionarySpanishLoad", groups = { "Analytics" })
 	public void testTermDictionaryEsPageLoad(String path, String contentType) {
+		System.out.println("Test Spanish Dictionary Page load event at " + path + ":");
+		driver.get(config.goHome() + path);
+
 		try {
-			System.out.println("Test Spanish Term Dictionary at " + path + ":");
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			Beacon beacon = getBeacon();
 
-			path = getDictionaryPath(path);
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+			String dictPath = getDictionaryPath(path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, dictPath);
+			logger.log(LogStatus.PASS, "Test Spanish Dictionary Page load event at " + path + " passed.");
 		} catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
 
+	// ==================== Data providers ==================== //
+
 	@DataProvider(name = "DictionarySpanishLoad")
-	public Iterator<Object[]> getDictionaryPageLoadData() {
+	private Iterator<Object[]> getDictionaryPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

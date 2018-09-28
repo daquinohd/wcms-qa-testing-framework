@@ -10,27 +10,34 @@ import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
-import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class DictPopupLoad_Test extends DictionaryBase {
 
-	private AnalyticsPageLoad analyticsPageLoad;
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "DictionaryPopup";
 
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsDictData");
 	}
 
+	// ==================== Test methods ==================== //
+
+	/// Test Dictionary Popup Page load event
 	@Test(dataProvider = "DictionaryPopupLoad", groups = { "Analytics" })
 	public void testDictionaryPopupLoad(String path, String contentType) {
+		System.out.println("Test Dictionary Popup Page load event:");
+		driver.get(config.goHome() + path);
+
 		try {
-			System.out.println("Test popup at " + path + ":");
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			Beacon beacon = getBeacon();
 
+			String dictPath = getDictionaryPath(path);
 			Assert.assertTrue(beacon.hasEvent(1), "Expected event1");
 			Assert.assertEquals(beacon.props.get(7), "patient");
 			Assert.assertTrue(beacon.hasEvent(11), "Expected event11");
@@ -38,15 +45,18 @@ public class DictPopupLoad_Test extends DictionaryBase {
 			Assert.assertEquals(beacon.props.get(8), analyticsPageLoad.getLanguageName());
 			Assert.assertEquals(beacon.eVars.get(2), beacon.props.get(8));
 			Assert.assertEquals(beacon.eVars.get(7), beacon.props.get(7));
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+			logger.log(LogStatus.PASS, "Test Dictionary Popup Page load event passed.");
 		} catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
 
+	// ==================== Data providers ==================== //
+
 	@DataProvider(name = "DictionaryPopupLoad")
-	public Iterator<Object[]> getDictionaryPageLoadData() {
+	private Iterator<Object[]> getDictionaryPopupLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

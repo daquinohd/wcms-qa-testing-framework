@@ -15,32 +15,43 @@ import gov.nci.webanalytics.Beacon;
 
 public class DictDefinitionLoad_Test extends DictionaryBase {
 
+	private final String TESTDATA_SHEET_NAME = "Definitions";
+
 	private AnalyticsPageLoad analyticsPageLoad;
 	private String testDataFilePath;
 
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsDictData");
 	}
 
+	// ==================== Test methods ==================== //
+
+	/// Test Definition Page load event
 	@Test(dataProvider = "DefinitionData", groups = { "Analytics" })
-	public void testDictionaryDefinitionLoad(String path, String contentType, String dat) {
+	public void testDictionaryDefinitionLoad(String path, String contentType, String cdrData) {
+		System.out.println("Test Definition Page load event at " + path + ":");
+		driver.get(config.goHome() + path);
+
 		try {
-			System.out.println("Test definition at " + path + ":");
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			Beacon beacon = getBeacon();
 
-			path = getDictionaryPath(path);
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			Assert.assertEquals(beacon.props.get(16), dat);
+			String dictPath = getDictionaryPath(path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, dictPath);
+			Assert.assertEquals(beacon.props.get(16), cdrData);
 			Assert.assertEquals(beacon.eVars.get(16), beacon.props.get(16));
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+			logger.log(LogStatus.PASS, "Test Definition Page load event at " + path + " passed.");
 		} catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
+
+	// ==================== Data providers ==================== //
 
 	/**
 	 * Get an iterator data object with path, section, and page detail values.
@@ -48,17 +59,16 @@ public class DictDefinitionLoad_Test extends DictionaryBase {
 	 * @return path, type, and expected CDR data for testing
 	 */
 	@DataProvider(name = "DefinitionData")
-	public Iterator<Object[]> getRightNavData() {
+	public Iterator<Object[]> getDefinitionLoadData() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount("Definitions"); rowNum++) {
-			String path = excelReader.getCellData("Definitions", "Path", rowNum);
-			String type = excelReader.getCellData("Definitions", "DictionaryType", rowNum);
-			String cdr = excelReader.getCellData("Definitions", "CDRData", rowNum);
-			Object ob[] = { path, type, cdr };
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
+			String path = excelReader.getCellData(TESTDATA_SHEET_NAME, "Path", rowNum);
+			String type = excelReader.getCellData(TESTDATA_SHEET_NAME, "DictionaryType", rowNum);
+			String cdrData = excelReader.getCellData(TESTDATA_SHEET_NAME, "CDRData", rowNum);
+			Object ob[] = { path, type, cdrData };
 			myObjects.add(ob);
 		}
 		return myObjects.iterator();
 	}
-
 }

@@ -14,42 +14,46 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class PdqCisLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * The following page / content types are covered by this test class: 
-	 * - PDQ Cancer Info Summary (English and Spanish)
-	 * - PDQ Cancer Info Summary section URLs (English and Spanish)
-	 * - PDQ Cancer Info Summary link URLs(English and Spanish)
-	 */
+	private final String TESTDATA_SHEET_NAME = "PDQCisPage";
 
 	private AnalyticsPageLoad analyticsPageLoad;
 	private String testDataFilePath;
 
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	public void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPDQData");
 	}
 
+	// ==================== Test methods ==================== //
+
+	/// Test PDQ Cancer Info Summary Page load event
 	@Test(dataProvider = "PDQPageLoad", groups = { "Analytics" })
-	public void testPdqPageLoad(String path, String contentType) {
+	public void testPdqCisPageLoad(String path, String contentType) {
+		System.out.println("Test PDQ Cancer Info Summary Page load event (" + contentType + "):");
+		driver.get(config.goHome() + path);
+		driver.navigate().refresh();
+
 		try {
-			driver.get(config.goHome() + path);
-			driver.navigate().refresh();
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
 			Beacon beacon = getBeacon();
 
 			String[] pathNoId = path.split("#");
 			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoId[0]);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+			logger.log(LogStatus.PASS, "Test PDQ Cancer Info Summary Page load event (" + contentType + ") passed.");
 		} catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
 
+	// ==================== Data providers ==================== //
+
 	@DataProvider(name = "PDQPageLoad")
 	public Iterator<Object[]> getPDQPageLoadData() {
-		return getPathContentTypeData(testDataFilePath, "PDQCisPage");
+		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 
 }

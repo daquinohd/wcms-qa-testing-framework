@@ -14,42 +14,44 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class BlogSeriesLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * The following page / content types are covered by this test class:
-	 * - Blog Series Page (English and Spanish)
-	 */
-	
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;	
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "BlogSeriesPage";
-	
-	@BeforeClass(groups = { "Analytics" }) 
-	public void setup() {
+
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
+	@BeforeClass(groups = { "Analytics" })
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
-	
-	/// BlogSeries page loads return expected values
+
+	// ==================== Test methods ==================== //
+
+	/// Test Blog Series Page load event
 	@Test(dataProvider = "BlogSeriesPageLoad", groups = { "Analytics" })
 	public void testBlogSeriesPageLoad(String path, String contentType) {
+		System.out.println("Test Blog Series Page load event:");
+		driver.get(config.goHome() + path);
+
 		try {
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
-			
+			Beacon beacon = getBeacon();
+
 			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			logger.log(LogStatus.PASS, "Test Blog Series Page load event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
+
+	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "BlogSeriesPageLoad")
 	public Iterator<Object[]> getBlogSeriesPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
-	
+
 }

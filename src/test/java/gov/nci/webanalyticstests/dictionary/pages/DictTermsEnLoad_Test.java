@@ -13,31 +13,41 @@ import gov.nci.webanalytics.Beacon;
 
 public class DictTermsEnLoad_Test extends DictionaryBase {
 
-	private AnalyticsPageLoad analyticsPageLoad;
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "TermsPageEnglish";
 
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsDictData");
 	}
 
+	// ==================== Test methods ==================== //
+
+	/// Test English Dictionary Page load event
 	@Test(dataProvider = "DictionaryEnglishLoad", groups = { "Analytics" })
 	public void testTermDictionaryEnPageLoad(String path, String contentType) {
+		System.out.println("Test English Dictionary Page load event at " + path + ":");
+		driver.get(config.goHome() + path);
+
 		try {
-			System.out.println("Test English Term Dictionary at " + path + ":");
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			Beacon beacon = getBeacon();
 
-			path = getDictionaryPath(path);
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
+			String dictPath = getDictionaryPath(path);
+			doCommonLoadAssertions(beacon, analyticsPageLoad, dictPath);
+			logger.log(LogStatus.PASS, "Test English Dictionary Page load event at " + path + " passed.");
 		} catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
+
+	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "DictionaryEnglishLoad")
 	public Iterator<Object[]> getDictionaryPageLoadData() {
@@ -45,3 +55,5 @@ public class DictTermsEnLoad_Test extends DictionaryBase {
 	}
 
 }
+
+

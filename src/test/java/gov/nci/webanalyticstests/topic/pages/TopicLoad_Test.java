@@ -14,38 +14,40 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class TopicLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * The following page types / content are covered by this test class:
-	 * - Topic (English and Spanish)
-	 */
-
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "TopicPage";
 
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	public void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
 
-	/// Topic page loads return expected values
+	// ==================== Test methods ==================== //
+
+	/// Test Topic Page load event
 	@Test(dataProvider = "TopicPageLoad", groups = { "Analytics" })
-	public void testHomePageLoad(String path, String contentType) {
+	public void testTopicPageLoad(String path, String contentType) {
+		System.out.println("Test Topic Page load event:");
+		driver.get(config.goHome() + path);
+
 		try {
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
-			
+			Beacon beacon = getBeacon();
+
 			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			logger.log(LogStatus.PASS, "Test Topic Page load event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
+
+	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "TopicPageLoad")
 	public Iterator<Object[]> getTopicPageLoadData() {

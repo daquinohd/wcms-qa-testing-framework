@@ -76,6 +76,7 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 	protected void doCommonLoadAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String path) {
 
 		String currUrl = driver.getCurrentUrl();
+		String currUrlMax = currUrl.substring(0, Math.min(currUrl.length(), 100));
 
 		// Common Suites
 		Assert.assertTrue(beacon.hasSuite("nciglobal", currUrl));
@@ -85,8 +86,8 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		Assert.assertTrue(beacon.hasEvent(47));
 
 		// Props
-		Assert.assertEquals(beacon.props.get(1), currUrl.substring(0, Math.min(currUrl.length(), 100)));
-		Assert.assertEquals(beacon.props.get(3), path);
+		Assert.assertEquals(beacon.props.get(1), currUrlMax);
+		Assert.assertEquals(beacon.props.get(3), path.toLowerCase());
 		Assert.assertEquals(beacon.props.get(6), analyticsPageLoad.getMetaTitle());
 		Assert.assertEquals(beacon.props.get(8), analyticsPageLoad.getLanguageName());
 		Assert.assertEquals(beacon.props.get(10), analyticsPageLoad.getPageTitle());

@@ -14,42 +14,44 @@ import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class CthpLoad_Test extends AnalyticsTestLoadBase {
 
-	/**
-	 * The following page types / content are covered by this test class:
-	 * - CTHP Patient (English and Spanish)
-	 * - CTHP Health Professional (English and Spanish)
-	 */
-	
-	private AnalyticsPageLoad analyticsPageLoad;
-	private Beacon beacon;	
-	private String testDataFilePath;
 	private final String TESTDATA_SHEET_NAME = "CTHPPage";
-	
-	@BeforeClass(groups = { "Analytics" }) 
-	public void setup() {
+
+	private AnalyticsPageLoad analyticsPageLoad;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
+	@BeforeClass(groups = { "Analytics" })
+	public void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
-	
-	/// CTHP page loads return expected values
-	@Test(dataProvider = "CTHPPageLoad", groups = { "Analytics" })
+
+	// ==================== Test methods ==================== //
+
+	/// Test CTHP Page load event
+	@Test(dataProvider = "CthpPageLoad", groups = { "Analytics" })
 	public void testCthpPageLoad(String path, String contentType) {
+		System.out.println("Test CTHP Page load event (" + contentType + "):");
+		driver.get(config.goHome() + path);
+
 		try {
-			driver.get(config.goHome() + path);
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
-			System.out.println(contentType + " load event (" + analyticsPageLoad.getLanguageName() + "):");
-			beacon = getBeacon();
+			Beacon beacon = getBeacon();
+
 			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			logger.log(LogStatus.PASS, contentType + " load values are correct.");
-		}
-		catch (Exception e) {
-			Assert.fail("Error loading " + contentType);
-			e.printStackTrace();
+			logger.log(LogStatus.PASS, "Test CTHP Page load event (" + contentType + ") passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
 
-	@DataProvider(name = "CTHPPageLoad")
-	public Iterator<Object[]> getCTHPPageLoadData() {
+	// ==================== Data providers ==================== //
+
+	@DataProvider(name = "CthpPageLoad")
+	public Iterator<Object[]> getCthpPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
-	
+
 }
