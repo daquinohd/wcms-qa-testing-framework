@@ -1,5 +1,6 @@
 package gov.nci.webanalyticstests.dictionary.common;
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,89 +16,108 @@ import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
 public class DictSearchClick_Test extends AnalyticsTestClickBase {
 
-	private String testDataFilePath;
 	private final String SEARCH_SELECTOR = ".dictionary-search-input";
 
+	DictObjectBase dict;
+	private String testDataFilePath;
+
+	// ==================== Setup methods ==================== //
+
 	@BeforeClass(groups = { "Analytics" })
-	public void setup() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsDictData");
 	}
 
+	/**
+	 * Go to dictionary search page and initialize DictionaryObject.
+	 * 
+	 * @param path
+	 */
+	private void setupTestMethod(String path) {
+		driver.get(config.goHome() + path);
+		try {
+			dict = new DictObjectBase(driver);
+		} catch (Exception e) {
+			Assert.fail("Error loading Dictionary Search URL at path: " + path);
+			e.printStackTrace();
+		}
+	}
+
+	// ==================== Test methods ==================== //
+
+	/// Test Term Search "Starts With" click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
 	public void testTermSearchStartsWithClick(String path, String term, String searchType, String linkName) {
-		String curMethod = new Object() {
-		}.getClass().getEnclosingMethod().getName();
-		System.out.println(linkName + " starts with '" + term + "':");
-		driver.get(config.goHome() + path);
+		System.out.println("Test Term Search starts With \"" + term + "\" click event:");
+		setupTestMethod(path);
 
 		try {
-			DictObjectBase dict = new DictObjectBase(driver);
 			dict.SubmitSearchTerm(SEARCH_SELECTOR, term);
 			Beacon beacon = getBeacon();
 
-			doCommonClickAssertions(beacon);
+			doCommonClassAssertions(beacon, linkName);
 			Assert.assertTrue(beacon.hasEvent(2));
-			Assert.assertEquals(beacon.linkName, linkName);
 			Assert.assertEquals(beacon.props.get(11), searchType);
 			Assert.assertEquals(beacon.props.get(22), term);
 			Assert.assertEquals(beacon.props.get(24), "starts with");
-			Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));
 			Assert.assertTrue(beacon.eVars.get(13).matches("^[+]\\d$"), "eVar13 regex mismatch");
-			Assert.assertEquals(beacon.eVars.get(26), beacon.props.get(24));
-		} catch (Exception ex) {
-			Assert.fail("Error clicking element in " + curMethod + "()");
+			logger.log(LogStatus.PASS, "Test Term Search starts with \"" + term + "\" click event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 
 	}
 
+	/// Test Term Search "Contains" click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
 	public void testTermSearchContainsClick(String path, String term, String searchType, String linkName) {
-		String curMethod = new Object() {
-		}.getClass().getEnclosingMethod().getName();
-		System.out.println(linkName + " contains '" + term + "':");
-		driver.get(config.goHome() + path);
+		System.out.println("Test Term Search contains \"" + term + "\" click event:");
+		setupTestMethod(path);
 
 		try {
-			DictObjectBase dict = new DictObjectBase(driver);
 			dict.selectContains();
 			dict.SubmitSearchTerm(SEARCH_SELECTOR, term);
 			Beacon beacon = getBeacon();
 
-			doCommonClickAssertions(beacon);
+			doCommonClassAssertions(beacon, linkName);
 			Assert.assertTrue(beacon.hasEvent(2));
-			Assert.assertEquals(beacon.linkName, linkName);
 			Assert.assertEquals(beacon.props.get(11), searchType);
 			Assert.assertEquals(beacon.props.get(22), term);
 			Assert.assertEquals(beacon.props.get(24), "contains");
-			Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));
 			Assert.assertTrue(beacon.eVars.get(13).matches("^[+]\\d$"), "eVar13 regex mismatch");
-			Assert.assertEquals(beacon.eVars.get(26), beacon.props.get(24));
-		} catch (Exception ex) {
-			Assert.fail("Error clicking element in " + curMethod + "()");
+			logger.log(LogStatus.PASS, "Test Term Search contains \"" + term + "\" click event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 
 	}
 
+	/// Test Ranked Result click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
 	public void testTermRankedResultsClick(String path, String term, String searchType, String linkName) {
-		String curMethod = new Object() {
-		}.getClass().getEnclosingMethod().getName();
-		System.out.println("Test " + path + " results click: ");
-		driver.get(config.goHome() + path);
+		System.out.println("Test Ranked Result click event (" + term + "):");
+		setupTestMethod(path);
 
 		try {
-			DictObjectBase dict = new DictObjectBase(driver);
 			dict.clickSearchResult("dfn a", 2);
 			Beacon beacon = getBeacon();
 
-			doCommonClickAssertions(beacon);
-			Assert.assertTrue(beacon.linkName.contains("DictionaryResults"));
+			doCommonClassAssertions(beacon, "DictionaryResults");
 			Assert.assertEquals(beacon.props.get(13), "3");
-		} catch (Exception ex) {
-			Assert.fail("Error clicking element in " + curMethod + "()");
+			logger.log(LogStatus.PASS, "Test Ranked Result click event passed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 
 	}
+
+	// ==================== Data providers ==================== //
 
 	/**
 	 * Get an iterator data object with path, term, and expected test values.
@@ -117,6 +137,23 @@ public class DictSearchClick_Test extends AnalyticsTestClickBase {
 			myObjects.add(ob);
 		}
 		return myObjects.iterator();
+	}
+
+	// ==================== Common assertions ==================== //
+
+	/**
+	 * Shared Assert() calls for this class.
+	 * 
+	 * @param beacon
+	 * @param linkName
+	 */
+	private void doCommonClassAssertions(Beacon beacon, String linkName) {
+		doCommonClickAssertions(beacon);
+
+		Assert.assertTrue(beacon.channels.contains("Publications"));
+		Assert.assertTrue(beacon.linkName.contains(linkName));
+		Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));
+		Assert.assertEquals(beacon.eVars.get(26), beacon.props.get(24));
 	}
 
 }

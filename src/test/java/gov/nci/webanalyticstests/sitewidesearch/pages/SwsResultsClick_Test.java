@@ -10,102 +10,130 @@ import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
 public class SwsResultsClick_Test extends AnalyticsTestClickBase {
-	
+
+	private final String RESULTS_PATH_EN = "/search/results";
+	private final String SEARCH_TERM = "Tumor";
+	private final String REGEX_RESULT_RANK = "^\\+\\d{1,2}$";
+
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
-	private Beacon beacon;
-	private final String SEARCH_TERM = "Tumor";	
 
+	// ==================== Test methods ==================== //
+
+	/// Test Best Bets click event for a search term
 	@Test(groups = { "Analytics" })
 	public void testBestBetsClick() {
+		System.out.println("Test Best Bets click event for '" + SEARCH_TERM + "':");
+		driver.get(config.goHome());
+
 		try {
-			System.out.println("Test Best Bets click event for \"" + SEARCH_TERM + "\": ");
-			driver.get(config.goHome());
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(SEARCH_TERM);
 			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.clickBestBets();
-			beacon = getBeacon();
-			
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, "");
 			Assert.assertEquals(beacon.props.get(12), "best_bets");
 			Assert.assertEquals(beacon.props.get(13), "1");
-			Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
-			logger.log(LogStatus.PASS, "Best Bet click values are correct.");
+			logger.log(LogStatus.PASS, "Test Best Bets click event for '" + SEARCH_TERM + "' passed.");
 		} catch (Exception e) {
-			Assert.fail("Error getting Best Bet click values.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 	}
 
+	/// Test result item click event for a search term
 	@Test(groups = { "Analytics" })
 	public void testResultItemClick() {
+		System.out.println("Test result item click event for '" + SEARCH_TERM + "':");
+		driver.get(config.goHome());
+
 		try {
-			System.out.println("Test result item click event for \"" + SEARCH_TERM + "\": ");
-			driver.get(config.goHome());
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(SEARCH_TERM);
 			swSearchResults = new SitewideSearchResults(driver);
-			swSearchResults.clickListItem(2);
-			beacon = getBeacon();
-			
+			swSearchResults.clickResultLinkNoNav(".sitewide-results .sitewide-list li a");
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, "");
 			Assert.assertEquals(beacon.props.get(12), "generic");
-			Assert.assertEquals(beacon.props.get(13), "2");
-			Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
-			logger.log(LogStatus.PASS, "Result item click values are correct.");
+			Assert.assertEquals(beacon.props.get(13), "1");
+			logger.log(LogStatus.PASS, "Test result item click event for '" + SEARCH_TERM + "' passed.");
 		} catch (Exception e) {
-			Assert.fail("Error getting result item click values.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 	}
 
+	/// Test "Search within results" click event
 	@Test(groups = { "Analytics" })
 	public void testSearchWithinResults() {
+		System.out.println("Test \"Search Within Results\" click event for '" + SEARCH_TERM + "':");
+		driver.get(config.getPageURL("SitewideResultsPage"));
+
 		try {
-			System.out.println("Test refined results search for \"" + SEARCH_TERM + "\": ");
-			driver.get(config.getPageURL("SitewideResultsPage"));
 			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.selectWithinResults();
 			swSearchResults.setSitewideSearchKeyword(SEARCH_TERM);
 			swSearchResults.clickSearchButton();
-			beacon = getBeacon();
-			
-			doCommonClickAssertions(beacon);
-			Assert.assertEquals(beacon.linkName, "SiteWideSearchResultsSearch");
-			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_withinresults");
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, "Search");
 			Assert.assertTrue(beacon.hasEvent(2));
+			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_withinresults");
 			Assert.assertEquals(beacon.props.get(14), SEARCH_TERM.toLowerCase());
-			Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));		
-			Assert.assertTrue(beacon.eVars.get(13).matches("^\\+\\d{1,2}$"));
-			Assert.assertEquals(beacon.eVars.get(14), beacon.props.get(14));
+			Assert.assertTrue(beacon.eVars.get(13).matches(REGEX_RESULT_RANK));
+			logger.log(LogStatus.PASS, "Test \"Search Within Results\" click event for '" + SEARCH_TERM + "' passed.");
 		} catch (Exception e) {
-			Assert.fail("Error submitting sitewide search from results.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 	}
-	
+
+	/// Test "Search within results" click event
 	@Test(groups = { "Analytics" })
 	public void testSearchNewFromResults() {
+		System.out.println("Test \"New Search\" click event for '" + SEARCH_TERM + "':");
+		driver.get(config.goHome() + RESULTS_PATH_EN);
+
 		try {
-			System.out.println("Test new results page search for \"" + SEARCH_TERM + "\": ");
-			driver.get(config.getPageURL("SitewideResultsPage"));
-			swSearchResults = new SitewideSearchResults(driver);			
+			swSearchResults = new SitewideSearchResults(driver);
 			swSearchResults.setSitewideSearchKeyword(SEARCH_TERM);
 			swSearchResults.clickSearchButton();
-			beacon = getBeacon();
-			
-			doCommonClickAssertions(beacon);
-			Assert.assertEquals(beacon.linkName, "SiteWideSearchResultsSearch");
-			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_new");
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, "Search");
 			Assert.assertTrue(beacon.hasEvent(2));
+			Assert.assertEquals(beacon.props.get(11), "sitewide_bottom_new");
 			Assert.assertEquals(beacon.props.get(14), SEARCH_TERM.toLowerCase());
-			Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));		
-			Assert.assertTrue(beacon.eVars.get(13).matches("^\\+\\d{1,2}$"));
-			Assert.assertEquals(beacon.eVars.get(14), beacon.props.get(14));
+			Assert.assertTrue(beacon.eVars.get(13).matches(REGEX_RESULT_RANK));
+			logger.log(LogStatus.PASS, "Test \"New Search\" click event for '" + SEARCH_TERM + "' passed.");
 		} catch (Exception e) {
-			Assert.fail("Error submitting sitewide search from results.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
-	}	
-	
-	
+	}
+
+	// ==================== Common assertions ==================== //
+
+	/**
+	 * Shared Assert() calls for this class.
+	 * 
+	 * @param beacon
+	 * @param action
+	 */
+	private void doCommonClassAssertions(Beacon beacon, String action) {
+		doCommonClickAssertions(beacon);
+
+		Assert.assertEquals(beacon.channels, "Search");
+		Assert.assertEquals(beacon.linkName, "SiteWideSearchResults" + action);
+		Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));
+		Assert.assertEquals(beacon.eVars.get(12), beacon.props.get(12));
+		Assert.assertEquals(beacon.eVars.get(14), beacon.props.get(14));
+	}
 }

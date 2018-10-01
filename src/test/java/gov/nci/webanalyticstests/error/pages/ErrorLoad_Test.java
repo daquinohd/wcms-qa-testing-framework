@@ -8,7 +8,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -16,14 +15,13 @@ public class ErrorLoad_Test extends AnalyticsTestLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "ErrorPage";
 
-	private AnalyticsPageLoad analyticsPageLoad;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
 
 	@BeforeClass(groups = { "Analytics" })
 	public void setupClass() {
-		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
+		testDataFilePath = config.getProperty("AnalyticsErrorPgData");
 	}
 
 	// ==================== Test methods ==================== //
@@ -35,7 +33,6 @@ public class ErrorLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			Beacon beacon = getBeacon();
 
 			// Error pages do not share the rest of the common pageload valules

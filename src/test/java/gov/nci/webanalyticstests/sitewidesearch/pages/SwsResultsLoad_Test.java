@@ -11,90 +11,98 @@ import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
 public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
-	
-	private AnalyticsPageLoad analyticsPageLoad;
-	private SitewideSearchForm swSearchForm;
-	private SitewideSearchResults swSearchResults;
-	private Beacon beacon;
 
 	private final String RESULTS_PATH_EN = "/search/results";
 	private final String RESULTS_PATH_ES = "/espanol/buscar/resultados";
-	private final String SEARCH_TERM = "Tumor";	
+	private final String SEARCH_TERM = "Tumor";
 
-	// Verify analytics load values for sitewide cancer term search results
+	private AnalyticsPageLoad analyticsPageLoad;
+	private SitewideSearchForm swSearchForm;
+	private SitewideSearchResults swSearchResults;
+
+	// ==================== Test methods ==================== //
+
+	// Test Sitewide Search Results page (English) load event
 	@Test(groups = { "Analytics" })
 	public void testSwsResultsPageEn() {
+		System.out.println("Test Sitewide Search Results page (English) load event for'" + SEARCH_TERM + "':");
+		driver.get(config.goHome());
+
 		try {
-			System.out.println("Test sitewide search term: " + SEARCH_TERM);
-			driver.get(config.goHome());
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
 			swSearchForm.clickSearchButton();
-			beacon = getBeacon();
-			
+			swSearchResults = new SitewideSearchResults(driver);
 			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");
-			doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_EN);
-			logger.log(LogStatus.PASS, "English results load values are correct.");
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, RESULTS_PATH_EN);
+			logger.log(LogStatus.PASS,
+					"Test Sitewide Search Results page (English) load event for'" + SEARCH_TERM + "' passsed.");
 		} catch (Exception e) {
-			Assert.fail("Error submitting English sitewide search.");
-			e.printStackTrace();
-		}
-	}
-	
-	// Verify analytics load values for Spanish sitewide cancer term search results
-	@Test(groups = { "Analytics" })
-	public void testSwsResultsPageEs() {
-		try {
-			System.out.println("Test Spanish sitewide search term: " + SEARCH_TERM);
-			driver.get(config.goHome() + "/espanol");
-			analyticsPageLoad = new AnalyticsPageLoad(driver);			
-			swSearchForm = new SitewideSearchForm(driver);
-			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
-			swSearchForm.clickSearchButton();
-			beacon = getBeacon();
-			
-			analyticsPageLoad.setPageTitle("Resultados - National Cancer Institute");
-			doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_ES);
-			logger.log(LogStatus.PASS, "Spanish results load values are correct.");
-		} catch (Exception e) {
-			Assert.fail("Error submitting Spanish sitewide search.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
 
-	// Verify analytics load values for sitewide cancer term search results
+	// Test Sitewide Search Results page (Spanish) load event
+	@Test(groups = { "Analytics" })
+	public void testSwsResultsPageEs() {
+		System.out.println("Test Sitewide Search Results page (Spanish) load event for'" + SEARCH_TERM + "':");
+		driver.get(config.getPageURL("SpanishHome"));
+
+		try {
+			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			swSearchForm = new SitewideSearchForm(driver);
+			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
+			swSearchForm.clickSearchButton();
+			swSearchResults = new SitewideSearchResults(driver);
+			analyticsPageLoad.setPageTitle("Resultados - National Cancer Institute");
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, RESULTS_PATH_ES);
+			Assert.assertEquals(beacon.props.get(8), "spanish");
+			logger.log(LogStatus.PASS,
+					"Test Sitewide Search Results page (Spanish) load event for'" + SEARCH_TERM + "' passsed.");
+		} catch (Exception e) {
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
+		}
+	}
+
+	// Test Sitewide Search Results page load event - no results
 	@Test(groups = { "Analytics" })
 	public void testSwsResultsPageNoResults() {
+		System.out.println("Test Sitewide Search Results page load event - no results:");
+		driver.get(config.goHome() + RESULTS_PATH_EN);
+
 		try {
-			System.out.println("Direct navigation to results page");			
-			driver.get(config.goHome() + RESULTS_PATH_EN);
-			beacon = getBeacon();
-			
-			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");			
-			doCommonClassAssertions(beacon, analyticsPageLoad, RESULTS_PATH_EN);
-			logger.log(LogStatus.PASS, "Sitewide search direct navigation values are correct.");
+			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");
+			Beacon beacon = getBeacon();
+
+			doCommonClassAssertions(beacon, RESULTS_PATH_EN);
+			logger.log(LogStatus.PASS, "Test Sitewide Search Results page load event - no results passed.");
 		} catch (Exception e) {
-			Assert.fail("Error on sitewide search direct navigation.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error loading page in " + currMethod + "()");
 		}
 	}
-	
+
+	// ==================== Common assertions ==================== //
+
 	/**
 	 * Shared assertions for all tests in this class.
+	 * 
 	 * @param beacon
-	 * @param analyticsPageLoad
 	 * @param path
 	 */
-	private void doCommonClassAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String path) {
-		try {
-			swSearchResults = new SitewideSearchResults(driver);
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			Assert.assertEquals(beacon.eVars.get(10), swSearchResults.getResultsCount());
-		} catch (Exception e) {
-			System.out.println("Error in SwsResultsPage_Test common assertions");
-			e.printStackTrace();
-		}
+	private void doCommonClassAssertions(Beacon beacon, String path) {
+		doCommonLoadAssertions(beacon, analyticsPageLoad, path);
+		Assert.assertEquals(beacon.eVars.get(10), swSearchResults.getResultsCount());
 	}
-	
+
 }

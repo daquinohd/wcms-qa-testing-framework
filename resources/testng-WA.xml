@@ -50,6 +50,7 @@
 			<!-- Sitewide Search tracking -->
 			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsLoad_Test" />
 			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsClick_Test" />
+			<class name="gov.nci.webanalyticstests.sitewidesearch.common.SwsFormClick_Test" />
 
 			<!-- Dictionary tracking -->
 			<class name="gov.nci.webanalyticstests.dictionary.pages.DictDefinitionLoad_Test" />
@@ -69,16 +70,18 @@
 			<class name="gov.nci.webanalyticstests.pdq.pages.PdqCisLoad_Test" />
 			<class name="gov.nci.webanalyticstests.pdq.pages.PdqDrugLoad_Test" />
 
+			<!-- Error page tracking -->
+			<class name="gov.nci.webanalyticstests.error.pages.ErrorLoad_Test" />
+			<class name="gov.nci.webanalyticstests.error.common.ErrorClick_Test" />
+
 			<!-- Common component tracking -->
 			<class name="gov.nci.webanalyticstests.commonobjects.CardClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" />
-			<class name="gov.nci.webanalyticstests.commonobjects.SwsFormClick_Test" />
 
 			<!-- All other page load tracking -->
-			<class name="gov.nci.webanalyticstests.error.pages.ErrorLoad_Test" />
 			<class name="gov.nci.webanalyticstests.home.pages.HomeLoad_Test" />
 			<class name="gov.nci.webanalyticstests.inner.pages.InnerLoad_Test" />
 			<class name="gov.nci.webanalyticstests.landing.pages.LandingLoad_Test" />

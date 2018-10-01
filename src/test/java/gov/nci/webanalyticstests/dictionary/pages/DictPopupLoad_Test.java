@@ -37,7 +37,6 @@ public class DictPopupLoad_Test extends DictionaryBase {
 			analyticsPageLoad = new AnalyticsPageLoad(driver);
 			Beacon beacon = getBeacon();
 
-			String dictPath = getDictionaryPath(path);
 			Assert.assertTrue(beacon.hasEvent(1), "Expected event1");
 			Assert.assertEquals(beacon.props.get(7), "patient");
 			Assert.assertTrue(beacon.hasEvent(11), "Expected event11");
