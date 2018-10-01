@@ -23,7 +23,7 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 
 	@BeforeClass(groups = { "Analytics" })
 	private void setupClass() {
-		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
+		testDataFilePath = config.getProperty("AnalyticsBlogData");
 	}
 
 	// ==================== Test methods ==================== //

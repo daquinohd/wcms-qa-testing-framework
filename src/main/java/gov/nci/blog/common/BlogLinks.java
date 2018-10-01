@@ -2,6 +2,8 @@ package gov.nci.blog.common;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,15 +17,15 @@ public class BlogLinks extends PageObjectBase {
 
 	WebDriver driver;
 
-    public BlogLinks (WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
-        super(driver);
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-	
+	public BlogLinks(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
+		super(driver);
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
+
 	/**************** Blog Common Link Elements *****************************/
 	private final String LNK_SUBSCRIBE = ".subscribeRSS a";
-	
+
 	@FindBy(css = LNK_SUBSCRIBE)
 	WebElement lnk_subscribe;
 
@@ -80,5 +82,16 @@ public class BlogLinks extends PageObjectBase {
 		ScrollUtil.scrollIntoview(driver, lnk_newerSeries);
 		lnk_newerSeries.click();
 	}
-	
+
+	/**
+	 * Click a blog element by selector.
+	 * 
+	 * @param selector
+	 */
+	public void clickBlogCommon(String selector) {
+		WebElement element = driver.findElement(By.cssSelector(selector));
+		ScrollUtil.scrollIntoview(driver, element);
+		element.click();
+	}
+
 }

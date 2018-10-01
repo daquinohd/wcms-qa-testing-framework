@@ -30,7 +30,9 @@
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostClick_Test" />
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesLoad_Test" />
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesClick_Test" />
-
+			<class name="gov.nci.webanalyticstests.blog.common.BlogLinksClick_Test" />
+			<class name="gov.nci.webanalyticstests.blog.common.BlogRightRailClick_Test" />
+			
 			<!-- Clinical Trials tracking -->
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsLoad_Test" />
