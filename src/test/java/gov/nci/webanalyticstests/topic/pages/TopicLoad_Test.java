@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -16,7 +16,7 @@ public class TopicLoad_Test extends AnalyticsTestLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "TopicPage";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -35,10 +35,10 @@ public class TopicLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			doCommonLoadAssertions(beacon, analyticsMetaData, path);
 			logger.log(LogStatus.PASS, "Test Topic Page load event passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {

@@ -1,7 +1,9 @@
 package gov.nci.webanalyticstests.commonobjects;
 
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.LogStatus;
+
 import org.testng.Assert;
 
 import gov.nci.commonobjects.OnThisPage;
@@ -10,83 +12,99 @@ import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
 public class OnThisPageClick_Test extends AnalyticsTestClickBase {
 
-	private OnThisPage otp;
-	private Beacon beacon;
-
 	private final String PATH_ARTICLE = "/about-cancer/understanding/what-is-cancer";
 	private final String PATH_FACTSHEET = "/about-cancer/diagnosis-staging/diagnosis/pathology-reports-fact-sheet";
 	private final String PATH_PDQ = "/about-cancer/screening/patient-screening-overview-pdq#section/all";
 
-	@BeforeMethod(groups = { "Analytics" })
-	public void setupOtpTest() {
+	private OnThisPage otp;
+	private String currentUrl;
+
+	// ==================== Setup methods ==================== //
+
+	private void setupTestMethod(String path) {
 		try {
-			this.otp = new OnThisPage(driver);
+			otp = new OnThisPage(driver);
+			driver.get(config.goHome() + path);
+			currentUrl = driver.getCurrentUrl();
 		} catch (Exception e) {
+			Assert.fail("Error loading OnThisPage object at " + path);
 			e.printStackTrace();
-			System.out.println("Error building Related Resources page object.");
 		}
 	}
 
+	// ==================== Test methods ==================== //
+
+	/// Test Article On This Page link click
 	@Test(groups = { "Analytics" })
 	public void testArticleOtpClick() {
+		System.out.println("Test Article On This Page link click: ");
+		setupTestMethod(PATH_ARTICLE);
+
 		try {
-			System.out.println("Test Article On This Page link click: ");
-			driver.get(config.goHome() + PATH_ARTICLE);
-			String currentUrl = driver.getCurrentUrl();
 			String linkText = otp.getOnThisPageLinkText(0);
 			String linkHref = otp.getOnThisPageHref(0);
 			otp.clickOnThisPageLink(0);
-			beacon = getBeacon();
+			Beacon beacon = getBeacon();
 
-			doCommonClassAssertions(currentUrl, linkText, linkHref);
+			doCommonClassAssertions(beacon, linkText, linkHref);
+			logger.log(LogStatus.PASS, "Test Article On This Page link click passed.");
 		} catch (Exception e) {
-			Assert.fail("Error clicking Article On This Page link.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 	}
 
+	/// Test Factsheet On This Page link click
 	@Test(groups = { "Analytics" })
 	public void testFactsheetOtpClick() {
+		System.out.println("Test Factsheet On This Page link click: ");
+		setupTestMethod(PATH_FACTSHEET);
+
 		try {
-			System.out.println("Test Factsheet On This Page link click: ");
-			driver.get(config.goHome() + PATH_FACTSHEET);
-			String currentUrl = driver.getCurrentUrl();
 			String linkText = otp.getOnThisPageLinkText(1);
 			String linkHref = otp.getOnThisPageHref(1);
 			otp.clickOnThisPageLink(1);
-			beacon = getBeacon();
+			Beacon beacon = getBeacon();
 
-			doCommonClassAssertions(currentUrl, linkText, linkHref);
+			doCommonClassAssertions(beacon, linkText, linkHref);
+			logger.log(LogStatus.PASS, "Test Factsheet On This Page link click passed.");
 		} catch (Exception e) {
-			Assert.fail("Error clicking Factsheet On This Page link.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 	}
 
+	/// Test PDQ On This Page link click
 	@Test(groups = { "Analytics" })
 	public void tesPdqOtpClick() {
+		System.out.println("Test PDQ On This Page link click: ");
+		setupTestMethod(PATH_PDQ);
+
 		try {
-			System.out.println("Test PDQ On This Page link click: ");
-			driver.get(config.goHome() + PATH_PDQ);
-			String currentUrl = driver.getCurrentUrl();
 			String linkText = otp.getOnThisPageLinkText(2);
 			String linkHref = otp.getOnThisPageHref(2);
 			otp.clickOnThisPageLink(2);
-			beacon = getBeacon();
+			Beacon beacon = getBeacon();
 
-			doCommonClassAssertions(currentUrl, linkText, linkHref);
+			doCommonClassAssertions(beacon, linkText, linkHref);
+			logger.log(LogStatus.PASS, "Test PDQ On This Page link click passed.");
 		} catch (Exception e) {
-			Assert.fail("Error clicking PDQ On This Page link.");
-			e.printStackTrace();
+			String currMethod = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			Assert.fail("Error clicking component in " + currMethod + "()");
 		}
 	}
+
+	// ==================== Common assertions ==================== //
 
 	/**
 	 * Shared Assert() calls for CtsBasicSearch_Test
 	 * 
 	 * @param beacon
 	 */
-	private void doCommonClassAssertions(String currentUrl, String linkText, String linkHref) {
+	private void doCommonClassAssertions(Beacon beacon, String linkText, String linkHref) {
 
 		String testPath = beacon.props.get(67);
 		Assert.assertTrue(beacon.hasEvent(29));

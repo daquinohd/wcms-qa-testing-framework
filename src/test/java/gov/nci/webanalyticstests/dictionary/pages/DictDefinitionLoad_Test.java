@@ -10,14 +10,14 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 
-public class DictDefinitionLoad_Test extends DictionaryBase {
+public class DictDefinitionLoad_Test extends DictionaryLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "Definitions";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -36,11 +36,11 @@ public class DictDefinitionLoad_Test extends DictionaryBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
 			String dictPath = getDictionaryPath(path);
-			doCommonLoadAssertions(beacon, analyticsPageLoad, dictPath);
+			doCommonLoadAssertions(beacon, analyticsMetaData, dictPath);
 			Assert.assertEquals(beacon.props.get(16), cdrData);
 			Assert.assertEquals(beacon.eVars.get(16), beacon.props.get(16));
 			logger.log(LogStatus.PASS, "Test Definition Page load event at " + path + " passed.");

@@ -4,7 +4,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -22,10 +22,10 @@ public class AdvancedSearchLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome() + PATH);
 
 		try {
-			AnalyticsPageLoad analyticsPageLoad = new AnalyticsPageLoad(driver);
+			AnalyticsMetaData analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsPageLoad, PATH);
+			doCommonLoadAssertions(beacon, analyticsMetaData, PATH);
 			Assert.assertEquals(beacon.props.get(62), SEARCH_TYPE);
 			Assert.assertEquals(beacon.eVars.get(62), beacon.props.get(62));
 			logger.log(LogStatus.PASS, SEARCH_TYPE + " page load values passed.");

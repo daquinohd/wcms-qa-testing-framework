@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -17,7 +17,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 	private final String TESTDATA_SHEET_NAME = "HomePage";
 	private final String SITEHOME_PATH = "/";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -36,10 +36,10 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
+			doCommonLoadAssertions(beacon, analyticsMetaData, path);
 			logger.log(LogStatus.PASS, "Test Home Page load event (" + contentType + ") passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {
@@ -56,10 +56,10 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 		driver.navigate().refresh();
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsPageLoad, SITEHOME_PATH);
+			doCommonLoadAssertions(beacon, analyticsMetaData, SITEHOME_PATH);
 			logger.log(LogStatus.PASS, "Test Home-refresh load event passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {
@@ -77,10 +77,10 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 		driver.navigate().back();
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsPageLoad, SITEHOME_PATH);
+			doCommonLoadAssertions(beacon, analyticsMetaData, SITEHOME_PATH);
 			logger.log(LogStatus.PASS, "Test Home-and-back load event passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {
@@ -100,7 +100,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 			// Click and scroll around page
 			// Refresh
 			Beacon beacon = getBeacon();
-			doCommonLoadAssertions(beacon, analyticsPageLoad, SITEHOME_PATH);
+			doCommonLoadAssertions(beacon, analyticsMetaData, SITEHOME_PATH);
 			logger.log(LogStatus.PASS, "Test engagement tracking on page load passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {

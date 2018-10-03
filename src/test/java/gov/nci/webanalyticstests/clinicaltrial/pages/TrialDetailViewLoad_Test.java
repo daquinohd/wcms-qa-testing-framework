@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -19,7 +19,7 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 	private final String PATH = "/about-cancer/treatment/clinical-trials/search/v";
 	private final String TESTDATA_SHEET_NAME = "TrialDetailView";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -37,7 +37,7 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 	private void setupTestMethod(String queryParams) {
 		try {
 			driver.get(config.goHome() + PATH + queryParams);
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 		} catch (Exception ex) {
 			Assert.fail("Error loading CTS Trial Detail View url: " + PATH + queryParams);
 			ex.printStackTrace();
@@ -55,7 +55,7 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 		try {
 			Beacon beacon = getBeacon();
 
-			doCommonClassAssertions(beacon, analyticsPageLoad, type);
+			doCommonClassAssertions(beacon, analyticsMetaData, type);
 			logger.log(LogStatus.PASS, "Test CTS Trial Detail View page load event (" + type + ") passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {
@@ -79,7 +79,7 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 	 * @param pageLoad
 	 * @return
 	 */
-	private String getNCTID(AnalyticsPageLoad pageLoad) {
+	private String getNCTID(AnalyticsMetaData pageLoad) {
 		String[] titleId = pageLoad.getMetaTitle().split("-");
 		return titleId[titleId.length - 1].trim();
 	}
@@ -90,13 +90,13 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 	 * Shared assertions for all tests in this class.
 	 * 
 	 * @param beacon
-	 * @param analyticsPageLoad
+	 * @param analyticsMetaData
 	 * @param type
 	 */
-	private void doCommonClassAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String type) {
-		doCommonLoadAssertions(beacon, analyticsPageLoad, PATH);
+	private void doCommonClassAssertions(Beacon beacon, AnalyticsMetaData analyticsMetaData, String type) {
+		doCommonLoadAssertions(beacon, analyticsMetaData, PATH);
 		Assert.assertEquals(beacon.channels, "About Cancer");
-		Assert.assertEquals(beacon.props.get(16), getNCTID(analyticsPageLoad));
+		Assert.assertEquals(beacon.props.get(16), getNCTID(analyticsMetaData));
 		Assert.assertEquals(beacon.props.get(62), "Clinical Trials: " + type);
 		Assert.assertEquals(beacon.eVars.get(62), beacon.props.get(62));
 	}

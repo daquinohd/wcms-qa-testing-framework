@@ -9,7 +9,7 @@ import java.util.List;
 import org.testng.Assert;
 
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 
 public class AnalyticsTestLoadBase extends AnalyticsTestBase {
@@ -70,10 +70,10 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 	 * Shared Assert() calls for all pageLoad tracking beacons.
 	 * 
 	 * @param beacon
-	 * @param analyticsPageLoad
+	 * @param analyticsMetaData
 	 * @param path
 	 */
-	protected void doCommonLoadAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad, String path) {
+	protected void doCommonLoadAssertions(Beacon beacon, AnalyticsMetaData analyticsMetaData, String path) {
 
 		String currUrl = driver.getCurrentUrl();
 		String currUrlMax = currUrl.substring(0, Math.min(currUrl.length(), 100));
@@ -88,23 +88,23 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		// Props
 		Assert.assertEquals(beacon.props.get(1), currUrlMax);
 		Assert.assertEquals(beacon.props.get(3), path.toLowerCase());
-		Assert.assertEquals(beacon.props.get(6), analyticsPageLoad.getMetaTitle());
-		Assert.assertEquals(beacon.props.get(8), analyticsPageLoad.getLanguageName());
-		Assert.assertEquals(beacon.props.get(10), analyticsPageLoad.getPageTitle());
+		Assert.assertEquals(beacon.props.get(6), analyticsMetaData.getMetaTitle());
+		Assert.assertEquals(beacon.props.get(8), analyticsMetaData.getLanguageName());
+		Assert.assertEquals(beacon.props.get(10), analyticsMetaData.getPageTitle());
 		Assert.assertTrue(beacon.props.get(25).matches(REGEX_MMDDYY));
 		Assert.assertTrue(beacon.props.get(26).matches(REGEX_TIMESTAMP_PIPE));
 		Assert.assertTrue(beacon.props.get(29).matches(REGEX_TIME_PARTING));
 		Assert.assertEquals(beacon.props.get(42), "Normal");
-		Assert.assertEquals(beacon.props.get(44), analyticsPageLoad.getMetaIsPartOf());
+		Assert.assertEquals(beacon.props.get(44), analyticsMetaData.getMetaIsPartOf());
 		Assert.assertTrue(beacon.props.get(48).matches(REGEX_PAGE_SCROLL));
 		Assert.assertTrue(beacon.props.get(64).matches(REGEX_PERCENT_VIEWED));
 		Assert.assertTrue(beacon.props.get(65).matches(REGEX_PAGELOAD_TIME));
 
 		// Evars
 		Assert.assertTrue(beacon.eVars.get(1).contains("www.cancer.gov"));
-		Assert.assertEquals(beacon.eVars.get(2), analyticsPageLoad.getLanguageName());
+		Assert.assertEquals(beacon.eVars.get(2), analyticsMetaData.getLanguageName());
 		Assert.assertTrue(beacon.eVars.get(5).matches(REGEX_BROWSER_SIZE));
-		Assert.assertEquals(beacon.eVars.get(44), analyticsPageLoad.getMetaIsPartOf());
+		Assert.assertEquals(beacon.eVars.get(44), analyticsMetaData.getMetaIsPartOf());
 
 		// HIer
 		Assert.assertEquals(beacon.hiers.get(1), buildHier1(currUrl));

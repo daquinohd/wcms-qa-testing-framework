@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -16,7 +16,7 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "BlogPostPage";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -35,11 +35,11 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsPageLoad, path);
-			Assert.assertEquals(beacon.eVars.get(48), analyticsPageLoad.getMetaIsPartOf() + " Viewer");
+			doCommonLoadAssertions(beacon, analyticsMetaData, path);
+			Assert.assertEquals(beacon.eVars.get(48), analyticsMetaData.getMetaIsPartOf() + " Viewer");
 			logger.log(LogStatus.PASS, "Test Blog Post Page load event passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {

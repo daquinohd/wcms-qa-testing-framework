@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -16,7 +16,7 @@ public class PdqDrugLoad_Test extends AnalyticsTestLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "PDQDrugPage";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -36,11 +36,11 @@ public class PdqDrugLoad_Test extends AnalyticsTestLoadBase {
 		driver.navigate().refresh();
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
 			String[] pathNoId = path.split("#");
-			doCommonLoadAssertions(beacon, analyticsPageLoad, pathNoId[0]);
+			doCommonLoadAssertions(beacon, analyticsMetaData, pathNoId[0]);
 			logger.log(LogStatus.PASS, "Test PDQ Drug Info Summary Page load event (" + contentType + ") passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {

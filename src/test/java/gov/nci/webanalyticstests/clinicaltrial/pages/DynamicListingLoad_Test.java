@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -18,7 +18,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "DynamicListingPage";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -36,7 +36,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 	private void setupTestMethod(String path) {
 		try {
 			driver.get(config.goHome() + path);
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 		} catch (Exception ex) {
 			Assert.fail("Error loading listing page path: " + path);
 			ex.printStackTrace();
@@ -133,9 +133,9 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 	private void doCommonClassAssertions(Beacon beacon, String path, String filter) {
 		String itemsPerPageRegex = "^\\d{1,4}$";
 		String itemCountXpath = "//span[@data-basiccts-searchparam='n']";
-		String itemsTotal = analyticsPageLoad.getElementTextFromXpath(itemCountXpath);
+		String itemsTotal = analyticsMetaData.getElementTextFromXpath(itemCountXpath);
 
-		doCommonLoadAssertions(beacon, analyticsPageLoad, path);
+		doCommonLoadAssertions(beacon, analyticsMetaData, path);
 		Assert.assertTrue(beacon.hasEvent(2));
 		Assert.assertEquals(beacon.channels, "About Cancer");
 		Assert.assertEquals(beacon.props.get(11), "clinicaltrials_custom");

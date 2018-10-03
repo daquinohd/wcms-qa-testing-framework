@@ -8,14 +8,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 
-public class DictPopupLoad_Test extends DictionaryBase {
+public class DictPopupLoad_Test extends DictionaryLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "DictionaryPopup";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -34,14 +34,14 @@ public class DictPopupLoad_Test extends DictionaryBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
 			Assert.assertTrue(beacon.hasEvent(1), "Expected event1");
 			Assert.assertEquals(beacon.props.get(7), "patient");
 			Assert.assertTrue(beacon.hasEvent(11), "Expected event11");
 			Assert.assertTrue(beacon.hasEvent(47), "Expected event47=");
-			Assert.assertEquals(beacon.props.get(8), analyticsPageLoad.getLanguageName());
+			Assert.assertEquals(beacon.props.get(8), analyticsMetaData.getLanguageName());
 			Assert.assertEquals(beacon.eVars.get(2), beacon.props.get(8));
 			Assert.assertEquals(beacon.eVars.get(7), beacon.props.get(7));
 			logger.log(LogStatus.PASS, "Test Dictionary Popup Page load event passed.");

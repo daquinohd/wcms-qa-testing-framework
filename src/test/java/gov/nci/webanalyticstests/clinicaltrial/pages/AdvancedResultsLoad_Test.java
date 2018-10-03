@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -20,7 +20,7 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 	private final String TESTDATA_SHEET_NAME = "AdvancedResultsLoad";
 
 	private String testDataFilePath;
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 
 	// ==================== Setup methods ==================== //
 
@@ -37,7 +37,7 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 	private void setupTestMethod(String queryParams) {
 		try {
 			driver.get(config.goHome() + PATH + queryParams);
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 		} catch (Exception ex) {
 			Assert.fail("Error loading Advanced CTS results url: " + PATH + queryParams);
 			ex.printStackTrace();
@@ -56,7 +56,7 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 		try {
 			Beacon beacon = getBeacon();
 
-			doCommonClassAssertions(beacon, analyticsPageLoad);
+			doCommonClassAssertions(beacon, analyticsMetaData);
 			Assert.assertEquals(beacon.props.get(15), fieldsUsed);
 			Assert.assertEquals(beacon.props.get(17), cancerInfo);
 			Assert.assertEquals(beacon.props.get(18), location);
@@ -102,10 +102,10 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 	 * Shared assertions for all tests in this class.
 	 * 
 	 * @param beacon
-	 * @param analyticsPageLoad
+	 * @param analyticsMetaData
 	 */
-	private void doCommonClassAssertions(Beacon beacon, AnalyticsPageLoad analyticsPageLoad) {
-		doCommonLoadAssertions(beacon, analyticsPageLoad, PATH);
+	private void doCommonClassAssertions(Beacon beacon, AnalyticsMetaData analyticsMetaData) {
+		doCommonLoadAssertions(beacon, analyticsMetaData, PATH);
 		Assert.assertTrue(beacon.hasEvent(2));
 		Assert.assertEquals(beacon.channels, "About Cancer");
 		Assert.assertEquals(beacon.props.get(11), "clinicaltrials_advanced");

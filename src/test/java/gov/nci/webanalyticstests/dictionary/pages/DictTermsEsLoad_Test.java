@@ -8,14 +8,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 
-public class DictTermsEsLoad_Test extends DictionaryBase {
+public class DictTermsEsLoad_Test extends DictionaryLoadBase {
 
 	private final String TESTDATA_SHEET_NAME = "TermsPageSpanish";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -34,11 +34,11 @@ public class DictTermsEsLoad_Test extends DictionaryBase {
 		driver.get(config.goHome() + path);
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			Beacon beacon = getBeacon();
 
 			String dictPath = getDictionaryPath(path);
-			doCommonLoadAssertions(beacon, analyticsPageLoad, dictPath);
+			doCommonLoadAssertions(beacon, analyticsMetaData, dictPath);
 			logger.log(LogStatus.PASS, "Test Spanish Dictionary Page load event at " + path + " passed.");
 		} catch (Exception e) {
 			String currMethod = new Object() {

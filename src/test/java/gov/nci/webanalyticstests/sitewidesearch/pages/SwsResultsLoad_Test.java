@@ -6,7 +6,7 @@ import org.testng.Assert;
 
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.sitewidesearch.pages.SitewideSearchResults;
-import gov.nci.webanalytics.AnalyticsPageLoad;
+import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
@@ -16,7 +16,7 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 	private final String RESULTS_PATH_ES = "/espanol/buscar/resultados";
 	private final String SEARCH_TERM = "Tumor";
 
-	private AnalyticsPageLoad analyticsPageLoad;
+	private AnalyticsMetaData analyticsMetaData;
 	private SitewideSearchForm swSearchForm;
 	private SitewideSearchResults swSearchResults;
 
@@ -29,12 +29,12 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome());
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
 			swSearchForm.clickSearchButton();
 			swSearchResults = new SitewideSearchResults(driver);
-			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");
+			analyticsMetaData.setPageTitle("NCI Search Results - National Cancer Institute");
 			Beacon beacon = getBeacon();
 
 			doCommonClassAssertions(beacon, RESULTS_PATH_EN);
@@ -54,12 +54,12 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.getPageURL("SpanishHome"));
 
 		try {
-			analyticsPageLoad = new AnalyticsPageLoad(driver);
+			analyticsMetaData = new AnalyticsMetaData(driver);
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.setSitewideSearchKeyword(SEARCH_TERM);
 			swSearchForm.clickSearchButton();
 			swSearchResults = new SitewideSearchResults(driver);
-			analyticsPageLoad.setPageTitle("Resultados - National Cancer Institute");
+			analyticsMetaData.setPageTitle("Resultados - National Cancer Institute");
 			Beacon beacon = getBeacon();
 
 			doCommonClassAssertions(beacon, RESULTS_PATH_ES);
@@ -80,7 +80,7 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 		driver.get(config.goHome() + RESULTS_PATH_EN);
 
 		try {
-			analyticsPageLoad.setPageTitle("NCI Search Results - National Cancer Institute");
+			analyticsMetaData.setPageTitle("NCI Search Results - National Cancer Institute");
 			Beacon beacon = getBeacon();
 
 			doCommonClassAssertions(beacon, RESULTS_PATH_EN);
@@ -101,7 +101,7 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 	 * @param path
 	 */
 	private void doCommonClassAssertions(Beacon beacon, String path) {
-		doCommonLoadAssertions(beacon, analyticsPageLoad, path);
+		doCommonLoadAssertions(beacon, analyticsMetaData, path);
 		Assert.assertEquals(beacon.eVars.get(10), swSearchResults.getResultsCount());
 	}
 

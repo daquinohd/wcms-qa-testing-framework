@@ -2,7 +2,7 @@ package gov.nci.webanalyticstests.dictionary.pages;
 
 import gov.nci.webanalyticstests.AnalyticsTestLoadBase;
 
-public class DictionaryBase extends AnalyticsTestLoadBase {
+public class DictionaryLoadBase extends AnalyticsTestLoadBase {
 	
 	/**
 	 * Clean up paths for expected dictionary analytics values

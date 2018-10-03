@@ -335,8 +335,8 @@ public class Beacon extends AnalyticsRequest {
 		// Go through the list of populated parameter values and add those to the return
 		// list where the number matches
 		for (NameValuePair pair : myList) {
-			String name = pair.getName();
-			String val = pair.getValue();
+			String name = pair.getName().trim();
+			String val = pair.getValue().trim();
 			// Regex: parameter name followed by 1 or more digits, starting with 1-9 only
 			if (name.matches("^" + myParam + "[1-9]\\d*$")) {
 				int index = Integer.parseInt(name.replace(myParam, ""));
