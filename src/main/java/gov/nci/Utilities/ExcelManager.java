@@ -49,8 +49,8 @@ public class ExcelManager {
 	}
 
 	/*
-	 * This method returns the data from a cell by providing the Sheet name,
-	 * Column name and Row number.
+	 * This method returns the data from a cell by providing the Sheet name, Column
+	 * name and Row number.
 	 */
 
 	@SuppressWarnings("deprecation")
@@ -110,6 +110,24 @@ public class ExcelManager {
 
 			e.printStackTrace();
 			return "row " + rowNum + " or column " + colName + " does not exist in xls";
+		}
+	}
+
+	/**
+	 * Get an integer from a number string in the spreadsheet.
+	 * 
+	 * @param sheetName
+	 * @param colName
+	 * @param rowNum
+	 * @return
+	 */
+	public int getCellIntegerData(String sheetName, String colName, int rowNum) {
+		String cellData = getCellData(sheetName, colName, rowNum);
+		try {
+			String myInt = cellData.split("[.]")[0];
+			return Integer.parseInt(myInt);
+		} catch (NumberFormatException e) {
+			return -1;
 		}
 	}
 
