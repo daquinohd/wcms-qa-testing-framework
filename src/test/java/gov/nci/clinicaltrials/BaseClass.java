@@ -94,7 +94,7 @@ public class BaseClass {
 	// If a method failed log the result and take a screenshot of the page
 	// -------------------------------------------------------------------
 	@AfterMethod(alwaysRun = true)
-	public void tearDown(ITestResult result) {
+	public void tearDown(ITestResult result) throws InterruptedException {
 		if (result.getStatus() == ITestResult.FAILURE) {
 			String screenshotPath = ScreenShot.captureScreenshot(driver, result.getName());
 			String image = logger.addScreenCapture(screenshotPath);
@@ -105,6 +105,8 @@ public class BaseClass {
 		} else {
 			logger.log(LogStatus.PASS, "Passed => " + result.getName());
 		}
+		// Thread.sleep(20);
+		Thread.sleep(2000);
 		report.flush();
 	}
 

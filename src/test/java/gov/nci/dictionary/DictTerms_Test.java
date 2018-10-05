@@ -228,8 +228,8 @@ public class DictTerms_Test extends DictBaseClass {
 
 		try {
 			dict = new DictObjectBase(driver);
-			Integer numDefs = NumberOfDefinitions("dict", language);
-			boolean displayOK = dict.AZListSelect(driver, cssSelector, language, numDefs);
+			// Integer numDefs = NumberOfDefinitions("dict", language);
+			boolean displayOK = dict.AZListSelect(driver, cssSelector, language);
 			Assert.assertTrue(displayOK,
 			                  "*** Error: Dictionary List for specified letter incorrect ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -335,11 +335,9 @@ public class DictTerms_Test extends DictBaseClass {
 				ExpectedConditions.urlContains("/publications/dictionaries/cancer-terms/search")
 			);
 
-			WebElement searchHeader = dict.SearchResultHeader("div.dictionary-search-results-header");
-
-			String searchHeaderExpected = "5 results found for: beva";
-			String pageNotFound = "List of terms containing " + term + " not found";
-			Assert.assertEquals(searchHeader.getText(), searchHeaderExpected, pageNotFound);
+			Boolean searchHeader = dict.SearchResultHeaderVisible("div.dictionary-search-results-header");
+			String searchHeaderExpected = "No Search Result Header Found";
+			Assert.assertEquals(searchHeader, searchHeaderExpected);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");

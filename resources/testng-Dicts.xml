@@ -9,20 +9,20 @@
   <parameter name="browser" value="Chrome" />
   -->
   <classes>
-  <!--
-  -->
-    <class name="gov.nci.dictionary.DictTerms_Test" />
     <class name="gov.nci.dictionary.DictDrugs_Test" />
-    <class name="gov.nci.dictionary.DictTermsES_Test" />
     <class name="gov.nci.dictionary.DictGenetics_Test" />
+  <!--
+    <class name="gov.nci.dictionary.DictTerms_Test" />
+    <class name="gov.nci.dictionary.DictTermsES_Test" />
+  -->
   </classes>
   </test>
   <!--
   <test name="NCI - Testing AZ-List" preserve-order="true">
     <classes>
-      <class name="gov.nci.dictionary.DictTerms_Test">
+      <class name="gov.nci.dictionary.DictGenetics_Test">
         <methods>
-          <include name="AZListSelect"/>
+          <include name="SearchAndClick"/>
         </methods>
       </class>
     </classes>

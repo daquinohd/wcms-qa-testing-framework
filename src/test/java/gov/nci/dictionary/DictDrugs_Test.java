@@ -26,9 +26,12 @@ public class DictDrugs_Test extends DictBaseClass {
 	public void TitleVisible(String url) {
 		DictObjectBase dict;
 		String dictTitle = "NCI Drug Dictionary";
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
 		logger.log(LogStatus.INFO, "Testing dictionary title: " + dictTitle);
 
 		driver.get(url);
@@ -37,9 +40,9 @@ public class DictDrugs_Test extends DictBaseClass {
 			dict = new DictObjectBase(driver);
 			boolean titleVisible = dict.TitleVisible();
 			WebElement titleText = dict.getTitleText();
+			String titleNotVisible = "*** Error: Drug Distionary Header Not Found ***";
 
-			Assert.assertTrue(titleVisible,
-							  "*** Error: Drug Distionary Header Not Found ***");
+			Assert.assertTrue(titleVisible, titleNotVisible);
 			Assert.assertTrue(titleText.getText().contains(dictTitle),
 							               "*** Error: Title text mismatch ***");
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -55,16 +58,20 @@ public class DictDrugs_Test extends DictBaseClass {
 		DictObjectBase dict;
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing radio button visible ");
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 			boolean radioVisible = dict.RadioBtnVisible();
-			Assert.assertTrue(radioVisible,
-			                  "*** Error: Drug Dictionary Radio Button Not Found ***");
+			String radioNotVisible =  "*** Error: Drug Dictionary Radio Button Not Found ***";
+			Assert.assertTrue(radioVisible, radioNotVisible);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -78,16 +85,21 @@ public class DictDrugs_Test extends DictBaseClass {
 		DictObjectBase dict;
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing radio button StartsWith selected");
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 			boolean radioStartsWith = dict.RadioDefault();
-			Assert.assertTrue(radioStartsWith,
-			                  "*** Error: Drug Dictionary Radio Button Default Not Found ***");
+			String radioError = "*** Error: Drug Dictionary Radio Button Default Not Found ***";
+
+			Assert.assertTrue(radioStartsWith, radioError);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -102,16 +114,21 @@ public class DictDrugs_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search box visible");
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 			boolean radioVisible = dict.FieldVisible(cssSelector);
-			Assert.assertTrue(radioVisible,
-			                  "*** Error: Drug Dictionary Input Field Not Found ***");
+			String radioError = "*** Error: Genetics Dictionary Input Field Not Found ***";
+
+			Assert.assertTrue(radioVisible, radioError);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -126,16 +143,21 @@ public class DictDrugs_Test extends DictBaseClass {
 		String cssSelector = "input.button";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing Search button visible");
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 			boolean searchBtnVisible = dict.FieldVisible(cssSelector);
-			Assert.assertTrue(searchBtnVisible,
-			                  "*** Error: Drug Dictionary SearchButton Not Found ***");
+			String searchBtnNotVisible = "*** Error: Genetics Dictionary SearchButton Not Found ***";
+
+			Assert.assertTrue(searchBtnVisible, searchBtnNotVisible);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -150,16 +172,21 @@ public class DictDrugs_Test extends DictBaseClass {
 		String cssSelector = "div.az-list";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing A-Z list visible");
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 			boolean radioVisible = dict.FieldVisible(cssSelector);
-			Assert.assertTrue(radioVisible,
-			                  "*** Error: Drug Dictionary A-Z List Not Found ***");
+			String radioNotVisible = "*** Error: Genetics Dictionary A-Z List Not Found ***";
+
+			Assert.assertTrue(radioVisible, radioNotVisible);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -169,24 +196,66 @@ public class DictDrugs_Test extends DictBaseClass {
 	// Confirming a letter from the  A-Z list can be selected and shows results
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
-	public void AZListSelect(String url) {
+	public void AZListSelectLetter(String url) {
 		DictObjectBase dict;
 		String cssSelector = "div.az-list ul li a";
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing A-Z list letter B selected");
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
-			Integer numDefs = NumberOfDefinitions("drug", language);
+			// Integer numDefs = NumberOfDefinitions("drug", language);
 			// Entries for the drug dictionary are displayed at 200 per page
-			numDefs = Math.min(numDefs, 200);
-			boolean displayOK = dict.AZListSelect(driver, cssSelector, language, numDefs);
-			Assert.assertTrue(displayOK,
-			                  "*** Error: Drug List for specified letter incorrect ***");
+			// numDefs = Math.min(numDefs, 200);
+			boolean displayOK = dict.AZListSelect(driver, cssSelector, language);
+			String displayNotOk = "*** Error: Drug List for specified letter incorrect ***";
+
+			Assert.assertTrue(displayOK, displayNotOk);
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Confirming a letter from the  A-Z list can be selected and shows results
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void AZListLetterUrl(String url) {
+		DictObjectBase dict;
+		String cssSelector = "div.az-list ul li a";
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing A-Z list URL when letter B selected");
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+
+			boolean displayOK = dict.AZListSelect(driver, cssSelector, language);
+
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug?expand=")
+			);
+			String pageNotFound = "*** Error: Drug List for specified letter incorrect ***";
+			String displayNotOk = "*** Error: Can't select A-Z List letter ***";
+
+			Assert.assertTrue(pageFound, pageNotFound);
+			Assert.assertTrue(displayOK, displayNotOk);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -198,28 +267,110 @@ public class DictDrugs_Test extends DictBaseClass {
 	 * -------------------------------------------------------------------------
 	 */
 	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
-	public void KeyWordStartsWith(String url) throws InterruptedException {
+	public void SubmitSearchStartsWith(String url) throws InterruptedException {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String drug = "bevacizumab-IRDye";
-		String drug4 = drug.substring(0, 12);
+		String drug = "becatecarin";
+		String drugSubstr = drug.substring(0, 5);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search StartsWith: " + drugSubstr);
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
-			dict.SubmitSearchTerm(cssSelector, drug4);
+			dict.SubmitSearchTerm(cssSelector, drugSubstr);
 
-			WebDriverWait wait = new WebDriverWait(driver, 10);
+			WebDriverWait wait = new WebDriverWait(driver, 5);
 			boolean pageFound = wait.until(
-				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + drug4)
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + drug)
 			);
 
 			String pageNotFound = "Page for drug " + drug + " not found";
+			Assert.assertTrue(pageFound, pageNotFound);
+
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	/*
+	 * Enter specific text ("beva") in search field with options "Starts with"
+	 * selected.  Confirm the URL is a definition page for this term.
+	 * -------------------------------------------------------------------------
+	 */
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SubmitSearchStartsWithMulti(String url) throws InterruptedException {
+		DictObjectBase dict;
+		String cssSelector = "input.dictionary-search-input";
+		String drug = "bevacizumab";
+		String drugSubstr = drug.substring(0, 8);
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search StartsWith: " + drugSubstr);
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+			dict.SubmitSearchTerm(cssSelector, drugSubstr);
+
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/search")
+			);
+
+			String pageNotFound = "Page for drug " + drug + " not found";
+			Assert.assertTrue(pageFound, pageNotFound);
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	/*
+	 * Enter specific text ("beva") in search field with options "Starts with"
+	 * selected.  Click the "Search" button. Confirm the URL is a definition
+	 * page for this term.
+	 * -------------------------------------------------------------------------
+	 */
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SearchButtonStartsWith(String url) throws InterruptedException {
+		DictObjectBase dict;
+		String cssSelector = "input.dictionary-search-input";
+		String term = "becatecarin";
+		String termSubstr = term.substring(0, 4);
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search with button for: " + termSubstr);
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+			dict.SearchTermPressButton(cssSelector, termSubstr);
+
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + term)
+			);
+
+			String pageNotFound = "Page for drug " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
@@ -232,31 +383,155 @@ public class DictDrugs_Test extends DictBaseClass {
 	// selected.  Confirm the URL is a search page.
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
-	public void KeyWordContains(String url) throws InterruptedException {
+	public void SearchEnterContains(String url) throws InterruptedException {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String term = "bevacizumab";
-		String term4 = term.substring(0, 4);
+		String drug = "lenapenem";
+		String drugSubstr = drug.substring(2, 8);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing contains: " + term4);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search with enter contains: " + drugSubstr);
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 		    dict.selectContains();
-			dict.SubmitSearchTerm(cssSelector, term4);
+			dict.SubmitSearchTerm(cssSelector, drugSubstr);
+
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + drug)
+			);
+
+			String pageNotFound = "Page for term " + drug + " not found";
+			Assert.assertTrue(pageFound, pageNotFound);
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	//
+	// Enter specific text ("beva") in search field with options "Contains"
+	// selected.  Confirm the URL is a search page.
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SearchEnterContainsMulti(String url) throws InterruptedException {
+		DictObjectBase dict;
+		String cssSelector = "input.dictionary-search-input";
+		String drug = "bevacizumab";
+		String drugSubstr = drug.substring(2, 7);
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search with enter contains: " + drugSubstr);
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+		    dict.selectContains();
+			dict.SubmitSearchTerm(cssSelector, drugSubstr);
 
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			boolean pageFound = wait.until(
 				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/search")
 			);
 
+			String pageNotFound = "Page for term " + drug + " not found";
+			Assert.assertTrue(pageFound, pageNotFound);
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
+	/*
+	 * Enter specific text ("pedig") in search field with options "Starts with"
+	 * selected.  Click the "Search" button. Confirm the URL is a definition
+	 * page for this term.
+	 * -------------------------------------------------------------------------
+	 */
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SearchButtonContains(String url) throws InterruptedException {
+		DictObjectBase dict;
+		String cssSelector = "input.dictionary-search-input";
+		String term = "lenapenem";
+		String termSubstr = term.substring(2, 8);
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing search with button click: " + url);
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+			dict.selectContains();
+			dict.SearchTermPressButton(cssSelector, termSubstr);
+
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + term)
+			);
+
 			String pageNotFound = "Page for term " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
 
+
+	//
+	// Enter specific text ("beva") in search field with options "Contains"
+	// selected.  Confirm the URL is a search page.
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SearchContainsSelect(String url) throws InterruptedException {
+		DictObjectBase dict;
+		String cssSelector = "input.dictionary-search-input";
+		String drug = "bevacizumab";
+		String drugSubstr = drug.substring(0, 4);
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing select a drug from search result");
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+			// Select the Contains radio button
+			dict.selectContains();
+			// Enter drug name in search field and submit
+			dict.SubmitSearchTerm(cssSelector, drugSubstr);
+			// Click a link on the results page
+			dict.ClickElement("dt dfn a", drugSubstr, driver);
+
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + drug)
+			);
+
+			String pageNotFound = "Page for term " + drug + " not found";
+			Assert.assertTrue(pageFound, pageNotFound);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -267,34 +542,40 @@ public class DictDrugs_Test extends DictBaseClass {
 	// selected.  Confirm header of the results page displayes: "5 results found for: beva".
 	// -------------------------------------------------------------------------------------
 	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
-	public void KeyWordContainsReturnHeader(String url) throws InterruptedException {
+	public void SearchReturnsHeader(String url) throws InterruptedException {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
 		String term = "bevacizumab";
-		String term4 = term.substring(0, 4);
+		String termSubstr = term.substring(2, 6);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing contains result header: " + url);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing contains result header: " + termSubstr);
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
 		    dict.selectContains();
-			dict.SubmitSearchTerm(cssSelector, term4);
+			dict.SubmitSearchTerm(cssSelector, termSubstr);
 
-			WebDriverWait wait = new WebDriverWait(driver, 10);
+			WebDriverWait wait = new WebDriverWait(driver, 5);
 			boolean searchResult = wait.until(
-				// ExpectedConditions.textToBePresentInElement(searchField, "6 results found for: beva")
+				// ExpectedConditions.textToBePresentInElement(searchField, "results found for: beva");
 				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/search")
 			);
+			Assert.assertTrue(searchResult, "URL for search page not found");
 
-			WebElement searchHeader = dict.SearchResultHeader("div.dictionary-search-results-header");
-
-			String searchHeaderExpected = "6 results found for: beva";
-			String pageNotFound = "List of terms containing " + term + " not found";
-			Assert.assertEquals(searchHeader.getText(), searchHeaderExpected, pageNotFound);
+			// The results page returns a header "12 results found for: term-string"
+			// This header is in a div with class "dictionary-search-results-header"
+			// It's a success when we find this class.
+			Boolean searchHeader = dict.SearchResultHeaderVisible("div.dictionary-search-results-header");
+			String searchHeaderExpected = "No Search Result Header Found";
+			Assert.assertTrue(searchHeader, searchHeaderExpected);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
@@ -306,33 +587,44 @@ public class DictDrugs_Test extends DictBaseClass {
 	// selected.  Confirm the number of results displayed is 5.
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
-	public void KeyWordContainsReturnList(String url) throws InterruptedException {
+	public void SearchReturnsList(String url) throws InterruptedException {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
 		String term = "bevacizumab";
-		String term4 = term.substring(0, 4);
+		String termSubstr = term.substring(0, 4);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-		System.out.println("    " + url);
-		logger.log(LogStatus.INFO, "Testing contains result list: " + term4);
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing contains result list: " + termSubstr);
 
 		driver.get(url);
 
 		try {
 			dict = new DictObjectBase(driver);
+			// Selecting "Contains" radio button
 			dict.selectContains();
-			dict.SubmitSearchTerm(cssSelector, term4);
+			// Submit search term and enter return
+			dict.SubmitSearchTerm(cssSelector, termSubstr);
 
-			WebDriverWait wait = new WebDriverWait(driver, 10);
-			boolean searchResult = wait.until(
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			boolean pageFound = wait.until(
 				// ExpectedConditions.textToBePresentInElement(searchField, "5 results found for: beva")
 				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/search")
 			);
+			Assert.assertTrue(pageFound, "URL for search page not found");
 
-			List<WebElement> resultList = dict.SearchResultList("dt > dfn");
+			List<WebElement> resultList = dict.SearchResultList("dt dfn");
+			boolean searchResults = false;
+			if (resultList.size() > 0) {
+				searchResults = true;
+			}
 
-			String pageNotFound = "List of drugs containing " + term + " not found";
-			Assert.assertEquals(resultList.size(), 6, pageNotFound);
+			String pageNotFound = "List of drugs containing " + termSubstr + " not found";
+			Assert.assertTrue(searchResults, pageNotFound);
 
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
@@ -340,13 +632,55 @@ public class DictDrugs_Test extends DictBaseClass {
 	}
 
 
+	//
+	// Enter specific text ("beva") in search field with options "Contains"
+	// selected.  Confirm header of the results page displayes: "5 results found for: beva".
+	// -------------------------------------------------------------------------------------
+	@Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+	public void SearchAndClick(String url) throws InterruptedException {
+		DictObjectBase dict;
+		String cssSelector = "input.dictionary-search-input";
+		String term = "alectinib";
+		String termSubstr = term.substring(1, 7);
+
+		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+		if (! blair) {
+			System.out.println("    " + url);
+		}
+
+		logger.log(LogStatus.INFO, "Testing to click member of list: " + termSubstr);
+
+		driver.get(url);
+
+		try {
+			dict = new DictObjectBase(driver);
+			// Select the Contains radio button
+			dict.selectContains();
+			// Enter drug name in search field and submit
+			dict.SubmitSearchTerm(cssSelector, termSubstr);
+			// Click a link on the results page
+			dict.ClickElement("dt dfn a", term, driver);
+
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			boolean pageFound = wait.until(
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + term)
+			);
+
+			String pageNotFound = "Page for term " + term + " not found";
+			Assert.assertTrue(pageFound, pageNotFound);
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			Assert.fail("*** Error loading page in " + curMethod + " ***");
+		}
+	}
+
 	/*  ***************************** Data Provider *********************************************** */
 
 	// DataProvider to read the Excel spreadsheet with data containing URLs to be checked
 	// Using worksheet indicating URLs with Page Options that are visible.
 	// ----------------------------------------------------------------------------------
 	@DataProvider(name = "DrugDictionary")
-	public Iterator<Object[]> loadAZList() {
+	public Iterator<Object[]> getDictUrl() {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
         String url = AddHostname("/publications/dictionaries/cancer-drug");
