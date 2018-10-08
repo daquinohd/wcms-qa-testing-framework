@@ -58,4 +58,18 @@ public class SitewideSearchForm {
 		btn_sw_search.click();
 	}
 	
+	/** 
+	 * Fill out search form and click submit.
+	 * @param searchText
+	 */
+	public void doSitewideSearch(String searchText) {
+		try {
+			setSitewideSearchKeyword(searchText);
+			clickSearchButton();
+		} catch (Exception ex) {
+			System.out.println("Error submitting sitewide search");
+		}
+	}
+	
+	
 }

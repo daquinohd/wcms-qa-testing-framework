@@ -16,6 +16,7 @@ import gov.nci.framework.PageObjectBase;
 public class DictObjectBase extends PageObjectBase {
     static String tier = "DEV";
 
+
     public DictObjectBase (WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
         super(browser);
         PageFactory.initElements(browser, this);
@@ -237,5 +238,15 @@ public class DictObjectBase extends PageObjectBase {
             List<WebElement> searchType = getBrowser().findElements(By.cssSelector("#lblContains"));
             searchType.get(0).click();
     }
+
+	public void clickSearchResult(String selector, int index) {
+		WebElement result = SearchResultList(selector).get(index);
+		ScrollUtil.scrollIntoview(getBrowser(), result);
+		result.click();
+	}
+
+	public void clickSearchResult(String selector) {
+		clickSearchResult(selector, 0);
+	}
 
 }

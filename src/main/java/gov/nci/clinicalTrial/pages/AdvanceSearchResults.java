@@ -11,11 +11,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import gov.nci.Utilities.ScrollUtil;
+import gov.nci.framework.ElementChange;
+
 public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 	public static final String SEARCH_RESULT_PAGE_TITLE = "Clinical Trials Search Results";
 	public static final String BREAD_CRUMB = "Home\nAbout Cancer\nCancer Treatment\nClinical Trials Information\nFind NCI-Supported Clinical Trials";
 	public static final String H1_TITLE = "Clinical Trials Search Results";
-
+	public static final String SEL_START_OVER = ".cts-start-over a";
+	
 	WebDriver driver;
 
 	/*************** Advance Search Page WebElements **********************/
@@ -62,11 +66,21 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 		return box_SearchCriteria;
 	}
 
+	public void clickStartOverNoNav() {
+		ElementChange.removeHref(driver, SEL_START_OVER);
+		lnk_StartOver.click();
+	}
+
+	public void clickStartOver() {
+		lnk_StartOver.click();
+	}
+	
 	public void clickOnSelectAllCheckBox() {
 		cbox_CheckAllTop.click();
 	}
 
 	public void clickPrintButton() {
+		ScrollUtil.scrollIntoview(driver, btn_Print);
 		btn_Print.click();
 	}
 
@@ -84,13 +98,20 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", checkBoxes.get(0));
 		System.out.println("Checkboxes: " + checkBoxes.get(1));
-
 	}
-
+	
 	public List<WebElement> getResultsLinks() {
 		System.out.println("First result link: " + lnk_resultLink.get(0).getText());
 		System.out.println("Number of result links: " + lnk_resultLink.size());
 		return lnk_resultLink;
 	}
 
+	public void clickResultLinkByIndex(int index) {
+		try {
+			lnk_resultLink.get(index).click();
+		} catch (IndexOutOfBoundsException ex) {
+			System.out.println("Invalid arraylist index: " + index);
+		}
+	}
+	
 }

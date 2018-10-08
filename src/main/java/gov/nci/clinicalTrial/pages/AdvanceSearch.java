@@ -232,6 +232,12 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
+	// Set age field without submitting form	
+	public void setAge(int age) {
+		ScrollUtil.scrollIntoview(driver, txt_age);
+		txt_age.sendKeys(String.valueOf(age));
+	}
+	
 	public void getAge(int age) throws InterruptedException {
 		ScrollUtil.scrollIntoview(driver, lbl_side_effects);
 		txt_age.click();
@@ -243,6 +249,12 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		Thread.sleep(200);
 	}
 
+	// Set keyword field without submitting form
+	public void setKeywordPhrase(String keyword) {
+		ScrollUtil.scrollIntoview(driver, txt_keywords);
+		txt_keywords.sendKeys(keyword);
+	}
+	
 	public void getKeywordPhrase(String keyword) throws InterruptedException {
 		ScrollUtil.scrollIntoview(driver, lbl_side_effects);
 		txt_keywords.click();
@@ -254,6 +266,15 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		// Thread.sleep(500);
 	}
 
+	/* Fill out the zipcode field without submitting */
+	public void enterZipCode(String zip) {
+		ScrollUtil.scrollIntoview(driver, lgd_location);
+		rbtn_zipcode.click();
+		txt_zipcode.click();
+		txt_zipcode.clear();
+		txt_zipcode.sendKeys(zip);
+	}
+	
 	public void advSearch_Zipcode(String zip) throws InterruptedException {
 		ScrollUtil.scrollIntoview(driver, lgd_location);
 		rbtn_zipcode.click();
@@ -386,6 +407,12 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 
+	// Set lead organization field without submitting form	
+	public void setLeadOrganization(String leadOrganization) {
+		ScrollUtil.scrollIntoview(driver, box_LeadOrganization);
+		txt_leadOrganization.sendKeys(leadOrganization);
+	}
+	
 	public void getLeadOrganization(String leadOrganization) {
 		txt_leadOrganization.click();
 		txt_leadOrganization.sendKeys(leadOrganization);
@@ -492,4 +519,5 @@ public class AdvanceSearch extends ClinicalTrialPageObjectBase {
 		defaultSearch();
 	}
 
+	
 }
