@@ -28,10 +28,6 @@ public class DictGenetics_Test extends DictBaseClass {
 		String dictTitle = "NCI Dictionary of Genetics Terms";
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-		if (! blair) {
-			System.out.println("    " + url);
-		}
-
 		logger.log(LogStatus.INFO, "Testing dictionary title: " + dictTitle);
 
 		driver.get(url);
@@ -41,10 +37,10 @@ public class DictGenetics_Test extends DictBaseClass {
 			boolean titleVisible = dict.TitleVisible();
 			WebElement titleText = dict.getTitleText();
 			String titleNotVisible = "*** Error: Drug Distionary Header Not Found ***";
+			String wrongTitleText = "*** Error: Title text mismatch ***";
 
 			Assert.assertTrue(titleVisible, titleNotVisible);
-			Assert.assertTrue(titleText.getText().contains(dictTitle),
-							                   "*** Error: Title text mismatch ***");
+			Assert.assertTrue(titleText.getText().contains(dictTitle), wrongTitleText);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -56,14 +52,9 @@ public class DictGenetics_Test extends DictBaseClass {
 	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" }, priority = 1)
 	public void RadioVisible(String url) {
 		DictObjectBase dict;
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-		if (! blair) {
-			System.out.println("    " + url);
-		}
-
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+		logger.log(LogStatus.INFO, "Testing radio selection visible");
 
 		driver.get(url);
 
@@ -83,12 +74,7 @@ public class DictGenetics_Test extends DictBaseClass {
 	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" }, priority = 1)
 	public void RadioStartsWithSelected(String url) {
 		DictObjectBase dict;
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing radio button StartsWith selected");
 
@@ -105,19 +91,13 @@ public class DictGenetics_Test extends DictBaseClass {
 		}
 	}
 
-	//
 	// Confirming the search input field is displayed
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" }, priority = 1)
 	public void InputFieldVisible(String url) {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing search box visible");
 
@@ -141,12 +121,7 @@ public class DictGenetics_Test extends DictBaseClass {
 	public void SearchBtnVisible(String url) {
 		DictObjectBase dict;
 		String cssSelector = "input.button";
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing Search button visible");
 
@@ -170,12 +145,7 @@ public class DictGenetics_Test extends DictBaseClass {
 	public void AZListVisible(String url) {
 		DictObjectBase dict;
 		String cssSelector = "div.az-list";
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing A-Z list visible");
 
@@ -199,12 +169,7 @@ public class DictGenetics_Test extends DictBaseClass {
 	public void AZListSelectLetter(String url) {
 		DictObjectBase dict;
 		String cssSelector = "div.az-list ul li a";
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing A-Z list letter B selected");
 
@@ -230,12 +195,7 @@ public class DictGenetics_Test extends DictBaseClass {
 	public void AZListLetterUrl(String url) {
 		DictObjectBase dict;
 		String cssSelector = "div.az-list ul li a";
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing A-Z list URL when letter B selected");
 
@@ -272,12 +232,7 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "pedigree";
 		String termSubstr = term.substring(0, 4);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing search StartsWith: " + termSubstr);
 
@@ -294,7 +249,6 @@ public class DictGenetics_Test extends DictBaseClass {
 
 			String pageNotFound = "Page for term " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
-
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -311,14 +265,9 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "familial";
 		String termSubstr = term.substring(0, 4);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-		if (! blair) {
-			System.out.println("    " + url);
-		}
-
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+		logger.log(LogStatus.INFO, "Testing StartsWith returning multiple results");
 
 		driver.get(url);
 
@@ -350,12 +299,7 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "pedigree";
 		String termSubstr = term.substring(0, 4);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing search with button for: " + termSubstr);
 
@@ -372,7 +316,6 @@ public class DictGenetics_Test extends DictBaseClass {
 
 			String pageNotFound = "Page for term " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
-
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -386,14 +329,9 @@ public class DictGenetics_Test extends DictBaseClass {
 	public void SearchEnterContains(String url) throws InterruptedException {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String term = "pedigree";  // pedigree
+		String term = "pedigree";
 		String termSubstr = term.substring(1, 5);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing search with enter contains: " + termSubstr);
 
@@ -427,14 +365,9 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "phenotype";  // pedigree
 		String termSubstr = term.substring(3, 6);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-		if (! blair) {
-			System.out.println("    " + url);
-		}
-
-		logger.log(LogStatus.INFO, "Testing contains: " + termSubstr);
+		logger.log(LogStatus.INFO, "Testing contains: " + termSubstr + " with multiple results");
 
 		driver.get(url);
 
@@ -468,14 +401,9 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "pedigree";
 		String termSubstr = term.substring(1, 5);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-		if (! blair) {
-			System.out.println("    " + url);
-		}
-
-		logger.log(LogStatus.INFO, "Testing url: " + url);
+		logger.log(LogStatus.INFO, "Testing button with contains: " + termSubstr);
 
 		driver.get(url);
 
@@ -491,7 +419,6 @@ public class DictGenetics_Test extends DictBaseClass {
 
 			String pageNotFound = "Page for term " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
-
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -507,12 +434,7 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "epigenetics";
 		String termSubstr = term.substring(0, 6);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing contains result header: " + termSubstr);
 
@@ -525,7 +447,6 @@ public class DictGenetics_Test extends DictBaseClass {
 
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			boolean searchResult = wait.until(
-				// ExpectedConditions.textToBePresentInElement(searchField, "5 results found for: beva")
 				ExpectedConditions.urlContains("/publications/dictionaries/genetics-dictionary/search")
 			);
 			Assert.assertTrue(searchResult, "URL for search page not found");
@@ -533,7 +454,6 @@ public class DictGenetics_Test extends DictBaseClass {
 			Boolean searchHeader = dict.SearchResultHeaderVisible("div.dictionary-search-results-header");
 			String searchHeaderExpected = "No Search Result Header Found";
 			Assert.assertTrue(searchHeader, searchHeaderExpected);
-
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -550,14 +470,9 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "epigenetics";
 		String termSubstr = term.substring(2, 6);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-		if (! blair) {
-			System.out.println("    " + url);
-		}
-
-		logger.log(LogStatus.INFO, "Testing contains result header: " + url);
+		logger.log(LogStatus.INFO, "Testing contains result list: " + termSubstr);
 
 		driver.get(url);
 
@@ -581,7 +496,6 @@ public class DictGenetics_Test extends DictBaseClass {
 			}
 			String pageNotFound = "List of terms containing " + termSubstr + " not found";
 			Assert.assertTrue(searchResults, pageNotFound);
-
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}
@@ -597,12 +511,7 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "epigenetics";
 		String termSubstr = term.substring(2, 6);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing to click member of list: " + termSubstr);
 
@@ -640,12 +549,7 @@ public class DictGenetics_Test extends DictBaseClass {
 		String cssSelector = "input.dictionary-search-input";
 		String term = "polymerase";
 		String termSubstr = term.substring(2, 6);
-
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-		if (! blair) {
-			System.out.println("    " + url);
-		}
 
 		logger.log(LogStatus.INFO, "Testing contains result list: " + termSubstr);
 
@@ -675,7 +579,6 @@ public class DictGenetics_Test extends DictBaseClass {
 
 			String pageNotFound = "Page for " + term + " not found";
 			Assert.assertTrue(moreInformation, pageNotFound);
-
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
 		}

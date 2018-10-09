@@ -503,8 +503,8 @@ public class DictDrugs_Test extends DictBaseClass {
 	public void SearchContainsSelect(String url) throws InterruptedException {
 		DictObjectBase dict;
 		String cssSelector = "input.dictionary-search-input";
-		String drug = "bevacizumab";
-		String drugSubstr = drug.substring(0, 4);
+		String term = "bevacizumab";
+		String termSubstr = term.substring(1, 5);
 
 		String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
@@ -521,16 +521,16 @@ public class DictDrugs_Test extends DictBaseClass {
 			// Select the Contains radio button
 			dict.selectContains();
 			// Enter drug name in search field and submit
-			dict.SubmitSearchTerm(cssSelector, drugSubstr);
+			dict.SubmitSearchTerm(cssSelector, termSubstr);
 			// Click a link on the results page
-			dict.ClickElement("dt dfn a", drugSubstr, driver);
+			dict.ClickElement("dt dfn a", term, driver);
 
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			boolean pageFound = wait.until(
-				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + drug)
+				ExpectedConditions.urlContains("/publications/dictionaries/cancer-drug/def/" + term)
 			);
 
-			String pageNotFound = "Page for term " + drug + " not found";
+			String pageNotFound = "Page for term " + term + " not found";
 			Assert.assertTrue(pageFound, pageNotFound);
 		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("*** Error loading page in " + curMethod + " ***");
