@@ -46,7 +46,7 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 	/// Test CTS Trial Detail View page load event
 	@Test(dataProvider = "TrialViewLoad", groups = { "Analytics" })
 	public void testCTSTrialDetailViewPageLoad(String params, String type) {
-		System.out.println("Test CTS Trial Detail View page load event (" + type + "): ");
+		System.out.println("Trial search type: " + type);
 		setupTestMethod(params);
 
 		try {

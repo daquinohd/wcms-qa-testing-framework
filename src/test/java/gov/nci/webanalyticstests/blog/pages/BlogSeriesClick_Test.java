@@ -31,7 +31,6 @@ public class BlogSeriesClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Title Link Click (English)
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriestTitleLinkClickEn() {
-		System.out.println("Test Blog Series Title Link Click (English):");
 		setupTestMethod(CANCER_CURRENTS_EN);
 
 		try {
@@ -48,7 +47,6 @@ public class BlogSeriesClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Title Link Click (Spanish)
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriestTitleLinkClickEs() {
-		System.out.println("Test Blog Series Title Link Click (Spanish):");
 		setupTestMethod(CANCER_CURRENTS_ES);
 
 		try {

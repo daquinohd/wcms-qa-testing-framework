@@ -1,6 +1,5 @@
 package gov.nci.webanalyticstests.blog.common;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -40,7 +39,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Rail Featured click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesRailFeaturedClick() {
-		System.out.println("Test Blog Series Rail Featured click: ");
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
@@ -52,7 +50,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Assert.assertTrue(beacon.hasEvent(54), "Missing event54");
 			Assert.assertEquals(beacon.props.get(50), featuredText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_FeaturedPosts:1");
-			logger.log(LogStatus.PASS, "Test Blog Series Rail Featured click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -62,7 +59,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Rail Featured click
 	@Test(groups = { "Analytics" })
 	public void testBlogPostRailFeaturedClick() {
-		System.out.println("Test Blog Post Rail Featured click:");
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
@@ -74,7 +70,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Assert.assertTrue(beacon.hasEvent(54), "Missing event54");
 			Assert.assertEquals(beacon.props.get(50), featuredText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_FeaturedPosts:1");
-			logger.log(LogStatus.PASS, "Test Blog Post Rail Featured click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -84,7 +79,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Rail Category click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesRailCategoryClick() {
-		System.out.println("Test Blog Series Rail Category click:");
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
@@ -96,7 +90,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), catText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_Category:2");
-			logger.log(LogStatus.PASS, "Test Blog Series Rail Category click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -106,7 +99,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Rail Category click
 	@Test(groups = { "Analytics" })
 	public void testBlogPostRailCategoryClick() {
-		System.out.println("Test Blog Post Rail Category click:");
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
@@ -118,7 +110,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), catText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_Category:2");
-			logger.log(LogStatus.PASS, "Test Blog Post Rail Category click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -128,7 +119,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Rail Archive Expand click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesRailArchiveExpand() {
-		System.out.println("Test Blog Series Rail Archive Expand click:");
 		setupTestMethod(BLOG_SERIES_ES);
 
 		try {
@@ -137,7 +127,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Series_Expand:Archive");
-			logger.log(LogStatus.PASS, "Test Blog Series Rail Archive Expand click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -147,7 +136,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Rail Archive expand click
 	@Test(groups = { "Analytics" })
 	public void testBlogPostRailArchiveExpand() {
-		System.out.println("Test Blog Post Rail Archive expand click: ");
 		setupTestMethod(BLOG_POST_ES);
 
 		try {
@@ -156,7 +144,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Post_Expand:Archive");
-			logger.log(LogStatus.PASS, "Test Blog Post Rail Archive expand click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -166,7 +153,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Rail month click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesRailMonthClick() {
-		System.out.println("Test Blog Series Rail month click:");
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
@@ -178,7 +164,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			doCommonClassAssertions(beacon, "BlogArchiveDateClick");
 			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), "2017:5");
-			logger.log(LogStatus.PASS, "Test Blog Series Rail month click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -188,7 +173,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Rail Month click
 	@Test(groups = { "Analytics" })
 	public void testBlogPostRailMonthClick() {
-		System.out.println("Test Blog Post Rail Month click:");
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
@@ -200,7 +184,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			doCommonClassAssertions(beacon, "BlogArchiveDateClick");
 			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), "2017:5");
-			logger.log(LogStatus.PASS, "Test Blog Post Rail Month click passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -210,7 +193,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Rail Archive collapse
 	@Test(groups = { "Analytics" })
 	public void testBlogPostRailArchiveCollapse() {
-		System.out.println("Test Blog Post Rail Archive collapse:");
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
@@ -220,7 +202,6 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_Collapse:Archive");
-			logger.log(LogStatus.PASS, "Test Blog Post Rail Archive collapse passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);

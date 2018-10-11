@@ -45,8 +45,8 @@ public class DictSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Term Search "Starts With" click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
-	public void testTermSearchStartsWithClick(String path, String term, String searchType, String linkName) {
-		System.out.println("Test Term Search starts With \"" + term + "\" click event:");
+	public void testTermSearchStartsWithClick(String path, String term, String searchType, String linkName) {		
+		System.out.println("Search term: " + term + ", Search type: " + searchType);
 		setupTestMethod(path);
 
 		try {
@@ -69,7 +69,7 @@ public class DictSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Term Search "Contains" click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
 	public void testTermSearchContainsClick(String path, String term, String searchType, String linkName) {
-		System.out.println("Test Term Search contains \"" + term + "\" click event:");
+		System.out.println("Search term: " + term + ", Search type: " + searchType);
 		setupTestMethod(path);
 
 		try {
@@ -93,7 +93,7 @@ public class DictSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Ranked Result click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
 	public void testTermRankedResultsClick(String path, String term, String searchType, String linkName) {
-		System.out.println("Test Ranked Result click event (" + term + "):");
+		System.out.println("Search term: " + term + ", Search type: " + searchType);
 		setupTestMethod(path);
 
 		try {

@@ -24,7 +24,7 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 	// Test Sitewide Search Results page (English) load event
 	@Test(groups = { "Analytics" })
 	public void testSwsResultsPageEn() {
-		System.out.println("Test Sitewide Search Results page (English) load event for'" + SEARCH_TERM + "':");
+		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome());
 
 		try {
@@ -46,7 +46,7 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 	// Test Sitewide Search Results page (Spanish) load event
 	@Test(groups = { "Analytics" })
 	public void testSwsResultsPageEs() {
-		System.out.println("Test Sitewide Search Results page (Spanish) load event for'" + SEARCH_TERM + "':");
+		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.getPageURL("SpanishHome"));
 
 		try {
@@ -69,7 +69,6 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 	// Test Sitewide Search Results page load event - no results
 	@Test(groups = { "Analytics" })
 	public void testSwsResultsPageNoResults() {
-		System.out.println("Test Sitewide Search Results page load event - no results:");
 		driver.get(config.goHome() + RESULTS_PATH_EN);
 
 		try {

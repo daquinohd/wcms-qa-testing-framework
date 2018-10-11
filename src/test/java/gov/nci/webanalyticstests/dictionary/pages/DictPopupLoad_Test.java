@@ -2,7 +2,6 @@ package gov.nci.webanalyticstests.dictionary.pages;
 
 import java.util.Iterator;
 
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
@@ -15,21 +14,13 @@ public class DictPopupLoad_Test extends DictionaryLoadBase {
 	private final String TESTDATA_SHEET_NAME = "DictionaryPopup";
 
 	private AnalyticsMetaData analyticsMetaData;
-	private String testDataFilePath;
-
-	// ==================== Setup methods ==================== //
-
-	@BeforeClass(groups = { "Analytics" })
-	private void setupClass() {
-		testDataFilePath = config.getProperty("AnalyticsDictData");
-	}
 
 	// ==================== Test methods ==================== //
 
 	/// Test Dictionary Popup Page load event
 	@Test(dataProvider = "DictionaryPopupLoad", groups = { "Analytics" })
 	public void testDictionaryPopupLoad(String path, String contentType) {
-		System.out.println("Test Dictionary Popup Page load event:");
+		System.out.println("Path: " + path + ",  Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

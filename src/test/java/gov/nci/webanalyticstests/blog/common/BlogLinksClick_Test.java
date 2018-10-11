@@ -39,13 +39,12 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Subscribe click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesSubscribeClick() {
-		System.out.println("Test Blog Series Subscribe click:");
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
 			blogLinks.clickSubscribeNoNav();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogSubscribeClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_Subscribe");
 		} catch (Exception e) {
@@ -55,15 +54,14 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Blog Post Subscribe click
-	@Test(groups = { "Analytics" }, priority = 10)
+	@Test(groups = { "Analytics" })
 	public void testBlogPostSubscribeClick() {
-		System.out.println("Test Blog Post Subscribe click: ");
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
 			blogLinks.clickSubscribeNoNav();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogSubscribeClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_Subscribe");
 		} catch (Exception e) {
@@ -75,13 +73,12 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Newer click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesNewerClick() {
-		System.out.println("Test Blog Series Newer click:");
 		setupTestMethod(BLOG_SERIES_ES + "?page=2");
 
 		try {
 			blogLinks.clickBlogCommon(".blog-pager a.newer");
+			
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Series_Newer");
 		} catch (Exception e) {
@@ -93,13 +90,12 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Series Older click
 	@Test(groups = { "Analytics" })
 	public void testBlogSeriesOlderClick() {
-		System.out.println("Test Blog Series Older click:");
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
 			blogLinks.clickBlogCommon(".blog-pager a.older");
+			
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_Older");
 		} catch (Exception e) {
@@ -111,13 +107,12 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Newer click
 	@Test(groups = { "Analytics" })
 	public void testBlogPostNewerClick() {
-		System.out.println("Test Blog Post Newer click:");
 		setupTestMethod(BLOG_POST_ES);
 
 		try {
 			blogLinks.clickNewerPost();
+			
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Post_Newer");
 		} catch (Exception e) {
@@ -129,13 +124,12 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	/// Test Blog Post Older click
 	@Test(groups = { "Analytics" })
 	public void testBlogPostOlderClick() {
-		System.out.println("Test Blog Post Older click:");
 		setupTestMethod(BLOG_POST_ES);
 
 		try {
 			blogLinks.clickOlderPost();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Post_Older");
 		} catch (Exception e) {

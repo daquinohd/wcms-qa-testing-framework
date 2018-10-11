@@ -43,7 +43,7 @@ public class PdqCisClick_Test extends AnalyticsTestClickBase {
 	// Test Right Nav section click
 	@Test(groups = { "Analytics" }, dataProvider = "RightNavData")
 	public void testRightNavClick(String path, String linkName) {
-		System.out.println("Test Right Nav current section click (" + linkName + "):");
+		System.out.println("Link name: " + linkName);
 		setupTestMethod(path);
 
 		try {
@@ -67,7 +67,7 @@ public class PdqCisClick_Test extends AnalyticsTestClickBase {
 	// Test Toggle Link details click
 	@Test(groups = { "Analytics" }, dataProvider = "ToggleData")
 	public void testToggleLinkDetail(String path, String linkName) {
-		System.out.println("Test Toggle Link details click (" + linkName + "):");
+		System.out.println("Link name: " + linkName);
 		setupTestMethod(path);
 
 		try {

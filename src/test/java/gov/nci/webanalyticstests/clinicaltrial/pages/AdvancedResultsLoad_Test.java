@@ -47,7 +47,7 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 	@Test(dataProvider = "AdvancedResultsLoadData", groups = { "Analytics" })
 	public void testCtsAdvancedResultsPageLoad(String params, String searchType, String fieldsUsed, String cancerInfo,
 			String location, String treatment, String custom) {
-		System.out.println("Test CTS Advanced Results page load event (" + searchType + "): ");
+		System.out.println("Fields used: " + fieldsUsed);
 		setupTestMethod(params);
 
 		try {

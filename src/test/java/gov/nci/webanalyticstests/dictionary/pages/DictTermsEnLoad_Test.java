@@ -2,7 +2,6 @@ package gov.nci.webanalyticstests.dictionary.pages;
 
 import java.util.Iterator;
 
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,21 +13,13 @@ public class DictTermsEnLoad_Test extends DictionaryLoadBase {
 	private final String TESTDATA_SHEET_NAME = "TermsPageEnglish";
 
 	private AnalyticsMetaData analyticsMetaData;
-	private String testDataFilePath;
-
-	// ==================== Setup methods ==================== //
-
-	@BeforeClass(groups = { "Analytics" })
-	private void setupClass() {
-		testDataFilePath = config.getProperty("AnalyticsDictData");
-	}
 
 	// ==================== Test methods ==================== //
 
 	/// Test English Dictionary Page load event
 	@Test(dataProvider = "DictionaryEnglishLoad", groups = { "Analytics" })
 	public void testTermDictionaryEnPageLoad(String path, String contentType) {
-		System.out.println("Test English Dictionary Page load event at " + path + ":");
+		System.out.println("Path: " + path + ",  Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

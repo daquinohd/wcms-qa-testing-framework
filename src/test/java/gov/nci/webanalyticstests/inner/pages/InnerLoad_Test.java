@@ -29,7 +29,7 @@ public class InnerLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Inner Page load event
 	@Test(dataProvider = "InnerPageLoad", groups = { "Analytics" })
 	public void testInnerPageLoad(String path, String contentType) {
-		System.out.println("Test Inner Page load event (" + contentType + "):");
+		System.out.println("Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

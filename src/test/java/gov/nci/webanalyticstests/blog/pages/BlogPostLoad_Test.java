@@ -31,7 +31,7 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Blog Post Page load event
 	@Test(dataProvider = "BlogPostPageLoad", groups = { "Analytics" })
 	public void testBlogPostPageLoad(String path, String contentType) {
-		System.out.println("Test Blog Post Page load event:");
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

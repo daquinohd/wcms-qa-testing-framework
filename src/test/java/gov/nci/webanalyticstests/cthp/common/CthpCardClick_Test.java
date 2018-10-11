@@ -48,7 +48,7 @@ public class CthpCardClick_Test extends AnalyticsTestClickBase {
 	// Test CTHP HP Card click event
 	@Test(dataProvider = "CthpHpCard", groups = { "Analytics" })
 	public void testCthpHpCardClick(String path, String cardTitle, String linkText, String cardPos) {
-		System.out.println("Test CTHP HP " + cardTitle + " Card click event:");
+		System.out.println("Card title: " + cardTitle);
 		setupTestMethod(path);
 
 		try {
@@ -65,7 +65,7 @@ public class CthpCardClick_Test extends AnalyticsTestClickBase {
 	// Test CTHP Patient Card click event
 	@Test(dataProvider = "CthpPatientCard", groups = { "Analytics" })
 	public void testCthpPatientCardClick(String path, String cardTitle, String linkText, String cardPos) {
-		System.out.println("Test CTHP Patient " + cardTitle + " Card click event:");
+		System.out.println("Card title: " + cardTitle);
 		setupTestMethod(path);
 
 		try {

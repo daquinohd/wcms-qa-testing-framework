@@ -31,7 +31,6 @@ public class RelatedResourcesClick_Test extends AnalyticsTestClickBase {
 
 	@Test(groups = { "Analytics" })
 	public void testBlogPostRelatedResourcesClick() {
-		System.out.println("Test Blog Post Related Resources link click: ");
 		setupTestMethod(PATH_BLOG_POST);
 
 		try {
@@ -53,7 +52,6 @@ public class RelatedResourcesClick_Test extends AnalyticsTestClickBase {
 
 	@Test(groups = { "Analytics" })
 	public void testArticleRelatedResourcesClick() {
-		System.out.println("Test Article Related Resources link click: ");
 		setupTestMethod(PATH_ARTICLE);
 
 		try {

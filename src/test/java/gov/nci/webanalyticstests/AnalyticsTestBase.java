@@ -1,5 +1,6 @@
 package gov.nci.webanalyticstests;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public abstract class AnalyticsTestBase {
 	protected static BrowserMobProxy proxy;
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
+	protected static String trackingServer;
+
 	protected ConfigReader config;
 	protected boolean debug;
 	
@@ -63,20 +66,21 @@ public abstract class AnalyticsTestBase {
 		config = new ConfigReader(environment);
 		
 		// Start the BrowserMob proxy on the site homepage
-		String initUrl = config.goHome();
 		System.out.println("=== Starting BrowserMobProxy ===");
-		this.initializeProxy(initUrl);
+		String initUrl = config.goHome();
+		initializeProxy(initUrl);
 
 		// Initialize driver and open browser
 		System.out.println("=== Starting Driver ===");
 		driver = BrowserManager.startProxyBrowser(browser, config, initUrl, proxy);
-		System.out.println("Requests to " + Beacon.TRACKING_SERVER + " will be tested.");
-		System.out.println("Analytics test group setup done.\r\nStarting from " + initUrl);
+		trackingServer = config.getProperty("AdobeTrackingServer");
+		System.out.println("~~ Analytics test group setup done.~~");		
+		System.out.println("  Testing requests to " + trackingServer + "\r\n  Starting from " + initUrl);
 
 		// Get path and configure extent reports
 		String fileName = new SimpleDateFormat("yyyy-MM-dd HH-mm-SS").format(new Date());
 		String extentReportPath = config.getExtentReportPath();
-		System.out.println("Logger Path:" + extentReportPath + "\n");
+		System.out.println("  Logger Path:" + extentReportPath);
 		report = new ExtentReports(extentReportPath + config.getProperty("Environment") + "-" + fileName + ".html");
 		report.addSystemInfo("Environment", config.getProperty("Environment"));
 	}
@@ -93,7 +97,10 @@ public abstract class AnalyticsTestBase {
 	}
 
 	@BeforeMethod(groups = { "Analytics" })
-	public void beforeMethod() throws RuntimeException {
+	public void beforeMethod(Method method) throws RuntimeException {
+		String message = method.getName() + "(): ";
+		System.out.println(message);
+
 		// Reset our browser to full screen before each method
 		driver.manage().window().maximize();
 	}
@@ -101,11 +108,14 @@ public abstract class AnalyticsTestBase {
 	@AfterMethod(groups = { "Analytics" })
 	public void afterMethod(ITestResult result) {
 		if (result.getStatus() == ITestResult.FAILURE) {
-			logger.log(LogStatus.FAIL, "Fail => " + result.getName());
+			logger.log(LogStatus.FAIL, "FAILED => " + result.getName() + ": " + result.getThrowable().getMessage());
+			System.out.println("  Failed: " + result.getThrowable().getMessage() + ".\n");
 		} else if (result.getStatus() == ITestResult.SKIP) {
-			logger.log(LogStatus.SKIP, "Skipped => " + result.getName());
+			logger.log(LogStatus.SKIP, "SKIPPED => " + result.getName());
+			System.out.println("  Skipped.\n");
 		} else {
-			logger.log(LogStatus.PASS, "Pass => " + result.getName());
+			logger.log(LogStatus.PASS, "PASSED => " + result.getName());
+			System.out.println("  Passed!\n");
 		}
 	}
 
@@ -119,6 +129,7 @@ public abstract class AnalyticsTestBase {
 		System.out.println("=== Quitting Driver ===");
 		report.flush();
 		driver.quit();
+		
 		System.out.println("=== Stopping BrowserMobProxy ===");
 		proxy.stop();
 	}
@@ -163,10 +174,9 @@ public abstract class AnalyticsTestBase {
 	protected List<String> getHarUrlList(BrowserMobProxy proxy) throws RuntimeException, IllegalArgumentException {
 
 		// A HAR (HTTP Archive) is a file format that can be used by HTTP monitoring
-		// tools to export collected data.
-		// BrowserMob Proxy allows us to manipulate HTTP requests and responses, capture
-		// HTTP content,
-		// and export performance data as a HAR file object.
+		// tools to export collected data. BrowserMob Proxy allows us to manipulate HTTP
+		// requests and responses, capture HTTP content, and export performance data as
+		// a HAR file object.
 		Har har = proxy.getHar();
 		List<HarEntry> entries = har.getLog().getEntries();
 
@@ -176,7 +186,7 @@ public abstract class AnalyticsTestBase {
 		// Build a list of requests to the analytics tracking server from the HAR
 		for (HarEntry entry : entries) {
 			String result = entry.getRequest().getUrl();
-			if (result.contains(Beacon.TRACKING_SERVER)) {
+			if (result.contains(trackingServer)) {
 				harUrlList.add(result);
 			}
 		}

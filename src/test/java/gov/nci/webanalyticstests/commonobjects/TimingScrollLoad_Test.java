@@ -32,7 +32,7 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Page Load event after no scrolling
 	@Test(dataProvider = "TimingScrollLoad", groups = { "Analytics" })
 	public void testNoScrollPageLoad(String path, String contentType) {
-		System.out.println("Test Page Load event after no scrolling (" + contentType + "):");
+		System.out.println("Content type: " + contentType);
 		driver.get(config.goHome() + path);
 		driver.navigate().refresh();
 
@@ -50,7 +50,6 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Page Load event after scrolling to bottom
 	// @Test(groups = { "Analytics" })
 	public void testFullScrollPageLoad() {
-		System.out.println("Test Page Load event after scrolling to bottom:");
 		driver.get(config.goHome());
 		// scroll to bottom
 		driver.navigate().refresh();
@@ -58,8 +57,8 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
 
-//			Beacon beacon = getBeacon();
-//			doCommonClassAssertions(beacon, analyticsMetaData, "");
+			// Beacon beacon = getBeacon();
+			// doCommonClassAssertions(beacon, analyticsMetaData, "");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -69,7 +68,6 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	/// Test engagement tracking on page load
 	// @Test(groups = { "Analytics" })
 	public void testEngagement() {
-		System.out.println("Test engagement tracking on page load:");
 		driver.get(config.goHome());
 
 		try {

@@ -37,7 +37,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Display' click event
 	@Test(groups = { "Analytics" })
 	public void testAdvancedDisplay() {
-		System.out.println("Advanced CTS 'Display' click event:");
 		setupTestMethod();
 
 		try {
@@ -54,7 +53,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Start' click event
 	@Test(groups = { "Analytics" })
 	public void testAdvancedStart() {
-		System.out.println("Advanced CTS 'Start' click event:");
 		setupTestMethod();
 
 		try {
@@ -73,7 +71,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Complete' click event (age)
 	@Test(groups = { "Analytics" })
 	public void testAdvancedCompleteAge() {
-		System.out.println("Advanced CTS 'Complete' click event (age):");
 		setupTestMethod();
 
 		try {
@@ -93,7 +90,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS zip submit click event
 	@Test(groups = { "Analytics" })
 	public void testAdvancedZipComplete() {
-		System.out.println("Advanced CTS zip submit click event:");
 		setupTestMethod();
 
 		try {
@@ -113,7 +109,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Complete' click event (investigator)
 	@Test(groups = { "Analytics" })
 	public void testAdvancedCompleteInv() {
-		System.out.println("Advanced CTS 'Complete' click event (investigator):");
 		setupTestMethod();
 
 		try {
@@ -133,7 +128,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Complete' click event (subtype)
 	@Test(groups = { "Analytics" })
 	public void testAdvancedMultiSelectSubmit() {
-		System.out.println("Advanced CTS 'Complete' click event (subtype):");
 		setupTestMethod();
 
 		try {
@@ -155,7 +149,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Abandon' click event (age)
 	@Test(groups = { "Analytics" })
 	public void testAdvancedAbandonAge() {
-		System.out.println("Advanced CTS 'Abandon' click event (age):");
 		setupTestMethod();
 
 		try {
@@ -175,7 +168,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Abandon' click event (organization)
 	@Test(groups = { "Analytics" })
 	public void testAdvancedAbandonOrg() {
-		System.out.println("Advanced CTS 'Abandon' click event (organization):");
 		setupTestMethod();
 
 		try {
@@ -195,7 +187,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS 'Abandon' click event (subtype)
 	@Test(groups = { "Analytics" })
 	public void testAdvancedMultiSelectAbandon() {
-		System.out.println("Advanced CTS 'Abandon' click event (subtype):");
 		setupTestMethod();
 
 		try {
@@ -216,7 +207,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS age error message click event
 	@Test(groups = { "Analytics" })
 	public void testAdvancedErrorAge() {
-		System.out.println("Advanced CTS age error message click event:");
 		setupTestMethod();
 
 		try {
@@ -237,7 +227,6 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced CTS Error Submit click event (zip):
 	@Test(groups = { "Analytics" })
 	public void testAdvancedZipError() {
-		System.out.println("Advanced CTS Error Submit click event (zip):");
 		setupTestMethod();
 
 		try {

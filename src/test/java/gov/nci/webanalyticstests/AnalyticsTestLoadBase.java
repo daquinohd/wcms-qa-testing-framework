@@ -9,7 +9,6 @@ import java.util.List;
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.Assert;
 
-import gov.nci.Utilities.ExcelManager;
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
 
@@ -32,12 +31,12 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		List<String> harList = getHarUrlList(proxy);
 		List<Beacon> beaconList = getBeaconList(harList);
 		Beacon beacon = beaconList.get(beaconList.size() - 1);
-		
+
 		if (debug) {
 			System.out.println("Load beacon to test: ");
 			System.out.println(beacon.url + "\n");
 		}
-		
+
 		return beacon;
 	}
 
@@ -70,7 +69,7 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 			System.out.println("Total analytics requests: " + urlList.size() + " (load: " + loadBeacons.size()
 					+ ", click: " + clickBeacons + ")");
 		}
-		
+
 		return loadBeacons;
 	}
 
@@ -166,8 +165,8 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		String msg = ex.toString();
 		msg = (msg.length() > 255) ? msg.substring(0, 255) : msg;
 
-		System.out.println("Exception: " + msg + "\n");
-		logger.log(LogStatus.FAIL, "Failure: " + msg);
+		System.out.println(" Exception: " + msg);
+		logger.log(LogStatus.FAIL, "Exception => " + msg);
 		Assert.fail("Load event exception in " + testMethod + "(): " + msg);
 	}
 

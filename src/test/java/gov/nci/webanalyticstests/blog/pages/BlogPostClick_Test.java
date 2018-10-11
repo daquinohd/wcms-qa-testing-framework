@@ -28,16 +28,15 @@ public class BlogPostClick_Test extends AnalyticsTestClickBase {
 	// ==================== Test methods ==================== //
 
 	/// Test Blog Post Body Link Click
-	@Test(groups = { "Analytics" }, priority = 1)
+	@Test(groups = { "Analytics" })
 	public void testBlogPostBodyLinkClick() {
-		System.out.println("Test Blog Post Body Link Click:");
 		setupTestMethod(CANCER_CURRENTS_POST);
 
 		try {
 			String firstLinkText = blogPost.getBodyLinkText();
 			String currUrl = driver.getCurrentUrl();
 			blogPost.clickBodyLink();
-			
+
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, currUrl, "BlogBodyLinkClick");
 			Assert.assertTrue(beacon.hasEvent(56), "Missing event56");
@@ -51,9 +50,8 @@ public class BlogPostClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Blog Post Definition Link Click
-	@Test(groups = { "Analytics" }, priority = 2)
+	@Test(groups = { "Analytics" })
 	public void testBlogPostDefinitionLinkClick() {
-		System.out.println("Test Blog Post Definition Link Click:");
 		setupTestMethod(CANCER_CURRENTS_POST);
 
 		try {
@@ -73,9 +71,8 @@ public class BlogPostClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Blog Post Recommended Link Click
-	@Test(groups = { "Analytics" }, priority = 3)
+	@Test(groups = { "Analytics" })
 	public void testBlogPostRecommendedClick() {
-		System.out.println("Test Blog Post Recommended Link Click:");
 		setupTestMethod(CANCER_CURRENTS_POST);
 
 		try {

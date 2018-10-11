@@ -29,7 +29,7 @@ public class PdqDrugLoad_Test extends AnalyticsTestLoadBase {
 	/// Test PDQ Drug Info Summary Page load event
 	@Test(dataProvider = "PDQPageLoad", groups = { "Analytics" })
 	public void testPdqDrugPageLoad(String path, String contentType) {
-		System.out.println("Test PDQ Drug Info Summary Page load event (" + path + "):");
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 		driver.navigate().refresh();
 

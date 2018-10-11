@@ -43,7 +43,6 @@ public class TrialPrintLoad_Test extends AnalyticsTestLoadBase {
 	/// Test CTS Trial(s) print page load
 	@Test(groups = { "Analytics" })
 	public void testCtsPrintPageLoad() {
-		System.out.println("Test CTS Trial(s) print page load:");
 		setupTestMethod();
 
 		try {

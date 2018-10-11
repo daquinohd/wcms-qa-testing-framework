@@ -37,7 +37,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Display' click event
 	@Test(groups = { "Analytics" })
 	public void testBasicDisplay() {
-		System.out.println("Basic CTS 'Display' click event:");
 		setupTestMethod();
 
 		try {
@@ -54,7 +53,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Start' click event
 	@Test(groups = { "Analytics" })
 	public void testBasicStart() {
-		System.out.println("Basic CTS 'Start' click event:");
 		setupTestMethod();
 
 		try {
@@ -73,7 +71,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Complete' click event
 	@Test(groups = { "Analytics" })
 	public void testBasicComplete() {
-		System.out.println("Basic CTS 'Complete' click event:");
 		setupTestMethod();
 
 		try {
@@ -93,7 +90,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Complete' click event (keyword)
 	@Test(groups = { "Analytics" })
 	public void testBasicKeywordMatch() {
-		System.out.println("Basic CTS 'Complete' click event (keyword):");
 		setupTestMethod();
 
 		try {
@@ -114,7 +110,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Abandon' click event (keyword)
 	@Test(groups = { "Analytics" })
 	public void testBasicAbandonKeyword() {
-		System.out.println("Basic CTS 'Abandon' click event (keyword):");
 		setupTestMethod();
 
 		try {
@@ -134,7 +129,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Abandon' click event (age)
 	@Test(groups = { "Analytics" })
 	public void testBasicAbandonAge() {
-		System.out.println("Basic CTS 'Abandon' click event (age):");
 		setupTestMethod();
 
 		try {
@@ -154,7 +148,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS 'Abandon' click event (zip)
 	@Test(groups = { "Analytics" })
 	public void testBasicAbandonZip() {
-		System.out.println("Basic CTS 'Abandon' click event (zip):");
 		setupTestMethod();
 
 		try {
@@ -174,7 +167,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS error message click event (age)
 	@Test(groups = { "Analytics" })
 	public void testBasicErrorAge() {
-		System.out.println("Test Basic CTS error message click event (age):");
 		setupTestMethod();
 
 		try {
@@ -195,7 +187,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS error message click event (zip):
 	@Test(groups = { "Analytics" })
 	public void testBasicErrorZip() {
-		System.out.println("Test Basic CTS error message click event (zip):");
 		setupTestMethod();
 
 		try {
@@ -216,7 +207,6 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic CTS error message submit click event
 	@Test(groups = { "Analytics" })
 	public void testBasicErrorSubmit() {
-		System.out.println("Test Basic CTS error message submit click event:");
 		setupTestMethod();
 
 		try {

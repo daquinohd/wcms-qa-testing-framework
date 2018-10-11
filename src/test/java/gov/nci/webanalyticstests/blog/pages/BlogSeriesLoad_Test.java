@@ -2,7 +2,6 @@ package gov.nci.webanalyticstests.blog.pages;
 
 import java.util.Iterator;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,12 +29,12 @@ public class BlogSeriesLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Blog Series Page load event
 	@Test(dataProvider = "BlogSeriesPageLoad", groups = { "Analytics" })
 	public void testBlogSeriesPageLoad(String path, String contentType) {
-		System.out.println("Test Blog Series Page load event:");
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
-			
+
 			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
 		} catch (Exception e) {

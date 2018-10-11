@@ -54,7 +54,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu Nav Group click event
 	@Test(dataProvider = "NavGroupData", groups = { "Analytics" })
 	public void testMegaMenuNavGroup(String path, String navGroup, String lang) {
-		System.out.println("Test MegaMenu Nav Group click event at \"" + path + "\" :");
+		System.out.println("Path: " + path + ", Group: " + navGroup);
 		setupTestMethod(path);
 
 		try {
@@ -78,7 +78,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu SubNav Group click event
 	@Test(dataProvider = "SubNavGroupData", groups = { "Analytics" })
 	public void testMegaMenuSubNavGroup(String path, String navGroup, String subNavGroup, String lang) {
-		System.out.println("Test MegaMenu SubNav Group click event at \"" + path + "\" :");
+		System.out.println("Path: " + path + ", Subnav group: " + subNavGroup);
 		setupTestMethod(path);
 
 		try {
@@ -103,7 +103,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	@Test(dataProvider = "SubNavLinkData", groups = { "Analytics" })
 	public void testMegaMenuSubNavLink(String path, String navGroup, String subNavGroup, String subNavLink,
 			String lang) {
-		System.out.println("Test MegaMenu SubNav Link click event at \"" + path + "\" :");
+		System.out.println("Path: " + path + ", Subnav link: " + subNavLink);
 		setupTestMethod(path);
 
 		try {
@@ -127,7 +127,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test Mega Menu Desktop Reveal
 	@Test(dataProvider = "PathData", groups = { "Analytics" })
 	public void testMegaMenuDesktopReveal(String path, String lang) {
-		System.out.println("Test MM desktop reveal event at \"" + path + "\" :");
+		System.out.println("Path: " + path);
 		setupTestMethod(path);
 
 		try {
@@ -147,7 +147,6 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu Mobile Reveal
 	@Test(groups = { "Analytics" })
 	public void testMegaMenuMobileReveal() {
-		System.out.println("Test Hamburger click:");
 		setupTestMethod();
 
 		try {
@@ -167,7 +166,6 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu Mobile Expand
 	@Test(groups = { "Analytics" })
 	public void testMegaMenuMobileExpand() {
-		System.out.println("Test MM mobile expand:");
 		setupTestMethod();
 
 		try {
@@ -187,7 +185,6 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu Mobile Collapse
 	@Test(groups = { "Analytics" })
 	public void testMegaMenuMobileCollapse() {
-		System.out.println("Test MM mobile collapse:");
 		setupTestMethod();
 
 		try {

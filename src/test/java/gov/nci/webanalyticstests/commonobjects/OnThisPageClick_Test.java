@@ -34,7 +34,6 @@ public class OnThisPageClick_Test extends AnalyticsTestClickBase {
 	/// Test Article On This Page link click
 	@Test(groups = { "Analytics" })
 	public void testArticleOtpClick() {
-		System.out.println("Test Article On This Page link click: ");
 		setupTestMethod(PATH_ARTICLE);
 
 		try {
@@ -53,7 +52,6 @@ public class OnThisPageClick_Test extends AnalyticsTestClickBase {
 	/// Test Factsheet On This Page link click
 	@Test(groups = { "Analytics" })
 	public void testFactsheetOtpClick() {
-		System.out.println("Test Factsheet On This Page link click: ");
 		setupTestMethod(PATH_FACTSHEET);
 
 		try {
@@ -72,7 +70,6 @@ public class OnThisPageClick_Test extends AnalyticsTestClickBase {
 	/// Test PDQ On This Page link click
 	@Test(groups = { "Analytics" })
 	public void tesPdqOtpClick() {
-		System.out.println("Test PDQ On This Page link click: ");
 		setupTestMethod(PATH_PDQ);
 
 		try {
@@ -97,7 +94,7 @@ public class OnThisPageClick_Test extends AnalyticsTestClickBase {
 	 */
 	private void doCommonClassAssertions(Beacon beacon, String linkText, String linkHref) {
 		String testPath = beacon.props.get(67);
-		
+
 		Assert.assertTrue(beacon.hasEvent(29), "Missing event29");
 		Assert.assertEquals(beacon.linkName, "OnThisPageClick");
 		Assert.assertEquals(beacon.props.get(4), linkHref);

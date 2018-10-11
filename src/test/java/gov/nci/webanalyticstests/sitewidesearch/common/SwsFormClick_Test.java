@@ -1,6 +1,5 @@
 package gov.nci.webanalyticstests.sitewidesearch.common;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.testng.annotations.BeforeClass;
@@ -11,7 +10,6 @@ import org.testng.Assert;
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
-import gov.nci.Utilities.ExcelManager;
 
 public class SwsFormClick_Test extends AnalyticsTestClickBase {
 
@@ -53,7 +51,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	// Test Sitewide Search from Home Page
 	@Test(dataProvider = "CancerTermsEn", groups = { "Analytics" })
 	public void testSitewideSearchFromHome(String searchTerm) {
-		System.out.println("Test Sitewide Search from Home Page (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_HOME_EN, searchTerm);
 
 		try {
@@ -70,7 +68,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	// Test Sitewide Search from Spanish Home Page
 	@Test(dataProvider = "CancerTermsEs", groups = { "Analytics" })
 	public void testSitewideSearchFromHomeSpanish(String searchTerm) {
-		System.out.println("Test Sitewide Search from Spanish Home Page (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_HOME_ES, searchTerm);
 
 		try {
@@ -87,7 +85,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	// Test Sitewide Search from Inner Page
 	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
 	public void testSitewideSearchFromInner(String searchTerm) {
-		System.out.println("Test Sitewide Search from Inner Page (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_INNER, searchTerm);
 
 		try {
@@ -104,7 +102,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	// Test Sitewide Search for unmatched term
 	@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" })
 	public void testSitewideSearchNoMatch(String searchTerm) {
-		System.out.println("Test Sitewide Search for unmatched term (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_HOME_EN, searchTerm);
 
 		try {
@@ -120,7 +118,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	// Verify analytics click values for microsite-wide search
 	@Test(dataProvider = "BestBetTerms", groups = { "Analytics" })
 	public void testMicroSitewideSearch(String searchTerm) {
-		System.out.println("Test Microsite Search for term (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_MICROSITE, searchTerm);
 
 		try {

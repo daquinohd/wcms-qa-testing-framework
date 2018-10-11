@@ -45,7 +45,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Dynamic Listing Page load event
 	@Test(dataProvider = "DiseaseListingPage", groups = { "Analytics" })
 	public void testDiseaseListingPageLoad(String path, String listingType, String filterInfo) {
-		System.out.println("Test '" + listingType + "' Dynamic Listing Page load event:");
+		System.out.println("Path: " + path);
 		setupTestMethod(path);
 
 		try {
@@ -60,7 +60,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Dynamic Listing Page load event
 	@Test(dataProvider = "InterventionListingPage", groups = { "Analytics" })
 	public void testInterventionListingPageLoad(String path, String listingType, String filterInfo) {
-		System.out.println("Test '" + listingType + "' Dynamic Listing Page load event:");
+		System.out.println("Path: " + path);
 		setupTestMethod(path);
 
 		try {
@@ -75,7 +75,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Manual Trial Listing Page load event
 	@Test(dataProvider = "ManualListingPage", groups = { "Analytics" })
 	public void testManualListingPageLoad(String path, String listingType, String filterInfo) {
-		System.out.println("Test '" + listingType + "' Trial Listing Page load event:");
+		System.out.println("Path: " + path);
 		setupTestMethod(path);
 
 		try {

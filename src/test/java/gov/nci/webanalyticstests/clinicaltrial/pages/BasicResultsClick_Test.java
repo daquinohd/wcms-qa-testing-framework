@@ -51,7 +51,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic 'Start Over' click event
 	@Test(groups = { "Analytics" })
 	public void testBasicStartOverClick() {
-		System.out.println("Test Basic 'Start Over' click event:");
 		setupTestMethod(BASIC_PAGE_1ST);
 
 		try {
@@ -70,7 +69,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic print error click event
 	@Test(groups = { "Analytics" })
 	public void testPrintError() {
-		System.out.println("Test Basic print error click event:");
 		setupTestMethod(BASIC_PAGE_1ST);
 
 		try {
@@ -90,7 +88,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic 'print one item' click event
 	@Test(groups = { "Analytics" })
 	public void testPrintOneItem() {
-		System.out.println("Test Basic 'print one item' click event:");
 		setupTestMethod(BASIC_PAGE_1ST);
 
 		try {
@@ -113,7 +110,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic 'print multiple items' click event
 	@Test(groups = { "Analytics" })
 	public void testPrintMultiItems() {
-		System.out.println("Test Basic 'print multiple items' click event:");
 		setupTestMethod(BASIC_PAGE_1ST);
 
 		try {
@@ -138,11 +134,10 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	// TODO: this method is making error, multiItems, and oneItem break
 	// @Test(groups = { "Analytics" })
 	public void testPrintAllItemsOnPage() {
-		System.out.println("Test Basic 'select all' print click event:");
 		setupTestMethod(BASIC_PAGE_2ND);
 
 		try {
-			Checkbox checkbox = new Checkbox(driver, CHECKBOX_ITEM_SELECTOR);
+			// Checkbox checkbox = new Checkbox(driver, CHECKBOX_ITEM_SELECTOR);
 			searchResults.clickOnSelectAllCheckBox();
 			searchResults.clickPrintButton();
 
@@ -160,7 +155,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Basic result ranking click event
 	@Test(groups = { "Analytics" })
 	public void testBasicLinkRanking() {
-		System.out.println("Test Basic result ranking click event:");
 		setupTestMethod(BASIC_PAGE_2ND);
 
 		try {

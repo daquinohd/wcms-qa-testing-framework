@@ -28,7 +28,7 @@ public class ErrorLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Error Page load event
 	@Test(dataProvider = "ErrorPageLoad", groups = { "Analytics" })
 	public void testErrorPageLoad(String path, String contentType) {
-		System.out.println("Test Error Page load event (" + contentType + "):");
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

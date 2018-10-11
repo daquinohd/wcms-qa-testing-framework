@@ -117,8 +117,8 @@ public class AnalyticsTestClickBase extends AnalyticsTestBase {
 		String msg = ex.toString();
 		msg = (msg.length() > 255) ? msg.substring(0, 255) : msg;
 
-		System.out.println("Exception: " + msg + "\n");
-		logger.log(LogStatus.FAIL, "Failure: " + msg);
+		System.out.println("  Exception: " + msg);
+		logger.log(LogStatus.FAIL, "EXCEPTION => " + msg);
 		Assert.fail("Click event exception in " + testMethod + "(): " + msg);
 	}
 

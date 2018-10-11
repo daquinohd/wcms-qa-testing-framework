@@ -47,7 +47,7 @@ public class BasicResultsLoad_Test extends AnalyticsTestLoadBase {
 	@Test(dataProvider = "BasicResultsLoadData", groups = { "Analytics" })
 	public void testCtsBasicResultsPageLoad(String params, String searchType, String fieldsUsed, String cancerInfo,
 			String location) {
-		System.out.println("Test CTS Basic Results page load event (" + searchType + "): ");
+		System.out.println("Fields used: " + fieldsUsed);
 		setupTestMethod(params);
 
 		try {

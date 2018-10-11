@@ -49,7 +49,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - start over click event
 	@Test(dataProvider = "AdvancedViewFullParams", groups = { "Analytics" })
 	public void testTrialViewStartOverClick(String params) {
-		System.out.println("Test Trial View - start over click event: ");
 		setupTestMethod(params);
 
 		try {
@@ -69,7 +68,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - open all sections click event
 	@Test(dataProvider = "AdvancedViewFullParams", groups = { "Analytics" })
 	public void testTrialViewOpenAllClick(String params) {
-		System.out.println("Test Trial View - open all sections click event:");
 		setupTestMethod(params);
 
 		try {
@@ -87,7 +85,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - close all sections click event
 	@Test(dataProvider = "AdvancedViewFullParams", groups = { "Analytics" })
 	public void testTrialViewCloseAllClick(String params) {
-		System.out.println("Test Trial View - close all sections click event: ");
 		setupTestMethod(params);
 
 		try {
@@ -105,7 +102,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - expand section click event
 	@Test(dataProvider = "BasicViewFullParams", groups = { "Analytics" })
 	public void testTrialViewSectionExpandClick(String params) {
-		System.out.println("Test Trial View - expand section click event: ");
 		setupTestMethod(params);
 
 		try {
@@ -123,7 +119,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - collapse section click event
 	@Test(dataProvider = "BasicViewFullParams", groups = { "Analytics" })
 	public void testTrialViewSectionCollapseClick(String params) {
-		System.out.println("Test Trial View - collapse section click event:");
 		setupTestMethod(params);
 
 		try {
@@ -141,7 +136,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - 'Print' click event
 	@Test(dataProvider = "CustomViewFullParams", groups = { "Analytics" })
 	public void testTrialViewPrintClick(String params) {
-		System.out.println("Test Trial View - 'Print' click event:");
 		setupTestMethod(params);
 
 		try {
@@ -162,7 +156,6 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 	/// Test Trial View - 'email' click event
 	@Test(dataProvider = "CustomViewFullParams", groups = { "Analytics" })
 	public void testTrialViewEmailClick(String params) {
-		System.out.println("Test Trial View - 'email' click event:");
 		setupTestMethod(params);
 
 		try {

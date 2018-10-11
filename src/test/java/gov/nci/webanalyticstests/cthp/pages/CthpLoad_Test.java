@@ -29,7 +29,7 @@ public class CthpLoad_Test extends AnalyticsTestLoadBase {
 	/// Test CTHP Page load event
 	@Test(dataProvider = "CthpPageLoad", groups = { "Analytics" })
 	public void testCthpPageLoad(String path, String contentType) {
-		System.out.println("Test CTHP Page load event (" + contentType + "):");
+		System.out.println("Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

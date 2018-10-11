@@ -17,12 +17,11 @@ public class BasicSearchLoad_Test extends AnalyticsTestLoadBase {
 	/// Test CTS Advanced Search page load
 	@Test(groups = { "Analytics" })
 	public void testCTSAdvancedSearchPageLoad() {
-		System.out.println("Test " + SEARCH_TYPE + " page load:");
 		driver.get(config.goHome() + PATH);
 
 		try {
 			AnalyticsMetaData analyticsMetaData = new AnalyticsMetaData(driver);
-			
+
 			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, PATH);
 			Assert.assertEquals(beacon.props.get(62), SEARCH_TYPE);

@@ -40,7 +40,6 @@ public class AdvancedResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced 'Start Over' click event
 	@Test(groups = { "Analytics" })
 	public void testAdvStartOverClick() {
-		System.out.println("Test Advanced 'Start Over' click event:");
 		setupTestMethod(ADVANCED_PAGE_1ST);
 
 		try {
@@ -59,7 +58,6 @@ public class AdvancedResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Advanced ranked result click event
 	@Test(groups = { "Analytics" })
 	public void testAdvLinkRanking() {
-		System.out.println("Test Advanced ranked result click event:");
 		setupTestMethod(ADVANCED_PAGE_2ND);
 
 		try {

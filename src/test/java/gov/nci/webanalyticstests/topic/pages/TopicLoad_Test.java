@@ -29,7 +29,7 @@ public class TopicLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Topic Page load event
 	@Test(dataProvider = "TopicPageLoad", groups = { "Analytics" })
 	public void testTopicPageLoad(String path, String contentType) {
-		System.out.println("Test Topic Page load event:");
+		System.out.println("Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

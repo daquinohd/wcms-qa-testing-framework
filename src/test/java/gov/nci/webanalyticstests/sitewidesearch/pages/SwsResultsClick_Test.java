@@ -22,7 +22,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test Best Bets click event for a search term
 	@Test(groups = { "Analytics" })
 	public void testBestBetsClick() {
-		System.out.println("Test Best Bets click event for '" + SEARCH_TERM + "':");
+		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome());
 
 		try {
@@ -44,7 +44,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test result item click event for a search term
 	@Test(groups = { "Analytics" })
 	public void testResultItemClick() {
-		System.out.println("Test result item click event for '" + SEARCH_TERM + "':");
+		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome());
 
 		try {
@@ -66,7 +66,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test "Search within results" click event
 	@Test(groups = { "Analytics" })
 	public void testSearchWithinResults() {
-		System.out.println("Test \"Search Within Results\" click event for '" + SEARCH_TERM + "':");
+		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.getPageURL("SitewideResultsPage"));
 
 		try {
@@ -90,7 +90,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	/// Test "Search within results" click event
 	@Test(groups = { "Analytics" })
 	public void testSearchNewFromResults() {
-		System.out.println("Test \"New Search\" click event for '" + SEARCH_TERM + "':");
+		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome() + RESULTS_PATH_EN);
 
 		try {

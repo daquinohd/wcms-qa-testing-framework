@@ -22,8 +22,6 @@ public class ResizeClick_Test extends AnalyticsTestClickBase {
 	/// Test resize to small
 	@Test(groups = { "Analytics" })
 	public void testResizeToMobile() {
-		System.out.println("Test resize to small:");
-
 		try {
 			Resize resize = new Resize(driver);
 			resize.toXlarge();
@@ -40,8 +38,6 @@ public class ResizeClick_Test extends AnalyticsTestClickBase {
 	/// Test resize to medium
 	@Test(groups = { "Analytics" })
 	public void testResizeToMedium() {
-		System.out.println("Test resize to medium:");
-
 		try {
 			Resize resize = new Resize(driver);
 			resize.toXlarge();
@@ -58,8 +54,6 @@ public class ResizeClick_Test extends AnalyticsTestClickBase {
 	//// Test resize to large
 	@Test(groups = { "Analytics" })
 	public void testResizeToLarge() {
-		System.out.println("Test resize to large:");
-
 		try {
 			Resize resize = new Resize(driver);
 			resize.toSmall();
@@ -76,8 +70,6 @@ public class ResizeClick_Test extends AnalyticsTestClickBase {
 	/// Test resize to x-large
 	@Test(groups = { "Analytics" })
 	public void testResizeToExtraWide() {
-		System.out.println("Test resize to x-large:");
-
 		try {
 			Resize resize = new Resize(driver);
 			resize.toSmall();
@@ -94,8 +86,6 @@ public class ResizeClick_Test extends AnalyticsTestClickBase {
 	/// Test maximize
 	@Test(groups = { "Analytics" })
 	public void testMaximize() {
-		System.out.println("Test maximize:");
-
 		try {
 			Resize resize = new Resize(driver);
 			resize.toSmall();
