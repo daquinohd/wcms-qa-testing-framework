@@ -105,8 +105,7 @@ public class BaseClass {
 		} else {
 			logger.log(LogStatus.PASS, "Passed => " + result.getName());
 		}
-		// Thread.sleep(20);
-		Thread.sleep(2000);
+		// Thread.sleep(2000);
 		report.flush();
 	}
 
