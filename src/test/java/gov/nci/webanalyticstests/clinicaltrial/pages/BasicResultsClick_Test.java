@@ -1,12 +1,9 @@
 package gov.nci.webanalyticstests.clinicaltrial.pages;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import java.util.List;
-
-import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
 
 import gov.nci.clinicalTrial.common.Checkbox;
 import gov.nci.clinicalTrial.pages.AdvanceSearchResults;
@@ -24,7 +21,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 	// There is no "BasicSearchResults" page object class; so we're reusing
 	// AdvanceSearchResults for now
 	private AdvanceSearchResults searchResults;
-	private Actions action;
 
 	// ==================== Setup methods ==================== //
 
@@ -44,9 +40,6 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 			Checkbox.uncheckAll(driver);
 			driver.manage().deleteAllCookies();
 			driver.navigate().refresh();
-
-			action = new Actions(driver);
-			action.pause(1000);
 		} catch (Exception ex) {
 			Assert.fail("Error loading Basic CTS results url: " + PATH + queryParams);
 			ex.printStackTrace();
@@ -63,16 +56,14 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 
 		try {
 			searchResults.clickStartOverNoNav();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(49));
+			Assert.assertTrue(beacon.hasEvent(49), "Missing event49");
 			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_basic|start over");
-			logger.log(LogStatus.PASS, "Test Basic 'Start Over' click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -83,19 +74,16 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BASIC_PAGE_1ST);
 
 		try {
-			action.pause(2000);
-			searchResults.clickPrintButton();
-			Beacon beacon = getBeacon();
+			searchResults.clickPrintButtonNoUrlChange();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(41));
+			Assert.assertTrue(beacon.hasEvent(41), "Missing event41");
 			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_basic|error");
 			Assert.assertEquals(beacon.props.get(75), "printselected|noneselected");
-			logger.log(LogStatus.PASS, "Test Basic print error click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -108,20 +96,17 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 		try {
 			List<String> attrList = searchResults.getFieldAttributeCollection(CHECKBOX_ITEM_SELECTOR, "id");
 			Checkbox checkbox = new Checkbox(driver, CHECKBOX_ITEM_SELECTOR);
-			;
 			checkbox.checkCheckbox(attrList.get(1));
 			searchResults.clickPrintButton();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(48));
+			Assert.assertTrue(beacon.hasEvent(48), "Missing event48");
 			Assert.assertEquals(beacon.props.get(21), "ctsprintselected_top_noselectall_1_1");
 			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_basic|print selected");
-			logger.log(LogStatus.PASS, "Test Basic 'print one item' click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -137,17 +122,15 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 			checkbox.checkCheckbox(attrList.get(1));
 			checkbox.checkCheckbox(attrList.get(2));
 			searchResults.clickPrintButton();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(48));
+			Assert.assertTrue(beacon.hasEvent(48), "Missing event48");
 			Assert.assertEquals(beacon.props.get(21), "ctsprintselected_top_noselectall_2_1");
 			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_basic|print selected");
-			logger.log(LogStatus.PASS, "Test Basic 'print multiple items' click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -162,17 +145,15 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 			Checkbox checkbox = new Checkbox(driver, CHECKBOX_ITEM_SELECTOR);
 			searchResults.clickOnSelectAllCheckBox();
 			searchResults.clickPrintButton();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(48));
+			Assert.assertTrue(beacon.hasEvent(48), "Missing event48");
 			Assert.assertEquals(beacon.props.get(21), "ctsprintselected_top_selectall_10_2");
 			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_basic|print selected");
-			logger.log(LogStatus.PASS, "Test Basic 'select all' print click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -184,18 +165,16 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 
 		try {
 			searchResults.clickResultLinkByIndex(0);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(42));
+			Assert.assertTrue(beacon.hasEvent(42), "Missing event42");
 			Assert.assertEquals(beacon.props.get(12), "clinicaltrials_basic");
 			Assert.assertEquals(beacon.props.get(13), "1|page 2");
 			Assert.assertEquals(beacon.props.get(12), beacon.eVars.get(12));
-			logger.log(LogStatus.PASS, "Test Basic result ranking click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 

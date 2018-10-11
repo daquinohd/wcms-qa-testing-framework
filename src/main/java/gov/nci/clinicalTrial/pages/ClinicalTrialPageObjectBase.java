@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.framework.PageObjectBase;
+import gov.nci.framework.PageObjectBase.IPageChangeAction;
 
 /**
  * This is the base class for all Clinical Trial page objects. This class
@@ -116,5 +119,16 @@ public class ClinicalTrialPageObjectBase extends PageObjectBase {
 		return attrList;
 	}
 
+	/**
+	 * Navigate away from the CTS page.
+	 * 
+	 * @param url
+	 */
+	public void abandon(String url) {
+		expectUrlChange(() -> {
+			browser.get(url);
+		});
+		
+	}
 	
 }

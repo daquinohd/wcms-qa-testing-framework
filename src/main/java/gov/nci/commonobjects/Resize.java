@@ -38,27 +38,27 @@ public class Resize extends PageObjectBase {
 	 */
 	public void toSmall() {
 		driver.manage().window().setSize(small);
-		action.pause(500).perform();
+		/// action.pause(500).perform();
 	}
 
 	public void toMed() {
 		driver.manage().window().setSize(med);
-		action.pause(500).perform();
+		/// action.pause(500).perform();
 	}
 
 	public void toLarge() {
 		driver.manage().window().setSize(large);
-		action.pause(500).perform();
+		/// action.pause(500).perform();
 	}
 
 	public void toXlarge() {
 		driver.manage().window().setSize(xlarge);
-		action.pause(500).perform();
+		/// action.pause(500).perform();
 	}
 
 	public void maximize() {
 		driver.manage().window().maximize();
-		action.pause(500).perform();
+		/// action.pause(500).perform();
 	}
 
 }

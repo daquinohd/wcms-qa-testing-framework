@@ -6,7 +6,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
@@ -36,21 +35,19 @@ public class BlogSeriesLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
+			
 			Beacon beacon = getBeacon();
-
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
-			logger.log(LogStatus.PASS, "Test Blog Series Page load event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "BlogSeriesPageLoad")
-	public Iterator<Object[]> getBlogSeriesPageLoadData() {
+	private Iterator<Object[]> getBlogSeriesPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

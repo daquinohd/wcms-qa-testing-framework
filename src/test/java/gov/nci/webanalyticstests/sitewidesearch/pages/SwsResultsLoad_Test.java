@@ -1,6 +1,5 @@
 package gov.nci.webanalyticstests.sitewidesearch.pages;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -35,15 +34,12 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 			swSearchForm.clickSearchButton();
 			swSearchResults = new SitewideSearchResults(driver);
 			analyticsMetaData.setPageTitle("NCI Search Results - National Cancer Institute");
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, RESULTS_PATH_EN);
-			logger.log(LogStatus.PASS,
-					"Test Sitewide Search Results page (English) load event for'" + SEARCH_TERM + "' passsed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -60,16 +56,13 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 			swSearchForm.clickSearchButton();
 			swSearchResults = new SitewideSearchResults(driver);
 			analyticsMetaData.setPageTitle("Resultados - National Cancer Institute");
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, RESULTS_PATH_ES);
 			Assert.assertEquals(beacon.props.get(8), "spanish");
-			logger.log(LogStatus.PASS,
-					"Test Sitewide Search Results page (Spanish) load event for'" + SEARCH_TERM + "' passsed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -81,14 +74,12 @@ public class SwsResultsLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData.setPageTitle("NCI Search Results - National Cancer Institute");
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, RESULTS_PATH_EN);
-			logger.log(LogStatus.PASS, "Test Sitewide Search Results page load event - no results passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 

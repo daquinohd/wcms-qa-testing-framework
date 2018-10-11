@@ -81,9 +81,17 @@ public class AdvanceSearchResults extends ClinicalTrialPageObjectBase {
 
 	public void clickPrintButton() {
 		ScrollUtil.scrollIntoview(driver, btn_Print);
-		btn_Print.click();
+		expectUrlChange(() -> {
+			btn_Print.click();
+		});
+
 	}
 
+	public void clickPrintButtonNoUrlChange() {
+		ScrollUtil.scrollIntoview(driver, btn_Print);
+		btn_Print.click();
+	}
+	
 	public List<WebElement> getCheckBoxes() {
 		return checkBoxes;
 	}

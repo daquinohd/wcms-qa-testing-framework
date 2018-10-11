@@ -3,8 +3,6 @@ package gov.nci.webanalyticstests.clinicaltrial.pages;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
-import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -53,19 +51,13 @@ public class TrialPrintLoad_Test extends AnalyticsTestLoadBase {
 			Checkbox checkbox = new Checkbox(driver, CHECKBOX_ITEM_SELECTOR);
 			checkbox.checkCheckbox(checkboxId);
 			searchResults.clickPrintButton();
-
-			// Give the print page time to load, then refresh
-			Actions action = new Actions(driver);
-			action.pause(2000).perform();
 			driver.navigate().refresh();
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, driver.getCurrentUrl());
-			logger.log(LogStatus.PASS, "Test CTS Trial(s) print page load passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -98,7 +90,7 @@ public class TrialPrintLoad_Test extends AnalyticsTestLoadBase {
 	 */
 	private void doCommonClassAssertions(Beacon beacon, String url) {
 
-		Assert.assertTrue(beacon.hasEvent(1));
+		Assert.assertTrue(beacon.hasEvent(1), "Missing event1");
 		Assert.assertEquals(beacon.channels, "Clinical Trials Print Results Page");
 		Assert.assertEquals(beacon.props.get(3), "/");
 		Assert.assertEquals(beacon.props.get(6), "Comprehensive Cancer Information");

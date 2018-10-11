@@ -1,7 +1,5 @@
 package gov.nci.webanalyticstests.blog.pages;
 
-import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -10,54 +8,71 @@ import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
 public class BlogSeriesClick_Test extends AnalyticsTestClickBase {
-	
+
+	private final String CANCER_CURRENTS_EN = "/news-events/cancer-currents-blog";
+	private final String CANCER_CURRENTS_ES = "/espanol/noticias/temas-y-relatos-blog";
+
 	private BlogSeries blogSeries;
 
-	private Beacon beacon;
-	private Actions action;
-	
-	// TODO: Spanish series
-	private final String CANCER_CURRENTS_EN = "/news-events/cancer-currents-blog";
+	// ==================== Setup methods ==================== //
 
-	@BeforeMethod(groups = { "Analytics" }) 
-	public void setupBlogPost() {
+	private void setupTestMethod(String path) {
 		try {
-			action = new Actions(driver);
 			driver.get(config.goHome() + CANCER_CURRENTS_EN);
-			this.blogSeries = new BlogSeries(driver);
-			action.pause(5000);
+			blogSeries = new BlogSeries(driver);
 		} catch (Exception e) {
+			Assert.fail("Error building Blog Series page object.");
 			e.printStackTrace();
-			System.out.println("Error building Blog Series page object.");
 		}
 	}
 
-	/**************** Blog Series body tests *****************************/
-	
+	// ==================== Test methods ==================== //
+
+	/// Test Blog Series Title Link Click (English)
 	@Test(groups = { "Analytics" })
-	public void testBlogSeriestTitleLinkClick() {
-		try {
-			System.out.println("Test body link click: ");
-			blogSeries.clickBlogPostTitle();
-			beacon = getBeacon();
+	public void testBlogSeriestTitleLinkClickEn() {
+		System.out.println("Test Blog Series Title Link Click (English):");
+		setupTestMethod(CANCER_CURRENTS_EN);
 
-			Assert.assertEquals(beacon.linkName, "SearchResults");
-			doCommonClickAssertions(beacon);
+		try {
+			blogSeries.clickBlogPostTitle();
+
+			Beacon beacon = getBeacon();
+			doCommonClassAssertions(beacon, "SearchResults");
 		} catch (Exception e) {
-			Assert.fail("Error clicking link in body.");
-			e.printStackTrace();
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
+
+	/// Test Blog Series Title Link Click (Spanish)
+	@Test(groups = { "Analytics" })
+	public void testBlogSeriestTitleLinkClickEs() {
+		System.out.println("Test Blog Series Title Link Click (Spanish):");
+		setupTestMethod(CANCER_CURRENTS_ES);
+
+		try {
+			blogSeries.clickBlogPostTitle();
+
+			Beacon beacon = getBeacon();
+			doCommonClassAssertions(beacon, "SearchResults");
+		} catch (Exception e) {
+			handleTestErrors(new Object() {
+			}, e);
+		}
+	}
+
+	// ==================== Common assertions ==================== //
 
 	/**
-	 * Shared Assert() calls for BlogSeries_Test class.
-	 * @param currentUrl
+	 * Shared Assert() calls for this class.
+	 * 
+	 * @param beacon
 	 * @param linkName
 	 */
-	private void doCommonClassAssertions(String currentUrl, String linkName) {
-		// Note: remove this once pageName value is fixed on CDE side
+	private void doCommonClassAssertions(Beacon beacon, String linkName) {
+		doCommonClickAssertions(beacon);
 		Assert.assertEquals(beacon.linkName, linkName);
-		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)));
 	}
-	
+
 }

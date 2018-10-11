@@ -36,22 +36,21 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
+			
 			Beacon beacon = getBeacon();
-
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
 			Assert.assertEquals(beacon.eVars.get(48), analyticsMetaData.getMetaIsPartOf() + " Viewer");
 			logger.log(LogStatus.PASS, "Test Blog Post Page load event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "BlogPostPageLoad")
-	public Iterator<Object[]> getBlogPostPageLoadData() {
+	private Iterator<Object[]> getBlogPostPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

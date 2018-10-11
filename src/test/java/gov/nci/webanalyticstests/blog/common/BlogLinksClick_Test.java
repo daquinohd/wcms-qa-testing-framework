@@ -1,6 +1,5 @@
 package gov.nci.webanalyticstests.blog.common;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -49,11 +48,9 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 
 			doCommonClassAssertions(beacon, "BlogSubscribeClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_Subscribe");
-			logger.log(LogStatus.PASS, "Test Blog Series Subscribe click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -69,11 +66,9 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 
 			doCommonClassAssertions(beacon, "BlogSubscribeClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_Subscribe");
-			logger.log(LogStatus.PASS, "Test Blog Post Subscribe click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -89,11 +84,9 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Series_Newer");
-			logger.log(LogStatus.PASS, "Test Blog Series Older click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -109,11 +102,9 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_Older");
-			logger.log(LogStatus.PASS, "Test Blog Series Older click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -129,11 +120,9 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Post_Newer");
-			logger.log(LogStatus.PASS, "Test Blog Post Newer click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -149,11 +138,9 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 
 			doCommonClassAssertions(beacon, "OlderNewerClick");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Post_Older");
-			logger.log(LogStatus.PASS, "Test Blog Post Newer click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -168,7 +155,7 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 	private void doCommonClassAssertions(Beacon beacon, String linkName) {
 		// Note: remove this once pageName value is fixed on CDE side
 		Assert.assertEquals(beacon.linkName, linkName);
-		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)));
+		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)), "prop67 incorrect");
 	}
 
 }

@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.relevantcodes.extentreports.ExtentReports;
@@ -26,6 +27,7 @@ import org.testng.annotations.Parameters;
 
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ConfigReader;
+import gov.nci.Utilities.ExcelManager;
 import gov.nci.webanalytics.Beacon;
 
 public abstract class AnalyticsTestBase {
@@ -35,11 +37,10 @@ public abstract class AnalyticsTestBase {
 	protected static ExtentReports report;
 	protected static ExtentTest logger;
 	protected ConfigReader config;
-
-	/**************************************
-	 * Section: TextNG Befores & Afters *
-	 **************************************/
-
+	protected boolean debug;
+	
+	// ==================== TextNG Befores & After methods ==================== //
+	
 	/**
 	* Configuration information for a TestNG class (http://testng.org/doc/documentation-main.html):
 	* @BeforeSuite: The annotated method will be run before all tests in this suite have run.
@@ -60,7 +61,7 @@ public abstract class AnalyticsTestBase {
 	@Parameters({ "browser", "environment" })
 	public void beforeTest(String browser, String environment) throws MalformedURLException {
 		config = new ConfigReader(environment);
-
+		
 		// Start the BrowserMob proxy on the site homepage
 		String initUrl = config.goHome();
 		System.out.println("=== Starting BrowserMobProxy ===");
@@ -81,11 +82,13 @@ public abstract class AnalyticsTestBase {
 	}
 
 	@BeforeClass(groups = { "Analytics" })
-	@Parameters({ "environment" })
-	public void beforeClass(String environment) {
+	@Parameters({ "environment", "debug" })
+	public void beforeClass(String environment, boolean debug) {
 		config = new ConfigReader(environment);
+		this.debug = debug;
+		
 		String testClass = this.getClass().getSimpleName();
-		System.out.println("~~ " + testClass + " ~~\n");
+		System.out.println("\n~~ " + testClass + " ~~\n");
 		logger = report.startTest(testClass);
 	}
 
@@ -120,10 +123,8 @@ public abstract class AnalyticsTestBase {
 		proxy.stop();
 	}
 
-	/*************************
-	 * Initialize BMP and request beacon objects
-	 *************************/
-
+	// ==================== BMP and request beacon Initialization methods ==================== //
+	
 	/**
 	 * Start and configure BrowserMob Proxy for Selenium.<br/>
 	 * Modified from
@@ -181,8 +182,10 @@ public abstract class AnalyticsTestBase {
 		}
 
 		// Debug size of HAR list
-		System.out.println("Total HAR entries: " + entries.size());
-
+		if (debug) {
+			System.out.println("Total HAR entries: " + entries.size());
+		}
+		
 		// The HAR list has been created; clear the log for next pass
 		har.getLog().getEntries().clear();
 		// For further reading, see https://en.wiktionary.org/wiki/hardy_har_har
@@ -190,43 +193,136 @@ public abstract class AnalyticsTestBase {
 		return harUrlList;
 	}
 
+	// ==================== Excel data retrieval methods ==================== //
+
 	/**
-	 * Utility function to get the last element in a list of AnalyticsRequest
-	 * objects
-	 * 
-	 * @param list of analytics request objects
-	 * @return the last analytics request object
+	 * Get a collection of spreadsheet data from a given sheet and column(s). 
+	 *
+	 * @param File path for the data
+	 * @param Spreadsheet name
+	 * @param Column values to return
+	 * @return a collection of test data
 	 */
-	protected static Beacon getLastReq(List<Beacon> requests) {
-		int index = requests.size() - 1;
-		Beacon request = (index >= 0) ? requests.get(index) : null;
-		return request;
+	protected Iterator<Object[]> getSpreadsheetData(String testDataFilePath, String sheetName, String[] columns) {
+		return getSpreadsheetData(testDataFilePath, sheetName, columns, null);
 	}
 
 	/**
-	 * Utility function to get an element from a given index in a list of
-	 * AnalyticsRequest objects.
+	 * Get a filtered collection of spreadsheet data from a given sheet and
+	 * column(s).
 	 * 
-	 * @param list of analytics request objects
-	 * @param index 
-	 * @return analytics request object at that position
+	 * @param File path for the data
+	 * @param Spreadsheet name
+	 * @param Column values to return
+	 * @param FilterParams - pair of values representing the column to filter and the expected value.
+	 * @return a collection of test data
 	 */
-	protected static Beacon getReqFromPosition(List<Beacon> requests, int index) {
-		try {
-			return requests.get(index);
-		} catch (IndexOutOfBoundsException e) {
+	protected Iterator<Object[]> getFilteredSpreadsheetData(String testDataFilePath, String sheetName, String[] columns,
+			String[] filterParams) {
+		return getSpreadsheetData(testDataFilePath, sheetName, columns, filterParams);
+	}
+	
+	/**
+	 * Get a collection of spreadsheet data from given sheet, column, and filter values.
+	 * 
+	 * @param testDataFilePath
+	 * @param sheetName
+	 * @param columns
+	 * @return collection of spreadsheet data rows from a given sheet and columns.
+	 */
+	private Iterator<Object[]> getSpreadsheetData(String testDataFilePath, String sheetName, String[] columns,
+			String[] filterParams) {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		int rowCount = excelReader.getRowCount(sheetName);
+		int colCount = columns.length;
+
+		// Stop if the search column array is more than ten items
+		if (colCount > 10) {
+			System.out.println(
+					"Trying to retrieve too many columns in data sheet; check test data and data provider method.");
 			return null;
+		}
+
+		// Stop if our test data is more than 300 cells
+		if (colCount * rowCount > 300) {
+			System.out.println(
+					"Number of data rows and columns may be getting out of control. Split out test data as needed.");
+			return null;
+		}
+
+		// IF we have a manageable amount of data, dynamically generate an array (rows)
+		// of arrays (columns).
+		for (int rowNum = 2; rowNum <= rowCount; rowNum++) {
+			if (meetsFilterCriteria(excelReader, sheetName, filterParams, rowNum) == true) {
+				ArrayList<String> tempList = getCellDataList(excelReader, sheetName, columns, rowNum);
+				myObjects.add(tempList.toArray());
+			}
+		}
+
+		return myObjects.iterator();
+	}
+
+	/**
+	 * Get a list of column values for a single row.
+	 * 
+	 * @param excelReader
+	 * @param sheetName
+	 * @param cols
+	 * @param rowNum
+	 * @return List of column values.
+	 */
+	private ArrayList<String> getCellDataList(ExcelManager excelReader, String sheetName, String[] cols, int rowNum) {
+		ArrayList<String> cdl = new ArrayList<String>();
+
+		for (int i = 0; i <= cols.length - 1; i++) {
+			String myItem = excelReader.getCellData(sheetName, cols[i], rowNum);
+			cdl.add(myItem);
+		}
+		return cdl;
+	}
+
+	/**
+	 * Check if 1) filter parameters have been passed in or 2) the cell value
+	 * matches our filter value. If so, return true.
+	 * 
+	 * @param ExcelManager object
+	 * @param Sheet name
+	 * @param filterParams
+	 * @param rowNum
+	 * @return
+	 */
+	private boolean meetsFilterCriteria(ExcelManager excelReader, String sheetName, String[] filterParams, int rowNum) {
+		if (filterParams == null) {
+			return true;
+		}
+
+		try {
+			String filterColumn = filterParams[0];
+			String filterValue = filterParams[1];
+
+			if (filterColumn.isEmpty() || filterValue.isEmpty()) {
+				return true;
+			} else if (excelReader.getCellData(sheetName, filterColumn, rowNum).contains(filterValue)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception ex) {
+			System.out.println("Invalid filter parameters; filter will not be applied.");
+			return true;
 		}
 	}
 
-	/****************************** Abstract methods ******************************/
+	// ==================== Abstract methods ==================== //
 
 	/**
 	 * Get a single Beacon object for testing.
 	 * 
+	 * @param index - optional int value
 	 * @return beacon (Beacon)
 	 */
-	protected abstract Beacon getBeacon();
+	protected abstract Beacon getBeacon(int... index);
 
 	/**
 	 * Get a list of Beacon objects.

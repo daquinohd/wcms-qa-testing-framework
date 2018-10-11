@@ -2,11 +2,9 @@ package gov.nci.webanalyticstests.home.pages;
 
 import java.util.Iterator;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
@@ -23,7 +21,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 	// ==================== Setup methods ==================== //
 
 	@BeforeClass(groups = { "Analytics" })
-	public void setupClass() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
 
@@ -37,14 +35,12 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
-			logger.log(LogStatus.PASS, "Test Home Page load event (" + contentType + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -57,14 +53,12 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, SITEHOME_PATH);
-			logger.log(LogStatus.PASS, "Test Home-refresh load event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -78,41 +72,19 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
-			Beacon beacon = getBeacon();
 
-			doCommonLoadAssertions(beacon, analyticsMetaData, SITEHOME_PATH);
-			logger.log(LogStatus.PASS, "Test Home-and-back load event passed.");
-		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
-		}
-	}
-
-	/// Test engagement tracking on page load
-	// @Test(groups = { "Analytics" })
-	public void testEngagement() {
-		System.out.println("Test engagement tracking on page load:");
-		driver.get(config.goHome());
-
-		try {
-			// TODO
-			// Click and scroll around page
-			// Refresh
 			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, SITEHOME_PATH);
-			logger.log(LogStatus.PASS, "Test engagement tracking on page load passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "HomePageLoad")
-	public Iterator<Object[]> getHomePageLoadData() {
+	private Iterator<Object[]> getHomePageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

@@ -2,11 +2,9 @@ package gov.nci.webanalyticstests.landing.pages;
 
 import java.util.Iterator;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
@@ -22,7 +20,7 @@ public class LandingLoad_Test extends AnalyticsTestLoadBase {
 	// ==================== Setup methods ==================== //
 
 	@BeforeClass(groups = { "Analytics" })
-	public void setupClass() {
+	private void setupClass() {
 		testDataFilePath = config.getProperty("AnalyticsPageLoadData");
 	}
 
@@ -36,21 +34,19 @@ public class LandingLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
-			logger.log(LogStatus.PASS, "Test Landing Page load event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "LandingPageLoad")
-	public Iterator<Object[]> getLandingPageLoadData() {
+	private Iterator<Object[]> getLandingPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

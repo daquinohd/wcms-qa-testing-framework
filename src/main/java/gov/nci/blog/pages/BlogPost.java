@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.framework.ElementChange;
 import gov.nci.framework.PageObjectBase;
+import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.blog.common.BlogLinks;
 import gov.nci.blog.common.BlogRightRail;
@@ -96,8 +97,7 @@ public class BlogPost extends PageObjectBase {
 	 * Clicks on the first "Recommended From NCI" card.
 	 */
 	public void clickRecommended() {
-		ScrollUtil.scrollIntoview(driver, lnk_blogFeatureCard);
-		lnk_blogFeatureCard.click();
+		ClickUtil.forceClick(driver, lnk_blogFeatureCard);
  	}
 		
 }

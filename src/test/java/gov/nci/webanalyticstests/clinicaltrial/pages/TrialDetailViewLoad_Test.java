@@ -1,14 +1,11 @@
 package gov.nci.webanalyticstests.clinicaltrial.pages;
 
-import com.relevantcodes.extentreports.LogStatus;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import java.util.Iterator;
-
-import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
@@ -54,13 +51,10 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 
 		try {
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, analyticsMetaData, type);
-			logger.log(LogStatus.PASS, "Test CTS Trial Detail View page load event (" + type + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.framework.PageObjectBase;
 
@@ -127,8 +128,7 @@ public class Card extends PageObjectBase {
 	 */
 	public void clickCardText(String text) {
 		WebElement element = getCardElementByText(text);
-		ScrollUtil.scrollIntoview(driver, element);
-		element.click();
+		ClickUtil.forceClick(driver, element);
 	}
 	
 }

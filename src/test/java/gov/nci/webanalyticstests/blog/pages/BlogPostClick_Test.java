@@ -1,7 +1,5 @@
 package gov.nci.webanalyticstests.blog.pages;
 
-import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -11,96 +9,104 @@ import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 
 public class BlogPostClick_Test extends AnalyticsTestClickBase {
 
-	private BlogPost blogPost;
-
-	private Beacon beacon;
-	private Actions action;
-
 	private final String CANCER_CURRENTS_POST = "/news-events/cancer-currents-blog/2018/fda-olaparib-breast-brca-mutations";
 
-	@BeforeMethod(groups = { "Analytics" })
-	public void setupBlogPost() {
+	private BlogPost blogPost;
+
+	// ==================== Setup methods ==================== //
+
+	private void setupTestMethod(String path) {
 		try {
-			action = new Actions(driver);
-			driver.get(config.goHome() + CANCER_CURRENTS_POST);
+			driver.get(config.goHome() + path);
 			this.blogPost = new BlogPost(driver);
-			action.pause(2000);
 		} catch (Exception e) {
+			Assert.fail("Error building BlogPost page object.");
 			e.printStackTrace();
-			System.out.println("Error building BlogPost page object.");
 		}
 	}
 
-	/**************** Blog Post body tests *****************************/
+	// ==================== Test methods ==================== //
 
+	/// Test Blog Post Body Link Click
 	@Test(groups = { "Analytics" }, priority = 1)
 	public void testBlogPostBodyLinkClick() {
+		System.out.println("Test Blog Post Body Link Click:");
+		setupTestMethod(CANCER_CURRENTS_POST);
+
 		try {
-			System.out.println("Test body link click: ");
 			String firstLinkText = blogPost.getBodyLinkText();
 			String currUrl = driver.getCurrentUrl();
 			blogPost.clickBodyLink();
-			beacon = getBeacon();
-
-			doCommonClassAssertions(currUrl, "BlogBodyLinkClick");
-			Assert.assertTrue(beacon.hasEvent(56));
+			
+			Beacon beacon = getBeacon();
+			doCommonClassAssertions(beacon, currUrl, "BlogBodyLinkClick");
+			Assert.assertTrue(beacon.hasEvent(56), "Missing event56");
 			Assert.assertEquals(beacon.props.get(50), firstLinkText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_BodyLink");
-			Assert.assertTrue(currUrl.contains(beacon.props.get(67)));
+			Assert.assertTrue(currUrl.contains(beacon.props.get(67)), "prop67 incorrect");
 		} catch (Exception e) {
-			Assert.fail("Error clicking link in body.");
-			e.printStackTrace();
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
+	/// Test Blog Post Definition Link Click
 	@Test(groups = { "Analytics" }, priority = 2)
 	public void testBlogPostDefinitionLinkClick() {
+		System.out.println("Test Blog Post Definition Link Click:");
+		setupTestMethod(CANCER_CURRENTS_POST);
+
 		try {
-			System.out.println("Test definition link click: ");
 			String firstLinkText = blogPost.getDefinitionLinkText();
 			String currUrl = driver.getCurrentUrl();
 			blogPost.clickDefinitionNoPopup();
-			beacon = getBeacon();
 
-			doCommonClassAssertions(currUrl, "BlogBodyLinkClick");
-			Assert.assertTrue(beacon.hasEvent(56));
+			Beacon beacon = getBeacon();
+			doCommonClassAssertions(beacon, currUrl, "BlogBodyLinkClick");
+			Assert.assertTrue(beacon.hasEvent(56), "Missing event56");
 			Assert.assertEquals(beacon.props.get(50), firstLinkText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_BodyGlossifiedTerm");
 		} catch (Exception e) {
-			Assert.fail("Error clicking definition link.");
-			e.printStackTrace();
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
+	/// Test Blog Post Recommended Link Click
 	@Test(groups = { "Analytics" }, priority = 3)
 	public void testBlogPostRecommendedClick() {
+		System.out.println("Test Blog Post Recommended Link Click:");
+		setupTestMethod(CANCER_CURRENTS_POST);
+
 		try {
-			System.out.println("Test 'Recommended' card click: ");
 			String recommended = blogPost.getRecommendedLinkText();
 			String currUrl = driver.getCurrentUrl();
 			blogPost.clickRecommended();
-			beacon = getBeacon();
 
-			doCommonClassAssertions(currUrl, "BlogFeatureCardClick");
-			Assert.assertTrue(beacon.hasEvent(54));
+			Beacon beacon = getBeacon();
+			doCommonClassAssertions(beacon, currUrl, "BlogFeatureCardClick");
+			Assert.assertTrue(beacon.hasEvent(54), "Missing event56");
 			Assert.assertEquals(beacon.props.get(50), recommended);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_BlogCard:1");
 		} catch (Exception e) {
-			Assert.fail("Error navigating blost post page.");
-			e.printStackTrace();
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
+	// ==================== Common assertions ==================== //
+
 	/**
-	 * Shared Assert() calls for BlogPost_Test class.
+	 * Shared Assert() calls for this class.
 	 * 
+	 * @param beacon
 	 * @param currentUrl
 	 * @param linkName
 	 */
-	private void doCommonClassAssertions(String currentUrl, String linkName) {
+	private void doCommonClassAssertions(Beacon beacon, String currentUrl, String linkName) {
 		// Note: remove this once pageName value is fixed on CDE side
 		Assert.assertEquals(beacon.linkName, linkName);
-		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)));
+		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)), "prop67 incorrect");
 	}
 
 }

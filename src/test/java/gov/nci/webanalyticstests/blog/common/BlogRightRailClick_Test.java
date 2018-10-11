@@ -2,7 +2,6 @@ package gov.nci.webanalyticstests.blog.common;
 
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.Test;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 import gov.nci.blog.common.BlogRightRail;
@@ -22,7 +21,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 
 	// ==================== Setup methods ==================== //
 
-	public void setupTestMethod(String path) {
+	private void setupTestMethod(String path) {
 		try {
 			driver.get(config.goHome() + path);
 			driver.navigate().refresh();
@@ -47,17 +46,16 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		try {
 			String featuredText = rightRail.getFeaturedItemText(0);
 			rightRail.clickFeaturedItem(0);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "FeaturedPostsClick");
-			Assert.assertTrue(beacon.hasEvent(54));
+			Assert.assertTrue(beacon.hasEvent(54), "Missing event54");
 			Assert.assertEquals(beacon.props.get(50), featuredText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_FeaturedPosts:1");
 			logger.log(LogStatus.PASS, "Test Blog Series Rail Featured click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -70,17 +68,16 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		try {
 			String featuredText = rightRail.getFeaturedItemText(0);
 			rightRail.clickFeaturedItem(0);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "FeaturedPostsClick");
-			Assert.assertTrue(beacon.hasEvent(54));
+			Assert.assertTrue(beacon.hasEvent(54), "Missing event54");
 			Assert.assertEquals(beacon.props.get(50), featuredText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_FeaturedPosts:1");
 			logger.log(LogStatus.PASS, "Test Blog Post Rail Featured click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -93,17 +90,16 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		try {
 			String catText = rightRail.getCategoryItemText(1);
 			rightRail.clickCategoryItem(1);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "CategoryClick");
-			Assert.assertTrue(beacon.hasEvent(55));
+			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), catText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Series_Category:2");
 			logger.log(LogStatus.PASS, "Test Blog Series Rail Category click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -116,17 +112,16 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		try {
 			String catText = rightRail.getCategoryItemText(1);
 			rightRail.clickCategoryItem(1);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "CategoryClick");
-			Assert.assertTrue(beacon.hasEvent(55));
+			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), catText);
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_Category:2");
 			logger.log(LogStatus.PASS, "Test Blog Post Rail Category click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -138,15 +133,14 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 
 		try {
 			rightRail.clickArchiveHeader();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Series_Expand:Archive");
 			logger.log(LogStatus.PASS, "Test Blog Series Rail Archive Expand click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -158,15 +152,14 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 
 		try {
 			rightRail.clickArchiveHeader();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrentsEsp_Post_Expand:Archive");
 			logger.log(LogStatus.PASS, "Test Blog Post Rail Archive expand click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -177,21 +170,18 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
-			Actions action = new Actions(driver);
 			rightRail.clickArchiveHeader();
-			action.pause(500).perform();
 			rightRail.clickArchiveYear("2017");
-			rightRail.clickArchiveMonth("May");
-			Beacon beacon = getBeacon();
+			rightRail.clickArchiveMonth("5", "2017");
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogArchiveDateClick");
-			Assert.assertTrue(beacon.hasEvent(55));
+			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), "2017:5");
 			logger.log(LogStatus.PASS, "Test Blog Series Rail month click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -202,21 +192,18 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
-			Actions action = new Actions(driver);
 			rightRail.clickArchiveHeader();
-			action.pause(500).perform();
 			rightRail.clickArchiveYear("2017");
-			rightRail.clickArchiveMonth("May");
-			Beacon beacon = getBeacon();
+			rightRail.clickArchiveMonth("5", "2017");
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogArchiveDateClick");
-			Assert.assertTrue(beacon.hasEvent(55));
+			Assert.assertTrue(beacon.hasEvent(55), "Missing event55");
 			Assert.assertEquals(beacon.props.get(50), "2017:5");
 			logger.log(LogStatus.PASS, "Test Blog Post Rail Month click passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -227,19 +214,16 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
-			Actions action = new Actions(driver);
 			rightRail.clickArchiveHeader();
-			action.pause(500).perform();
 			rightRail.clickArchiveHeader();
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
 			Assert.assertEquals(beacon.props.get(66), "Blog_CancerCurrents_Post_Collapse:Archive");
 			logger.log(LogStatus.PASS, "Test Blog Post Rail Archive collapse passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -254,7 +238,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	private void doCommonClassAssertions(Beacon beacon, String linkName) {
 		// Note: remove this once pageName value is fixed on CDE side
 		Assert.assertEquals(beacon.linkName, linkName);
-		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)));
+		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)), "prop67 incorrect");
 	}
 
 }
