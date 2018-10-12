@@ -1,9 +1,7 @@
 package gov.nci.webanalyticstests.sitewidesearch.common;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,7 +10,6 @@ import org.testng.Assert;
 import gov.nci.commonobjects.SitewideSearchForm;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
-import gov.nci.Utilities.ExcelManager;
 
 public class SwsFormClick_Test extends AnalyticsTestClickBase {
 
@@ -54,148 +51,121 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	// Test Sitewide Search from Home Page
 	@Test(dataProvider = "CancerTermsEn", groups = { "Analytics" })
 	public void testSitewideSearchFromHome(String searchTerm) {
-		System.out.println("Test Sitewide Search from Home Page (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_HOME_EN, searchTerm);
 
 		try {
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.props.get(8), "english");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
-			logger.log(LogStatus.PASS, "Test Sitewide Search from Home Page (" + searchTerm + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// Test Sitewide Search from Spanish Home Page
 	@Test(dataProvider = "CancerTermsEs", groups = { "Analytics" })
 	public void testSitewideSearchFromHomeSpanish(String searchTerm) {
-		System.out.println("Test Sitewide Search from Spanish Home Page (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_HOME_ES, searchTerm);
 
 		try {
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.props.get(8), "spanish");
 			Assert.assertEquals(beacon.props.get(11), "sitewide_spanish");
-			logger.log(LogStatus.PASS, "Test Sitewide Search from Spanish Home Page (" + searchTerm + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// Test Sitewide Search from Inner Page
 	@Test(dataProvider = "DefinitionTerms", groups = { "Analytics" })
 	public void testSitewideSearchFromInner(String searchTerm) {
-		System.out.println("Test Sitewide Search from Inner Page (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_INNER, searchTerm);
 
 		try {
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.props.get(8), "english");
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
-			logger.log(LogStatus.PASS, "Test Sitewide Search from Inner Page (" + searchTerm + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// Test Sitewide Search for unmatched term
 	@Test(dataProvider = "NoMatchTerms", groups = { "Analytics" })
 	public void testSitewideSearchNoMatch(String searchTerm) {
-		System.out.println("Test Sitewide Search for unmatched term (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_HOME_EN, searchTerm);
 
 		try {
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
-			logger.log(LogStatus.PASS, "Test Sitewide Search unmatched term (" + searchTerm + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// Verify analytics click values for microsite-wide search
 	@Test(dataProvider = "BestBetTerms", groups = { "Analytics" })
 	public void testMicroSitewideSearch(String searchTerm) {
-		System.out.println("Test Microsite Search for term (" + searchTerm + "):");
+		System.out.println("Search term: " + searchTerm);
 		setupTestMethod(PATH_MICROSITE, searchTerm);
 
 		try {
 			Beacon beacon = getBeacon();
-
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.props.get(11), "sitewide");
-			logger.log(LogStatus.PASS, "Test Microsite Search for term (" + searchTerm + ") passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "CancerTermsEn")
-	public Iterator<Object[]> getCancerTermsEn() {
-		return getFilteredSearchTerms(TESTDATA_SHEET_NAME_EN, "Generic");
+	private Iterator<Object[]> getCancerTermsEn() {
+		String[] columnsToReturn = { "SearchTerm" };
+		String[] filterInfo = { "ResultType", "Generic" };
+		return getFilteredSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME_EN, columnsToReturn, filterInfo);
 	}
 
 	@DataProvider(name = "CancerTermsEs")
-	public Iterator<Object[]> getCancerTermsEs() {
-		return getFilteredSearchTerms(TESTDATA_SHEET_NAME_ES, "Generic");
+	private Iterator<Object[]> getCancerTermsEs() {
+		String[] columnsToReturn = { "SearchTerm" };
+		String[] filterInfo = { "ResultType", "Generic" };
+		return getFilteredSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME_ES, columnsToReturn, filterInfo);
 	}
 
 	@DataProvider(name = "BestBetTerms")
-	public Iterator<Object[]> getBestBetTerms() {
-		return getFilteredSearchTerms(TESTDATA_SHEET_NAME_EN, "BestBet");
+	private Iterator<Object[]> getBestBetTerms() {
+		String[] columnsToReturn = { "SearchTerm" };
+		String[] filterInfo = { "ResultType", "BestBet" };
+		return getFilteredSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME_EN, columnsToReturn, filterInfo);
 	}
 
 	@DataProvider(name = "DefinitionTerms")
-	public Iterator<Object[]> getDefinitionTerms() {
-		return getFilteredSearchTerms(TESTDATA_SHEET_NAME_EN, "BestBet");
+	private Iterator<Object[]> getDefinitionTerms() {
+		String[] columnsToReturn = { "SearchTerm" };
+		String[] filterInfo = { "ResultType", "Definition" };
+		return getFilteredSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME_EN, columnsToReturn, filterInfo);
 	}
 
 	@DataProvider(name = "NoMatchTerms")
-	public Iterator<Object[]> getNoMatchTerms() {
-		return getFilteredSearchTerms(TESTDATA_SHEET_NAME_EN, "NoMatch");
-	}
-
-	/**
-	 * Get an iterable collection of test objects given a data sheet name and column
-	 * 
-	 * @param sheetName
-	 * @param filter
-	 * @return
-	 */
-	private Iterator<Object[]> getFilteredSearchTerms(String sheetName, String filter) {
-		ExcelManager excelReader = new ExcelManager(testDataFilePath);
-		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(sheetName); rowNum++) {
-			String searchTerm = excelReader.getCellData(sheetName, "SearchTerm", rowNum);
-			String resultType = excelReader.getCellData(sheetName, "ResultType", rowNum);
-			if (resultType.equalsIgnoreCase(filter)) {
-				Object ob[] = { searchTerm };
-				myObjects.add(ob);
-			}
-		}
-		return myObjects.iterator();
-
+	private Iterator<Object[]> getNoMatchTerms() {
+		String[] columnsToReturn = { "SearchTerm" };
+		String[] filterInfo = { "ResultType", "NoMatch" };
+		return getFilteredSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME_EN, columnsToReturn, filterInfo);
 	}
 
 	// ==================== Common assertions ==================== //
@@ -208,12 +178,11 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 	 */
 	private void doCommonClassAssertions(Beacon beacon, String searchTerm) {
 		doCommonClickAssertions(beacon);
-		Assert.assertTrue(beacon.hasEvent(2));
+		Assert.assertTrue(beacon.hasEvent(2), "Missing event2");
 		Assert.assertEquals(beacon.linkName, "SiteWideSearch");
-
 		Assert.assertEquals(beacon.props.get(14), searchTerm.toLowerCase());
 		Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));
-		Assert.assertTrue(beacon.eVars.get(13).matches("^\\+\\d{1,2}$"));
+		Assert.assertTrue(beacon.eVars.get(13).matches("^\\+\\d{1,2}$"), "eVar13 incorrect");
 		Assert.assertEquals(beacon.eVars.get(14), beacon.props.get(14));
 	}
 

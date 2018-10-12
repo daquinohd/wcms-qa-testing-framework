@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.framework.PageObjectBase;
 
@@ -81,11 +83,6 @@ public class MegaMenu extends PageObjectBase {
 	}
 
 	public void clickMegaMenuListItem(String text) {
-		// WebElement element = mm_subnav_li_text;
-		// WebElement element = getMegaMenuElementByText(text);
-		// JavascriptExecutor js = (JavascriptExecutor) driver;
-		// js.executeScript("arguments[0].click();", element);
-
 		action.moveToElement(mm_bar_link).perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li));
 		mm_subnav_li.click();
@@ -93,18 +90,20 @@ public class MegaMenu extends PageObjectBase {
 
 	public void revealMegaMenuDesktop() {
 		action.moveToElement(mm_bar_link).perform();
-		action.pause(2000).perform();
 		wait.until(ExpectedConditions.visibilityOf(mm_subnav_li));
+		ClickUtil.stall(mm_subnav_li);
 	}
 
 	public void revealMegaMenuMobile() {
 		driver.manage().window().setSize(Resize.small);
 		mm_reveal_mobile.click();
+		
+		WebElement element = driver.findElement(By.cssSelector("button.toggle"));
+		ClickUtil.stall(element);
 	}
 
 	public void clickMegaMenuMobileButton() {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();", mm_btn_mobile);
+		ClickUtil.forceClick(driver, ".nav-item-title button.toggle");
 	}
 
 	/**
@@ -113,11 +112,9 @@ public class MegaMenu extends PageObjectBase {
 	 * @param text
 	 * @return
 	 */
-	// TODO: make this a reusable utility function
 	private WebElement getMegaMenuElementByText(String text) {
 		WebElement element = driver.findElement(By.xpath("//*[contains(text(), '" + text + "')]"));
-
 		return element;
 	}
-
+	
 }

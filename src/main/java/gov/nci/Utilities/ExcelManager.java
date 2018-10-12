@@ -113,24 +113,6 @@ public class ExcelManager {
 		}
 	}
 
-	/**
-	 * Get an integer from a number string in the spreadsheet.
-	 * 
-	 * @param sheetName
-	 * @param colName
-	 * @param rowNum
-	 * @return
-	 */
-	public int getCellIntegerData(String sheetName, String colName, int rowNum) {
-		String cellData = getCellData(sheetName, colName, rowNum);
-		try {
-			String myInt = cellData.split("[.]")[0];
-			return Integer.parseInt(myInt);
-		} catch (NumberFormatException e) {
-			return -1;
-		}
-	}
-
 	// This method is to find whether sheet exists and returns True or False
 	public boolean isSheetExist(String sheetName) {
 		int index = workbook.getSheetIndex(sheetName);

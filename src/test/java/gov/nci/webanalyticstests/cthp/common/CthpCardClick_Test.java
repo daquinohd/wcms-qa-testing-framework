@@ -1,16 +1,12 @@
 package gov.nci.webanalyticstests.cthp.common;
 
-import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
-import gov.nci.Utilities.ExcelManager;
 import gov.nci.commonobjects.Card;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
@@ -31,17 +27,19 @@ public class CthpCardClick_Test extends AnalyticsTestClickBase {
 		testDataFilePath = config.getProperty("AnalyticsCTHPData");
 	}
 
+	/**
+	 * Create new card object and go to
+	 * 
+	 * @param path
+	 */
 	private void setupTestMethod(String path) {
 		try {
 			driver.get(config.goHome() + path);
 			currentUrl = driver.getCurrentUrl();
 			card = new Card(driver);
-
-			Actions action = new Actions(driver);
-			action.pause(1000).perform();
 		} catch (Exception e) {
+			Assert.fail("Error loading CTHP Card object at: " + driver.getCurrentUrl());
 			e.printStackTrace();
-			System.out.println("Error building CTHP page object.");
 		}
 	}
 
@@ -50,38 +48,34 @@ public class CthpCardClick_Test extends AnalyticsTestClickBase {
 	// Test CTHP HP Card click event
 	@Test(dataProvider = "CthpHpCard", groups = { "Analytics" })
 	public void testCthpHpCardClick(String path, String cardTitle, String linkText, String cardPos) {
-		System.out.println("Test CTHP HP " + cardTitle + " Card click event:");
+		System.out.println("Card title: " + cardTitle);
 		setupTestMethod(path);
 
 		try {
 			card.clickCardText(linkText);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, cardTitle, linkText, cardPos);
-			logger.log(LogStatus.PASS, "Test CTHP HP " + cardTitle + " Card click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// Test CTHP Patient Card click event
 	@Test(dataProvider = "CthpPatientCard", groups = { "Analytics" })
 	public void testCthpPatientCardClick(String path, String cardTitle, String linkText, String cardPos) {
-		System.out.println("Test CTHP Patient " + cardTitle + " Card click event:");
+		System.out.println("Card title: " + cardTitle);
 		setupTestMethod(path);
 
 		try {
 			card.clickCardText(linkText);
-			Beacon beacon = getBeacon();
 
+			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, cardTitle, linkText, cardPos);
-			logger.log(LogStatus.PASS, "Test CTHP Patient " + cardTitle + " Card click event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error clicking component in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
@@ -98,24 +92,14 @@ public class CthpCardClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/**
-	 * Get a testable data object, filtered by audience
+	 * Get a testable data object based on audience sheet.
 	 * 
 	 * @param sheetName
-	 * @return
+	 * @return object containing path, card title, linktext, position data
 	 */
 	private Iterator<Object[]> getCthpCardData(String sheetName) {
-		ExcelManager excelReader = new ExcelManager(testDataFilePath);
-		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(sheetName); rowNum++) {
-			String path = excelReader.getCellData(sheetName, "Path", rowNum);
-			String title = excelReader.getCellData(sheetName, "CardTitle", rowNum);
-			String text = excelReader.getCellData(sheetName, "LinkText", rowNum);
-			String index = excelReader.getCellData(sheetName, "CardPos", rowNum);
-
-			Object ob[] = { path, title, text, index };
-			myObjects.add(ob);
-		}
-		return myObjects.iterator();
+		String[] columnsToReturn = { "Path", "CardTitle", "LinkText", "CardPos" };
+		return getSpreadsheetData(testDataFilePath, sheetName, columnsToReturn);
 	}
 
 	// ==================== Common assertions ==================== //
@@ -133,12 +117,12 @@ public class CthpCardClick_Test extends AnalyticsTestClickBase {
 		String testPath = beacon.props.get(60);
 
 		doCommonClickAssertions(beacon);
-		Assert.assertTrue(beacon.hasEvent(27));
+		Assert.assertTrue(beacon.hasEvent(27), "Missing event27");
 		Assert.assertEquals(beacon.linkName, "FeatureCardClick");
 		Assert.assertEquals(beacon.props.get(57), cardTitle.trim());
 		Assert.assertEquals(beacon.props.get(58), linkText.trim());
 		Assert.assertEquals(beacon.props.get(59), typePosition);
-		Assert.assertTrue(currentUrl.contains(testPath.substring(testPath.indexOf("cancer.gov"))));
+		Assert.assertTrue(currentUrl.contains(testPath.substring(testPath.indexOf("cancer.gov"))), "prop60 incorrect");
 	}
 
 }

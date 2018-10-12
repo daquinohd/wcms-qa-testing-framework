@@ -12,7 +12,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.clinicalTrial.common.Delighter;
 import gov.nci.framework.AutoSuggestHelper;
@@ -92,17 +94,14 @@ public class TrialDetailView extends ClinicalTrialPageObjectBase {
 	}
 	
 	public void clickPrintLink() {
-		JavascriptExecutor js = (JavascriptExecutor) driver;		
-		js.executeScript("window.print=function(){};");		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.print=function(){};");
+		ClickUtil.forceClick(driver, lnk_print);
+	}
 
-		ScrollUtil.scrollIntoview(this.driver, lnk_print);
-		lnk_print.click();
-	}
-	
 	public void clickEmailLink() {
-		ElementChange.removeHref(driver, "a.email");		
-		ScrollUtil.scrollIntoview(this.driver, lnk_email);
-		lnk_email.click();
+		ElementChange.removeHref(driver, "a.email");
+		ClickUtil.forceClick(driver, lnk_email);
 	}
-		
+
 }

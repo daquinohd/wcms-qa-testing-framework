@@ -166,20 +166,6 @@ public class BrowserManager {
 			driver.manage().window().maximize();
 			driver.get(url); // open proxy page
 		}
-		else if (browserName.equalsIgnoreCase("ChromeHeadless")) {
-			System.out.println("Chrome headless");
-			String driverFullPath = getDriverPath(config, "ChromeDriver");			
-			System.setProperty("webdriver.chrome.driver", driverFullPath);
-			System.out.println("Chrome Driver Path: " + driverFullPath);
-				
-			// TODO: handle NoSuchElementException
-			// chromeOptions.addArguments("headless");
-			// chromeOptions.addArguments("window-size=1200x600");  // Testing large screens: Breakpoint 1024px
-			chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);			
-			driver = new ChromeDriver(chromeOptions);
-			driver.manage().window().maximize();
-			driver.get(url);
-		}		
 		else if(browserName.equalsIgnoreCase("Firefox")) {
 			System.out.println("Firefox browser");
 			String driverFullPath = getDriverPath(config, "FirefoxDriver");
@@ -191,7 +177,7 @@ public class BrowserManager {
 			driver.manage().window().maximize();
 			driver.get(url);
 		}
-		else if(browserName.equalsIgnoreCase("GeckoHeadless")) {
+		else if (browserName.toLowerCase().contains("headless")) {
 			System.out.println("Gecko headless");
 			// Firefox/Geckdo driver are the same
 			String driverFullPath = getDriverPath(config, "FirefoxDriver");
@@ -203,6 +189,20 @@ public class BrowserManager {
 			firefoxOptions.setBinary(firefoxBinary);
 			firefoxOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
 			driver = new FirefoxDriver(firefoxOptions);
+			driver.manage().window().maximize();
+			driver.get(url);
+		}
+		else if (browserName.equalsIgnoreCase("ChromeHeadless")) {
+			System.out.println("Chrome headless");
+			String driverFullPath = getDriverPath(config, "ChromeDriver");			
+			System.setProperty("webdriver.chrome.driver", driverFullPath);
+			System.out.println("Chrome Driver Path: " + driverFullPath);
+				
+			// TODO: handle NoSuchElementException
+			// chromeOptions.addArguments("headless");
+			// chromeOptions.addArguments("window-size=1200x600");  // Testing large screens: Breakpoint 1024px
+			chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);			
+			driver = new ChromeDriver(chromeOptions);
 			driver.manage().window().maximize();
 			driver.get(url);
 		}

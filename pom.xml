@@ -159,6 +159,7 @@
               If no environment is specified, the default is QA.
             -->
             <environment>qa</environment>
+            <debug>false</debug>
           </systemPropertyVariables>
         </configuration>
 

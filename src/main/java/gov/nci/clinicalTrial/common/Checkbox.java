@@ -44,7 +44,7 @@ public class Checkbox {
 		js.executeScript(
 				"var x=document.getElementById('" + id + "');x.style.display='inline';x.click();x.checked=true;");
 		Actions action = new Actions(browser);
-		action.pause(500);
+		/// action.pause(500);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class Checkbox {
 		js.executeScript(
 				"var x=document.getElementById('" + id + "');x.style.display='inline';x.checked=false;");
 		Actions action = new Actions(browser);
-		action.pause(500);
+		/// action.pause(500);
 	}
 
 	/**
@@ -68,6 +68,6 @@ public class Checkbox {
 		js.executeScript("for(var checkboxes=document.getElementsByTagName('input'),x=0;x<checkboxes.length;x++)"
 				+ "'checkbox'==checkboxes[x].type&&(checkboxes[x].checked=!1);");
 		Actions action = new Actions(browser);
-		action.pause(500);
+		/// action.pause(500);
 	}
 }

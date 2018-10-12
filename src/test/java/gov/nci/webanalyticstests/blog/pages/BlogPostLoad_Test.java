@@ -31,27 +31,26 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Blog Post Page load event
 	@Test(dataProvider = "BlogPostPageLoad", groups = { "Analytics" })
 	public void testBlogPostPageLoad(String path, String contentType) {
-		System.out.println("Test Blog Post Page load event:");
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {
 			analyticsMetaData = new AnalyticsMetaData(driver);
+			
 			Beacon beacon = getBeacon();
-
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
 			Assert.assertEquals(beacon.eVars.get(48), analyticsMetaData.getMetaIsPartOf() + " Viewer");
 			logger.log(LogStatus.PASS, "Test Blog Post Page load event passed.");
 		} catch (Exception e) {
-			String currMethod = new Object() {
-			}.getClass().getEnclosingMethod().getName();
-			Assert.fail("Error loading page in " + currMethod + "()");
+			handleTestErrors(new Object() {
+			}, e);
 		}
 	}
 
 	// ==================== Data providers ==================== //
 
 	@DataProvider(name = "BlogPostPageLoad")
-	public Iterator<Object[]> getBlogPostPageLoadData() {
+	private Iterator<Object[]> getBlogPostPageLoadData() {
 		return getPathContentTypeData(testDataFilePath, TESTDATA_SHEET_NAME);
 	}
 

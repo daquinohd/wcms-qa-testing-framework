@@ -2,7 +2,6 @@ package gov.nci.pdq.common;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -10,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.framework.ElementChange;
 import gov.nci.framework.PageObjectBase;
@@ -68,8 +68,7 @@ public class PdqRightNav extends PageObjectBase {
 	 */
 	public void clickSection(String text) {
 		WebElement section = getSection(text);
-		ScrollUtil.scrollIntoview(driver, section);
-		section.click();
+		ClickUtil.forceClick(driver, section);
 	}
 
 	/**
@@ -81,8 +80,7 @@ public class PdqRightNav extends PageObjectBase {
 		WebElement section = getSection(text);
 		ScrollUtil.scrollIntoview(driver, section);
 		
-		ElementChange.removeHref(driver, ".pdq-toptoc a");
-		
+		ElementChange.removeHref(driver, ".pdq-toptoc a");		
 		section.click();
 	}
 	

@@ -15,9 +15,9 @@
 			<parameter name="browser" value="GeckoHeadless" />
 			<parameter name="browser" value="iPhone6" />
 			<parameter name="browser" value="iPad" />
-			<parameter name="environment" value="prod" />
+			<parameter name="environment" value="qa" />
+			<parameter name="debug" value="false" />
 		-->
-		<parameter name="environment" value="dt" />
 		<groups>
 			<run>
 				<include name="Analytics" />
@@ -80,6 +80,7 @@
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" />
+			<class name="gov.nci.webanalyticstests.commonobjects.TimingScrollLoad_Test" />
 
 			<!-- All other page load tracking -->
 			<class name="gov.nci.webanalyticstests.home.pages.HomeLoad_Test" />

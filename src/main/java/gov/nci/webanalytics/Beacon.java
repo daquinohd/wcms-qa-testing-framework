@@ -11,12 +11,9 @@ import gov.nci.Utilities.ExcelManager;
 public class Beacon extends AnalyticsRequest {
 	// TODO: Handle null exceptions in has() methods
 	// TODO: Clean up comments
-	// TODO: Replace "contains' with "matches" where possible
-	// TODO: Refactor common key/var logic into util methods
 	// TODO: Rename cgov_pagename
 
 	// Constants
-	public static final String TRACKING_SERVER = "nci.122.2o7.net";
 	public static final String CGOV_PAGENAME = "www.cancer.gov";
 	protected static final String DATA_FILEPATH = "./test-data/webanalytics-suitemap.xlsx";
 	protected static final String DATA_SHEETNAME = "CancerGov";
