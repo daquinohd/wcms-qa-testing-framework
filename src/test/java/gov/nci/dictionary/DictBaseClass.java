@@ -8,6 +8,7 @@ import java.util.Map;
  *  Dictionary base class
  */
 public class DictBaseClass extends BaseClass {
+	static boolean blair = true;
 
 	/**
 	 *  Method to return the expected number of dictionary definitions for letter "B" on PROD

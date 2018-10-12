@@ -15,7 +15,7 @@ import gov.nci.framework.PageObjectBase;
 
 public class DictObjectBase extends PageObjectBase {
     static String tier = "DEV";
-    
+
 
     public DictObjectBase (WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
         super(browser);
@@ -44,13 +44,27 @@ public class DictObjectBase extends PageObjectBase {
         return text_TitleText;
     }
 
+    public boolean FieldVisible(String elementSelector) {
+        List<WebElement> elementExists = getElementControl(elementSelector);
+
+        if (elementExists.size() > 0) {
+            WebElement element = elementExists.get(0);
+            return element.isDisplayed();
+        }
+        return false;
+    }
+
     // Testing if the input field is correct
     // ---------------------------------------
-    public WebElement SearchResultHeader(String selector) {
+    public Boolean SearchResultHeaderVisible(String selector) {
         List<WebElement> elementExists = getBrowser().findElements(By.cssSelector(selector));
-        WebElement text_TitleText = elementExists.get(0);
 
-        return text_TitleText;
+        if (elementExists.size() > 0) {
+            // WebElement text_TitleText = elementExists.get(0);
+            return true;
+        }
+
+        return false;
     }
 
     // Testing if the input field is correct
@@ -102,8 +116,7 @@ public class DictObjectBase extends PageObjectBase {
     // Find the anchor link for the dictionary widget and click the link
     // Ensure we're seeing the correct page
     // -----------------------------------------------------------------
-    public boolean AZListSelect(WebDriver driver, String elementSelector,
-                                String language, Integer numberOfEntries) {
+    public boolean AZListSelect(WebDriver driver, String elementSelector, String language) {
         List<WebElement> followLink = getElementControl(elementSelector);
 
         if (followLink.size() > 0) {
@@ -112,7 +125,10 @@ public class DictObjectBase extends PageObjectBase {
 
             List<WebElement> letterResults = driver.findElements(By.cssSelector("dt dfn"));
 
-            if (letterResults.size() == numberOfEntries) {
+            // Only want to check that we're getting results. Don't need to check for exact numbers
+            // since these numbers differ between environments
+            // if (letterResults.size() == numberOfEntries) {
+            if (letterResults.size() > 0) {
                 return true;
             }
         }
@@ -149,21 +165,36 @@ public class DictObjectBase extends PageObjectBase {
         return false;
     }
 
-    public boolean FieldVisible(String elementSelector) {
-        List<WebElement> elementExists = getElementControl(elementSelector);
-
-        if (elementExists.size() > 0) {
-            WebElement element = elementExists.get(0);
-            return element.isDisplayed();
-        }
-        return false;
-    }
-
     public void SubmitSearchTerm(String inputSelector, String searchTerm) {
         List<WebElement> searchField = getElementControl(inputSelector);
         searchField.get(0).sendKeys(searchTerm);
         searchField.get(0).sendKeys(Keys.RETURN);
+    }
 
+    public void SearchTermPressButton(String inputSelector, String searchTerm) {
+        List<WebElement> searchField = getElementControl(inputSelector);
+        searchField.get(0).sendKeys(searchTerm);
+        List<WebElement> searchBtn = getElementControl("#btnSearch");
+        searchBtn.get(0).click();
+    }
+
+    public void ClickElement(String inputSelector, String term, WebDriver driver) {
+        List<WebElement> searchField = getElementControl(inputSelector);
+        // Walk through the list of elements found and click the term provided
+        //
+        // I wasn't able to click the element inside the for-loop.  This resulted
+        // in a StaleElementReferenceException but clicking the element outside
+        // the loop works as expected.
+        Integer item = 0;
+        for (WebElement e : searchField) {
+            if (e.getText().equals(term)){
+                // e.click();
+                ScrollUtil.scrollIntoview(driver, e);
+                break;
+            }
+            item++;
+        }
+        searchField.get(item).click();
     }
 
     private List<WebElement> getTitle() {
@@ -207,7 +238,7 @@ public class DictObjectBase extends PageObjectBase {
             List<WebElement> searchType = getBrowser().findElements(By.cssSelector("#lblContains"));
             searchType.get(0).click();
     }
-    
+
 	public void clickSearchResult(String selector, int index) {
 		WebElement result = SearchResultList(selector).get(index);
 		ScrollUtil.scrollIntoview(getBrowser(), result);
@@ -217,5 +248,5 @@ public class DictObjectBase extends PageObjectBase {
 	public void clickSearchResult(String selector) {
 		clickSearchResult(selector, 0);
 	}
-    
+
 }
