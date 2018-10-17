@@ -23,24 +23,26 @@ public class Resources4ResearchersSearchResult {
 	public static final String R4R_HOME_PAGE_URL = "https://www-blue-dev.cancer.gov/research/r4r/";
 	public final String BREAD_CRUMB = "Home\nResearch";
 	public static final List<String> EXP_TOOL_TYPE_OPTIONS = Lists.newArrayList("Analysis Tools",
-			"Datasets & Databases", "Lab Tools", "Terminology", "Networks/Consortiums", "Clinical Research Tools",
-			"Community Research Tools");
-	public static final List<String> EXP_RESEARCH_AREA_OPTIONS = Lists.newArrayList("Cancer Treatment", "Cancer Omics",
-			"Cancer Biology", "Screening & Detection", "Cancer Statistics", "Cancer Health Disparities",
-			"Cancer & Public Health", "Cancer Diagnosis", "Causes of Cancer", "Cancer Survivorship",
-			"Cancer Prevention");
+			"Datasets & Databases", "Lab Tools", "Community Research Tools", "Terminology", "Networks/Consortiums",
+			"Clinical Research Tools", "Training Resources");
+
+	public static final List<String> EXP_RESEARCH_AREA_OPTIONS = Lists.newArrayList("Cancer Biology", "Cancer Omics",
+			"Cancer Treatment", "Screening & Detection", "Causes of Cancer", "Cancer Health Disparities",
+			"Cancer & Public Health", "Cancer Diagnosis", "Cancer Statistics", "Cancer Prevention",
+			"Cancer Survivorship", "Bioinformatics");
 	public static final List<String> EXP_RESEARCH_TYPE_OPTIONS = Lists.newArrayList("Basic", "Translational",
-			"Clinical Trials", "Epidemiologic", "Clinical");
-	public static final List<String> EXP_RESEARCH_SUBTYPE_OPTIONS_ANALYSIS_TOOLS = Lists.newArrayList(
-			"Genomic Analysis", "Data Visualization", "Imaging Analysis", "R Software", "Modeling",
-			"Statistical Software", "Natural Language Processing");
-	public static final List<String> EXP_RESEARCH_SUBTYPE_OPTIONS_DATASETS = Lists.newArrayList("Clinical Data",
-			"Imaging", "Genomic Datasets", "Epidemiologic Data", "Patient Registries", "Biological Networks");
-	public static final List<String> EXP_RESEARCH_SUBTYPE_OPTIONS_LAB = Lists.newArrayList("Reagents", "Biospecimen",
-			"Assays", "Cell Lines", "Protocols", "Animal Models", "Compounds", "Plant Samples", "Vectors");
-	public static final List<String> EXP_RESEARCH_SUBTYPE_OPTIONS_CLINICAL_RESEARCH = Lists.newArrayList("CTCAE");
-	public static final List<String> EXP_RESEARCH_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH = Lists
-			.newArrayList("Questionnaire");
+			"Epidemiologic", "Clinical Trials", "Clinical");
+	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_ANALYSIS_TOOLS = Lists.newArrayList("Genomic Analysis",
+			"Data Visualization", "Modeling", "Statistical Software", "Imaging Analysis", "R Software",
+			"Natural Language Processing");
+	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_DATASETS = Lists.newArrayList("Epidemiologic Data",
+			"Clinical Data", "Genomic Datasets", "Imaging", "Patient Registries", "Biological Networks");
+	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_LAB = Lists.newArrayList("Reagents", "Biospecimen",
+			"Protocols", "Assays", "Cell Lines", "Animal Models", "Compounds", "Vectors", "Plant Samples");
+	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH = Lists
+			.newArrayList("Guidelines/Protocols", "Policies");
+	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH = Lists.newArrayList("Questionnaire",
+			"Sample Size Calculator", "Risk Assessment", "Survey", "Screener");
 
 	/*************** Resources for Researchers Search Results Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
@@ -55,6 +57,9 @@ public class Resources4ResearchersSearchResult {
 	@FindBy(how = How.XPATH, using = "//button[@class='searchbar__button--submit  button']")
 	WebElement btn_Search;
 
+	@FindBy(how = How.XPATH, using = "//section[@class='results__selected-filters  r4r-DEFAULT']/p")
+	WebElement lbl_SelectedFilter;
+
 	@FindBy(how = How.XPATH, using = "//div[@class='r4r-pager__count  r4r-DEFAULT']")
 	WebElement lbl_ResultCount;
 
@@ -67,14 +72,14 @@ public class Resources4ResearchersSearchResult {
 
 	@FindBy(how = How.XPATH, using = "(//div[@class='facet__box  r4r-DEFAULT'])[1]")
 	WebElement box_ResearchAreas;
-	@FindBy(how = How.XPATH, using = "//div[@class='facet__box  r4r-DEFAULT']/h4 [contains(text(),'Research Areas')]")
+	@FindBy(how = How.XPATH, using = "//div[@class='facet__box  r4r-DEFAULT']/h4 [contains(text(),'Research Area')]")
 	WebElement lbl_ResearchAreas;
 	@FindBy(how = How.XPATH, using = "(//div[@class='facet__box  r4r-DEFAULT'])[1]/label/span")
 	List<WebElement> researchAreaItems;
 
 	@FindBy(how = How.XPATH, using = "(//div[@class='facet__box  r4r-DEFAULT'])[2]")
 	WebElement box_ResearchTypes;
-	@FindBy(how = How.XPATH, using = "//div[@class='facet__box  r4r-DEFAULT']/h4 [contains(text(),'Research Types')]")
+	@FindBy(how = How.XPATH, using = "//div[@class='facet__box  r4r-DEFAULT']/h4 [contains(text(),'Research Type')]")
 	WebElement lbl_ResearchTypes;
 	@FindBy(how = How.XPATH, using = "(//div[@class='facet__box  r4r-DEFAULT'])[2]/label/span")
 	List<WebElement> researchTypesItems;
@@ -115,6 +120,10 @@ public class Resources4ResearchersSearchResult {
 
 	public WebElement getSearchButton() {
 		return btn_Search;
+	}
+
+	public WebElement getSelectedFilter() {
+		return lbl_SelectedFilter;
 	}
 
 	//Search Resources for Researchers based on any keyword

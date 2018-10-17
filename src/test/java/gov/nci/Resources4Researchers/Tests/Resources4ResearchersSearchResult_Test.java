@@ -21,9 +21,9 @@ import gov.nci.Resources4Researchers.Resources4ResearchersSearchResult;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
+import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
@@ -250,7 +250,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			// Verify that Research Area box displays the Research Area filter
 			// as checked
 			WebElement researchAreaFilter = driver.findElement(By
-					.xpath("(//h4[@class='facet__title  r4r-DEFAULT' and contains(text(),'Research Areas')]/following-sibling::label[@class='facet__filter  r4r-DEFAULT'])["
+					.xpath("(//h4[@class='facet__title  r4r-DEFAULT' and contains(text(),'Research Area')]/following-sibling::label[@class='facet__filter  r4r-DEFAULT'])["
 							+ i + "]"));
 
 			researchAreaFilter.getAttribute("aria-checked").equals("true");
@@ -369,21 +369,19 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		switch (toolType) {
 		case "Analysis Tools":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_ANALYSIS_TOOLS);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_ANALYSIS_TOOLS);
 			break;
 		case "Datasets & Databases":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_DATASETS);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_DATASETS);
 			break;
 		case "Lab Tools":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_LAB);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_LAB);
 			break;
 		case "Clinical Research Tools":
-			Assert.assertEquals(toolSubTypeNameAsString,
-					r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_CLINICAL_RESEARCH);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH);
 			break;
 		case "Community Research Tools":
-			Assert.assertEquals(toolSubTypeNameAsString,
-					r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH);
 			break;
 
 		}
