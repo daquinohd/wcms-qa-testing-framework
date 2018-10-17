@@ -145,6 +145,7 @@ public class BrowserManager {
 	 * @param url URL to open
 	 * @return WebDriver driver
 	 * TODO: create headless Chrome driver
+	 * TODO: reuse startBrowser where possible
 	 */
 	public static WebDriver startProxyBrowser(String browserName, String url, BrowserMobProxy bmp) {
 		
@@ -153,9 +154,7 @@ public class BrowserManager {
 		FirefoxOptions firefoxOptions = new FirefoxOptions();			
 		
 	    // Get the Selenium proxy object and configure it as a desired capability
-		System.out.println("=== Starting Driver ===");
 	    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(bmp);
-	    DesiredCapabilities capabilities = new DesiredCapabilities();
 		
 		if(browserName.equalsIgnoreCase("Chrome")) {
 			System.out.println("Chrome browser");
