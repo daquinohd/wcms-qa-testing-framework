@@ -253,7 +253,11 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			// Verify that Research Area box displays the Research Area filter
 			// as checked
 			WebElement researchAreaFilter = driver.findElement(By
+<<<<<<< HEAD
 					.xpath("(//h4[@class='facet__title r4r-DEFAULT' and contains(text(),'Research Areas')]/following-sibling::label[@class='facet__filter r4r-DEFAULT'])["
+=======
+					.xpath("(//h4[@class='facet__title  r4r-DEFAULT' and contains(text(),'Research Area')]/following-sibling::label[@class='facet__filter  r4r-DEFAULT'])["
+>>>>>>> 8db5a5880ec01aad80898bc0a155393a3b7367d0
 							+ i + "]"));
 
 			researchAreaFilter.getAttribute("aria-checked").equals("true");
@@ -372,21 +376,19 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		switch (toolType) {
 		case "Analysis Tools":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_ANALYSIS_TOOLS);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_ANALYSIS_TOOLS);
 			break;
 		case "Datasets & Databases":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_DATASETS);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_DATASETS);
 			break;
 		case "Lab Tools":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_LAB);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_LAB);
 			break;
 		case "Clinical Research Tools":
-			Assert.assertEquals(toolSubTypeNameAsString,
-					r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_CLINICAL_RESEARCH);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH);
 			break;
 		case "Community Research Tools":
-			Assert.assertEquals(toolSubTypeNameAsString,
-					r4rSearchResult.EXP_RESEARCH_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH);
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH);
 			break;
 
 		}
