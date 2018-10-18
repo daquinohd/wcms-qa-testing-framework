@@ -14,10 +14,11 @@
 			</run>
 		</groups>
 		<classes>
-
-			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" />	
+			<!-- -->
+			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" />
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" /> 
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" />
+			
 			<!-- 
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test">
 				<methods>

@@ -86,7 +86,7 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void verifyBackToResultReturnfromSearchresult() {
 		driver.navigate().to(config.getProperty("Resources4ResearchersSearchResultURL"));
-		r4rSearchResult.getResultItems().get(0).click();
+		//r4rSearchResult.getResultItems().get(0).click();
 		Assert.assertTrue(driver.getPageSource().contains("Back to results"));
 		logger.log(LogStatus.PASS,
 				"Verify that there is Back to result link is displayed on the Resource Detail page ");

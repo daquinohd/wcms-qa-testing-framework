@@ -20,7 +20,7 @@ public class Resources4ResearchersSearchResult {
 
 	public static final String R4R_SEARCH_RESULT_PAGE_TITLE = "Resources for Researchers: Search Results - National Cancer Institute";
 	public static final String R4R_SEARCH_RESULT_H1_PAGE_TITLE = "Resources for Researchers Search Results";
-	public static final String R4R_HOME_PAGE_URL = "https://www-blue-dev.cancer.gov/research/r4r/";
+	public static final String R4R_HOME_PAGE_URL = "/research/resources/";
 	public final String BREAD_CRUMB = "Home\nResearch";
 	public static final List<String> EXP_TOOL_TYPE_OPTIONS = Lists.newArrayList("Analysis Tools",
 			"Datasets & Databases", "Lab Tools", "Community Research Tools", "Terminology", "Networks/Consortiums",
@@ -39,10 +39,10 @@ public class Resources4ResearchersSearchResult {
 			"Clinical Data", "Genomic Datasets", "Imaging", "Patient Registries", "Biological Networks");
 	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_LAB = Lists.newArrayList("Reagents", "Biospecimen",
 			"Protocols", "Assays", "Cell Lines", "Animal Models", "Compounds", "Vectors", "Plant Samples");
-	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH = Lists
-			.newArrayList("Guidelines/Protocols", "Policies");
 	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH = Lists.newArrayList("Questionnaire",
 			"Sample Size Calculator", "Risk Assessment", "Survey", "Screener");
+	public static final List<String> EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH = Lists
+			.newArrayList("Guidelines/Protocols", "Policies");
 
 	/*************** Resources for Researchers Search Results Page WebElements **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
