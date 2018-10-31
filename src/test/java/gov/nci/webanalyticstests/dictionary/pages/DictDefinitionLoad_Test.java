@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
+import gov.nci.webanalyticstests.dictionary.DictionaryLoadBase;
 
 public class DictDefinitionLoad_Test extends DictionaryLoadBase {
 

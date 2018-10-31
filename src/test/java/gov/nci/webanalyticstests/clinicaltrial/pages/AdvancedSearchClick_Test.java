@@ -26,6 +26,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 			// Create search page with chat prompt suppressed.
 			SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
 			advancedSearch = new AdvanceSearch(driver, chatPrompt);
+			System.out.println("Path: " + currentUrl);
 		} catch (Exception e) {
 			Assert.fail("Error loading Advanced CTS results url: " + currentUrl);
 			e.printStackTrace();
@@ -112,7 +113,8 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod();
 
 		try {
-			advancedSearch.submitFromSelectedField("#in", "joey jo jo junior");
+			advancedSearch.setSelectedField("#in", "joey jo jo junior");
+			advancedSearch.clickSelectedField("input.submit.button");
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
@@ -231,7 +233,8 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 		try {
 			advancedSearch.enterZipCode("blahh");
-			advancedSearch.clickSelectedField("#cts-submit-floater");
+			advancedSearch.clickSelectedField("input.submit.button");
+			advancedSearch.clickSelectedField("input.submit.button"); // Second call to set 'submit' error
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);

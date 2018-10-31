@@ -30,7 +30,7 @@ public class ErrorClick_Test extends AnalyticsTestClickBase {
 	// Test Error Page English sitewide search click event
 	@Test(dataProvider = "SearchTerms", groups = { "Analytics" })
 	public void testErrorPageSearchEn(String searchTerm) {
-		System.out.println("Search term: " + searchTerm);
+		System.out.println("Search term: " + searchTerm + ", Path: /PageNotFound.html");
 		driver.get(config.goHome() + "/PageNotFound.html");
 
 		try {
@@ -51,7 +51,7 @@ public class ErrorClick_Test extends AnalyticsTestClickBase {
 	// Test Error Page Spanish sitewide search click event
 	@Test(dataProvider = "SearchTerms", groups = { "Analytics" })
 	public void testErrorPageSearchEs(String searchTerm) {
-		System.out.println("Search term: " + searchTerm);
+		System.out.println("Search term: " + searchTerm + ", Path: /hsinaps-dilavni");
 		driver.get(config.goHome() + "/hsinaps-dilavni");
 
 		try {

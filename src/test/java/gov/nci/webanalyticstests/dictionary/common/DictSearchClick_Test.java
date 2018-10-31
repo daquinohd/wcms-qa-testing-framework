@@ -35,6 +35,7 @@ public class DictSearchClick_Test extends AnalyticsTestClickBase {
 		driver.get(config.goHome() + path);
 		try {
 			dict = new DictObjectBase(driver);
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error loading Dictionary Search URL at path: " + path);
 			e.printStackTrace();
@@ -45,7 +46,7 @@ public class DictSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Term Search "Starts With" click event
 	@Test(dataProvider = "SearchClickData", groups = { "Analytics" })
-	public void testTermSearchStartsWithClick(String path, String term, String searchType, String linkName) {		
+	public void testTermSearchStartsWithClick(String path, String term, String searchType, String linkName) {
 		System.out.println("Search term: " + term + ", Search type: " + searchType);
 		setupTestMethod(path);
 

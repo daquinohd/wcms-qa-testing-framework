@@ -128,6 +128,11 @@ public class Resources4ResearchersSearchResult {
 		return lbl_ResultCount;
 	}
 
+	public String getResultsCount() {
+		String[] results = lbl_ResultCount.getText().split(" ");
+		return results[results.length - 2];
+	}
+	
 	public WebElement getToolTypeBox() {
 		return box_ToolType;
 	}

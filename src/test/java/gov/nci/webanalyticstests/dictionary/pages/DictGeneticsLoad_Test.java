@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 import gov.nci.webanalytics.AnalyticsMetaData;
 import gov.nci.webanalytics.Beacon;
+import gov.nci.webanalyticstests.dictionary.DictionaryLoadBase;
 
 public class DictGeneticsLoad_Test extends DictionaryLoadBase {
 

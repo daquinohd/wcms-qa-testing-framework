@@ -29,7 +29,7 @@ public class LandingLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Landing Page load event
 	@Test(dataProvider = "LandingPageLoad", groups = { "Analytics" })
 	public void testLandingPageLoad(String path, String contentType) {
-		System.out.println("Type: " + contentType);
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {

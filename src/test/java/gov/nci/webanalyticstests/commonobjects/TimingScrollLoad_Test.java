@@ -32,6 +32,7 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Page Load event after no scrolling
 	@Test(dataProvider = "TimingScrollLoad", groups = { "Analytics" })
 	public void testNoScrollPageLoad(String path, String contentType) {
+		System.out.println("Path: " + path);
 		System.out.println("Content type: " + contentType);
 		driver.get(config.goHome() + path);
 		driver.navigate().refresh();
@@ -50,6 +51,7 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Page Load event after scrolling to bottom
 	// @Test(groups = { "Analytics" })
 	public void testFullScrollPageLoad() {
+		System.out.println("Path: " + "/");
 		driver.get(config.goHome());
 		// scroll to bottom
 		driver.navigate().refresh();
@@ -68,6 +70,7 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	/// Test engagement tracking on page load
 	// @Test(groups = { "Analytics" })
 	public void testEngagement() {
+		System.out.println("Path: " + "/");
 		driver.get(config.goHome());
 
 		try {

@@ -34,6 +34,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 		try {
 			driver.get(config.goHome() + path);
 			analyticsMetaData = new AnalyticsMetaData(driver);
+			System.out.println("Path: " + path);
 		} catch (Exception ex) {
 			Assert.fail("Error loading listing page path: " + path);
 			ex.printStackTrace();
@@ -125,6 +126,7 @@ public class DynamicListingLoad_Test extends AnalyticsTestLoadBase {
 		String itemsTotal = analyticsMetaData.getElementTextFromXpath(itemCountXpath);
 
 		doCommonLoadAssertions(beacon, analyticsMetaData, path);
+		Assert.assertTrue(beacon.hasSuite("nciclinicaltrials", driver.getCurrentUrl()), "Missing NCT suite");
 		Assert.assertTrue(beacon.hasEvent(2), "Missing event2");
 		Assert.assertEquals(beacon.channels, "About Cancer");
 		Assert.assertEquals(beacon.props.get(11), "clinicaltrials_custom");

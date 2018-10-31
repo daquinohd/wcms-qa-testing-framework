@@ -28,6 +28,7 @@ public class BlogLinksClick_Test extends AnalyticsTestClickBase {
 			BlogPost blogPost = new BlogPost(driver);
 			blogLinks = blogPost.getBlogLinks();
 			currentUrl = driver.getCurrentUrl();
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building Blog Series page object.");
 			e.printStackTrace();

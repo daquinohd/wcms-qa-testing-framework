@@ -32,6 +32,7 @@ public class TrialPrintLoad_Test extends AnalyticsTestLoadBase {
 			Checkbox.uncheckAll(driver);
 			driver.manage().deleteAllCookies();
 			driver.navigate().refresh();
+			System.out.println("Path: " + PATH);
 		} catch (Exception ex) {
 			Assert.fail("Error loading CTS print page url: " + PATH);
 			ex.printStackTrace();

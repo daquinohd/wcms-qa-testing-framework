@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.framework.PageObjectBase;
 import gov.nci.framework.PageObjectBase.IPageChangeAction;
@@ -63,9 +64,7 @@ public class ClinicalTrialPageObjectBase extends PageObjectBase {
 	 * @param selector
 	 */
 	public void clickSelectedField(String selector) {
-		WebElement element = getSelectedField(selector);
-		ScrollUtil.scrollIntoview(browser, element);
-		element.click();
+		ClickUtil.forceClick(browser, selector);
 	}
 
 	/**
@@ -75,21 +74,7 @@ public class ClinicalTrialPageObjectBase extends PageObjectBase {
 	 * @param value
 	 */
 	public void setSelectedField(String selector, String value) {
-		WebElement element = getSelectedField(selector);
-		clickSelectedField(selector);
-		element.sendKeys(value);
-	}
-
-	/**
-	 * Submit a page after filling out an element.
-	 * 
-	 * @param selector
-	 * @param value
-	 */
-	public void submitFromSelectedField(String selector, String value) {
-		WebElement element = getSelectedField(selector);
-		setSelectedField(selector, value);
-		element.sendKeys(Keys.ENTER);
+		ClickUtil.setElementValue(browser, selector, value);
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package gov.nci.webanalyticstests.dictionary.pages;
+package gov.nci.webanalyticstests.dictionary;
 
 import org.testng.annotations.BeforeClass;
 

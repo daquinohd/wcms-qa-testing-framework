@@ -19,6 +19,7 @@ public class BlogPostClick_Test extends AnalyticsTestClickBase {
 		try {
 			driver.get(config.goHome() + path);
 			this.blogPost = new BlogPost(driver);
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building BlogPost page object.");
 			e.printStackTrace();

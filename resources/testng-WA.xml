@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="QA Environment" parallel="none">
+	<listeners>
+		<listener class-name="gov.nci.framework.AnnotationTransformer"/>
+	</listeners>
 	<test name="NCI Web Analytics Testing" >
 		<!--
 			The browser parameter is set in pom.xml as part of invoking
@@ -74,12 +77,29 @@
 			<class name="gov.nci.webanalyticstests.error.pages.ErrorLoad_Test" />
 			<class name="gov.nci.webanalyticstests.error.common.ErrorClick_Test" />
 
+			<!-- R4R tracking -->
+			<class name="gov.nci.webanalyticstests.r4r.pages.R4RHomePageLoad_Test" />
+			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResultsPageLoad_Test" />
+			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResourcePageLoad_Test" />
+			<!--
+				<class name="gov.nci.webanalyticstests.r4r.pages.R4RHomePageClick_Test" />
+				<class name="gov.nci.webanalyticstests.r4r.pages.R4RResultsPageClick_Test" />
+				<class name="gov.nci.webanalyticstests.r4r.pages.R4RResourcePageClick_Test" />
+				<class name="gov.nci.webanalyticstests.r4r.common.R4RComponentClick_Test" />
+			-->
+
 			<!-- Common component tracking -->
 			<class name="gov.nci.webanalyticstests.commonobjects.CardClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" />
+				<methods>
+					<exclude name="testResizeToExtraWide" />
+					<exclude name="testResizeToLarge" />
+					<exclude name="testResizeToMedium" />
+					<exclude name="testResizeToMobile" />
+				</methods>
 			<class name="gov.nci.webanalyticstests.commonobjects.TimingScrollLoad_Test" />
 
 			<!-- All other page load tracking -->

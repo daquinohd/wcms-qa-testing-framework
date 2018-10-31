@@ -40,6 +40,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
 			swSearchForm.doSitewideSearch(searchTerm);
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building Related Resources page object: " + path);
 			e.printStackTrace();

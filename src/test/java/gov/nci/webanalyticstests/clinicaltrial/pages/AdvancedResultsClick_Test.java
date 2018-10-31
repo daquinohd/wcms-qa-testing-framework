@@ -29,6 +29,7 @@ public class AdvancedResultsClick_Test extends AnalyticsTestClickBase {
 		try {
 			SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
 			searchResults = new AdvanceSearchResults(driver, chatPrompt);
+			System.out.println("Path: " + PATH + queryParams);
 		} catch (Exception e) {
 			Assert.fail("Error loading Advanced CTS results url: " + PATH + queryParams);
 			e.printStackTrace();

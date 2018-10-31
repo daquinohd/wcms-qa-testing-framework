@@ -32,6 +32,7 @@ public class PdqCisClick_Test extends AnalyticsTestClickBase {
 			driver.get(config.goHome() + path);
 			pdqPage = new PdqPage(driver);
 			pdqRightNav = pdqPage.getRightNav();
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building PDQ page object.");
 			e.printStackTrace();

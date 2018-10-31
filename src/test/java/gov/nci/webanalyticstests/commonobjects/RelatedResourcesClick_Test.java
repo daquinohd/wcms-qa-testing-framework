@@ -21,6 +21,7 @@ public class RelatedResourcesClick_Test extends AnalyticsTestClickBase {
 		try {
 			this.relatedResources = new RelatedResources(driver);
 			driver.get(config.goHome() + path);
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error creating RelatedResources object in RelatedResourceClick_Test.");
 			e.printStackTrace();

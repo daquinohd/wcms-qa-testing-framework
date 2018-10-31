@@ -38,6 +38,7 @@ public class TrialDetailViewClick_Test extends AnalyticsTestClickBase {
 			SuppressChatPromptPageObject chatPrompt = new SuppressChatPromptPageObject(driver, null);
 			trialView = new TrialDetailView(driver, chatPrompt);
 			driver.navigate().refresh();
+			System.out.println("Path: " + VIEW_TRIAL_PATH + params);
 		} catch (Exception ex) {
 			Assert.fail("Error loading CTS Trial Detail View: " + VIEW_TRIAL_PATH + params);
 			ex.printStackTrace();

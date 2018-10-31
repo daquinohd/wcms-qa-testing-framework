@@ -24,6 +24,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	public void testBestBetsClick() {
 		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome());
+		System.out.println("Path: " + driver.getCurrentUrl());
 
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
@@ -46,6 +47,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	public void testResultItemClick() {
 		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome());
+		System.out.println("Path: " + driver.getCurrentUrl());
 
 		try {
 			swSearchForm = new SitewideSearchForm(driver);
@@ -68,6 +70,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	public void testSearchWithinResults() {
 		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.getPageURL("SitewideResultsPage"));
+		System.out.println("Path: " + driver.getCurrentUrl());
 
 		try {
 			swSearchResults = new SitewideSearchResults(driver);
@@ -92,6 +95,7 @@ public class SwsResultsClick_Test extends AnalyticsTestClickBase {
 	public void testSearchNewFromResults() {
 		System.out.println("Search term: " + SEARCH_TERM);
 		driver.get(config.goHome() + RESULTS_PATH_EN);
+		System.out.println("Path: " + driver.getCurrentUrl());
 
 		try {
 			swSearchResults = new SitewideSearchResults(driver);

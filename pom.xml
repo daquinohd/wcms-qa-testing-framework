@@ -149,12 +149,13 @@
               To use a different environment, on the maven commmand line, specify
               `-Denvironment=<environment_name>`
 
-              Valid values are:
-                blue-dev
-                red-dev
-                pink-dev
+              Valid values are:              
+                blue
+                red
+                pink
                 qa
-                dt-qa
+                dt
+                stage
 
               If no environment is specified, the default is QA.
             -->

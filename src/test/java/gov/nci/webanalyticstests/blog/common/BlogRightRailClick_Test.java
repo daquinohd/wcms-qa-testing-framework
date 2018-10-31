@@ -28,6 +28,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 			BlogPost blogPost = new BlogPost(driver);
 			rightRail = blogPost.getRightRail();
 			currentUrl = driver.getCurrentUrl();
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building Blog Series page object.");
 			e.printStackTrace();

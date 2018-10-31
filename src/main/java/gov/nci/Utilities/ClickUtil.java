@@ -23,7 +23,7 @@ public class ClickUtil {
 
 	/**
 	 * Click method for cases where Selenium can't find or otherwise doesn't want to
-	 * click on a given WebElement.
+	 * click on a given CSS selector.
 	 * 
 	 * @param driver
 	 * @param selector
@@ -31,6 +31,19 @@ public class ClickUtil {
 	public static void forceClick(WebDriver driver, String selector) {
 		javaScript = (JavascriptExecutor) driver;
 		javaScript.executeScript("document.querySelector(arguments[0]).click();", selector);
+	}
+
+	/**
+	 * Method to set text values in cases where Selenium can't find a given CSS
+	 * selector.
+	 * 
+	 * @param driver
+	 * @param selector
+	 * @param value
+	 */
+	public static void setElementValue(WebDriver driver, String selector, String value) {
+		javaScript = (JavascriptExecutor) driver;
+		javaScript.executeScript("document.querySelector(arguments[0]).value = (arguments[1]);", selector, value);
 	}
 
 	/**

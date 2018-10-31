@@ -40,6 +40,7 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 			Checkbox.uncheckAll(driver);
 			driver.manage().deleteAllCookies();
 			driver.navigate().refresh();
+			System.out.println("Path: " + PATH + queryParams);
 		} catch (Exception ex) {
 			Assert.fail("Error loading Basic CTS results url: " + PATH + queryParams);
 			ex.printStackTrace();

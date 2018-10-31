@@ -30,7 +30,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Home Page load event
 	@Test(dataProvider = "HomePageLoad", groups = { "Analytics" })
 	public void testHomePageLoad(String path, String contentType) {
-		System.out.println("Type: " + contentType);
+		System.out.println("Path: " + path + ", Type: " + contentType);
 		driver.get(config.goHome() + path);
 
 		try {
@@ -47,6 +47,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Home-refresh load event
 	@Test(groups = { "Analytics" })
 	public void testRefresh() {
+		System.out.println("Path: /");
 		driver.get(config.goHome());
 		driver.navigate().refresh();
 
@@ -64,6 +65,7 @@ public class HomeLoad_Test extends AnalyticsTestLoadBase {
 	/// Test Home-and-back load event
 	@Test(groups = { "Analytics" })
 	public void testHomeAndBack() {
+		System.out.println("Path: /");
 		driver.get(config.goHome());
 		driver.get(config.getPageURL("SpanishHome"));
 		driver.navigate().back();

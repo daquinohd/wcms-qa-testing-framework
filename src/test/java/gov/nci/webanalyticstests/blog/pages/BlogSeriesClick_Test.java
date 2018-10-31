@@ -18,8 +18,9 @@ public class BlogSeriesClick_Test extends AnalyticsTestClickBase {
 
 	private void setupTestMethod(String path) {
 		try {
-			driver.get(config.goHome() + CANCER_CURRENTS_EN);
+			driver.get(config.goHome() + path);
 			blogSeries = new BlogSeries(driver);
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building Blog Series page object.");
 			e.printStackTrace();

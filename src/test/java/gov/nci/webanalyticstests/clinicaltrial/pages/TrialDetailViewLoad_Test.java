@@ -35,6 +35,7 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 		try {
 			driver.get(config.goHome() + PATH + queryParams);
 			analyticsMetaData = new AnalyticsMetaData(driver);
+			System.out.println("Path: " + PATH + queryParams);
 		} catch (Exception ex) {
 			Assert.fail("Error loading CTS Trial Detail View url: " + PATH + queryParams);
 			ex.printStackTrace();
@@ -89,6 +90,8 @@ public class TrialDetailViewLoad_Test extends AnalyticsTestLoadBase {
 	 */
 	private void doCommonClassAssertions(Beacon beacon, AnalyticsMetaData analyticsMetaData, String type) {
 		doCommonLoadAssertions(beacon, analyticsMetaData, PATH);
+		
+		Assert.assertTrue(beacon.hasSuite("nciclinicaltrials", driver.getCurrentUrl()), "Missing NCT suite");
 		Assert.assertEquals(beacon.channels, "About Cancer");
 		Assert.assertEquals(beacon.props.get(16), getNCTID(analyticsMetaData));
 		Assert.assertEquals(beacon.props.get(62), "Clinical Trials: " + type);

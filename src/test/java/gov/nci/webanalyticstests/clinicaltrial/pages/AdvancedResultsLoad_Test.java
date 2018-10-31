@@ -35,6 +35,7 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 		try {
 			driver.get(config.goHome() + PATH + queryParams);
 			analyticsMetaData = new AnalyticsMetaData(driver);
+			System.out.println("Path: " + PATH + queryParams);
 		} catch (Exception ex) {
 			Assert.fail("Error loading Advanced CTS results url: " + PATH + queryParams);
 			ex.printStackTrace();
@@ -89,6 +90,8 @@ public class AdvancedResultsLoad_Test extends AnalyticsTestLoadBase {
 	 */
 	private void doCommonClassAssertions(Beacon beacon, AnalyticsMetaData analyticsMetaData) {
 		doCommonLoadAssertions(beacon, analyticsMetaData, PATH);
+		
+		Assert.assertTrue(beacon.hasSuite("nciclinicaltrials", driver.getCurrentUrl()), "Missing NCT suite");
 		Assert.assertTrue(beacon.hasEvent(2), "Missing event2");
 		Assert.assertEquals(beacon.channels, "About Cancer");
 		Assert.assertEquals(beacon.props.get(11), "clinicaltrials_advanced");
