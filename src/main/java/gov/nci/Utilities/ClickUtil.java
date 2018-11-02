@@ -54,8 +54,8 @@ public class ClickUtil {
 	public static void stall(WebDriver driver) {
 		javaScript = (JavascriptExecutor) driver;
 		for (int i = 0; i <= 3; i++) {
-			javaScript.executeScript(
-					"window.scrollBy(0, (window.innerHeight/2));window.scrollBy(0, -(window.innerHeight/2));");
+			javaScript.executeScript("window.scrollTo(0,document.body.scrollHeight),"
+					+ "window.scrollTo(0,document.body.scrollHeight/2),window.scrollTo(0,0);");
 		}
 	}
 

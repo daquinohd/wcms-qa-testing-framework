@@ -43,11 +43,7 @@
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsLoad_Test" />
-			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchClick_Test">
-				<methods>
-					<exclude name="testBasicAbandonKeyword" />
-				</methods>
-			</class>
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.DynamicListingLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.TrialDetailViewClick_Test" />
