@@ -36,6 +36,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 			driver.get(config.goHome() + path);
 			currentUrl = driver.getCurrentUrl();
 			megaMenu = new MegaMenu(driver, "");
+			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error creating MegaMenu object at path: " + path);
 			e.printStackTrace();
@@ -54,7 +55,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu Nav Group click event
 	@Test(dataProvider = "NavGroupData", groups = { "Analytics" })
 	public void testMegaMenuNavGroup(String path, String navGroup, String lang) {
-		System.out.println("Path: " + path + ", Group: " + navGroup);
+		System.out.println("Group: " + navGroup);
 		setupTestMethod(path);
 
 		try {
@@ -78,7 +79,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test MegaMenu SubNav Group click event
 	@Test(dataProvider = "SubNavGroupData", groups = { "Analytics" })
 	public void testMegaMenuSubNavGroup(String path, String navGroup, String subNavGroup, String lang) {
-		System.out.println("Path: " + path + ", Subnav group: " + subNavGroup);
+		System.out.println("Group: " + navGroup + ", subnav group: " + subNavGroup);
 		setupTestMethod(path);
 
 		try {
@@ -103,7 +104,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	@Test(dataProvider = "SubNavLinkData", groups = { "Analytics" })
 	public void testMegaMenuSubNavLink(String path, String navGroup, String subNavGroup, String subNavLink,
 			String lang) {
-		System.out.println("Path: " + path + ", Subnav link: " + subNavLink);
+		System.out.println("Group: " + navGroup + ", subnav group: " + subNavGroup + ", subnav link: " + subNavLink);
 		setupTestMethod(path);
 
 		try {
@@ -127,7 +128,6 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 	/// Test Mega Menu Desktop Reveal
 	@Test(dataProvider = "PathData", groups = { "Analytics" })
 	public void testMegaMenuDesktopReveal(String path, String lang) {
-		System.out.println("Path: " + path);
 		setupTestMethod(path);
 
 		try {
@@ -169,7 +169,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod();
 
 		try {
-			megaMenu.clickMegaMenuMobileButton();
+			megaMenu.expandMegaMenuMobileButton();
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
@@ -188,8 +188,7 @@ public class MegaMenuClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod();
 
 		try {
-			megaMenu.clickMegaMenuMobileButton();
-			megaMenu.clickMegaMenuMobileButton();
+			megaMenu.collapseMegaMenuMobileButton();
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
