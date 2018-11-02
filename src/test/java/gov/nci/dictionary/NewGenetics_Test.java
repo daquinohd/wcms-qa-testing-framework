@@ -30,20 +30,22 @@ public class NewGenetics_Test extends NewDictionaryCommon {
 
 		logger.log(LogStatus.INFO, "Testing if dictionary title is visible: " + dictTitle);
 
-		driver.get(url);
+		throw new RuntimeException("This test is disabled pending resolution of build errors.");
 
-		try {
-			dict = new DictionarySearch(driver);
-			boolean titleVisible = dict.TitleVisible();
-			WebElement titleText = dict.getTitleText();
-			String titleNotVisible = "*** Error: Gen Distionary Header Not Found ***";
-			String incorrectTitle = "*** Error: Gen Distionary Title text mismatch ***";
-
-			Assert.assertTrue(titleVisible, titleNotVisible);
-			Assert.assertTrue(titleText.getText().contains(dictTitle), incorrectTitle);
-		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in " + curMethod + " ***");
-		}
+//		driver.get(url);
+//
+//		try {
+//			dict = new DictionarySearch(driver);
+//			boolean titleVisible = dict.TitleVisible();
+//			WebElement titleText = dict.getTitleText();
+//			String titleNotVisible = "*** Error: Gen Distionary Header Not Found ***";
+//			String incorrectTitle = "*** Error: Gen Distionary Title text mismatch ***";
+//
+//			Assert.assertTrue(titleVisible, titleNotVisible);
+//			Assert.assertTrue(titleText.getText().contains(dictTitle), incorrectTitle);
+//		} catch (MalformedURLException | UnsupportedEncodingException e) {
+//			Assert.fail("*** Error loading page in " + curMethod + " ***");
+//		}
 	}
 
 	// Confirming the "Starts with"/"Contains" radio buttons are displayed
@@ -168,19 +170,21 @@ public class NewGenetics_Test extends NewDictionaryCommon {
 
 		logger.log(LogStatus.INFO, "Testing A-Z list. Selecting letter B");
 
-		driver.get(url);
+		throw new RuntimeException("This test is disabled pending resolution of build errors.");
 
-		try {
-			dict = new DictObjectBase(driver);
-
-			// Integer numDefs = NumberOfDefinitions("genetics", language);
-			boolean displayOK = dict.AZListSelect(driver, language);
-			String displayNotOk = "*** Error: Gen Dictionary Result for specified letter incorrect ***";
-
-			Assert.assertTrue(displayOK, displayNotOk);
-		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in " + curMethod + " ***");
-		}
+//		driver.get(url);
+//
+//		try {
+//			dict = new DictObjectBase(driver);
+//
+//			// Integer numDefs = NumberOfDefinitions("genetics", language);
+//			boolean displayOK = dict.AZListSelect(driver, language);
+//			String displayNotOk = "*** Error: Gen Dictionary Result for specified letter incorrect ***";
+//
+//			Assert.assertTrue(displayOK, displayNotOk);
+//		} catch (MalformedURLException | UnsupportedEncodingException e) {
+//			Assert.fail("*** Error loading page in " + curMethod + " ***");
+//		}
 	}
 
 	// Confirming a letter from the A-Z list can be selected and shows correct URL
@@ -193,26 +197,28 @@ public class NewGenetics_Test extends NewDictionaryCommon {
 
 		logger.log(LogStatus.INFO, "Testing A-Z list. Check URL when letter B selected");
 
-		driver.get(url);
+		throw new RuntimeException("This test is disabled pending resolution of build errors.");
 
-		try {
-			dict = new DictObjectBase(driver);
-
-			// Integer numDefs = NumberOfDefinitions("genetics", language);
-			boolean displayOK = dict.AZListSelect(driver, language);
-
-			WebDriverWait wait = new WebDriverWait(driver, 5);
-			boolean pageFound = wait.until(
-				ExpectedConditions.urlContains("/publications/dictionaries/genetics-dictionary?expand=")
-			);
-			String pageNotFound = "*** Error: Gen Dictionary URL for specified letter incorrect ***";
-			String displayNotOk = "*** Error: Gen Dictionary Can't select letter for A-Z List ***";
-
-			Assert.assertTrue(pageFound, pageNotFound);
-			Assert.assertTrue(displayOK, displayNotOk);
-		} catch (MalformedURLException | UnsupportedEncodingException e) {
-			Assert.fail("*** Error loading page in " + curMethod + " ***");
-		}
+//		driver.get(url);
+//
+//		try {
+//			dict = new DictObjectBase(driver);
+//
+//			// Integer numDefs = NumberOfDefinitions("genetics", language);
+//			boolean displayOK = dict.AZListSelect(driver, language);
+//
+//			WebDriverWait wait = new WebDriverWait(driver, 5);
+//			boolean pageFound = wait.until(
+//				ExpectedConditions.urlContains("/publications/dictionaries/genetics-dictionary?expand=")
+//			);
+//			String pageNotFound = "*** Error: Gen Dictionary URL for specified letter incorrect ***";
+//			String displayNotOk = "*** Error: Gen Dictionary Can't select letter for A-Z List ***";
+//
+//			Assert.assertTrue(pageFound, pageNotFound);
+//			Assert.assertTrue(displayOK, displayNotOk);
+//		} catch (MalformedURLException | UnsupportedEncodingException e) {
+//			Assert.fail("*** Error loading page in " + curMethod + " ***");
+//		}
 	}
 
 	// Enter specific text in search field with options "Starts with" selected.

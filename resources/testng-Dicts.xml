@@ -8,25 +8,44 @@
   -->
 
   <!--
+    <parameter name="browser" value="Chrome" />
   -->
-  <parameter name="browser" value="Chrome" />
    <classes>
     <class name="gov.nci.dictionary.DictDrugs_Test" />
     <class name="gov.nci.dictionary.DictGenetics_Test" />
     <class name="gov.nci.dictionary.DictTerms_Test" />
-    <class name="gov.nci.dictionary.DictTermsES_Test" />
+    <class name="gov.nci.dictionary.DictTermsES_Test">
+      <methods>
+        <include name="TitleVisible" />
+      </methods>
+    </class>
+
+    <class name="gov.nci.dictionary.NewDrugs_Test">
+      <methods>
+        <include name="HeaderVisible"/>
+        <include name="HeaderDisplay"/>
+        <include name="TitleVisible"/>
+        <include name="TitleDisplay"/>
+        <include name="RadioVisible"/>
+        <include name="RadioStartsWithSelected"/>
+        <include name="SearchInputVisible"/>
+        <include name="SearchBtnVisible"/>
+        <include name="AZListVisible"/>
+        <include name="AZListHome"/>
+        <include name="AZListHomeUrl"/>
+        <include name="AZListSelectLetter"/>
+        <include name="AZListSelectLetterTestUrl"/>
+        <include name="SubmitSearchStartsWith"/>
+        <include name="SubmitSearchStartsWithUrl"/>
+      </methods>
+    </class>
+    <!--
+        <class name="gov.nci.dictionary.NewGenetics_Test" />
+        <class name="gov.nci.dictionary.NewTerms_Test" />
+        <class name="gov.nci.dictionary.NewTermsES_Test" />
+      -->
+
    </classes>
   </test>
-  <!--
-  <test name="NCI - Testing AZ-List" preserve-order="true">
-    <classes>
-      <class name="gov.nci.dictionary.DictDrugs_Test">
-        <methods>
-          <include name="SearchContainsSelect"/>
-        </methods>
-      </class>
-    </classes>
-  </test>
-  -->
 </suite>
 
