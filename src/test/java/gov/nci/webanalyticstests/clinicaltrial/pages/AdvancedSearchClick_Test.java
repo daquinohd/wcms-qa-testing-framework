@@ -233,8 +233,8 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 		try {
 			advancedSearch.enterZipCode("blahh");
-			advancedSearch.clickSelectedField("input.submit.button");
-			advancedSearch.clickSelectedField("input.submit.button"); // Second call to set 'submit' error
+			advancedSearch.pressEnterOnField("input.submit.button");
+			advancedSearch.pressEnterOnField("input.submit.button"); // Second call to set 'submit' error
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
