@@ -133,7 +133,7 @@ public class BasicResultsClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Basic 'select all' print click event
 	// TODO: this method is making error, multiItems, and oneItem break
-	// @Test(groups = { "Analytics" })
+	@Test(groups = { "Analytics" })
 	public void testPrintAllItemsOnPage() {
 		setupTestMethod(BASIC_PAGE_2ND);
 
