@@ -90,7 +90,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Advanced CTS zip submit click event
 	@Test(groups = { "Analytics" })
-	public void testAdvancedZipComplete() {
+	public void testAdvancedCompleteZip() {
 		setupTestMethod();
 
 		try {
@@ -129,7 +129,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Advanced CTS 'Complete' click event (subtype)
 	@Test(groups = { "Analytics" })
-	public void testAdvancedMultiSelectSubmit() {
+	public void testAdvancedCompleteMultiSelect() {
 		setupTestMethod();
 
 		try {
@@ -188,7 +188,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Advanced CTS 'Abandon' click event (subtype)
 	@Test(groups = { "Analytics" })
-	public void testAdvancedMultiSelectAbandon() {
+	public void testAdvancedAbandonMultiSelect() {
 		setupTestMethod();
 
 		try {
@@ -208,7 +208,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Advanced CTS age error message click event
 	@Test(groups = { "Analytics" })
-	public void testAdvancedErrorAge() {
+	public void testAdvancedErrorAgeClick() {
 		setupTestMethod();
 
 		try {
@@ -228,7 +228,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Advanced CTS Error Submit click event (zip):
 	@Test(groups = { "Analytics" })
-	public void testAdvancedZipError() {
+	public void testAdvancedErrorZipSubmit() {
 		setupTestMethod();
 
 		try {
