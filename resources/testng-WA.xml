@@ -94,11 +94,7 @@
 
 			<!-- Common component tracking -->
 			<class name="gov.nci.webanalyticstests.commonobjects.CardClick_Test" />
-			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test">
-				<methods>
-					<exclude name="testMegaMenuSubNavLink" />
-				</methods>
-			</class>
+			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" >
