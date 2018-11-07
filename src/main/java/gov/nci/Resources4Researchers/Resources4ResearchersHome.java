@@ -22,7 +22,7 @@ public class Resources4ResearchersHome {
 
 	public static final String R4R_PAGE_TITLE = "Resources for Researchers";
 	public static final String R4R_RESULT_PAGE_TITLE = "Resources for Researchers Search Results";
-	public static final String R4R_LEARN_MORE_PAGE_URL = "/research/resources/about";
+	public static final String R4R_LEARN_MORE_PAGE_URL = "https://www.cancer.gov/research/resources/about";
 	public static final String R4R_INTRO_TEXT = "Resources for Researchers is a directory of NCI-supported tools and services for cancer researchers. Most resources are free of cost and available to anyone.";
 	public final String BREAD_CRUMB = "Home\nResearch";
 	public static final List<String> EXP_TOOL_TYPE_OPTIONS = Lists.newArrayList("Analysis Tools",
@@ -33,7 +33,9 @@ public class Resources4ResearchersHome {
 			"Cancer & Public Health", "Cancer Diagnosis", "Cancer Statistics", "Cancer Prevention",
 			"Cancer Survivorship", "Bioinformatics");
 
-	/*************** Resources for Researchers Page WebElements **********************/
+	/***************
+	 * Resources for Researchers Page WebElements
+	 **********************/
 	@FindBy(how = How.XPATH, using = ".//h1")
 	WebElement r4rPageTitle;
 	@FindBy(how = How.XPATH, using = "//article[@class='home__desc  r4r-DEFAULT']/p")
@@ -77,6 +79,10 @@ public class Resources4ResearchersHome {
 	WebElement lbl_BrowseByResearchArea;
 	@FindBy(how = How.XPATH, using = "//div[@class='home-nav__section  r4r-DEFAULT'][@aria-label='Browse by Research Area']/div/a")
 	List<WebElement> researchAreaItems;
+	@FindBy(how = How.XPATH, using = "//li[@class='page-options--email']")
+	WebElement lnk_ShareEmail;
+	@FindBy(how = How.XPATH, using = "//li[@class='social-share social-share--twitter']")
+	WebElement lnk_ShareTwitter;
 
 	// Initializing the Page Objects
 	public Resources4ResearchersHome(WebDriver driver, ExtentTest logger) {
@@ -138,14 +144,15 @@ public class Resources4ResearchersHome {
 		return btn_Search;
 	}
 
-	//Search Resources for Researchers based on any keyword
+	// Search Resources for Researchers based on any keyword
 	public void search(String keyword) {
 		getSearchInput().click();
 		getSearchInput().sendKeys(keyword);
 		getSearchButton().click();
 	}
 
-	//Search Resources for Researchers based on any keyword and hitting ENTER KEY
+	// Search Resources for Researchers based on any keyword and hitting ENTER
+	// KEY
 	public void searchWithEnterKey(String keyword) {
 		getSearchInput().click();
 		getSearchInput().sendKeys(keyword);
@@ -253,6 +260,20 @@ public class Resources4ResearchersHome {
 		System.out.println("researchAreaNumberAsString===>" + researchAreaNumberAsString);
 		return researchAreaNumberAsString;
 
+	}
+
+	/*
+	 * Get Email icon
+	 */
+	public WebElement getEmailIcon() {
+		return lnk_ShareEmail;
+	}
+
+	/*
+	 * Get Twitter icon
+	 */
+	public WebElement getTwitterIcon() {
+		return lnk_ShareTwitter;
 	}
 
 }

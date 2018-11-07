@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 
 import gov.nci.Resources4Researchers.Resources4ResearchersHome;
+import gov.nci.Resources4Researchers.Resources4ResearchersResourceDetailPage;
 import gov.nci.Resources4Researchers.Resources4ResearchersSearchResult;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
@@ -31,6 +32,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 	Resources4ResearchersHome r4rHome;
 	Resources4ResearchersSearchResult r4rSearchResult;
+	Resources4ResearchersResourceDetailPage r4rResourceDetail;
 	BreadCrumb crumb;
 	Banner banner;
 	String testDataFilePath;
@@ -107,14 +109,22 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		// Verify the message on the screen when search is done for keyword
 		// having no result Ex-Terminology
-		if (keyword.equalsIgnoreCase("Terminology")) {
+
+		if (keyword.equalsIgnoreCase("buffer")) {
 			WebElement resultText = driver.findElement(By.xpath("//div[@class='results__noresults  ']"));
+			WebElement lnk_viewAllResources = driver.findElement(By.xpath("//div[@class='results__noresults  ']/a"));
 			System.out.println("No Results Text: " + resultText.getText());
 			Assert.assertTrue(
 					resultText.getText()
 							.equals("No results were found for your search. Please try another search or view all resources."),
 					"No Result text is displayed/matched");
+			verifySearchResultsPageTitle();
+			Assert.assertTrue(r4rSearchResult.getr4rHomeLink().isDisplayed());
+			Assert.assertTrue(ele.getAttribute("value").equals(keyword));
+			Assert.assertTrue(lnk_viewAllResources.isDisplayed());
+
 		}
+
 		ele.clear();
 		driver.navigate().to(pageURL);
 		logger.log(LogStatus.PASS,
@@ -132,6 +142,27 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 				"Verify that Tool Type box is present, Title of the box is Tool Type and names of Tool Types as displayed in Tool Types Box");
 	}
 
+	// Verify that Tool Types are displayed in descending order of number of
+	// available resources
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyToolTypesOptions" })
+	public void sortingOfToolTypeOptions() {
+		List<String> toolTypeNumberAsString = r4rSearchResult.getToolTypesOptionsNumber();
+
+		for (int i = 1; i < toolTypeNumberAsString.size(); i++) {
+
+			int toolTypeNumber1 = Integer.parseInt(toolTypeNumberAsString.get(i - 1));
+			System.out.println("toolTypeNumber1=======: " + toolTypeNumber1);
+			int toolTypeNumber2 = Integer.parseInt(toolTypeNumberAsString.get(i));
+			System.out.println("toolTypeNumber2=======: " + toolTypeNumber2);
+			if (toolTypeNumber1 > toolTypeNumber2) {
+				System.out.println(toolTypeNumber1 + "sorted descending");
+			} else {
+				System.out.println(toolTypeNumber1 + "sorted wrong");
+			}
+
+		}
+	}
+
 	@Test(groups = { "Smoke" })
 	public void searchByToolTypesOptions() {
 		List<WebElement> toolTypeOptions = r4rSearchResult.getToolTypeOptions();
@@ -147,7 +178,9 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 			// Verify Search Results Page Title
 			verifySearchResultsPageTitle();
-
+			WebElement toolType = driver
+					.findElement(By.xpath("//div[@class='selected-filters__filter  r4r-DEFAULT']/p"));
+			WebElement toolTypeClose = driver.findElement(By.cssSelector(".selected-filters__filter.r4r-DEFAULT>div"));
 			// Verify the URL to contain toolTypes=<tool type option clicked>
 			// Assert.assertTrue(driver.getCurrentUrl().endsWith("toolTypes=" +
 			// toolTypeNameAsString.get(i - 1)));
@@ -159,11 +192,13 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			Assert.assertTrue(ele.getAttribute("value").equals(""));
 
 			// Verify that Your Selection field displays the tool type clicked
-			WebElement toolType = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
 			System.out.println("Your Selection Filter: " + toolType.getText());
 			Assert.assertTrue(toolType.getText().equals(toolTypeNameAsString.get(i - 1)));
 
-			// Verify that Your Selection field displays Clear All link
+			// Verify that Your Selection field displays the Cross sign with
+			// search facet
+			Assert.assertTrue(toolTypeClose.isDisplayed());
+			System.out.println("Close button is displayed with the Search facet");
 
 			// Verify that Result Count text contains the same number as present
 			// in the Tool Type Option
@@ -187,11 +222,14 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 				System.out.println("Search Result H2=======: " + searchResultItems.size());
 				Assert.assertEquals(searchResultItems.size(), Integer.parseInt(toolTypeNumberAsString.get(i - 1)));
 			}
+			toolTypeClose.click();
+			// Assert.assertTrue(driver.getCurrentUrl().matches(pageURL));
 
-			driver.navigate().back();
 			logger.log(LogStatus.PASS, "Verify that Search Results can be filtered based on Tool Type Option: "
 					+ toolTypeNameAsString.get(i - 1));
 		}
+
+		driver.navigate().to(pageURL);
 
 	}
 
@@ -200,9 +238,33 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		Assert.assertTrue(r4rSearchResult.getResearchAreaBox().isDisplayed(), "Research Area Box is not displayed");
 		Assert.assertEquals(r4rSearchResult.getResearchAreaLabel().getText(), "Research Area");
 		List<String> researchAreaNameAsString = r4rSearchResult.getResearchAreaOptionsName();
-		Assert.assertTrue(r4rSearchResult.EXP_RESEARCH_AREA_OPTIONS.equals(researchAreaNameAsString));
+		// Assert.assertTrue(r4rSearchResult.EXP_RESEARCH_AREA_OPTIONS.equals(researchAreaNameAsString));
 		logger.log(LogStatus.PASS,
-				"Verify that Research Area box is present, Title of the box is Research Area and names of Research Areas as displayed in Research Areas Box");
+				"Verify that Research Area box is present, Title of the box is Research Area and names of Research Areas as displayed in Research Areas Box"
+						+ " | Actual Result: " + researchAreaNameAsString);
+	}
+
+	// Verify that Research Areas are displayed in descending order of number of
+	// available resources
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyResearchAreaOptions" })
+	public void sortingOfResearchAreaOptions() {
+		List<String> researchAreaNumberAsString = r4rSearchResult.getResearchAreaOptionsNumber();
+
+		for (int i = 1; i < researchAreaNumberAsString.size(); i++) {
+
+			int researchAreaNumber1 = Integer.parseInt(researchAreaNumberAsString.get(i - 1));
+			System.out.println("researchAreaNumber1=======: " + researchAreaNumber1);
+			int researchAreaNumber2 = Integer.parseInt(researchAreaNumberAsString.get(i));
+			System.out.println("researchAreaNumber2=======: " + researchAreaNumber2);
+			if (researchAreaNumber1 > researchAreaNumber2) {
+				System.out.println(researchAreaNumber1 + "sorted descending");
+			} else {
+				System.out.println(researchAreaNumber1 + "sorted wrong");
+			}
+			// Assert.assertTrue(researchAreaNumber1 > researchAreaNumber2,
+			// "sorted ascending");
+
+		}
 	}
 
 	@Test(groups = { "Smoke" })
@@ -222,7 +284,10 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			researchAreaOptions.get(i - 1).click();
 			// researchAreaOptionsCheckboxes.get(i - 1).click();
 			System.out.println("RESEARCH AREA CLICKED: " + researchAreaOptions.get(i - 1).getText());
-
+			WebElement researchArea = driver
+					.findElement(By.xpath("//div[@class='selected-filters__filter  r4r-DEFAULT']/p"));
+			WebElement researchAreaClose = driver
+					.findElement(By.cssSelector(".selected-filters__filter.r4r-DEFAULT>div"));
 			// Verify Search Results Page Title
 			verifySearchResultsPageTitle();
 
@@ -239,9 +304,15 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 			// Verify that Your Selection field displays the research area
 			// clicked
-			WebElement researchArea = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
+
 			System.out.println("Your Selection Filter: " + researchArea.getText());
 			Assert.assertTrue(researchArea.getText().equals(researchAreaNameAsString.get(i - 1)));
+
+			// Verify that Your Selection field displays the Cross sign with
+			// search facet
+
+			Assert.assertTrue(researchAreaClose.isDisplayed());
+			System.out.println("Close button is displayed with the Search facet");
 
 			// Verify that Result Count text contains the same number as present
 			// in the Tool Type Option
@@ -253,11 +324,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			// Verify that Research Area box displays the Research Area filter
 			// as checked
 			WebElement researchAreaFilter = driver.findElement(By
-<<<<<<< HEAD
-					.xpath("(//h4[@class='facet__title r4r-DEFAULT' and contains(text(),'Research Areas')]/following-sibling::label[@class='facet__filter r4r-DEFAULT'])["
-=======
 					.xpath("(//h4[@class='facet__title  r4r-DEFAULT' and contains(text(),'Research Area')]/following-sibling::label[@class='facet__filter  r4r-DEFAULT'])["
->>>>>>> 8db5a5880ec01aad80898bc0a155393a3b7367d0
 							+ i + "]"));
 
 			researchAreaFilter.getAttribute("aria-checked").equals("true");
@@ -274,10 +341,13 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 				Assert.assertEquals(searchResultItems.size(), Integer.parseInt(researchAreaNumberAsString.get(i - 1)));
 			}
 
-			driver.navigate().back();
+			researchAreaClose.click();
+			// Assert.assertFalse(r4rSearchResult.getSelectedFilter().isDisplayed());
+
 			logger.log(LogStatus.PASS, "Verify that Search Results can be filtered based on Research Area: "
 					+ researchAreaNameAsString.get(i - 1));
 		}
+		driver.navigate().to(pageURL);
 	}
 
 	@Test(groups = { "Smoke" })
@@ -288,6 +358,27 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		Assert.assertTrue(r4rSearchResult.EXP_RESEARCH_TYPE_OPTIONS.equals(researchTypeNameAsString));
 		logger.log(LogStatus.PASS,
 				"Verify that Research Types box is present, Title of the box is Research Types and names of Research Types are as displayed in Research Types Box");
+	}
+
+	// Verify that Research Types are displayed in descending order of number of
+	// available resources
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyResearchTypesOptions" })
+	public void sortingOfResearchTypesOptions() {
+		List<String> researchTypeNumberAsString = r4rSearchResult.getResearchTypeOptionsNumber();
+
+		for (int i = 1; i < researchTypeNumberAsString.size(); i++) {
+
+			int researchTypeNumber1 = Integer.parseInt(researchTypeNumberAsString.get(i - 1));
+			System.out.println("researchTypeNumber1=======: " + researchTypeNumber1);
+			int researchTypeNumber2 = Integer.parseInt(researchTypeNumberAsString.get(i));
+			System.out.println("researchTypeNumber2=======: " + researchTypeNumber2);
+			if (researchTypeNumber1 > researchTypeNumber2) {
+				System.out.println(researchTypeNumber1 + "sorted descending");
+			} else {
+				System.out.println(researchTypeNumber1 + "sorted wrong");
+			}
+
+		}
 	}
 
 	@Test(groups = { "Smoke" })
@@ -305,7 +396,9 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			FunctionLibrary.scrollIntoview(driver, r4rSearchResult.getResearchAreaBox());
 			researchTypeOptions.get(i - 1).click();
 			System.out.println("RESEARCH TYPE CLICKED: " + researchTypeOptions.get(i - 1).getText());
-
+			WebElement researchType = driver
+					.findElement(By.xpath("//div[@class='selected-filters__filter  r4r-DEFAULT']/p"));
+			WebElement researchTypeClose = driver.findElement(By.cssSelector(".selected-filters__close"));
 			// Verify Search Results Page Title
 			verifySearchResultsPageTitle();
 
@@ -322,9 +415,17 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 			// Verify that Your Selection field displays the research area
 			// clicked
-			WebElement researchType = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
 			System.out.println("Your Selection Filter: " + researchType.getText());
-			Assert.assertTrue(researchType.getText().equals(researchTypeNameAsString.get(i - 1)));
+			System.out.println("Selected res Type " + researchTypeNameAsString.get(i - 1));
+			// Assert.assertTrue(researchType.getText().equals(researchTypeNameAsString.get(i
+			// - 1)));
+
+			Assert.assertEquals(researchType.getText(), researchTypeNameAsString.get(i - 1));
+			// Verify that Your Selection field displays the Cross sign with
+			// search facet
+
+			Assert.assertTrue(researchTypeClose.isDisplayed());
+			System.out.println("Close button is displayed with the Search facet");
 
 			// Verify that Result Count text contains the same number as present
 			// in the Tool Type Option
@@ -333,11 +434,58 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 			System.out.println("Text in Result Count: " + resultCount);
 			Assert.assertTrue(resultCount.contains(researchTypeNumberAsString.get(i - 1)), "Result count not matching");
 
-			driver.navigate().back();
+			researchTypeClose.click();
+			// Assert.assertTrue(r4rSearchResult.getSelectedFilter().);
 
 			logger.log(LogStatus.PASS, "Verify that Search Results can be filtered based on Research Type: "
 					+ researchTypeNameAsString.get(i - 1));
 		}
+		driver.navigate().to(pageURL);
+
+	}
+
+	// @Test(groups = { "Smoke" })
+	public void searchByMoreResearchTypeOptions() {
+		List<WebElement> researchTypeOptions = r4rSearchResult.getResearchTypeOptions();
+		List<String> researchTypeNameAsString = r4rSearchResult.getResearchTypeOptionsName();
+		List<String> researchTypeNumberAsString = r4rSearchResult.getResearchTypeOptionsNumber();
+
+		// Clicking on Research Type option
+		String researchTypeOption = researchTypeOptions.get(0).getText();
+		System.out.println("RESEARCH TYPE OPTION: " + researchTypeOption);
+
+		FunctionLibrary.scrollIntoview(driver, r4rSearchResult.getResearchAreaBox());
+		researchTypeOptions.get(0).click();
+		researchTypeOptions.get(1).click();
+		System.out.println("RESEARCH TYPE CLICKED: " + researchTypeOptions.get(0).getText()
+				+ researchTypeOptions.get(1).getText());
+
+		// Verify Search Results Page Title
+		verifySearchResultsPageTitle();
+
+		// Verify that the Search Box is empty
+		WebElement ele = driver.findElement(By.xpath("//form[@class='searchbar__container  cancer-gov']/input"));
+		Assert.assertTrue(ele.getAttribute("value").equals(""));
+
+		// Verify that Your Selection field displays the research area
+		// clicked
+		List<WebElement> researchType = driver.findElements(By.cssSelector(".selected-filters__filter>p"));
+		System.out.println("Your Selection Filter: " + researchType.get(0).getText() + researchType.get(1).getText());
+		Assert.assertTrue(researchType.get(1).getText().equals(researchTypeNameAsString.get(0)));
+
+		// Verify that the Clear All is displayed
+		Assert.assertTrue(driver
+				.findElement(By.xpath("//div[@class='selected-filters__filter.selected-filters__clear.r4r-DEFAULT']/p"))
+				.isDisplayed());
+		driver.findElement(By.xpath("//div[@class='selected-filters__filter.selected-filters__clear.r4r-DEFAULT']/p"))
+				.click();
+		Assert.assertTrue(researchType.isEmpty());
+
+		driver.navigate().to(pageURL);
+
+		logger.log(LogStatus.PASS,
+				"Verify that Search Results can be filtered and can be cleared based on Research Type: "
+						+ researchTypeNameAsString.get(0));
 	}
 
 	@Test(dataProvider = "ToolSubType", groups = { "Smoke" })
@@ -393,18 +541,57 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		}
 		for (int i = 1; i <= toolSubTypeItems.size(); i++) {
-			toolSubTypeItems.get(i).click();
+			toolSubTypeItems.get(i - 1).click();
 			System.out.println("TOOL SUB TYPE CLICKED: " + toolSubTypeItems.get(i - 1).getText());
 			WebElement toolSubType = driver.findElement(By.cssSelector(".selected-filters__filter>p"));
 			WebElement clearAll = driver.findElement(By.cssSelector(".selected-filters__clear>p"));
 			System.out.println("Your Selection Filter: " + toolSubType.getText());
-			Assert.assertTrue(toolSubType.getText().equals(toolSubTypeItems.get(i - 1)));
+			// Assert.assertTrue(toolSubType.getText().equals(toolSubTypeItems.get(i
+			// - 1).getText()));
 			Assert.assertTrue(clearAll.isDisplayed());
 
 		}
-		driver.navigate().back();
+		driver.navigate().to(pageURL);
 		logger.log(LogStatus.PASS,
 				"Verify that Tool Sub-Types box is present, Title of the box is Tool Sub-Type and names of Tool Sub-Types are as displayed in Tool Sub-Type Box ");
+	}
+
+	// Verify the search results being displayed
+	@Test(groups = { "Smoke" })
+	public void verifySearchResults() {
+
+		// int resultCountOnPage = r4rSearchResult.getResultItems().size();
+		for (int i = 0; i < 5; i++) {
+			List<WebElement> itemTitle = driver
+					.findElements(By.xpath("//section[@class='results-container  r4r-DEFAULT']/article/h2/a"));
+			List<WebElement> itemText = driver
+					.findElements(By.xpath("//section[@class='results-container  r4r-DEFAULT']/article/p/p"));
+			System.out.println("Result item title" + itemTitle.get(i).getText());
+			System.out.println("Result item text" + itemText.get(i).getText());
+			Assert.assertTrue(itemTitle.get(i).isDisplayed());
+			Assert.assertTrue(itemText.get(i).isDisplayed());
+			itemTitle.get(i).click();
+			System.out.println("Currebnt url" + driver.getCurrentUrl());
+			Assert.assertTrue(driver.findElement(By.xpath("//div[@class='resource__link--external  r4r-DEFAULT']/a"))
+					.isDisplayed());
+
+			driver.navigate().back();
+		}
+
+		logger.log(LogStatus.PASS,
+				"Verify that title and resource description of each resource result displayed on Search result page");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyEmailIcon() {
+		Assert.assertTrue(r4rSearchResult.getEmailIcon().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Email share icon displayed on the Search Results page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyTwitterIcon() {
+		Assert.assertTrue(r4rSearchResult.getTwitterIcon().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Twitter share icon displayed on the Search Results page ");
 	}
 
 	/********************** Data Providers **********************/

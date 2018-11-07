@@ -7,6 +7,9 @@ DelighterLiveHelpURL=https://www-blue-dev.cancer.gov/contact
 DelighterWhatURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
 DelighterFeedbackURL=https://www-blue-dev.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
+Resources4ResearchersHomeURL=https://www-blue-dev.cancer.gov/research/resources
+Resources4ResearchersSearchResultURL=https://www-blue-dev.cancer.gov/research/resources/search?from=0
+Resources4ResearchersResourceDetailPageURL=https://www-blue-dev.cancer.gov/research/resources/resource/144
 
 ************************Drivers Path***************************************
 ChromeDriver=./resources/drivers/chromedriver.exe
@@ -42,6 +45,7 @@ PageNotFound=https://www-blue-dev.cancer.gov/i-am-error
 TestData= ./test-data/TestData.xlsx
 ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx
+TestDataR4R= ./test-data/TestData_R4R.xlsx
 
 ***********************External Resources**********************************
 AnalyticsTrackingServer=nci.122.2o7.net

@@ -43,6 +43,7 @@ PageNotFound=https://www-qa.cancer.gov/i-am-error
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx
 SitewideSearchData= ./test-data/sitewide-search.xlsx
 TestDataR4R= ./test-data/TestData_R4R.xlsx
 ***********************External Resources**********************************

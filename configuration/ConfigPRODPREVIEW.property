@@ -8,7 +8,9 @@ DelighterLiveHelpURL=https://preview.cancer.gov/contact
 DelighterWhatURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
 DelighterWhichURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/search/trial-guide
 DelighterFeedbackURL=https://preview.cancer.gov/about-cancer/treatment/clinical-trials/what-are-trials
-
+Resources4ResearchersHomeURL=https://preview.cancer.gov/research/resources
+Resources4ResearchersSearchResultURL=https://preview.cancer.gov/research/resources/search?from=0
+Resources4ResearchersResourceDetailPageURL=https://preview.cancer.gov/research/resources/resource/144
 ************************Drivers Path***************************************
 ChromeDriver=./resources/drivers/chromedriver.exe
 FirefoxDriver=./resources/drivers/geckodriver.exe
@@ -25,3 +27,6 @@ Environment= PRODPREVIEWEnvironment
 
 ***********************Test Data******************************************
 TestData= ./test-data/TestData.xlsx
+ClinicalTrialData= ./test-data/clinical-trials.xlsx
+SitewideSearchData= ./test-data/sitewide-search.xlsx
+TestDataR4R= ./test-data/TestData_R4R.xlsx

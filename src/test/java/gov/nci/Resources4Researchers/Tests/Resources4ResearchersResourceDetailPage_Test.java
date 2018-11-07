@@ -145,16 +145,12 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void verifyEmailIcon() {
 		Assert.assertTrue(r4rResourceDetail.getEmailIcon().isDisplayed());
-		// Assert.assertTrue(r4rResourceDetail.getNCIAffliationDetail().getText().contains("This
-		// resource is managed by"));
 		logger.log(LogStatus.PASS, "Verify that there is Email share icon displayed on the Resource Detail page ");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verifyTwitterIcon() {
 		Assert.assertTrue(r4rResourceDetail.getTwitterIcon().isDisplayed());
-		// Assert.assertTrue(r4rResourceDetail.getNCIAffliationDetail().getText().contains("This
-		// resource is managed by"));
 		logger.log(LogStatus.PASS, "Verify that there is Twitter share icon displayed on the Resource Detail page ");
 	}
 
