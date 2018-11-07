@@ -22,7 +22,7 @@ public class Resources4ResearchersSearchResult {
 
 	public static final String R4R_SEARCH_RESULT_PAGE_TITLE = "Resources for Researchers: Search Results - National Cancer Institute";
 	public static final String R4R_SEARCH_RESULT_H1_PAGE_TITLE = "Resources for Researchers Search Results";
-	public static final String R4R_HOME_PAGE_URL = "https://www.cancer.gov/research/resources/";
+	public static final String R4R_HOME_PAGE_URL = "/research/resources/";
 	public final String BREAD_CRUMB = "Home\nResearch";
 	public final List<String> EXP_TOOL_TYPE_OPTIONS = Lists.newArrayList("Analysis Tools", "Datasets & Databases",
 			"Lab Tools", "Community Research Tools", "Terminology", "Networks/Consortiums", "Clinical Research Tools",

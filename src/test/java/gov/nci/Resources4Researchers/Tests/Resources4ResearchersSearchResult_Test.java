@@ -77,20 +77,20 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 	public void verifyResources4ResearchersHomeLink() {
 		Assert.assertTrue(r4rSearchResult.getr4rHomeLink().isDisplayed());
 		r4rSearchResult.clickResources4ResearchersHome();
-		Assert.assertTrue(FunctionLibrary.waitURLToBe(driver, r4rSearchResult.R4R_HOME_PAGE_URL));
+		Assert.assertTrue(driver.getCurrentUrl().contains(r4rSearchResult.R4R_HOME_PAGE_URL));
 		driver.navigate().back();
 		logger.log(LogStatus.PASS,
 				"Verify that 'Resources For Researchers Home' page is displayed on clicking the link 'Resources for Researchers Home'");
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyResources4ResearchersHomeLink" })
 	public void verifySearchBar() {
 		Assert.assertTrue(r4rSearchResult.getSearchBox().isDisplayed(), "Search Bar is not displayed");
 		Assert.assertTrue(r4rSearchResult.getSearchButton().isDisplayed(), "Search Button is not displayed");
 		logger.log(LogStatus.PASS, "Verify that Search Bar and button are displayed");
 	}
 
-	@Test(dataProvider = "Search", groups = { "Smoke" })
+	@Test(dataProvider = "Search", groups = { "Smoke" }, dependsOnMethods = { "verifySearchBar" })
 	public void verifySearch(String keyword) {
 
 		System.out.println("Search Keyword: " + keyword);
@@ -109,8 +109,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 		// Verify the message on the screen when search is done for keyword
 		// having no result Ex-Terminology
-
-		if (keyword.equalsIgnoreCase("buffer")) {
+		if (keyword.equalsIgnoreCase("xTerminologyx")) {
 			WebElement resultText = driver.findElement(By.xpath("//div[@class='results__noresults  ']"));
 			WebElement lnk_viewAllResources = driver.findElement(By.xpath("//div[@class='results__noresults  ']/a"));
 			System.out.println("No Results Text: " + resultText.getText());
@@ -132,7 +131,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 						+ "Page Title, URL containing q=keyword and Search bar displays the keyword. If no result for a keyword, no result message is displayed");
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifySearch" })
 	public void verifyToolTypesOptions() {
 		Assert.assertTrue(r4rSearchResult.getToolTypeBox().isDisplayed(), "Tool Types Box is not displayed");
 		Assert.assertEquals(r4rSearchResult.getToolTypeLabel().getText(), "Tool Type");
@@ -163,7 +162,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		}
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyToolTypesOptions" })
 	public void searchByToolTypesOptions() {
 		List<WebElement> toolTypeOptions = r4rSearchResult.getToolTypeOptions();
 		List<String> toolTypeNameAsString = r4rSearchResult.getToolTypesOptionsName();
@@ -233,7 +232,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "searchByToolTypesOptions" })
 	public void verifyResearchAreaOptions() {
 		Assert.assertTrue(r4rSearchResult.getResearchAreaBox().isDisplayed(), "Research Area Box is not displayed");
 		Assert.assertEquals(r4rSearchResult.getResearchAreaLabel().getText(), "Research Area");
@@ -267,7 +266,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		}
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyResearchAreaOptions" })
 	public void searchByResearchAreaOptions() {
 		List<WebElement> researchAreaOptions = r4rSearchResult.getResearchAreaOptions();
 		List<String> researchAreaNameAsString = r4rSearchResult.getResearchAreaOptionsName();
@@ -350,7 +349,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		driver.navigate().to(pageURL);
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "searchByResearchAreaOptions" })
 	public void verifyResearchTypesOptions() {
 		Assert.assertTrue(r4rSearchResult.getResearchTypeBox().isDisplayed(), "Research Type Box is not displayed");
 		Assert.assertEquals(r4rSearchResult.getResearchTypesLabel().getText(), "Research Type");
@@ -381,7 +380,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		}
 	}
 
-	@Test(groups = { "Smoke" })
+	@Test(groups = { "Smoke" }, dependsOnMethods = { "verifyResearchTypesOptions" })
 	public void searchByResearchTypeOptions() {
 		List<WebElement> researchTypeOptions = r4rSearchResult.getResearchTypeOptions();
 		List<String> researchTypeNameAsString = r4rSearchResult.getResearchTypeOptionsName();
@@ -488,14 +487,13 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 						+ researchTypeNameAsString.get(0));
 	}
 
-	@Test(dataProvider = "ToolSubType", groups = { "Smoke" })
+	@Test(dataProvider = "ToolSubType", groups = { "Smoke" }, dependsOnMethods = { "searchByResearchTypeOptions" })
 	public void verifyToolSubTypesOptions(String toolType) {
 		System.out.println("Tool Type ====================:" + toolType);
 
 		String toolTypeXPath = "//label[@class='facet__filter  r4r-DEFAULT']/input[@value='" + toolType
 				+ "']/ancestor::label";
-		// FunctionLibrary.scrollIntoview(driver,
-		// r4rSearchResult.getSearchBox());
+		FunctionLibrary.scrollIntoview(driver, r4rSearchResult.getSearchBox());
 		WebElement toolType1 = driver.findElement(By.xpath(toolTypeXPath));
 		toolType1.click();
 		// Verify that Tool Sub-Type box is displayed
@@ -532,13 +530,12 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		case "Lab Tools":
 			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_LAB);
 			break;
-		case "Clinical Research Tools":
-			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH);
-			break;
 		case "Community Research Tools":
 			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_COMMUNITY_RESEARCH);
 			break;
-
+		case "Clinical Research Tools":
+			Assert.assertEquals(toolSubTypeNameAsString, r4rSearchResult.EXP_TOOL_SUBTYPE_OPTIONS_CLINICAL_RESEARCH);
+			break;
 		}
 		for (int i = 1; i <= toolSubTypeItems.size(); i++) {
 			toolSubTypeItems.get(i - 1).click();

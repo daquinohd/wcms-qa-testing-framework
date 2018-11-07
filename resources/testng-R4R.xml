@@ -14,12 +14,12 @@
 			</run>
 		</groups>
 		<classes>
-
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 	
-			 <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" /> 
+			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" /> 
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" /> 
 			
-			<!--<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test">
+			<!--
+			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test">
 				<methods>
 					These tests do not currently work and must be repaired before being reinstated.
 
@@ -31,7 +31,6 @@
 			</class> 
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test">
 				 <methods>
-
 					These tests do not currently work and must be repaired before being reinstated.
 					<exclude name="verifyToolSubTypesOptions" />
 					<exclude name="verifyToolTypesOptions" />
@@ -43,7 +42,6 @@
 					<exclude name="searchByToolTypesOptions" />
 					<exclude name="verifyResearchTypesOptions" />
 					<exclude name="searchByResearchTypeOptions" /> 
-					
 				</methods>
 			</class> -->
 			<!-- <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" >
@@ -55,9 +53,8 @@
 					<exclude name="verifySearchbyENTER" />
 					<exclude name="verifyBackToResult" />
 				</methods>
-
 			</class>
--->
+			-->
 
 		</classes>
 	</test>
