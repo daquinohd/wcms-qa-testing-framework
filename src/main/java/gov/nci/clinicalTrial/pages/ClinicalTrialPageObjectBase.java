@@ -110,6 +110,7 @@ public class ClinicalTrialPageObjectBase extends PageObjectBase {
 	 * @param url
 	 */
 	public void abandon(String url) {
+		ClickUtil.stall(browser);
 		expectUrlChange(() -> {
 			browser.get(url);
 		});
