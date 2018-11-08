@@ -159,8 +159,8 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(40), "Missing event40");
-			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_advanced|abandon|a");
+			Assert.assertTrue(beacon.hasEvent(40), "event40");
+			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_advanced|abandon|a", "prop74");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -178,8 +178,8 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(40), "Missing event40");
-			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_advanced|abandon|lo");
+			Assert.assertTrue(beacon.hasEvent(40), "event40");
+			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_advanced|abandon|lo", "prop74");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -188,7 +188,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 	/// Test Advanced CTS 'Abandon' click event (subtype)
 	@Test(groups = { "Analytics" })
-	public void testAdvancedMultiSelectAbandon() {
+	public void testAdvancedAbandonMultiSelect() {
 		setupTestMethod();
 
 		try {
@@ -198,8 +198,8 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon);
-			Assert.assertTrue(beacon.hasEvent(40), "Missing event40");
-			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_advanced|abandon|st-multiselect");
+			Assert.assertTrue(beacon.hasEvent(40), "event40");
+			Assert.assertEquals(beacon.props.get(74), "clinicaltrials_advanced|abandon|st-multiselect", "prop74");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
