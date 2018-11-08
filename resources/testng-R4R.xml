@@ -15,62 +15,31 @@
 		</groups>
 		<classes>
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test" /> 	
-			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test" /> 
-			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" /> 
-			
-			<!--
-			<class name="gov.nci.Resources4Researchers.Tests.Resources4Researchers_Test">
-				<methods>
-					These tests do not currently work and must be repaired before being reinstated.
-
-					<exclude name="verifyViewAllResources" />
-					<exclude name="verifyLearnMoreAboutR4RLink" />
-					<exclude name="searchByToolTypesOptions" />
-					<exclude name="searchByResearchAreaOptions" />
-					<exclude name="verifyResearchAreaOptions" />
-					<exclude name="verifyToolTypesOptions" />
-
-				</methods>
-			</class> 
 			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersSearchResult_Test">
-				 <methods>
-					These tests do not currently work and must be repaired before being reinstated.
-					<exclude name="verifyToolSubTypesOptions" />
-					<exclude name="verifyResources4ResearchersHomeLink" />
-					<exclude name="verifyResearchAreaOptions" />
-					<exclude name="searchByResearchAreaOptions" />
-					<exclude name="verifyViewAllResources" />
-					<exclude name="verifyLearnMoreAboutR4RLink" />
-					<exclude name="searchByToolTypesOptions" />
-					<exclude name="verifyResearchTypesOptions" />
-					<exclude name="searchByResearchTypeOptions" />
-					<exclude name="verifySearch" />
-					<exclude name="verifyToolTypesOptions" />
-					
-				</methods>
-			</class> -->
-			<!-- <class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test" >
 				<methods>
-
-		These tests do not currently work and must be repaired before being reinstated.
-
-					<exclude name="verifySearchbyClick" />
-					<exclude name="verifySearchbyENTER" />
-					<exclude name="verifyBackToResult" />
-					<exclude name="verifyContactInfoDetail" />
-					<exclude name="verifyContactInfoTitle" />
-					<exclude name="verifyNCIAffiliationDetail" />
-					<exclude name="verifyNCIAffiliationTitle" />
-					<exclude name="verifyResearchAreaOptions" />
-					<exclude name="verifyResourceAccessText" />
-					<exclude name="verifyResourceDetailPageTitle" />
 					<exclude name="verifySearch" />
 					<exclude name="verifyToolTypesOptions" />
-
+					<exclude name="sortingOfToolTypeOptions" />
+					<exclude name="searchByToolTypesOptions" />
+					<exclude name="verifyResearchAreaOptions" />
+					<exclude name="sortingOfResearchAreaOptions" />
+					<exclude name="searchByResearchAreaOptions" />
+					<exclude name="verifyResearchTypesOptions" />
+					<exclude name="sortingOfResearchTypesOptions" />
+					<exclude name="searchByResearchTypeOptions" />
+					<exclude name="verifyToolSubTypesOptions" />
 				</methods>
 			</class>
-			-->
-
+			<class name="gov.nci.Resources4Researchers.Tests.Resources4ResearchersResourceDetailPage_Test">
+				<methods>
+				 	<exclude name="verifyBackToResultReturnfromSearchresult" />
+					<exclude name="verifyNCIAffiliationTitle" />
+					<exclude name="verifyResourceDetailPageTitle" />
+					<exclude name="verifyResources4ResearchersHome" />
+					<exclude name="verifyVisitResource" />
+				</methods>
+			</class>
+			
 		</classes>
 	</test>
 
