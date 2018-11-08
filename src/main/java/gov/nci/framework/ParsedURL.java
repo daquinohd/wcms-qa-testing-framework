@@ -4,8 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * Breaks a URL string into its constituent components (path, query parameters,
@@ -40,7 +45,7 @@ public class ParsedURL {
             }
         }
     }
-
+    
     /**
      * Gets the path part of this URL.
      * 
@@ -72,4 +77,43 @@ public class ParsedURL {
         else
             return  null;
     }
+    
+	/**
+	 * Get a list of decoded query parameters and values.
+	 * 
+	 * I realize this is very similar to the logic in the constructor, but trying to build the queryPairs 
+	 * maps throws the following error: 
+	 *   java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+	 *   at java.lang.String.substring(Unknown Source)
+	 *   at gov.nci.framework.ParsedURL.<init>(ParsedURL.java:43)
+	 * Adding getParamsArrayList as a static method for now b/c I'd rather not mess with the constructor 
+	 * logic - daquinohd
+	 * 
+     * @param url (String)
+     * @return
+     */
+	public static List<NameValuePair> getParamArrayList(String url) {
+		List<NameValuePair> rtnParams = new ArrayList<NameValuePair>();			        
+		try {
+			URL myUrl = new URL(url);
+			String queries = myUrl.getQuery(); // get encoded query string
+			for(String parm : queries.split("&")) {
+				String[] pair = parm.split("=");
+				String name = URLDecoder.decode(pair[0], "UTF-8");
+				String value = "";
+				if(pair.length > 1) {
+					value = URLDecoder.decode(pair[1], "UTF-8"); 
+				}
+				rtnParams.add(new BasicNameValuePair(name, value));				
+			}
+		} 
+		catch (MalformedURLException ex) {
+			System.out.println("Malformed URL in ParsedURL:getParamsArrayList()");
+		}
+		catch (UnsupportedEncodingException ex) {
+			System.out.println("Error decoding URL in ParsedURL:getParamsArrayList()");
+		}
+		return rtnParams;
+	}	
+	 
 }

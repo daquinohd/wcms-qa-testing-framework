@@ -49,8 +49,8 @@ public class ExcelManager {
 	}
 
 	/*
-	 * This method returns the data from a cell by providing the Sheet name,
-	 * Column name and Row number.
+	 * This method returns the data from a cell by providing the Sheet name, Column
+	 * name and Row number.
 	 */
 
 	@SuppressWarnings("deprecation")

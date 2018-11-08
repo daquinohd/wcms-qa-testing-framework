@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Common Functionality Suite" parallel="none">
-	  <test name="Common Functionality Tests" preserve-order="true">
+	  <test name="Sitewide Search" preserve-order="true">
 		<!--
 			The browser parameter is set in pom.xml as part of invoking
 			the maven-surefire-plugin.
@@ -15,9 +15,10 @@
 		</groups>
 		<classes>
 			<class name="gov.nci.CommonObjects.Tests.SitewideSearch_Test" />
+			<!--
 			<class name="gov.nci.CommonObjects.Tests.LanguageBar_Test" />
 			<class name="gov.nci.CommonObjects.Tests.UtilityNav_Test" />
-			<!-- -->
+			-->
 		</classes>
 	</test>
 

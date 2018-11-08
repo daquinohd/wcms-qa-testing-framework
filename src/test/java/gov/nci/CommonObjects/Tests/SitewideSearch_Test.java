@@ -31,9 +31,9 @@ public class SitewideSearch_Test extends BaseClass {
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
-		pageURL = config.getProperty("HomePageURL");
+		pageURL = config.getProperty("HomePage");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		search = new SitewideSearch(driver, logger);
 		testDataFilePath = config.getProperty("TestData");
@@ -63,7 +63,7 @@ public class SitewideSearch_Test extends BaseClass {
 		//Verify that the Top Search Result Text contains search keyword
 		WebElement topResultText = driver.findElement(By.xpath("(//h4)[1]"));
 		System.out.println("Top Result Text Value ***********: " + topResultText.getText());
-		Assert.assertTrue(topResultText.getText().contains("Results 1–10 of"));
+		Assert.assertTrue(topResultText.getText().contains("Results 1\u201310 of"));
 		Assert.assertTrue(topResultText.getText().contains("for: " + keyword));
 
 		//Verify that the bottom Search Result Text contains search keyword
@@ -98,7 +98,7 @@ public class SitewideSearch_Test extends BaseClass {
 		//Verify that the Top Search Result Text contains search keyword
 		WebElement topResultText = driver.findElement(By.xpath("(//h4)[1]"));
 		System.out.println("Top Result Text Value ***********: " + topResultText.getText());
-		Assert.assertTrue(topResultText.getText().contains("Results 0–0 of 0 for:"));
+		Assert.assertTrue(topResultText.getText().contains("Results 0\u20130 of 0 for:"));
 
 		//Verify that the error message is displayed for empty search
 		WebElement errorMsg = driver.findElement(By.xpath("(//h4)[1]/following-sibling::div[1]"));
@@ -133,7 +133,8 @@ public class SitewideSearch_Test extends BaseClass {
 		//Verify that the Top Search Result Text contains search keywords
 		WebElement topResultText = driver.findElement(By.xpath("(//h4)[1]"));
 		System.out.println("Top Result Text Value ***********: " + topResultText.getText());
-		Assert.assertTrue(topResultText.getText().contains("Results 1–10 of"));
+		// "\u2013" is an endash
+		Assert.assertTrue(topResultText.getText().contains("Results 1\u201310 of"));
 		Assert.assertTrue(topResultText.getText().contains("for: " + keyword1 + " : " + keyword2));
 
 		//Verify that the bottom Search Result Text contains search keyword

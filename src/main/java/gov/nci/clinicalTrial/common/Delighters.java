@@ -6,12 +6,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import gov.nci.Utilities.ConfigReader;
 
 @Deprecated
 public class Delighters {
 	WebDriver driver;
-	ConfigReader config = new ConfigReader();
 
 	@FindBy(how = How.CSS, using = ".delighter.cts-livehelp")
 	WebElement delighter_LiveHelp;

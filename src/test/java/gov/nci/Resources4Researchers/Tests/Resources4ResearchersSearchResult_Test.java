@@ -43,7 +43,7 @@ public class Resources4ResearchersSearchResult_Test extends BaseClass {
 		logger = report.startTest(this.getClass().getSimpleName());
 		pageURL = config.getProperty("Resources4ResearchersSearchResultURL");
 		System.out.println("PageURL: " + pageURL);
-		driver = BrowserManager.startBrowser(browser, pageURL);
+		driver = BrowserManager.startBrowser(browser, config, pageURL);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		r4rSearchResult = new Resources4ResearchersSearchResult(driver, logger);
 		r4rHome = new Resources4ResearchersHome(driver, logger);
