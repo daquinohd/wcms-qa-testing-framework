@@ -90,16 +90,21 @@ Valid browser names are:
 3. Extract files in the appropriate folder
 ### Selenium Webdriver:
 1. http://selenium-release.storage.googleapis.com/index.html?path=3.5/
-2. Click on  selenium-java-3.5.0.zip
+2. Click on selenium-java-3.5.0.zip
 3. Extract files in the appropriate folder
 ### ChromeDriver:
 1. https://chromedriver.storage.googleapis.com/index.html?path=2.34/
 2. Click on chromedriver_win32.zip
 3. Extract files in the appropriate folder
+
 ### Gecko Driver:
-1. https://github.com/mozilla/geckodriver/releases
-2. Click on geckodriver-v0.18.0-win64.zip
-3. Extract files in the appropriate folder
+1. https://github.com/mozilla/geckodriver/releases/tag/v0.23.0
+2. Download file for desired OS:
+   1. **Windows:** geckodriver-v0.23.0-win64.zip
+   2. **Mac OS:** geckodriver-v0.23.0-macos.tar.gz
+   3. **Linux:** geckodriver-v0.23.0-linux64.tar.gz
+3. Extract file and copy to the appropriate folder
+
 ### Apache Maven:
 1. https://maven.apache.org/download.cgi
 2. Click on apache-maven-3.5.2-bin.zip
