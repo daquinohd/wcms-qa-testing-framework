@@ -23,7 +23,7 @@ public class Resources4ResearchersResourceDetailPage {
 	// public static final String R4R_H1_PAGE_TITLE = "Resources for Researchers
 	// Search Results";
 	public final String BREAD_CRUMB = "Home\nResearch";
-	public static final String R4R_HOME_PAGE_URL = "https://www-qa.cancer.gov/research/resources/";
+	public static final String R4R_HOME_PAGE_URL = "https://www.cancer.gov/research/resources/";
 
 	/*
 	 * Resources for Researchers Resource Detail Page WebElements
@@ -101,7 +101,7 @@ public class Resources4ResearchersResourceDetailPage {
 	/*
 	 * Get Back to Results link
 	 */
-	public WebElement getBacktoResult() {
+	public WebElement getBacktoResultlink() {
 		return lnk_BacktoSearchResults;
 	}
 
@@ -222,4 +222,19 @@ public class Resources4ResearchersResourceDetailPage {
 	public List<WebElement> getRelatedResources() {
 		return relatedResourcesItems;
 	}
+
+	/*
+	 * Get Email icon
+	 */
+	public WebElement getEmailIcon() {
+		return lnk_ShareEmail;
+	}
+
+	/*
+	 * Get Twitter icon
+	 */
+	public WebElement getTwitterIcon() {
+		return lnk_ShareTwitter;
+	}
+
 }

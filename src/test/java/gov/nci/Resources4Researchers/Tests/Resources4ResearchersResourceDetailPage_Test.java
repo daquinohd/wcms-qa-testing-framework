@@ -22,9 +22,9 @@ import gov.nci.Resources4Researchers.Resources4ResearchersSearchResult;
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
 import gov.nci.Utilities.FunctionLibrary;
+import gov.nci.clinicaltrials.BaseClass;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import gov.nci.clinicaltrials.BaseClass;
 
 public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 
@@ -74,21 +74,33 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 
 	@Test(groups = { "Smoke" })
 	public void verifyBackToResult() {
-		driver.navigate().to(pageURL);
-		Assert.assertFalse(r4rResourceDetail.getBacktoResult().isDisplayed());
+		Assert.assertFalse(driver.getPageSource().contains("Back to results"));
 		// Assert.assertNull(r4rResourceDetail.getBacktoResult());
 		// Assert.assertTrue(FunctionLibrary.waitURLToBe(driver,
 		// r4rHome.R4R_LEARN_MORE_PAGE_URL));
 		logger.log(LogStatus.PASS,
 				"Verify that there is Back to result link is not displayed on the Resource Detail page ");
+
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyBackToResultReturnfromSearchresult() {
+		driver.navigate().to(config.getProperty("Resources4ResearchersSearchResultURL"));
+		//r4rSearchResult.getResultItems().get(0).click();
+		Assert.assertTrue(driver.getPageSource().contains("Back to results"));
+		logger.log(LogStatus.PASS,
+				"Verify that there is Back to result link is displayed on the Resource Detail page ");
+		r4rResourceDetail.clickBacktoResult();
+		Assert.assertEquals(driver.getCurrentUrl(), config.getProperty("Resources4ResearchersSearchResultURL"));
+		logger.log(LogStatus.PASS, "Verify that Back to result link displays the Search Results page ");
 	}
 
 	@Test(groups = { "Smoke" })
 	public void verifyVisitResource() {
 		Assert.assertTrue(r4rResourceDetail.getVisitResource().isDisplayed());
-		logger.log(LogStatus.PASS,
-				"Verify that there is Visit Resource link is displayed on the Resource Detail page ");
-
+		logger.log(LogStatus.PASS, "Verify that there is Visit Resource link displayed on the Resource Detail page ");
+		Assert.assertTrue(r4rResourceDetail.getVisitResource().isEnabled());
+		logger.log(LogStatus.PASS, "Verify that Visit Resource link is clickable on the Resource Detail page ");
 	}
 
 	@Test(groups = { "Smoke" })
@@ -126,7 +138,20 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 	@Test(groups = { "Smoke" })
 	public void verifyNCIAffiliationDetail() {
 		Assert.assertTrue(r4rResourceDetail.getNCIAffliationDetail().isDisplayed());
+		Assert.assertTrue(r4rResourceDetail.getNCIAffliationDetail().getText().contains("This resource is managed by"));
 		logger.log(LogStatus.PASS, "Verify that there is NCI Affiliation text displayed on the Resource Detail page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyEmailIcon() {
+		Assert.assertTrue(r4rResourceDetail.getEmailIcon().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Email share icon displayed on the Resource Detail page ");
+	}
+
+	@Test(groups = { "Smoke" })
+	public void verifyTwitterIcon() {
+		Assert.assertTrue(r4rResourceDetail.getTwitterIcon().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that there is Twitter share icon displayed on the Resource Detail page ");
 	}
 
 	@Test(dataProvider = "Search", groups = { "Smoke" })
@@ -225,7 +250,7 @@ public class Resources4ResearchersResourceDetailPage_Test extends BaseClass {
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "Keyword", rowNum);
+			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "SearchText", rowNum);
 			Object ob[] = { cancerType };
 
 			myObjects.add(ob);
