@@ -1,13 +1,12 @@
 package gov.nci.clinicaltrials;
 
-import java.net.URL;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -16,15 +15,17 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import gov.nci.framework.ParsedURL;
+import com.relevantcodes.extentreports.LogStatus;
+
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
+import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.clinicalTrial.pages.BasicSearch;
 import gov.nci.clinicalTrial.pages.SearchResults;
 import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
-import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
+import gov.nci.framework.ParsedURL;
 
 public class BasicSearch_Test extends BaseClass {
 
@@ -45,7 +46,6 @@ public class BasicSearch_Test extends BaseClass {
 	String resultPageUrl;
 	String advSearchPageUrl;
 	String testDataFilePath;
-
 
 	@BeforeClass(groups = { "Smoke", "current" })
 	@Parameters({ "browser" })
@@ -79,25 +79,28 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement headerTextElement = basicSearch.getHeaderText();
 		Assert.assertTrue(headerTextElement.isDisplayed(), "Basic CTS header text not displayed");
-		Assert.assertTrue(headerTextElement.getText().contains("Steps to Find a Clinical Trial"), "header text mismatch");
+		Assert.assertTrue(headerTextElement.getText().contains("Steps to Find a Clinical Trial"),
+				"header text mismatch");
 	}
 
 	/**
 	 * Verifies presence, visibility, and content of the search help icon
 	 */
 	@Test(groups = { "Smoke" })
-	public void uiVerificationSearchTip () {
+	public void uiVerificationSearchTip() {
 
 		WebElement searchTipElememt = basicSearch.getSearchTipElement();
 		Assert.assertTrue(searchTipElememt.isDisplayed(), "Search Tip not displayed");
-		Assert.assertTrue(searchTipElememt.getText().contains("Search Tip: For more search options, use our advanced search"), "Search Tip text mismatched");
+		Assert.assertTrue(
+				searchTipElememt.getText().contains("Search Tip: For more search options, use our advanced search"),
+				"Search Tip text mismatched");
 	}
 
 	/**
 	 * Verifies presence, visibility, and content of the cancer type input field.
 	 */
 	@Test(groups = { "Smoke" })
-	public void uiVerificationCancerType () {
+	public void uiVerificationCancerType() {
 
 		WebElement cancerTypeLabel = basicSearch.getCancerTypeLabel();
 		Assert.assertTrue(cancerTypeLabel.isDisplayed(), "Cancer Type label not displayed");
@@ -107,7 +110,9 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement cancerTypeMessageElement = basicSearch.getCancerTypeMessageElement();
 		Assert.assertTrue(cancerTypeMessageElement.isDisplayed(), "Cancer Type Placeholder message not displayed");
-		Assert.assertTrue(cancerTypeMessageElement.getAttribute("placeholder").contains("Start typing to select a cancer type"), "Cancer type message text mismatch");
+		Assert.assertTrue(
+				cancerTypeMessageElement.getAttribute("placeholder").contains("Start typing to select a cancer type"),
+				"Cancer type message text mismatch");
 	}
 
 	/**
@@ -124,14 +129,15 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement ageHelpText = basicSearch.getTextAgeElement();
 		Assert.assertTrue(ageHelpText.isDisplayed(), "Age help text not displayed");
-		Assert.assertTrue(ageHelpText.getText().contains("Your age helps determine which trials are right for you."), "Age text mismatch");
+		Assert.assertTrue(ageHelpText.getText().contains("Your age helps determine which trials are right for you."),
+				"Age text mismatch");
 	}
 
 	/**
 	 * Verifies presence, visibility, and content of the ZIP code input field.
 	 */
 	@Test(groups = { "Smoke" })
-	public void uiVerificationZipCodeField () {
+	public void uiVerificationZipCodeField() {
 
 		WebElement zipCodeField = basicSearch.getZipCodeField();
 		Assert.assertTrue(zipCodeField.isDisplayed(), "ZipCode Input field not displayed.");
@@ -144,14 +150,15 @@ public class BasicSearch_Test extends BaseClass {
 
 		WebElement zipCodeTextElement = basicSearch.getZipCodeTextElement();
 		Assert.assertTrue(zipCodeTextElement.isDisplayed(), "ZipCode help text not displayed.");
-		Assert.assertTrue(zipCodeTextElement.getText().contains("Show trials near this U.S. ZIP code."), "Zip code help text mismatch.");
+		Assert.assertTrue(zipCodeTextElement.getText().contains("Show trials near this U.S. ZIP code."),
+				"Zip code help text mismatch.");
 	}
 
 	/**
 	 * Verifies presence, visibility, and content of the search button
 	 */
 	@Test(groups = { "Smoke" })
-	public void uiVerificationSearchButton () {
+	public void uiVerificationSearchButton() {
 
 		WebElement searchButton = basicSearch.getSearchButton();
 		Assert.assertTrue(searchButton.isDisplayed(), "Find Results button not displayed");
@@ -170,11 +177,11 @@ public class BasicSearch_Test extends BaseClass {
 		String link = nextStepsLink.getAttribute("href");
 		Assert.assertNotEquals(link, null, "Next steps link is missing");
 
-		try{
+		try {
 			URL url = new URL(link);
-			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/trial-guide", "Next steps link path is mismatched.");
-		}
-		catch (MalformedURLException ex) {
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/trial-guide",
+					"Next steps link path is mismatched.");
+		} catch (MalformedURLException ex) {
 			Assert.fail("Error parsing Next steps URL");
 		}
 	}
@@ -345,7 +352,7 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(dataProvider = "ValidAges", groups = { "Smoke" })
 	public void searchByAge(String age) {
 
-		try{
+		try {
 			basicSearch.setSearchAge(age);
 			SearchResults result = basicSearch.clickSearchButton();
 
@@ -370,14 +377,15 @@ public class BasicSearch_Test extends BaseClass {
 	 * Verifies that invalid age criteria are handled correctly.
 	 */
 	@Test(dataProvider = "InvalidAges", groups = { "Smoke" })
-	public void searchByAgeInvalid(String age)	{
+	public void searchByAgeInvalid(String age) {
 
 		basicSearch.setSearchAge(age);
 		basicSearch.setSearchKeyword(""); // Send focus to another field
 
 		WebElement errMessage = basicSearch.getAgeInputError();
 		Assert.assertTrue(errMessage.isDisplayed(), "Age input message not visible.");
-		Assert.assertEquals(errMessage.getText(), "Please enter a number between 1 and 120.", "Age input message not set correctly.");
+		Assert.assertEquals(errMessage.getText(), "Please enter a number between 1 and 120.",
+				"Age input message not set correctly.");
 	}
 
 	/**
@@ -386,13 +394,14 @@ public class BasicSearch_Test extends BaseClass {
 	@Test(dataProvider = "ValidZipCode", groups = { "Smoke" })
 	public void searchByZip(String zipCode) {
 
-		try{
+		try {
 			basicSearch.setSearchZip(zipCode);
 			SearchResults result = basicSearch.clickSearchButton();
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
-			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r", "Unexpected URL path.");
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
 
 			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
 			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
@@ -448,7 +457,8 @@ public class BasicSearch_Test extends BaseClass {
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
-			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r", "Unexpected URL path.");
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
 
 			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), "", "Keyword parameter not matched.");
 			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
@@ -478,7 +488,8 @@ public class BasicSearch_Test extends BaseClass {
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
-			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r", "Unexpected URL path.");
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
 
 			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), keyword, "Keyword parameter not matched.");
 			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
@@ -486,7 +497,7 @@ public class BasicSearch_Test extends BaseClass {
 			Assert.assertEquals(url.getQueryParam(ZIPCODE_PARAM), "", "ZIP code parameter not matched.");
 			Assert.assertEquals(url.getQueryParam(RESULTS_LINK), "1", "Results Link parameter not matched.");
 
-		} catch(MalformedURLException| UnsupportedEncodingException e) 	{
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
 			Assert.fail("Error parsing page URL.");
 			e.printStackTrace();
 		}
@@ -508,7 +519,8 @@ public class BasicSearch_Test extends BaseClass {
 
 			// Verify the search parameters were set correctly.
 			ParsedURL url = result.getPageUrl();
-			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r", "Unexpected URL path.");
+			Assert.assertEquals(url.getPath(), "/about-cancer/treatment/clinical-trials/search/r",
+					"Unexpected URL path.");
 
 			Assert.assertEquals(url.getQueryParam(KEYWORD_PARAM), keyword, "Keyword parameter not matched.");
 			Assert.assertEquals(url.getQueryParam(CANCERTYPE_PARAM), "", "Cancer Type parameter not matched.");
@@ -554,7 +566,6 @@ public class BasicSearch_Test extends BaseClass {
 		}
 	}
 
-
 	@Test(groups = { "Smoke" })
 	public void verifyAdvancedSearchLink() {
 
@@ -565,7 +576,7 @@ public class BasicSearch_Test extends BaseClass {
 	}
 
 	// TODO: Move all bread crumb verifications to a single test class.
-	@Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Smoke" })
 	public void verifyBreadCrumb() {
 
 		BreadCrumb crumb = new BreadCrumb(driver);
@@ -576,7 +587,7 @@ public class BasicSearch_Test extends BaseClass {
 	}
 
 	// TODO: Move all page banner verifications to a single test class.
-	@Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Smoke" })
 	public void verifyBanner() {
 
 		Banner banner = new Banner(driver);
@@ -601,7 +612,6 @@ public class BasicSearch_Test extends BaseClass {
 		System.out.println("**********API function executed***********");
 		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
 	}
-
 
 	/******************** Data Providers ****************/
 
@@ -671,7 +681,7 @@ public class BasicSearch_Test extends BaseClass {
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
 			String zipcode = excelReader.getCellData(TESTDATA_SHEET_NAME, "ValidZipCode", rowNum);
 			// skip empty rows
-			if(!zipcode.trim().isEmpty()) {
+			if (!zipcode.trim().isEmpty()) {
 				Object ob[] = { zipcode.trim() };
 				myObjects.add(ob);
 			}
@@ -708,7 +718,7 @@ public class BasicSearch_Test extends BaseClass {
 			zipcode = zipcode.trim();
 
 			// Skip blank entries.
-			if(age.isEmpty() || zipcode.isEmpty())
+			if (age.isEmpty() || zipcode.isEmpty())
 				continue;
 
 			Object ob[] = { age, zipcode };
@@ -730,7 +740,7 @@ public class BasicSearch_Test extends BaseClass {
 
 			cancerType = cancerType.trim();
 			age = age.trim();
-			if( cancerType.isEmpty() || age.isEmpty() )
+			if (cancerType.isEmpty() || age.isEmpty())
 				continue;
 
 			Object ob[] = { cancerType, age };
@@ -752,7 +762,7 @@ public class BasicSearch_Test extends BaseClass {
 
 			cancerType = cancerType.trim();
 			zipcode = zipcode.trim();
-			if(cancerType.isEmpty() || zipcode.isEmpty())
+			if (cancerType.isEmpty() || zipcode.isEmpty())
 				continue;
 
 			Object ob[] = { cancerType, zipcode };
@@ -776,7 +786,7 @@ public class BasicSearch_Test extends BaseClass {
 			cancerType = cancerType.trim();
 			age = age.trim();
 			zipcode = zipcode.trim();
-			if( cancerType.isEmpty() || age.isEmpty() || zipcode.isEmpty() )
+			if (cancerType.isEmpty() || age.isEmpty() || zipcode.isEmpty())
 				continue;
 
 			Object ob[] = { cancerType, age, zipcode };

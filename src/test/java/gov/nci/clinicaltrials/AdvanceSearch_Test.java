@@ -14,15 +14,16 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.relevantcodes.extentreports.LogStatus;
+
 import gov.nci.Utilities.BrowserManager;
 import gov.nci.Utilities.ExcelManager;
-import gov.nci.clinicalTrial.pages.AdvanceSearch;
-import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.clinicalTrial.common.ApiReference;
 import gov.nci.clinicalTrial.common.Delighters;
+import gov.nci.clinicalTrial.pages.AdvanceSearch;
+import gov.nci.clinicalTrial.pages.SuppressChatPromptPageObject;
 import gov.nci.commonobjects.Banner;
 import gov.nci.commonobjects.BreadCrumb;
-import com.relevantcodes.extentreports.LogStatus;
 
 public class AdvanceSearch_Test extends BaseClass {
 
@@ -58,7 +59,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		testDataFilePath = config.getProperty("ClinicalTrialData");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Smoke" })
 	public void verifyAdvanceSearchPageTitle() {
 		Assert.assertEquals(advanceSearch.getAdvanceSearchPageTitle(), AdvanceSearch.ADVANCE_SEARCH_PAGE_TITLE);
 		logger.log(LogStatus.PASS,
@@ -67,7 +68,7 @@ public class AdvanceSearch_Test extends BaseClass {
 	}
 
 	// TODO: Move all page banner verifications to a single test class.
-	@Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Smoke" })
 	public void verifyBanner() {
 
 		Banner banner = new Banner(driver);
@@ -78,7 +79,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 1)
+	@Test(groups = { "Smoke" })
 	public void verify_bread_crumb() {
 		crumb.getBreadCrumbText();
 		Assert.assertEquals(crumb.getBreadCrumbText(), advanceSearch.BREAD_CRUMB);
@@ -87,7 +88,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyApiReference() {
 		api.getApiReference();
 		Assert.assertTrue(api.getApiReference().isDisplayed());
@@ -100,7 +101,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verifying the API Reference section on the page");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterLiveHelp() {
 		Assert.assertTrue(delighter.getLiveHelpDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("CTSLiveHelpDelighterPath");
@@ -116,7 +117,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Live Help Delighter on Advance CTS");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhat() {
 		Assert.assertTrue(delighter.getWhatAreDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("CTSWhatAreTrialsDelighterPath");
@@ -132,7 +133,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify What are Clinical Trials Delighter on Advance CTS");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void verifyDelighterWhich() {
 		Assert.assertTrue(delighter.getWhichTrialDelighter().isDisplayed());
 		String expectedPageUrl = config.getProperty("CTSWhichTrialsDelighterPath");
@@ -148,7 +149,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Pass => " + "Verify Which Trials are Best for You Delighter on Advance CTS");
 	}
 
-	@Test(groups = { "Smoke" }, priority = 2)
+	@Test(groups = { "Smoke" })
 	public void defaultSearchTest() {
 
 		advanceSearch.defaultSearch();
@@ -168,7 +169,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify Default Search on Advanced CTS");
 	}
 
-	@Test(dataProvider = "CancerType_SubType", groups = { "Smoke" }, priority = 2)
+	@Test(dataProvider = "CancerType_SubType", groups = { "Smoke" })
 	public void advancesearch_CancerType_SubType(String cancerTypeId, String cancerType, String cancerSubTypeId,
 			String cancerSubType) throws InterruptedException {
 		Object[][] data;
@@ -203,7 +204,7 @@ public class AdvanceSearch_Test extends BaseClass {
 				+ cancerType + " , CancerSubType = " + cancerSubType);
 	}
 
-	@Test(dataProvider = "CancerType_SubType_Stage", groups = { "Smoke" }, priority = 2)
+	@Test(dataProvider = "CancerType_SubType_Stage", groups = { "Smoke" })
 	public void advancesearch_CancerType_SubType_Stage(String cancerTypeId, String cancerType, String cancerSubTypeId,
 			String cancerSubType, String cancerStageId, String cancerStage) throws InterruptedException {
 		Object[][] data;
@@ -235,7 +236,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "Age", groups = { "Smoke" }, priority = 3)
+	@Test(dataProvider = "Age", groups = { "Smoke" })
 	public void advancesearch_AgeTest(int age) throws InterruptedException {
 		System.out.println("Age from Data Provider: " + age);
 		Object[][] data;
@@ -273,7 +274,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		}
 	}
 
-	@Test(dataProvider = "Keyword", groups = { "Smoke" }, priority = 3)
+	@Test(dataProvider = "Keyword", groups = { "Smoke" })
 	public void advancesearch_Keywords_PhraseTest(String keyword) throws InterruptedException {
 		System.out.println("Keyword from Data Provider: " + keyword);
 
@@ -307,7 +308,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		}
 	}
 
-	@Test(dataProvider = "Zipcode", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "Zipcode", groups = { "Smoke" })
 	public void advancesearch_Zipcode(String zip) throws InterruptedException {
 		System.out.println("Zipcode from Data Provider: " + zip);
 		// zip = zip.toString();
@@ -357,7 +358,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		}
 	}
 
-	@Test(dataProvider = "CountryStateCity", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "CountryStateCity", groups = { "Smoke" })
 	public void advancesearch_CountryStateCity(String country, String state, String statecode, String city)
 			throws InterruptedException {
 		System.out.println("Country from Data Provider: " + country + " ,State from Data Provider: " + state
@@ -396,7 +397,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "HospitalInstitution", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "HospitalInstitution", groups = { "Smoke" })
 	public void advancesearch_Hospital(String hospital) throws InterruptedException {
 		System.out.println("Hospital from Data Provider: " + hospital);
 
@@ -425,7 +426,7 @@ public class AdvanceSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify Search by Hospital on Advanced CTS. Hospital = " + hospital);
 	}
 
-	@Test(groups = { "Smoke" }, priority = 4)
+	@Test(groups = { "Smoke" })
 	public void advancesearch_AtNIH() throws InterruptedException {
 
 		Object[][] data;
@@ -453,7 +454,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "TrialType", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "TrialType", groups = { "Smoke" })
 	public void advancesearch_TrialType(String trialType) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(200);
@@ -480,7 +481,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "Drug", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "Drug", groups = { "Smoke" })
 	public void advancesearch_Drug(String drug, String drugId) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(200);
@@ -507,7 +508,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "Treatment", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "Treatment", groups = { "Smoke" })
 	public void advancesearch_Treatment(String treatment, String treatmentId) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(200);
@@ -534,7 +535,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "TrialPhase", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "TrialPhase", groups = { "Smoke" })
 	public void advancesearch_TrialPhase(String trialphase) throws InterruptedException {
 		Object[][] data;
 		Thread.sleep(200);
@@ -561,7 +562,7 @@ public class AdvanceSearch_Test extends BaseClass {
 
 	}
 
-	@Test(dataProvider = "TrialID", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "TrialID", groups = { "Smoke" })
 	public void advancesearch_TrialID(String trialId) throws InterruptedException {
 		Object[][] data;
 		// Thread.sleep(200);
@@ -614,7 +615,7 @@ public class AdvanceSearch_Test extends BaseClass {
 				"Verify Search by TrialId or Trial Ids (separated by ; or ,) on Advanced CTS. Trial Id = " + trialId);
 	}
 
-	@Test(dataProvider = "TrialInvestigator", groups = { "Smoke", "current" }, priority = 4)
+	@Test(dataProvider = "TrialInvestigator", groups = { "Smoke", "current" })
 	public void advancesearch_TrialInvestigator(String trialInvestigator) throws InterruptedException {
 		Object[][] data;
 		advanceSearch.advSearch_TrialInvestigator(trialInvestigator);
@@ -638,7 +639,7 @@ public class AdvanceSearch_Test extends BaseClass {
 				"Verify Search by Trial Investigator on Advanced CTS. Trial Id = " + trialInvestigator);
 	}
 
-	@Test(dataProvider = "LeadOrganization", groups = { "Smoke" }, priority = 4)
+	@Test(dataProvider = "LeadOrganization", groups = { "Smoke" })
 	public void advancesearch_LeadOrganization(String leadOrganization) throws InterruptedException {
 		Object[][] data;
 		advanceSearch.advSearch_LeadOrganization(leadOrganization);

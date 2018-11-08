@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="QA Environment1" parallel="none">
-	  <test name="Resources for Researchers suite" preserve-order="true">
+<suite name="Common Functionality Suite" parallel="none">
+	  <test name="Sitewide Search" preserve-order="true">
 		<!--
 			The browser parameter is set in pom.xml as part of invoking
 			the maven-surefire-plugin.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="QA Environment" parallel="none">
+<suite name="Web Analytics Suite" parallel="none">
 	<listeners>
 		<listener class-name="gov.nci.framework.AnnotationTransformer"/>
 	</listeners>
@@ -31,7 +31,11 @@
 			<!-- Blog tracking -->
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostLoad_Test" />
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostClick_Test" />
-			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesLoad_Test" />
+			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesLoad_Test">
+				<methods>
+					<exclude name="testBlogSeriesPageLoad" />
+				</methods>
+			</class>
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesClick_Test" />
 			<class name="gov.nci.webanalyticstests.blog.common.BlogLinksClick_Test" />
 			<class name="gov.nci.webanalyticstests.blog.common.BlogRightRailClick_Test" />
@@ -39,7 +43,11 @@
 			<!-- Clinical Trials tracking -->
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsLoad_Test" />
-			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchClick_Test">
+				<methods>
+					<exclude name="testAdvancedAbandonOrg" />
+				</methods>
+			</class>
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsClick_Test">
 				<methods>
@@ -57,7 +65,11 @@
 			<!-- Sitewide Search tracking -->
 			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsLoad_Test" />
 			<class name="gov.nci.webanalyticstests.sitewidesearch.pages.SwsResultsClick_Test" />
-			<class name="gov.nci.webanalyticstests.sitewidesearch.common.SwsFormClick_Test" />
+			<class name="gov.nci.webanalyticstests.sitewidesearch.common.SwsFormClick_Test">
+				<methods>
+					<exclude name="testSitewideSearchNoMatch" />
+				</methods>
+			</class>
 
 			<!-- Dictionary tracking -->
 			<class name="gov.nci.webanalyticstests.dictionary.pages.DictDefinitionLoad_Test" />
@@ -70,7 +82,12 @@
 
 			<!-- CTHP tracking -->
 			<class name="gov.nci.webanalyticstests.cthp.pages.CthpLoad_Test" />
-			<class name="gov.nci.webanalyticstests.cthp.common.CthpCardClick_Test" />
+			<class name="gov.nci.webanalyticstests.cthp.common.CthpCardClick_Test">
+				<methods>
+					<exclude name="testCthpHpCardClick" />
+					<exclude name="testCthpPatientCardClick" />
+				</methods>
+			</class>
 
 			<!-- PDQ tracking -->
 			<class name="gov.nci.webanalyticstests.pdq.pages.PdqCisClick_Test" />

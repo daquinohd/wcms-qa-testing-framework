@@ -3,10 +3,15 @@
 <suite name="NCI Automation - All Test Cases" parallel="none">
   <!-- This suite should simply be a list of all the feature-level suites. -->
   <suite-files>
-  
+
+  <!--
+    <suite-file path="resources/testanalytics.xml" />
+    <suite-file path="resources/testng-Common.xml" />
     <suite-file path="resources/testng-WA.xml" />
     <suite-file path="resources/testng-CTS.xml" />
+    -->
     <suite-file path="resources/testng-R4R.xml" />
+
     <!-- TODO: Evaluate the tests in nci.gov.CommonObjects and determine which ones should be reinstated. -->
     <!-- <suite-file path="resources/testng-Common.xml" /> -->
   </suite-files>
