@@ -72,4 +72,17 @@ public class ClickUtil {
 		stall(webElement, 5);
 	}
 
+	/**
+	 * Mimic a user repeatedly scrolling up and down.
+	 * 
+	 * @param driver
+	 */
+	public static void stall(WebDriver driver) {
+		javaScript = (JavascriptExecutor) driver;
+		for (int i = 0; i <= 5; i++) {
+			javaScript.executeScript("window.scrollTo(0,document.body.scrollHeight),"
+					+ "window.scrollTo(0,document.body.scrollHeight/2),window.scrollTo(0,0);");
+		}
+	}
+
 }
