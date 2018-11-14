@@ -17,7 +17,7 @@ public class R4RResultsPageLoad_Test extends R4RLoadBase {
 
 	/// Test R4R Resource Page Load event
 	@Test(dataProvider = "R4RResourcePageLoad", groups = { "Analytics" })
-	public void testR4RResourcePageLoad(String path, String type) {
+	public void testR4RResultsPageLoad(String path, String type) {
 		System.out.println("Path: " + path + ", page type: " + type);
 		driver.get(config.goHome() + path);
 
@@ -28,7 +28,7 @@ public class R4RResultsPageLoad_Test extends R4RLoadBase {
 			Assert.assertTrue(beacon.hasEvent(1), "event1");
 			Assert.assertTrue(beacon.hasEvent(47), "event47");
 			Assert.assertEquals(beacon.props.get(6), "Resources for Researchers", "prop6");
-			Assert.assertEquals(beacon.props.get(10), "Resources for Researchers - National Cancer Institute",
+			Assert.assertEquals(beacon.props.get(10), "Resources for Researchers: Search Results - National Cancer Institute",
 					"prop10");
 			Assert.assertEquals(beacon.props.get(44), "RandD Resources", "prop44");
 			Assert.assertEquals(beacon.eVars.get(44), beacon.props.get(44), "eVar44");
