@@ -49,10 +49,17 @@ public class DictionarySearch extends PageObjectBase {
     /**************** Sitewide Search Results Page Elements *****************************/
 
 
-    //* Testing if the H1 header element exists on the page
+    // Testing if the H1 header element exists on the page
     // ---------------------------------------------------
     public boolean headerVisible() {
         return txt_header.isDisplayed();
+    }
+
+
+    // Getting the H1 header text
+    // ---------------------------------------------------
+    public String getHeaderText() {
+        return txt_header.getText();
     }
 
 
