@@ -26,15 +26,12 @@
         <exclude name="Dada"/>
       </methods>
     </class>
-  <!--
     <class name="gov.nci.dictionary.NewGenetics_Test">
       <methods>
         <exclude name="Dada"/>
       </methods>
     </class>
-  -->
 
    </classes>
   </test>
 </suite>
-
