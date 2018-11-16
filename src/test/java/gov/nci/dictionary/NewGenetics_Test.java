@@ -33,7 +33,7 @@ public class NewGenetics_Test extends NewDictionaryCommon {
 
         try {
             dict = new DictionarySearch(driver);
-            boolean headerVisible = dict.headerVisible();
+            boolean headerVisible = dict.isHeaderVisible();
             String headerNotVisibleTxt = "*** Error: Genetics Dictionary Header"
                                        + " Not Displayed ***";
             Assert.assertTrue(headerVisible, headerNotVisibleTxt);

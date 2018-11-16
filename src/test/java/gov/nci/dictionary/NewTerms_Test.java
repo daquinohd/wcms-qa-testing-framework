@@ -33,7 +33,7 @@ public class NewTerms_Test extends NewDictionaryCommon {
 
         try {
             dict = new DictionarySearch(driver);
-            boolean headerVisible = dict.headerVisible();
+            boolean headerVisible = dict.isHeaderVisible();
             String headerNotVisibleTxt = "*** Error: Cancer Term Dictionary Header"
                                        + " Not Displayed ***";
             Assert.assertTrue(headerVisible, headerNotVisibleTxt);

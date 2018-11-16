@@ -51,7 +51,7 @@ public class DictionarySearch extends PageObjectBase {
 
     // Testing if the H1 header element exists on the page
     // ---------------------------------------------------
-    public boolean headerVisible() {
+    public boolean isHeaderVisible() {
         return txt_header.isDisplayed();
     }
 
@@ -62,5 +62,11 @@ public class DictionarySearch extends PageObjectBase {
         return txt_header.getText();
     }
 
+
+    //* Testing if the radio button for the StartsWith/Contains selection is displayed
+    // ------------------------------------------------------------------------------
+    public boolean isRadioBtnVisible() {
+        return contains_toggle.isDisplayed();
+    }
 
 }

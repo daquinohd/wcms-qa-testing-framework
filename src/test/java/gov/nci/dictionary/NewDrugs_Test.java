@@ -33,8 +33,9 @@ public class NewDrugs_Test extends NewDictionaryCommon {
 
         try {
             dict = new DictionarySearch(driver);
-            boolean headerVisible = dict.headerVisible();
-            String headerNotVisibleTxt = "*** Error: Drug Dictionary Header Not Displayed ***";
+            boolean headerVisible = dict.isHeaderVisible();
+            String headerNotVisibleTxt = "*** Error: Drug Dictionary Header "
+                                       + "Not Displayed ***";
             Assert.assertTrue(headerVisible, headerNotVisibleTxt);
         } catch (MalformedURLException | UnsupportedEncodingException e) {
             Assert.fail("*** Error loading page in " + curMethod + " ***");
@@ -42,7 +43,7 @@ public class NewDrugs_Test extends NewDictionaryCommon {
     }
 
 
-    //* Testing to confirm the correct page header is displayed
+    // Testing to confirm the correct page header is displayed
     // ------------------------------------------------------------------------------
     @Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
     public void HeaderDisplay(String url) {
@@ -64,8 +65,29 @@ public class NewDrugs_Test extends NewDictionaryCommon {
         }
     }
 
+    // Confirming the "Starts with"/"Contains" radio buttons are displayed
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+    public void RadioButtonVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
 
-    /*  ***************************** Data Provider *********************************************** */
+        logger.log(LogStatus.INFO, "Testing if radio buttons are visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean radioVisible = dict.isRadioBtnVisible();
+            String radioNotVisible = "*** Error: Drug Dictionary Radio Button "
+                                   + "Not Displayed ***";
+            Assert.assertTrue(radioVisible, radioNotVisible);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
+
+/*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
     // Using worksheet indicating URLs with Page Options that are visible.
