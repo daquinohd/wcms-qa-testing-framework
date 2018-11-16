@@ -43,6 +43,28 @@ public class NewGenetics_Test extends NewDictionaryCommon {
     }
 
 
+    // Testing to confirm the correct page header is displayed
+    // ------------------------------------------------------------------------------
+    @Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+    public void HeaderDisplay(String url) {
+        DictionarySearch dict;
+        String dictHeaderTxt = "NCI Dictionary of Genetics Terms";
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if correct dictionary header is displayed: "
+                   + dictHeaderTxt);
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            String headerTxt = dict.getHeaderText();
+            String incorrectTitle = "*** Error: Genetics Dictionary Header text mismatch ***";
+            Assert.assertEquals(headerTxt, dictHeaderTxt, incorrectTitle);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
