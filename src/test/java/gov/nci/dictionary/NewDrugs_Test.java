@@ -65,6 +65,7 @@ public class NewDrugs_Test extends NewDictionaryCommon {
         }
     }
 
+
     // Confirming the "Starts with"/"Contains" radio buttons are displayed
     // -------------------------------------------------------------------------
     @Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
@@ -108,6 +109,27 @@ public class NewDrugs_Test extends NewDictionaryCommon {
         }
     }
 
+
+    // Confirming the search input field is displayed
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
+    public void SearchInputVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if search entry field is visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean searchVisible = dict.isSearchInputVisible();
+            String searchErrorTxt = "*** Error: Drug Dictionary Search Input "
+                                  + "Field Not Displayed ***";
+            Assert.assertTrue(searchVisible, searchErrorTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
 
 /*  ***************************** Data Provider ***************************************** */
 
