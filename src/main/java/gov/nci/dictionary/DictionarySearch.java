@@ -82,4 +82,11 @@ public class DictionarySearch extends PageObjectBase {
         return search_input.isDisplayed();
     }
 
+
+    //* Testing if the search button is visible
+    // ---------------------------------------------------
+    public boolean isSearchBtnVisible() {
+        return search_btn.isDisplayed();
+    }
+
 }
