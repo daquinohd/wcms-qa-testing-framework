@@ -28,6 +28,8 @@ public class DictionarySearch extends PageObjectBase {
     /**************** Sitewide Search Results Page Elements *****************************/
     @FindBy(css = "h1")
     WebElement txt_header;
+    @FindBy(xpath = "//head/title")
+    WebElement txt_title;
     @FindBy(css = "div span.radio")
     WebElement contains_toggle;
     @FindBy(css = "#radioStarts" )
@@ -94,6 +96,15 @@ public class DictionarySearch extends PageObjectBase {
     // ---------------------------------------------------
     public boolean isAzListVisible() {
         return az_list.isDisplayed();
+    }
+
+
+    // Getting the HTML document title
+    // Note: The title is not displayed on the page,
+    //       therefore txt_title.getText() doesn't work.
+    // ---------------------------------------------------
+    public String getPageTitle() {
+        return txt_title.getAttribute("textContent").trim();
     }
 
 }
