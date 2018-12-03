@@ -89,4 +89,11 @@ public class DictionarySearch extends PageObjectBase {
         return search_btn.isDisplayed();
     }
 
+
+    // Testing if the A-Z List is visible
+    // ---------------------------------------------------
+    public boolean isAzListVisible() {
+        return az_list.isDisplayed();
+    }
+
 }
