@@ -24,11 +24,6 @@ public class R4RComponentClick_Test extends R4RClickBase {
 
 	// ==================== Setup methods ==================== //
 
-	@BeforeClass(groups = { "Analytics" })
-	private void setupClass() {
-		testDataFilePath = config.getProperty("AnalyticsDictData");
-	}
-
 	/**
 	 * Go to dictionary search page and initialize DictionaryObject.
 	 * 
@@ -53,7 +48,7 @@ public class R4RComponentClick_Test extends R4RClickBase {
 
 		try {
 			Beacon beacon = getBeacon();
-			//doCommonClassAssertions(beacon);
+			// doCommonClassAssertions(beacon);
 			Assert.assertEquals(beacon, beacon);
 		} catch (Exception e) {
 			handleTestErrors(new Object() {

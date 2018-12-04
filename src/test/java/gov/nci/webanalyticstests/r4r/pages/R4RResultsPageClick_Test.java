@@ -1,6 +1,10 @@
 package gov.nci.webanalyticstests.r4r.pages;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.Iterator;
+
 import org.testng.Assert;
 
 import gov.nci.Resources4Researchers.Resources4ResearchersSearchResult;
@@ -9,14 +13,7 @@ import gov.nci.webanalyticstests.r4r.R4RClickBase;
 
 public class R4RResultsPageClick_Test extends R4RClickBase {
 
-	// TODO: data method and more test cases
-	// TODO: detail tests
-
-	private final String ROOT_PATH = "/research/resources";
-	private final String SEARCH_ALL = "/search";
-	private final String SEARCH_TOOLS = "/search?from=0&toolTypes=analysis_tools";
-	private final String SEARCH_AREAS = "/search?from=0&researchAreas=cancer_omics";
-	private final String SEARCH_FILTERED = "/search?from=20&toolSubtypes=modeling&toolSubtypes=r_software&toolTypes=analysis_tools";
+	private final String TESTDATA_SHEET_NAME = "R4RResultsLoad";
 
 	private Resources4ResearchersSearchResult r4rResult;
 
@@ -38,19 +35,33 @@ public class R4RResultsPageClick_Test extends R4RClickBase {
 	}
 
 	// ==================== Test methods ==================== //
-	
+
 	/// Test R4R Pages Load event
-	@Test(groups = { "Analytics" })
-	public void testR4RResultsViewClick() {
-		driver.get(config.goHome());
+	@Test(dataProvider = "R4RResultsPage", groups = { "Analytics" })
+	public void testR4RResultsViewClick(String path, String type, String action, String filters) {
+		System.out.println("Path: " + path + ", search type: " + type);
+		setupTestMethod(path);
 
 		try {
+			String total = r4rResult.getResultsCount();
 			Beacon beacon = getBeacon();
-			Assert.assertEquals(beacon, getBeacon());
+
+			doCommonClassAssertions(beacon);
+			Assert.assertTrue(beacon.hasEvent(65), "event65");
+			Assert.assertEquals(beacon.props.get(39), action + total, "prop39");
+			Assert.assertEquals(beacon.props.get(40), filters, "prop40");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
 		}
+	}
+
+	// ==================== Data providers ==================== //
+
+	@DataProvider(name = "R4RResultsPage")
+	private Iterator<Object[]> getR4RResultsPageData() {
+		String[] columnsToReturn = { "Path", "ContentType", "ActionStatus", "Filters" };
+		return getSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME, columnsToReturn);
 	}
 
 	// ==================== Common assertions ==================== //
@@ -59,7 +70,6 @@ public class R4RResultsPageClick_Test extends R4RClickBase {
 	 * Shared Assert() calls for this class.
 	 * 
 	 * @param beacon
-	 * @param linkName
 	 */
 	private void doCommonClassAssertions(Beacon beacon) {
 		doCommonClickAssertions(beacon);
