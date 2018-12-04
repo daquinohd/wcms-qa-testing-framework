@@ -132,6 +132,28 @@ public class NewTermsES_Test extends NewDictionaryCommon {
     }
 
 
+
+    // Confirming the search input field is displayed
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+    public void SearchInputVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if search entry field is visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean searchVisible = dict.isSearchInputVisible();
+            String searchErrorTxt = "*** Error: Glossary (ES) Search Input "
+                                  + "Field Not Displayed ***";
+            Assert.assertTrue(searchVisible, searchErrorTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
