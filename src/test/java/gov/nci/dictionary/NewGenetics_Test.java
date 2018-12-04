@@ -65,6 +65,28 @@ public class NewGenetics_Test extends NewDictionaryCommon {
         }
     }
 
+
+    // Confirming the "Starts with"/"Contains" radio buttons are displayed
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+    public void RadioButtonVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if radio buttons are visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean radioVisible = dict.isRadioBtnVisible();
+            String radioNotVisibleTxt = "*** Error: Genetics Radio Button "
+                                      + "Not Displayed ***";
+            Assert.assertTrue(radioVisible, radioNotVisibleTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
