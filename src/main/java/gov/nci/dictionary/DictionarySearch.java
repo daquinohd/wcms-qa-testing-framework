@@ -78,8 +78,6 @@ public class DictionarySearch extends PageObjectBase {
     public boolean isStartsWithSelected() {
         return btn_startswith.isSelected();
     }
-
-
     // Testing if the search input field is visible
     // ---------------------------------------------------
     public boolean isSearchInputVisible() {
