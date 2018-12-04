@@ -48,6 +48,8 @@ public class DictionarySearch extends PageObjectBase {
     List<WebElement> az_list_letters;
     @FindBy(css = "div.results dfn span")
     WebElement defHeader;
+    @FindBy(css = "div.last-SI p > a")
+    WebElement widgetLink;
     /**************** Sitewide Search Results Page Elements *****************************/
 
 
@@ -107,4 +109,10 @@ public class DictionarySearch extends PageObjectBase {
         return txt_title.getAttribute("textContent").trim();
     }
 
+
+    // Testing if the anchor link to the glossary widget exists on the page
+    // ------------------------------------------------------------------------------
+    public boolean isWidgetLinkVisible() {
+        return widgetLink.isDisplayed();
+    }
 }
