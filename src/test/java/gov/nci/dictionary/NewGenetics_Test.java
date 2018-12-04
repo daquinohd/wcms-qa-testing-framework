@@ -128,6 +128,7 @@ public class NewGenetics_Test extends NewDictionaryCommon {
         }
     }
 
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
