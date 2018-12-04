@@ -88,6 +88,29 @@ public class NewTermsES_Test extends NewDictionaryCommon {
         }
     }
 
+
+    // Confirm the link to the glossary widget in the header paragraph is
+    // visible.
+    // -----------------------------------------------------------------------
+    @Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+    public void WidgetLinkVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if widget link is visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean linkVisible = dict.isWidgetLinkVisible();
+            String linkNotVisibleTxt = "*** Error: Term Dictionary (ES) Widget "
+                                     + "Link Not Found ***";
+            Assert.assertTrue(linkVisible, linkNotVisibleTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
