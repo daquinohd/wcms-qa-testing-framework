@@ -115,4 +115,25 @@ public class DictionarySearch extends PageObjectBase {
     public boolean isWidgetLinkVisible() {
         return widgetLink.isDisplayed();
     }
+
+    // Find the anchor link for the dictionary widget and click the link
+    // Ensure we're seeing the correct page
+    // -----------------------------------------------------------------
+    public boolean linksToWidgetPage(WebDriver driver, String lang) {
+        String widgetTitle;
+        widgetLink.click();
+
+        if (lang.equals("ES")){
+            widgetTitle = "Widget del Diccionario del NCI - National Cancer Institute";
+        } else {
+            widgetTitle = "NCI Dictionary Widget - National Cancer Institute";
+        }
+
+        if ( driver.getTitle().equals(widgetTitle) ) {
+            System.out.println("    Widget " + lang + " Found");
+            return true;
+        }
+
+        return false;
+    }
 }
