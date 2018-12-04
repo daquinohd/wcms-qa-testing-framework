@@ -42,6 +42,7 @@ public class NewTerms_Test extends NewDictionaryCommon {
         }
     }
 
+
     // Testing to confirm the correct page header is displayed
     // ------------------------------------------------------------------------------
     @Test(dataProvider = "Glossary", groups = { "dictionary" })
@@ -64,6 +65,27 @@ public class NewTerms_Test extends NewDictionaryCommon {
         }
     }
 
+
+    // Confirming the "Starts with"/"Contains" radio buttons are displayed
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "Glossary", groups = { "dictionary" })
+    public void RadioButtonVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if radio buttons are visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean radioVisible = dict.isRadioBtnVisible();
+            String radioNotVisibleTxt = "*** Error: Glossary Dictionary Radio Button "
+                                      + "Not Displayed ***";
+            Assert.assertTrue(radioVisible, radioNotVisibleTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
 
 /*  ***************************** Data Provider ***************************************** */
 
