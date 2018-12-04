@@ -3,6 +3,7 @@ package gov.nci.Resources4Researchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.collect.Lists;
 import com.relevantcodes.extentreports.ExtentTest;
+
+import gov.nci.Utilities.ClickUtil;
 
 public class Resources4ResearchersHome {
 
@@ -274,6 +277,16 @@ public class Resources4ResearchersHome {
 	 */
 	public WebElement getTwitterIcon() {
 		return lnk_ShareTwitter;
+	}
+	
+	/**
+	 * Stall until the 'load' click event is fired.
+	 * 
+	 * @param number of times to repeat the stall action
+	 */
+	public void waitForAnalytics(int reps) {
+		WebElement elem = driver.findElement(By.cssSelector(".r4r-container input"));
+		ClickUtil.stall(elem, reps);
 	}
 
 }
