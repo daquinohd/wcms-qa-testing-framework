@@ -48,6 +48,8 @@ public class DictionarySearch extends PageObjectBase {
     List<WebElement> az_list_letters;
     @FindBy(css = "div.results dfn span")
     WebElement defHeader;
+    @FindBy(css = "div.last-SI p > a")
+    WebElement widgetLink;
     /**************** Sitewide Search Results Page Elements *****************************/
 
 
@@ -132,11 +134,5 @@ public class DictionarySearch extends PageObjectBase {
         }
 
         return false;
-
-
-    // Testing if the A-Z List is visible
-    // ---------------------------------------------------
-    public boolean isAzListVisible() {
-        return az_list.isDisplayed();
     }
 }
