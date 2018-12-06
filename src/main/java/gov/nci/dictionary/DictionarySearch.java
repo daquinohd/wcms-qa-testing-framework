@@ -28,8 +28,6 @@ public class DictionarySearch extends PageObjectBase {
     /**************** Sitewide Search Results Page Elements *****************************/
     @FindBy(css = "h1")
     WebElement txt_header;
-    @FindBy(xpath = "//head/title")
-    WebElement txt_title;
     @FindBy(css = "div span.radio")
     WebElement contains_toggle;
     @FindBy(css = "#radioStarts" )
@@ -48,8 +46,6 @@ public class DictionarySearch extends PageObjectBase {
     List<WebElement> az_list_letters;
     @FindBy(css = "div.results dfn span")
     WebElement defHeader;
-    @FindBy(css = "div.last-SI p > a")
-    WebElement widgetLink;
     /**************** Sitewide Search Results Page Elements *****************************/
 
 
@@ -67,11 +63,12 @@ public class DictionarySearch extends PageObjectBase {
     }
 
 
-    // Testing if the radio button for the StartsWith/Contains selection is displayed
+    //* Testing if the radio button for the StartsWith/Contains selection is displayed
     // ------------------------------------------------------------------------------
     public boolean isRadioBtnVisible() {
         return contains_toggle.isDisplayed();
     }
+
 
     // Testing if the "Starts with" radio button is selected by default
     // -----------------------------------------------------------------
@@ -133,5 +130,11 @@ public class DictionarySearch extends PageObjectBase {
         }
 
         return false;
+
+
+    // Testing if the A-Z List is visible
+    // ---------------------------------------------------
+    public boolean isAzListVisible() {
+        return az_list.isDisplayed();
     }
 }
