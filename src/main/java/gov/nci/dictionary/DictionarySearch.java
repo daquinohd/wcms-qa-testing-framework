@@ -28,6 +28,8 @@ public class DictionarySearch extends PageObjectBase {
     /**************** Sitewide Search Results Page Elements *****************************/
     @FindBy(css = "h1")
     WebElement txt_header;
+    @FindBy(xpath = "//head/title")
+    WebElement txt_title;
     @FindBy(css = "div span.radio")
     WebElement contains_toggle;
     @FindBy(css = "#radioStarts" )
@@ -63,7 +65,7 @@ public class DictionarySearch extends PageObjectBase {
     }
 
 
-    //* Testing if the radio button for the StartsWith/Contains selection is displayed
+    // Testing if the radio button for the StartsWith/Contains selection is displayed
     // ------------------------------------------------------------------------------
     public boolean isRadioBtnVisible() {
         return contains_toggle.isDisplayed();
