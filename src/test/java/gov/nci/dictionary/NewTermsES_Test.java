@@ -176,6 +176,28 @@ public class NewTermsES_Test extends NewDictionaryCommon {
         }
     }
 
+
+    // Confirming the A-Z list is displayed
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+    public void AZListVisible(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing if A-Z list is visible");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean azListVisible = dict.isAzListVisible();
+            String azListNotVisibleTxt = "*** Error: Glossary (ES) A-Z List "
+                                       + "Not Displayed ***";
+            Assert.assertTrue(azListVisible, azListNotVisibleTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
