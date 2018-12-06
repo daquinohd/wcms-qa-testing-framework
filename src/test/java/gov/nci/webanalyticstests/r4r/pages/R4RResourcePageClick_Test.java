@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import gov.nci.Resources4Researchers.Resources4ResearchersResourceDetailPage;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.r4r.R4RClickBase;
 
@@ -12,16 +13,44 @@ public class R4RResourcePageClick_Test extends R4RClickBase {
 
 	private final String TESTDATA_SHEET_NAME = "R4RResourceLoad";
 
+	private Resources4ResearchersResourceDetailPage r4rResourcePage;
+
+	// ==================== Setup methods ==================== //
+
+	/**
+	 * Go to dictionary search page and initialize DictionaryObject.
+	 * 
+	 * @param path
+	 */
+	private void setupTestMethod(String path) {
+		driver.get(config.goHome() + path);
+		try {
+			r4rResourcePage = new Resources4ResearchersResourceDetailPage(driver, logger);
+		} catch (Exception e) {
+			Assert.fail("Error loading R4R page at path: " + path);
+			e.printStackTrace();
+		}
+	}
+
 	// ==================== Test methods ==================== //
 
-	/// Test R4R Pages Load event
-	@Test(groups = { "Analytics" })
-	public void testR4RPageViewClick() {
-		driver.get(config.goHome());
+	/// Test R4R resource detail page load event
+	@Test(dataProvider = "R4RResourcePage", groups = { "Analytics" })
+	public void testR4RResourceViewClick(String path, String type) {
+		System.out.println("Path: " + path + ", search type: " + type);
+		setupTestMethod(path);
 
 		try {
+			r4rResourcePage.clickResources4ResearchersHome();
+			driver.navigate().back();
+			String title = r4rResourcePage.getPageTitleText();
+			
 			Beacon beacon = getBeacon();
-			Assert.assertEquals(beacon, getBeacon());
+			doCommonClassAssertions(beacon);
+			Assert.assertEquals(beacon.linkName, "R4R Data Load", "linkName");
+			Assert.assertTrue(beacon.hasEvent(66), "event66");
+			Assert.assertEquals(beacon.props.get(39), "r4r_resource|view", "prop39");
+			Assert.assertEquals(beacon.props.get(40), title, "prop40");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -30,28 +59,21 @@ public class R4RResourcePageClick_Test extends R4RClickBase {
 
 	// ==================== Data providers ==================== //
 
-	@DataProvider(name = "R4RPageLoad")
-	private Iterator<Object[]> getR4RPageLoadData() {
-		String[] columnsToReturn = { "Path", "ContentType", "CustomText" };
+	@DataProvider(name = "R4RResourcePage")
+	private Iterator<Object[]> getR4RResultsPageData() {
+		String[] columnsToReturn = { "Path", "ContentType" };
 		return getSpreadsheetData(testDataFilePath, TESTDATA_SHEET_NAME, columnsToReturn);
 	}
 
 	// ==================== Common assertions ==================== //
 
 	/**
-	 * Shared assertions for all tests in this class.
+	 * Shared Assert() calls for this class.
 	 * 
 	 * @param beacon
-	 * @param customText
 	 */
-	private void doCommonClassAssertions(Beacon beacon, String customText) {
-		Assert.assertTrue(beacon.hasSuite("nciglobal", driver.getCurrentUrl()), "Common missing Global Suite");
-		Assert.assertEquals(beacon.channels, "Research", "Channel");
-		Assert.assertTrue(beacon.hasEvent(1), "Missing event1");
-		Assert.assertTrue(beacon.hasEvent(47), "Missing event47");
-		Assert.assertEquals(beacon.props.get(6), "Resources for Researchers", "prop6");
-		Assert.assertEquals(beacon.props.get(10), "Resources for Researchers: " + customText, "prop10");
-		Assert.assertEquals(beacon.props.get(44), "RandD Resources", "prop44");
-		Assert.assertEquals(beacon.eVars.get(44), beacon.props.get(44), "eVar44");
+	private void doCommonClassAssertions(Beacon beacon) {
+		doCommonClickAssertions(beacon);
 	}
+
 }

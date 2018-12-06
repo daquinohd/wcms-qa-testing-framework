@@ -2,14 +2,13 @@ package gov.nci.Resources4Researchers;
 
 import java.util.List;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-
-import com.relevantcodes.extentreports.ExtentTest;
 
 public class Resources4ResearchersResourceDetailPage {
 
@@ -84,6 +83,13 @@ public class Resources4ResearchersResourceDetailPage {
 		return r4rResourceDetailH1PageTitle;
 	}
 
+	/*
+	 * Get Page title text
+	 */
+	public String getPageTitleText() {
+		return  getPageH1Title().getText();
+	}
+	
 	/*
 	 * Get the Resources For researchers Home link
 	 */

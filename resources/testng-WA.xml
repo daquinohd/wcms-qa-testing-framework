@@ -91,14 +91,13 @@
 			<class name="gov.nci.webanalyticstests.error.common.ErrorClick_Test" />
 
 			<!-- R4R tracking -->
-            <class name="gov.nci.webanalyticstests.r4r.pages.R4RHomePageClick_Test" />
-
+			<class name="gov.nci.webanalyticstests.r4r.pages.R4RHomePageClick_Test" />
 			<class name="gov.nci.webanalyticstests.r4r.pages.R4RHomePageLoad_Test" />
+			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResourcePageClick_Test" />
+			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResourcePageLoad_Test" />
 			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResultsPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResultsPageLoad_Test" />
-			<class name="gov.nci.webanalyticstests.r4r.pages.R4RResourcePageLoad_Test" />
 			<!--
-				<class name="gov.nci.webanalyticstests.r4r.pages.R4RResourcePageClick_Test" />
 				<class name="gov.nci.webanalyticstests.r4r.common.R4RComponentClick_Test" />
 			-->
 
