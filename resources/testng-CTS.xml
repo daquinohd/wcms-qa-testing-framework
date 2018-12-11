@@ -38,7 +38,11 @@
 				</methods>
 			</class>
 			<class name="gov.nci.clinicaltrials.BasicResultsUIElements_Test" />
-			<class name="gov.nci.clinicaltrials.SearchResults_Test" />
+			<class name="gov.nci.clinicaltrials.SearchResults_Test" >
+			<methods>
+					<exclude name="VerifyCriteriaDisplay" />
+			</methods>
+			</class>
 
 			<!--
 

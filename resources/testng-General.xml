@@ -9,7 +9,11 @@
 			<parameter name="browser" value="Chrome" />
 		-->
 		<classes>
-			<class name="gov.nci.general.PageOptions_Test" />
+			<class name="gov.nci.general.PageOptions_Test" >
+		    <methods>
+					<exclude name="GoogleplusVisible" />
+			</methods>		
+		</class>
 		</classes>
 	</test>
 	<test name="NCI - Testing AZ-List" preserve-order="true">

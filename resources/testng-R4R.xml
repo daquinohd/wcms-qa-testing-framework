@@ -37,6 +37,12 @@
 					<exclude name="verifyResourceDetailPageTitle" />
 					<exclude name="verifyResources4ResearchersHome" />
 					<exclude name="verifyVisitResource" />
+					<exclude name="verifyContactInfoDetail" />
+					<exclude name="verifyContactInfoTitle" />
+					<exclude name="verifyNCIAffiliationDetail" />
+					<exclude name="verifyResourceAccessText" />
+					<exclude name="verifySearchbyClick" />
+					<exclude name="verifySearchbyENTER" />
 				</methods>
 			</class>
 			

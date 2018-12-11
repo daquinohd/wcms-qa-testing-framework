@@ -14,7 +14,12 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="gov.nci.CommonObjects.Tests.SitewideSearch_Test" />
+			<class name="gov.nci.CommonObjects.Tests.SitewideSearch_Test" >
+			<methods>
+					<exclude name="verifySearchWithinSearch" />
+					<exclude name="verifySitewideSearch" />
+			</methods>
+			</class>
 			<!--
 			<class name="gov.nci.CommonObjects.Tests.LanguageBar_Test" />
 			<class name="gov.nci.CommonObjects.Tests.UtilityNav_Test" />
