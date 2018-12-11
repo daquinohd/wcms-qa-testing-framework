@@ -16,15 +16,16 @@
         <exclude name="Dada"/>
       </methods>
     </class>
-  <!--
     <class name="gov.nci.dictionary.NewTerms_Test">
       <methods>
         <exclude name="Dada"/>
-      </methods>
+       </methods>
     </class>
     <class name="gov.nci.dictionary.NewTermsES_Test">
       <methods>
         <exclude name="Dada"/>
+         <exclude name="HeaderDisplay"/>
+        <exclude name="TitleDisplay"/>
       </methods>
     </class>
     <class name="gov.nci.dictionary.NewGenetics_Test">
@@ -32,9 +33,7 @@
         <exclude name="Dada"/>
       </methods>
     </class>
-  -->
 
    </classes>
   </test>
 </suite>
-

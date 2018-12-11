@@ -3,6 +3,9 @@ package gov.nci.Resources4Researchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+import com.relevantcodes.extentreports.ExtentTest;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,8 +15,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.google.common.collect.Lists;
-import com.relevantcodes.extentreports.ExtentTest;
+import gov.nci.Utilities.ClickUtil;
+import gov.nci.framework.ParsedURL;
+
+import gov.nci.Utilities.ClickUtil;
 
 public class Resources4ResearchersHome {
 
@@ -275,5 +280,49 @@ public class Resources4ResearchersHome {
 	public WebElement getTwitterIcon() {
 		return lnk_ShareTwitter;
 	}
+	
+	/**
+	 * Stall until the 'load' click event is fired.
+	 * 
+	 * @param number of times to repeat the stall action
+	 */
+	public void waitForAnalytics(int reps) {
+		WebElement elem = driver.findElement(By.cssSelector(".r4r-container input"));
+		ClickUtil.stall(elem, reps);
+	}
 
+	/**
+	 * Get value of a given filter URL parameter.
+	 * 
+	 * @param paramName
+	 * @return query parameter value
+	 */
+	private String getFilterParam(String paramName) {
+		ParsedURL parsedUrl;
+		try {
+			parsedUrl = new ParsedURL(driver.getCurrentUrl());
+			return parsedUrl.getQueryParam(paramName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	/**
+	 * Get value the value of the 'toolTypes' parameter.
+	 * 
+	 * @return query parameter value
+	 */
+	public String getToolTypeFilter() {
+		return getFilterParam("toolTypes");
+	}
+	
+	/**
+	 * Click the first Tool Type section item.
+	 */
+	public void clickToolTypeLink() {
+		List<WebElement> toolTypeLinks = getToolTypeOptions();
+		ClickUtil.forceClick(driver, toolTypeLinks.get(0));
+	}
+	
 }

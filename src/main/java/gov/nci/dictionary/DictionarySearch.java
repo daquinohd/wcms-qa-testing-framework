@@ -28,6 +28,8 @@ public class DictionarySearch extends PageObjectBase {
     /**************** Sitewide Search Results Page Elements *****************************/
     @FindBy(css = "h1")
     WebElement txt_header;
+    @FindBy(xpath = "//head/title")
+    WebElement txt_title;
     @FindBy(css = "div span.radio")
     WebElement contains_toggle;
     @FindBy(css = "#radioStarts" )
@@ -46,14 +48,91 @@ public class DictionarySearch extends PageObjectBase {
     List<WebElement> az_list_letters;
     @FindBy(css = "div.results dfn span")
     WebElement defHeader;
+    @FindBy(css = "div.last-SI p > a")
+    WebElement widgetLink;
     /**************** Sitewide Search Results Page Elements *****************************/
 
 
-    //* Testing if the H1 header element exists on the page
+    // Testing if the H1 header element exists on the page
     // ---------------------------------------------------
-    public boolean headerVisible() {
+    public boolean isHeaderVisible() {
         return txt_header.isDisplayed();
     }
 
 
+    // Getting the H1 header text
+    // ---------------------------------------------------
+    public String getHeaderText() {
+        return txt_header.getText();
+    }
+
+
+    // Testing if the radio button for the StartsWith/Contains selection is displayed
+    // ------------------------------------------------------------------------------
+    public boolean isRadioBtnVisible() {
+        return contains_toggle.isDisplayed();
+    }
+
+
+    // Testing if the "Starts with" radio button is selected by default
+    // -----------------------------------------------------------------
+    public boolean isStartsWithSelected() {
+        return btn_startswith.isSelected();
+    }
+    // Testing if the search input field is visible
+    // ---------------------------------------------------
+    public boolean isSearchInputVisible() {
+        return search_input.isDisplayed();
+    }
+
+
+    //* Testing if the search button is visible
+    // ---------------------------------------------------
+    public boolean isSearchBtnVisible() {
+        return search_btn.isDisplayed();
+    }
+
+
+    // Testing if the A-Z List is visible
+    // ---------------------------------------------------
+    public boolean isAzListVisible() {
+        return az_list.isDisplayed();
+    }
+
+
+    // Getting the HTML document title
+    // Note: The title is not displayed on the page,
+    //       therefore txt_title.getText() doesn't work.
+    // ---------------------------------------------------
+    public String getPageTitle() {
+        return txt_title.getAttribute("textContent").trim();
+    }
+
+
+    // Testing if the anchor link to the glossary widget exists on the page
+    // ------------------------------------------------------------------------------
+    public boolean isWidgetLinkVisible() {
+        return widgetLink.isDisplayed();
+    }
+
+    // Find the anchor link for the dictionary widget and click the link
+    // Ensure we're seeing the correct page
+    // -----------------------------------------------------------------
+    public boolean linksToWidgetPage(WebDriver driver, String lang) {
+        String widgetTitle;
+        widgetLink.click();
+
+        if (lang.equals("ES")){
+            widgetTitle = "Widget del Diccionario del NCI - National Cancer Institute";
+        } else {
+            widgetTitle = "NCI Dictionary Widget - National Cancer Institute";
+        }
+
+        if ( driver.getTitle().equals(widgetTitle) ) {
+            System.out.println("    Widget " + lang + " Found");
+            return true;
+        }
+
+        return false;
+    }
 }
