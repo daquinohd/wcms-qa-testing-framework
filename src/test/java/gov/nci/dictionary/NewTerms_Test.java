@@ -110,28 +110,28 @@ public class NewTerms_Test extends NewDictionaryCommon {
     }
 
 
-    // Finding the link for the Glossary Widget in the header paragraph and
-    // test that the widget page exists by checking the resulting page title.
-    // -------------------------------------------------------------------------
-    @Test(dataProvider = "Glossary", groups = { "dictionary" })
-    public void ClickWidgetLink(String url) {
-        DictionarySearch dict;
-        String language = "EN";
-        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-
-        logger.log(LogStatus.INFO, "Testing link to glossary widget goes to correct page");
-        driver.get(url);
-
-        try {
-            dict = new DictionarySearch(driver);
-            boolean foundWidgetPage = dict.linksToWidgetPage(driver, language);
-            String wrongWidgetPageTxt = "*** Error: Glossary Click Widget Page "
-                                      + "Link Not Found ***";
-            Assert.assertTrue(foundWidgetPage, wrongWidgetPageTxt);
-        } catch (MalformedURLException | UnsupportedEncodingException e) {
-            Assert.fail("*** Error loading page in " + curMethod + " ***");
-        }
-    }
+//     // Finding the link for the Glossary Widget in the header paragraph and
+//     // test that the widget page exists by checking the resulting page title.
+//     // -------------------------------------------------------------------------
+//     @Test(dataProvider = "Glossary", groups = { "dictionary" })
+//     public void ClickWidgetLink(String url) {
+//         DictionarySearch dict;
+//         String language = "EN";
+//         String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+// 
+//         logger.log(LogStatus.INFO, "Testing link to glossary widget goes to correct page");
+//         driver.get(url);
+// 
+//         try {
+//             dict = new DictionarySearch(driver);
+//             boolean foundWidgetPage = dict.linksToWidgetPage(driver, language);
+//             String wrongWidgetPageTxt = "*** Error: Glossary Click Widget Page "
+//                                       + "Link Not Found ***";
+//             Assert.assertTrue(foundWidgetPage, wrongWidgetPageTxt);
+//         } catch (MalformedURLException | UnsupportedEncodingException e) {
+//             Assert.fail("*** Error loading page in " + curMethod + " ***");
+//         }
+//     }
 
     // Confirming the "Starts with" radio button is selected by default
     // -------------------------------------------------------------------------

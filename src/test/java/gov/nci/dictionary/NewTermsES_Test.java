@@ -112,6 +112,47 @@ public class NewTermsES_Test extends NewDictionaryCommon {
     }
 
 
+    // Finding the link for the Glossary Widget in the header paragraph and
+    // test that the widget page exists by checking the resulting page header.
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "GlossaryES", groups = { "dictionary" })
+    public void ClickWidgetLink(String url) {
+        DictionarySearch dict;
+        // ResultPage widgetPage;
+        String pageHeader;
+        String language = "ES";
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing link to glossary widget goes to correct page");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            ResultPage widgetPage = dict.clickWidgetLink();
+            // String widgetHeader = widgetPage.pageHeader();
+            String widgetPageHeaderTxt = widgetPage.getHeaderText();
+
+            switch (language) {
+                case "EN":
+                    pageHeader = "NCI Dictionary of Cancer Terms Widget";
+                    break;
+                case "ES":
+                    pageHeader = "Widget del Diccionario de cáncer del NCI";
+                    break;
+                default:
+                    pageHeader = "Not Found";
+            }
+
+            String wrongPageHeaderTxt = "*** Error: Glossary (ES) Click Widget Page "
+                                      + "Link Not Found ***";
+
+            Assert.assertEquals(pageHeader, widgetPageHeaderTxt, wrongPageHeaderTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
+
     // Confirming the "Starts with" radio button is selected by default
     // -------------------------------------------------------------------------
     @Test(dataProvider = "GlossaryES", groups = { "dictionary" })
@@ -219,6 +260,8 @@ public class NewTermsES_Test extends NewDictionaryCommon {
             Assert.fail("*** Error loading page in " + curMethod + " ***");
         }
     }
+
+
 /*  ***************************** Data Provider ***************************************** */
 
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
