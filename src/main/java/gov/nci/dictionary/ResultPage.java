@@ -33,6 +33,8 @@ public class ResultPage extends PageObjectBase {
     WebElement search_btn;
     @FindBy(css = "div.last-SI p > a")
     WebElement widgetLink;
+    @FindBy(css = "dt dfn")
+    List<WebElement> az_letter_result;
     /**************** Sitewide Search Results Page Elements *****************************/
 
 
@@ -47,5 +49,12 @@ public class ResultPage extends PageObjectBase {
     // ---------------------------------------------------
     public String getHeaderText() {
         return txt_header.getText();
+    }
+
+
+    // Getting the number of definitions on the page
+    // ---------------------------------------------------
+    public int getDefinitionCount() {
+        return az_letter_result.size();
     }
 }

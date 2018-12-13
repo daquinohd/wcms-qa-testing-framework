@@ -104,6 +104,24 @@ public class DictionarySearch extends PageObjectBase {
     }
 
 
+    // Testing if all of the elements of the A-Z list can be clicked and
+    // returning a non-zero result  J9 O14 Q16 Y24 #26
+    // -----------------------------------------------------------------
+    public ResultPage clickAZListLetter(int position) throws MalformedURLException,
+                                                 UnsupportedEncodingException {
+        az_list_letters.get(position).click();
+
+        return new ResultPage(getBrowser());
+    }
+
+
+    // Return the list of the AZ Header row
+    // -----------------------------------------------------------------
+    public List<WebElement> getAZList() {
+        return az_list_letters;
+    }
+
+
     // Getting the HTML document title
     // Note: The title is not displayed on the page,
     //       therefore txt_title.getText() doesn't work.
