@@ -87,6 +87,7 @@ public class NewTerms_Test extends NewDictionaryCommon {
         }
     }
 
+
     // Confirm the link to the glossary widget in the header paragraph is
     // visible.
     // -----------------------------------------------------------------------
@@ -110,28 +111,45 @@ public class NewTerms_Test extends NewDictionaryCommon {
     }
 
 
-//     // Finding the link for the Glossary Widget in the header paragraph and
-//     // test that the widget page exists by checking the resulting page title.
-//     // -------------------------------------------------------------------------
-//     @Test(dataProvider = "Glossary", groups = { "dictionary" })
-//     public void ClickWidgetLink(String url) {
-//         DictionarySearch dict;
-//         String language = "EN";
-//         String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
-// 
-//         logger.log(LogStatus.INFO, "Testing link to glossary widget goes to correct page");
-//         driver.get(url);
-// 
-//         try {
-//             dict = new DictionarySearch(driver);
-//             boolean foundWidgetPage = dict.linksToWidgetPage(driver, language);
-//             String wrongWidgetPageTxt = "*** Error: Glossary Click Widget Page "
-//                                       + "Link Not Found ***";
-//             Assert.assertTrue(foundWidgetPage, wrongWidgetPageTxt);
-//         } catch (MalformedURLException | UnsupportedEncodingException e) {
-//             Assert.fail("*** Error loading page in " + curMethod + " ***");
-//         }
-//     }
+    // Finding the link for the Glossary Widget in the header paragraph and
+    // test that the widget page exists by checking the resulting page header.
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "Glossary", groups = { "dictionary" })
+    public void ClickWidgetLink(String url) {
+        DictionarySearch dict;
+        // ResultPage widgetPage;
+        String pageHeader;
+        String language = "EN";
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing link to glossary widget goes to correct page");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            ResultPage widgetPage = dict.clickWidgetLink();
+            // String widgetHeader = widgetPage.pageHeader();
+            String widgetPageHeaderTxt = widgetPage.getHeaderText();
+
+            switch (language) {
+                case "EN":
+                    pageHeader = "NCI Dictionary of Cancer Terms Widget";
+                    break;
+                case "ES":
+                    pageHeader = "Widget del Diccionario de cáncer del NCI";
+                    break;
+                default:
+                    pageHeader = "Not Found";
+            }
+
+            String wrongPageHeaderTxt = "*** Error: Glossary Click Widget Page "
+                                      + "Link Not Found ***";
+            Assert.assertEquals(pageHeader, widgetPageHeaderTxt, wrongPageHeaderTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
 
     // Confirming the "Starts with" radio button is selected by default
     // -------------------------------------------------------------------------
@@ -151,6 +169,8 @@ public class NewTerms_Test extends NewDictionaryCommon {
             Assert.fail("*** Error loading page in " + curMethod + " ***");
         }
     }
+
+
     // Confirming the search input field is displayed
     // -------------------------------------------------------------------------
     @Test(dataProvider = "Glossary", groups = { "dictionary" })
@@ -172,6 +192,7 @@ public class NewTerms_Test extends NewDictionaryCommon {
         }
     }
 
+
     // Confirming the Search button is displayed
     // -------------------------------------------------------------------------
     @Test(dataProvider = "Glossary", groups = { "dictionary" })
@@ -192,6 +213,8 @@ public class NewTerms_Test extends NewDictionaryCommon {
             Assert.fail("*** Error loading page in " + curMethod + " ***");
         }
     }
+
+
     // Testing to confirm the correct HTML title text is displayed
     // ------------------------------------------------------------------------
     @Test(dataProvider = "Glossary", groups = { "dictionary" })

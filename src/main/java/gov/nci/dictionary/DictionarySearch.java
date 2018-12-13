@@ -20,7 +20,8 @@ public class DictionarySearch extends PageObjectBase {
     // static String tier = "DT";
 
 
-    public DictionarySearch (WebDriver browser) throws MalformedURLException, UnsupportedEncodingException {
+    public DictionarySearch (WebDriver browser) throws MalformedURLException,
+                                                       UnsupportedEncodingException {
         super(browser);
         PageFactory.initElements(browser, this);
     }
@@ -80,6 +81,8 @@ public class DictionarySearch extends PageObjectBase {
     public boolean isStartsWithSelected() {
         return btn_startswith.isSelected();
     }
+
+
     // Testing if the search input field is visible
     // ---------------------------------------------------
     public boolean isSearchInputVisible() {
@@ -87,7 +90,7 @@ public class DictionarySearch extends PageObjectBase {
     }
 
 
-    //* Testing if the search button is visible
+    // Testing if the search button is visible
     // ---------------------------------------------------
     public boolean isSearchBtnVisible() {
         return search_btn.isDisplayed();
