@@ -215,6 +215,49 @@ public class NewTerms_Test extends NewDictionaryCommon {
     }
 
 
+    // Confirming each letter from the A-Z list can be selected and shows results
+    // --------------------------------------------------------------------------
+    @Test(dataProvider = "Glossary", groups = { "dictionary" })
+    public void AZListSelectLetter(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing A-Z list. Selecting each letter");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            // Find the members of AZ List Header row to loop over
+            List<WebElement> alphaList = dict.getAZList();
+
+            int curCount = 0;
+            int countLetters = alphaList.size();
+            boolean AZLetterResultOK = true;
+
+            // Loop over each of the letters of the alpha list
+            // -----------------------------------------------
+            for (int i = curCount; i < countLetters; i++) {
+                System.out.print(alphaList.get(i).getText() + " ");
+                ResultPage azListPage = dict.clickAZListLetter(i);
+
+                // Check to see if there are results
+                // ---------------------------------
+                if (azListPage.getDefinitionCount() == 0) {
+                    System.out.println(alphaList.get(i).getText()
+                                       + " letter is empty!!!");
+                    AZLetterResultOK = false;
+                }
+            }
+
+            String AZLetterResultNotOkTxt = "*** Error: Drug Dictionary Result for "
+                                          + "specified letter incorrect ***";
+            Assert.assertTrue(AZLetterResultOK, AZLetterResultNotOkTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
+
     // Testing to confirm the correct HTML title text is displayed
     // ------------------------------------------------------------------------
     @Test(dataProvider = "Glossary", groups = { "dictionary" })
