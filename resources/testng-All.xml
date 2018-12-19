@@ -8,6 +8,7 @@
     <suite-file path="resources/testng-Dicts.xml" />
     <suite-file path="resources/testng-R4R.xml" /> 
     <suite-file path="resources/testng-General.xml" /> 
+    <suite-file path="resources/testng-factsheets.xml" /> 
     <!-- <suite-file path="resources/testng-WA.xml" /> -->
   </suite-files>
 </suite>
