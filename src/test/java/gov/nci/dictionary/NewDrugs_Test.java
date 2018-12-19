@@ -9,18 +9,19 @@ import java.util.List;
 import com.relevantcodes.extentreports.LogStatus;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class NewDrugs_Test extends NewDictionaryCommon {
 
     private String language = "EN";
     private String dictionary = "drug";
+    private String url = "https://www-qa.cancer.gov/publications/dictionaries/cancer-drug";
 
 /* ***************************** Test Methods ****************************************** */
+
     // Testing to confirm the page header (H1 element) is visible
     // ------------------------------------------------------------------------------
     @Test(dataProvider = "DrugDictionary", groups = { "dictionary" })
@@ -204,7 +205,7 @@ public class NewDrugs_Test extends NewDictionaryCommon {
                 // Check to see if there are results
                 // ---------------------------------
                 if (azListPage.getDefinitionCount() == 0) {
-                    System.out.println(alphaList.get(i).getText() 
+                    System.out.println(alphaList.get(i).getText()
                                        + " letter is empty!!!");
                     AZLetterResultOK = false;
                 }
@@ -245,11 +246,13 @@ public class NewDrugs_Test extends NewDictionaryCommon {
     // DataProvider to read the Excel spreadsheet with data containing URLs to be checked
     // Using worksheet indicating URLs with Page Options that are visible.
     // ----------------------------------------------------------------------------------
+
     @DataProvider(name = "DrugDictionary")
     public Iterator<Object[]> getDictUrl() {
         ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
         String url = AddHostname("/publications/dictionaries/cancer-drug");
+        // System.out.println(url);
         Object ob[] = { url };
         myObjects.add(ob);
 

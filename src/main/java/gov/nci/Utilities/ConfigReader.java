@@ -60,6 +60,10 @@ public class ConfigReader {
 		hostName = environmentHostMap.get(environment.trim()) + ".cancer.gov";
 	}
 
+	public String GetHostName() {
+		return hostName;
+	}
+
 
 	/**
 	 * Retrieves the identified URL from the configuration file and
