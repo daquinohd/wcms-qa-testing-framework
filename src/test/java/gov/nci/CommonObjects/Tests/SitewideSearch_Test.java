@@ -23,10 +23,10 @@ import gov.nci.commonobjects.SitewideSearch;
 public class SitewideSearch_Test extends BaseClass {
 
 	public static final String SITEWIDE_SEARCH_SHEET_NAME = "SitewideSearch";
-
 	public static final String BESTBET_SEARCH_SHEET_NAME = "BestBet";
 	public static final String SITEWIDE_SEARCH_NOISEWORDS_SHEET_NAME = "NoiseWords";
 	public static final String BESTBET_DEFINITION_SEARCH_SHEET_NAME = "BestBet_Definition";
+	public static final String DEFINITION_SEARCH_SHEET_NAME = "Definition";
 
 	SitewideSearch search;
 	String testDataFilePath;
@@ -230,6 +230,7 @@ public class SitewideSearch_Test extends BaseClass {
 	// Search Result Page and validate the results
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "BestBets", groups = { "Smoke" })
+
 	public void verifyBestBetSearch(String keyword) {
 
 		System.out.println("Search Keyword: " + keyword);
@@ -245,6 +246,29 @@ public class SitewideSearch_Test extends BaseClass {
 
 		logger.log(LogStatus.PASS,
 				"Verify that when a keyword having Best Bet is searched, Search Result page is displayed with Best Bet Box");
+	}
+
+	// Perform Site-wide search for words which display Definition on the Search
+	// Result Page and validate the results
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "Definitions", groups = { "Smoke" })
+	public void verifyDefinitionSearch(String keyword) {
+
+		System.out.println("Search Keyword: " + keyword);
+		search.search(keyword);
+
+		// Verify Search Results page common validation
+		verifySearchResultsPage();
+
+		// Verify Definition box is displayed
+		Assert.assertTrue(search.getDefinitionBox().isDisplayed());
+		Assert.assertTrue(search.getDefinitionLabel().isDisplayed());
+		Assert.assertTrue(search.getDefinitionLabel().getText().contains("Definition:"));
+		System.out.println("Definition Keyword Text: " + search.getDefinitionKeywordText());
+		Assert.assertEquals(search.getDefinitionKeywordText(), keyword);
+
+		logger.log(LogStatus.PASS,
+				"Verify that when a keyword having Definition is searched, Search Result page is displayed with Definition Box");
 	}
 
 	/********************** Data Providers **********************/
@@ -316,15 +340,30 @@ public class SitewideSearch_Test extends BaseClass {
 
 	@DataProvider(name = "BestBets_Definitions")
 	public Iterator<Object[]> readBestBets_DefinitionsSearchData() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(BESTBET_DEFINITION_SEARCH_SHEET_NAME); rowNum++) {
+			String bestBet_DefinitionKeyword = excelReader.getCellData(BESTBET_DEFINITION_SEARCH_SHEET_NAME,
+					"BestBet_DefinitionKeywords", rowNum);
+			Object ob[] = { bestBet_DefinitionKeyword };
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+	}
+
+	@DataProvider(name = "Definitions")
+	public Iterator<Object[]> readDefinitionsSearchData() {
 
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(BESTBET_DEFINITION_SEARCH_SHEET_NAME); rowNum++) {
-			String bestBet_DefinitionKeyword = excelReader.getCellData(BESTBET_DEFINITION_SEARCH_SHEET_NAME,
-					"BestBet_DefinitionKeywords", rowNum);
-			Object ob[] = { bestBet_DefinitionKeyword };
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(DEFINITION_SEARCH_SHEET_NAME); rowNum++) {
+			String definitionKeyword = excelReader.getCellData(DEFINITION_SEARCH_SHEET_NAME, "DefinitionKeywords",
+					rowNum);
+			Object ob[] = { definitionKeyword };
 
 			myObjects.add(ob);
 
