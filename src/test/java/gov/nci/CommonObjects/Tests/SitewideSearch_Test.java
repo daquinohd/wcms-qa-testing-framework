@@ -92,9 +92,6 @@ public class SitewideSearch_Test extends BaseClass {
 		System.out.println("Bottom Result Text Value ***********: " + bottomResultText.getText());
 		Assert.assertTrue(bottomResultText.getText().contains("results found for: " + keyword));
 
-		// Verify best bet box is displayed
-		Assert.assertTrue(search.getBestBetBox().isDisplayed());
-
 		logger.log(LogStatus.PASS,
 				"Verify that when a keyword is searched, Search Result page is displayed with following validations: "
 						+ "Page Title, H1 Title, URL ending with 'results', results text");
@@ -238,7 +235,6 @@ public class SitewideSearch_Test extends BaseClass {
 
 		// Verify Search Results page common validation
 		verifySearchResultsPage();
-
 		// Verify Best Bet box, label and text are displayed
 		Assert.assertTrue(search.getBestBetBox().isDisplayed());
 		Assert.assertTrue(search.getBestBetLabel().isDisplayed());
@@ -269,6 +265,7 @@ public class SitewideSearch_Test extends BaseClass {
 
 		logger.log(LogStatus.PASS,
 				"Verify that when a keyword having Definition is searched, Search Result page is displayed with Definition Box");
+
 	}
 
 	/********************** Data Providers **********************/
