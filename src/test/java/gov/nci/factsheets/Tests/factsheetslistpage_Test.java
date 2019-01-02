@@ -1,5 +1,6 @@
 package gov.nci.factsheets.Tests;
 
+
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class factsheetslistpage_Test extends BaseClass {
 	}
 
     @Test
-	public void verifyFSlistPageH1Title() {
+     public void verifyFSlistPageH1Title() {
 		driver.get(pageURL);
 		fslp = new FactSheetsListPage(driver, logger);
 		Assert.assertEquals(fslp.getPageH1Title().getText(),FACTSHEETLISTPAGE_PAGE_TITLE);
@@ -88,11 +89,11 @@ public class factsheetslistpage_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verifying the Banner of the page");
 	}
 
-   @Test
+    @Test
     public void verifyFSlistPageURL() {
     	driver.get(pageURL);
 	    fslp = new FactSheetsListPage(driver, logger);
 	    Assert.assertTrue(driver.getCurrentUrl().contains(FACTSHEETLISTPAGE_URL));
-	}
+    }
 }
 

@@ -30,6 +30,7 @@ public class FactSheetsListPage {
 	List<WebElement> subjectListItems ;
 
 
+
 // Initializing the Page Objects
 	    public FactSheetsListPage(WebDriver driver, ExtentTest logger) {
 			this.driver = driver;
@@ -39,6 +40,7 @@ public class FactSheetsListPage {
 
 // Testing if the H1 header element exists on the page
 // ---------------------------------------------------
+
        public WebElement getPageH1Title() {
            return factsheetslist_PageTitle;
 		}
@@ -49,6 +51,14 @@ public class FactSheetsListPage {
 			return text_FSListIntroText;
 		}
 }
+
+
+
+
+
+
+
+
 
 
 
