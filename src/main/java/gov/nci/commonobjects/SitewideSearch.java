@@ -50,6 +50,10 @@ public class SitewideSearch {
 	WebElement lbl_Definition;
 	@FindBy(how = How.XPATH, using = "//div[@id='best-bet-definition']//dl/dt")
 	WebElement txt_Definition;
+	@FindBy(how = How.CSS, using = "#ctl34_lblDDLPageUnitShowText")
+	WebElement lbl_ShowResults;
+	@FindBy(how = How.CSS, using = "#ctl34_lblDDLPageUnitResultsPPText")
+	WebElement lbl_ResultsPerPage;
 
 	// Initializing the Page Objects
 	public SitewideSearch(WebDriver driver, ExtentTest logger) {
@@ -82,6 +86,16 @@ public class SitewideSearch {
 	// Get Search Results page h1 title
 	public String getSearchResultsH1Title() {
 		return SEARCH_RESULT_H1_TITLE;
+	}
+
+	// Get Search Results page h1 title
+	public WebElement getShowResultsLabel() {
+		return lbl_ShowResults;
+	}
+
+	// Get Search Results page h1 title
+	public WebElement getResultsPerPage() {
+		return lbl_ResultsPerPage;
 	}
 
 	// Get Search Results page best bet box
