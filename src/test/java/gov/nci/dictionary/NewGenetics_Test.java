@@ -107,6 +107,7 @@ public class NewGenetics_Test extends NewDictionaryCommon {
         }
     }
 
+
     // Confirming the search input field is displayed
     // -------------------------------------------------------------------------
     @Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
@@ -127,7 +128,6 @@ public class NewGenetics_Test extends NewDictionaryCommon {
             Assert.fail("*** Error loading page in " + curMethod + " ***");
         }
     }
-
 
 
     // Testing to confirm the correct HTML title text is displayed
@@ -173,6 +173,7 @@ public class NewGenetics_Test extends NewDictionaryCommon {
         }
     }
 
+
     // Confirming the A-Z list is displayed
     // -------------------------------------------------------------------------
     @Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
@@ -189,6 +190,59 @@ public class NewGenetics_Test extends NewDictionaryCommon {
             String azListNotVisibleTxt = "*** Error: Genetics Dictionary A-Z List "
                                        + "Not Displayed ***";
             Assert.assertTrue(azListVisible, azListNotVisibleTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+    
+
+    // Confirming each letter from the A-Z list can be selected and shows results
+    // --------------------------------------------------------------------------
+    @Test(dataProvider = "GeneticsDictionary", groups = { "dictionary" })
+    public void AZListSelectLetter(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing A-Z list. Selecting each letter");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            // Find the members of AZ List Header row to loop over
+            List<WebElement> alphaList = dict.getAZList();
+
+            int curCount = 0;
+            int countLetters = alphaList.size();
+            boolean AZLetterResultOK = true;
+
+            // Loop over each of the letters of the alpha list
+            // -----------------------------------------------
+            for (int i = curCount; i < countLetters; i++) {
+                logger.log(LogStatus.INFO, alphaList.get(i).getText() + " ");
+                ResultPage azListPage = dict.clickAZListLetter(i);
+
+                // Check to see if there are results.  Some of the letters
+                // will be empty and that's OK for this dictionary
+                // -------------------------------------------------------
+                if (azListPage.getDefinitionCount() == 0) {
+                    if (alphaList.get(i).getText().equals("J") ||
+                        alphaList.get(i).getText().equals("O") ||
+                        alphaList.get(i).getText().equals("Q") ||
+                        alphaList.get(i).getText().equals("Y") ||
+                        alphaList.get(i).getText().equals("#")) {
+                        continue;
+                    }
+                    else {
+                        logger.log(LogStatus.INFO, alphaList.get(i).getText()
+                                           + " returns no results!!!");
+                        AZLetterResultOK = false;
+                    }
+                }
+            }
+
+            String AZLetterResultNotOkTxt = "*** Error: Genetics Dictionary Result for "
+                                          + "specified letter incorrect ***";
+            Assert.assertTrue(AZLetterResultOK, AZLetterResultNotOkTxt);
         } catch (MalformedURLException | UnsupportedEncodingException e) {
             Assert.fail("*** Error loading page in " + curMethod + " ***");
         }
