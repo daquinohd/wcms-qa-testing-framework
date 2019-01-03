@@ -25,7 +25,9 @@ public class SitewideSearch {
 	@FindBy(how = How.XPATH, using = "//button[@id='sitesearch']")
 	WebElement btn_Search;
 
-	/*************** Site-wide Search Results Page WebElements **********************/
+	/***************
+	 * Site-wide Search Results Page WebElements
+	 **********************/
 	@FindBy(how = How.XPATH, using = "//label[@for='ctl34_rblSWRSearchType_0']")
 	WebElement rbtn_NewSearch;
 	@FindBy(how = How.XPATH, using = "//label[@for='ctl34_rblSWRSearchType_1']")
@@ -36,8 +38,12 @@ public class SitewideSearch {
 	WebElement btn_SearchWithinSearch;
 	@FindBy(how = How.XPATH, using = "//span[@id='ctl34_lblSearchWithinResultsFound']")
 	WebElement lbl_SearchResult;
-	@FindBy(how = How.XPATH, using = "//div[@id='best-bet-definition']")
+	@FindBy(how = How.CSS, using = "#cgvBody > div.contentid-16400.slot-item.last-SI > div > div.featured.sitewide-results")
 	WebElement box_BestBet;
+	@FindBy(how = How.XPATH, using = "//div[@class='featured sitewide-results']//h2")
+	WebElement lbl_BestBet;
+	@FindBy(how = How.XPATH, using = "//div[@class='title-and-desc title desc container']//a")
+	WebElement txt_BestBet;
 
 	// Initializing the Page Objects
 	public SitewideSearch(WebDriver driver, ExtentTest logger) {
@@ -54,7 +60,7 @@ public class SitewideSearch {
 		return btn_Search;
 	}
 
-	//Site-wide Search based on any keyword
+	// Site-wide Search based on any keyword
 	public void search(String keyword) {
 		getSearchBox().click();
 		getSearchBox().clear();
@@ -77,6 +83,16 @@ public class SitewideSearch {
 		return box_BestBet;
 	}
 
+	// Get Search Results page Best Bet label
+	public WebElement getBestBetLabel() {
+		return lbl_BestBet;
+	}
+
+	// Get Search Results page Best Bet text
+	public String getBestBetKeywordText() {
+		return txt_BestBet.getText();
+	}
+
 	// Get Search Results page Search Within Search Box
 	public WebElement getSearchWithinSearchBox() {
 		return txt_SearchWithinSearchBox;
@@ -86,7 +102,7 @@ public class SitewideSearch {
 		return btn_SearchWithinSearch;
 	}
 
-	//Search Within Search based on any two keyword
+	// Search Within Search based on any two keyword
 	public void SearchWithinSearch(String keyword1, String keyword2) {
 
 		search(keyword1);

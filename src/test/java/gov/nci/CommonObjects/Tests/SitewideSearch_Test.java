@@ -22,7 +22,8 @@ import gov.nci.commonobjects.SitewideSearch;
 
 public class SitewideSearch_Test extends BaseClass {
 
-	public static final String TESTDATA_SHEET_NAME = "SitewideSearch";
+	public static final String SITEWIDE_SEARCH_SHEET_NAME = "SitewideSearch";
+	public static final String BESTBET_SEARCH_SHEET_NAME = "BestBet";
 
 	SitewideSearch search;
 	String testDataFilePath;
@@ -154,6 +155,27 @@ public class SitewideSearch_Test extends BaseClass {
 						+ "Page Title, H1 Title, URL ending with 'results', results text");
 	}
 
+	// Perform Site-wide search for words which display Best Bet Box on the
+	// Search Result Page and validate the results
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "BestBets", groups = { "Smoke" })
+	public void verifyBestBetSearch(String keyword) {
+
+		System.out.println("Search Keyword: " + keyword);
+		search.search(keyword);
+
+		// Verify Search Results page common validation
+		verifySearchResultsPage();
+
+		// Verify Best Bet box, label and text are displayed
+		Assert.assertTrue(search.getBestBetBox().isDisplayed());
+		Assert.assertTrue(search.getBestBetLabel().isDisplayed());
+		Assert.assertTrue(search.getBestBetLabel().getText().contains("Best Bets"));
+
+		logger.log(LogStatus.PASS,
+				"Verify that when a keyword having Best Bet is searched, Search Result page is displayed with Best Bet Box");
+	}
+
 	/********************** Data Providers **********************/
 
 	@DataProvider(name = "Search")
@@ -162,8 +184,8 @@ public class SitewideSearch_Test extends BaseClass {
 
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String cancerType = excelReader.getCellData(TESTDATA_SHEET_NAME, "Keyword1", rowNum);
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(SITEWIDE_SEARCH_SHEET_NAME); rowNum++) {
+			String cancerType = excelReader.getCellData(SITEWIDE_SEARCH_SHEET_NAME, "Keyword1", rowNum);
 			Object ob[] = { cancerType };
 
 			myObjects.add(ob);
@@ -179,10 +201,27 @@ public class SitewideSearch_Test extends BaseClass {
 
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
 
-		for (int rowNum = 2; rowNum <= excelReader.getRowCount(TESTDATA_SHEET_NAME); rowNum++) {
-			String keyword1 = excelReader.getCellData(TESTDATA_SHEET_NAME, "Keyword1", rowNum);
-			String keyword2 = excelReader.getCellData(TESTDATA_SHEET_NAME, "Keyword2", rowNum);
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(SITEWIDE_SEARCH_SHEET_NAME); rowNum++) {
+			String keyword1 = excelReader.getCellData(SITEWIDE_SEARCH_SHEET_NAME, "Keyword1", rowNum);
+			String keyword2 = excelReader.getCellData(SITEWIDE_SEARCH_SHEET_NAME, "Keyword2", rowNum);
 			Object ob[] = { keyword1, keyword2 };
+
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+
+	}
+
+	@DataProvider(name = "BestBets")
+	public Iterator<Object[]> readBestBetsSearchData() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(BESTBET_SEARCH_SHEET_NAME); rowNum++) {
+			String bestBetKeyword = excelReader.getCellData(BESTBET_SEARCH_SHEET_NAME, "BestBetKeywords", rowNum);
+			Object ob[] = { bestBetKeyword };
 
 			myObjects.add(ob);
 
