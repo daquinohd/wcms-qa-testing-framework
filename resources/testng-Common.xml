@@ -16,7 +16,7 @@
 		<classes>
 			<class name="gov.nci.CommonObjects.Tests.SitewideSearch_Test" >
 			<methods>
-					<exclude name="verifySitewideSearch" />
+					<exclude name="verifySearchWithinSearch" />
 			</methods>
 			</class>
 			<!--
