@@ -94,6 +94,7 @@ public class factsheetslistpage_Test extends BaseClass {
     	driver.get(pageURL);
 	    fslp = new FactSheetsListPage(driver, logger);
 	    Assert.assertTrue(driver.getCurrentUrl().contains(FACTSHEETLISTPAGE_URL));
+
     }
 }
 
