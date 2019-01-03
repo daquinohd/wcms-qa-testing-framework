@@ -104,6 +104,21 @@ public class DictionarySearch extends PageObjectBase {
     }
 
 
+    // Testing if the A-Z List home page displays the results for letter "A"
+    // ----------------------------------------------------------------------
+    public boolean isAZListHomeLetterA() {
+        String resultHome = results_home.getText();
+        String[] resultTokens = resultHome.trim().split("\\s+");
+        Boolean isNumber = StringUtils.isNumeric(resultTokens[0]);
+
+        // The result count lists an integer number and the letter "A"
+        // i.e.:  'NNN results found for: A'
+        if (isNumber && resultTokens[4].equals("A")) {
+            return true;
+        }
+        return false;
+    }
+
     // Testing if all of the elements of the A-Z list can be clicked and
     // returning a non-zero result  J9 O14 Q16 Y24 #26
     // -----------------------------------------------------------------
