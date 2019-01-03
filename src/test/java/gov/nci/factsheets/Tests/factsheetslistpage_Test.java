@@ -25,7 +25,7 @@ public class factsheetslistpage_Test extends BaseClass {
     public static final String FACTSHEETLISTPAGE_PAGE_TITLE = "NCI Fact Sheets";
 	public static final String FACTSHEETSLISTPAGE_INTRO_TEXT = "The NCI fact sheet collection addresses a variety of cancer topics. Fact sheets are updated and revised based on the latest cancer research.";
     public final String BREAD_CRUMB = "Home\nPublications";
-    public static final String FACTSHEETLISTPAGE_URL = "https://www-qa.cancer.gov/publications/fact-sheets";
+    public static final String FACTSHEETLISTPAGE_URL = "/publications/fact-sheets";
     public static final List<String> EXP_FACTSHEETLISTS_ON_FACTSHEETSLISTPAGE= Lists.newArrayList("Cancer Therapy","Cancer Types",
 			"Detection and Diagnosis", "Diet and Nutrition", "Prevention", "Risk Factors and Possible Causes", "Support, Coping, and Resources",
 			"Tobacco and Smoking Cessation", "En Español");
@@ -93,7 +93,6 @@ public class factsheetslistpage_Test extends BaseClass {
     	driver.get(pageURL);
 	    fslp = new FactSheetsListPage(driver, logger);
 	    Assert.assertTrue(driver.getCurrentUrl().contains(FACTSHEETLISTPAGE_URL));
-		System.out.println("Fact Sheet Page URL: " + driver.getCurrentUrl());
-		}
+	}
 }
 
