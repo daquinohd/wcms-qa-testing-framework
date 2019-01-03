@@ -93,6 +93,11 @@ public class SitewideSearch {
 		return txt_BestBet.getText();
 	}
 
+	// Get Search box placeholder
+	public String getSearchboxPlaceholder() {
+		return getSearchBox().getAttribute("placeholder");
+	}
+
 	// Get Search Results page Search Within Search Box
 	public WebElement getSearchWithinSearchBox() {
 		return txt_SearchWithinSearchBox;

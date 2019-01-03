@@ -55,6 +55,16 @@ public class SitewideSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify that Search button are displayed");
 	}
 
+	// Testing if correct placeholder is displayed in the Search Box
+	@Test(groups = { "Smoke" })
+	public void verifySearchBoxPlaceholder() {
+		Assert.assertEquals(search.getSearchboxPlaceholder(), "search");
+		logger.log(LogStatus.PASS, "Verify that correct placeholder is displayed in the Search box");
+
+	}
+
+	// Perform Site-wide search on English site and validate the results
+	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Search", groups = { "Smoke" })
 	public void verifySitewideSearch(String keyword) {
 
@@ -110,6 +120,11 @@ public class SitewideSearch_Test extends BaseClass {
 				"Verify that when a search is performed with noise words (the, a, to, at, etc), Search Result page is displayed with no results");
 	}
 
+	// Verify that when a search is performed with empty keyword, Search Result
+	// page is displayed with error message:
+	// "Please enter a search phrase."
+	// -------------------------------------------------------------------------
+
 	@Test(groups = { "Smoke" })
 	public void verifyEmptySitewideSearch() {
 
@@ -146,6 +161,8 @@ public class SitewideSearch_Test extends BaseClass {
 						+ "Page Title, H1 Title, URL ending with 'results', error message");
 	}
 
+	// Perform Search within Search and validate results
+	// -------------------------------------------------------------------------
 	@Test(dataProvider = "SearchWithinSearch", groups = { "Smoke" })
 	public void verifySearchWithinSearch(String keyword1, String keyword2) {
 
