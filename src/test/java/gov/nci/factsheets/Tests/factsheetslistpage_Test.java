@@ -29,8 +29,7 @@ public class factsheetslistpage_Test extends BaseClass {
 
     FactSheetsListPage fslp;
 
-
-	@BeforeClass
+    @BeforeClass
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -49,15 +48,15 @@ public class factsheetslistpage_Test extends BaseClass {
 	}
 
     @Test
-     public void verifyFSlistPageH1Title() {
-		driver.get(pageURL);
+    public void verifyFSlistPageH1Title() {
+        driver.get(pageURL);
 		fslp = new FactSheetsListPage(driver, logger);
 		Assert.assertEquals(fslp.getPageH1Title().getText(),FACTSHEETLISTPAGE_PAGE_TITLE);
 		logger.log(LogStatus.PASS, "Verify that H1 Title of the page is *NCI Fact Sheets* | Actual Result: "
 				+ fslp.getPageH1Title());
-	}
+		}
 
-	@Test
+   	@Test
 	public void verifyfactsheetDesciptionText() {
 		driver.get(pageURL);
 		fslp = new FactSheetsListPage(driver, logger);

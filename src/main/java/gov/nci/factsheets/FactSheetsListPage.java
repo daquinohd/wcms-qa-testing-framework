@@ -14,13 +14,15 @@ public class FactSheetsListPage {
 	WebDriver driver;
 	ExtentTest logger;
 
-/**************** FactSheets Page WebElements *****************************/
+
+/*************** FactSheets Page WebElements *****************************/
 	@FindBy(how = How.CSS, using = "div.resize-content>h1>span")
 	   WebElement factsheetslist_PageTitle;
 	@FindBy(how = How.CSS, using = "#cgvBody>div.slot-item.first-SI>p")
 	    WebElement text_FSListIntroText;
 	@FindBy(how = How.CSS, using = "head#header>title")
 		WebElement factsheetslist_BrowserTitle;
+
 
 
 // Initializing the Page Objects
@@ -42,11 +44,8 @@ public class FactSheetsListPage {
 // ---------------------------------------------------
         public WebElement getPageIntroText() {
 			return text_FSListIntroText;
-		}
+        }
 }
-
-
-
 
 
 
