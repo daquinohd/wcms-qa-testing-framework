@@ -113,11 +113,12 @@ public class DictionarySearch extends PageObjectBase {
 
         // The result count lists an integer number and the letter "A"
         // i.e.:  'NNN results found for: A'
-        if (isNumber && resultTokens[4].equals("A")) {
+        if (isNumber && resultTokens[resultTokens.length-1].equals("A")) {
             return true;
         }
         return false;
     }
+
 
     // Testing if all of the elements of the A-Z list can be clicked and
     // returning a non-zero result  J9 O14 Q16 Y24 #26
