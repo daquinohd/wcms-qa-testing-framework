@@ -266,7 +266,7 @@ public class NewDrugs_Test extends NewDictionaryCommon {
             // -----------------------------------------------
             for (int i = curCount; i < countLetters; i++) {
                 String curLetter = alphaList.get(i).getText();
-                System.out.print(curLetter + " ");
+                logger.log(LogStatus.INFO, curLetter + " ");
                 // Get the result page for the letter clicked
                 ResultPage azListPage = dict.clickAZListLetter(i);
                 // Get the URL for the result page
@@ -279,7 +279,7 @@ public class NewDrugs_Test extends NewDictionaryCommon {
                         AZLetterResultOK = true;
                     }
                     else {
-                        System.out.println(curLetter + " letter is empty!!!");
+                        logger.log(LogStatus.INFO, curLetter + " returns no results!!!");
                         AZLetterResultOK = false;
                     }
                 }
