@@ -216,6 +216,27 @@ public class NewTerms_Test extends NewDictionaryCommon {
     }
 
 
+    // Confirming the A-Z list home page displays results for letter "A"
+    // -------------------------------------------------------------------------
+    @Test(dataProvider = "Glossary", groups = { "dictionary" })
+    public void AZListHomeIsA(String url) {
+        DictionarySearch dict;
+        String curMethod = new Object(){}.getClass().getEnclosingMethod().getName();
+
+        logger.log(LogStatus.INFO, "Testing A-Z List home page is 'A'");
+        driver.get(url);
+
+        try {
+            dict = new DictionarySearch(driver);
+            boolean azHome = dict.isAZListHomeLetterA();
+            String azNotHomeTxt = "*** Error: Glossary A-Z Home Page Not Found ***";
+            Assert.assertTrue(azHome, azNotHomeTxt);
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            Assert.fail("*** Error loading page in " + curMethod + " ***");
+        }
+    }
+
+
     // Confirming each letter from the A-Z list can be selected and shows results
     // --------------------------------------------------------------------------
     @Test(dataProvider = "Glossary", groups = { "dictionary" })
