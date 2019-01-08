@@ -1,6 +1,8 @@
 package gov.nci.factsheets;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -11,10 +13,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.relevantcodes.extentreports.ExtentTest;
 
+import gov.nci.framework.PageObjectBase;
 
 
-public class FactSheetsListPage {
-
+public class FactSheetsListPage extends PageObjectBase {
 	WebDriver driver;
 	ExtentTest logger;
 
@@ -32,8 +34,9 @@ public class FactSheetsListPage {
 
 
 // Initializing the Page Objects
-	    public FactSheetsListPage(WebDriver driver, ExtentTest logger) {
-			this.driver = driver;
+	    public FactSheetsListPage(WebDriver driver, ExtentTest logger) throws MalformedURLException, UnsupportedEncodingException  {
+			super (driver);
+	    	this.driver = driver;
 			this.logger = logger;
 			PageFactory.initElements(driver, this);
 		}
