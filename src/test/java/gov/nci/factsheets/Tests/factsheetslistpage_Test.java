@@ -1,6 +1,5 @@
 package gov.nci.factsheets.Tests;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -34,12 +33,13 @@ public class factsheetslistpage_Test extends BaseClass {
 			"Tobacco and Smoking Cessation", "En Español");
 
 
+
 	FactSheetsListPage fslp;
     BreadCrumb crumb;
 	Banner banner;
 
 
-	@BeforeClass
+    @BeforeClass
 	@Parameters({ "browser" })
 	public void setup(String browser) throws MalformedURLException {
 		logger = report.startTest(this.getClass().getSimpleName());
@@ -61,7 +61,7 @@ public class factsheetslistpage_Test extends BaseClass {
 	}
 
 
-	@Test
+    @Test
     public void verifyFSlistPageH1Title() {
 		try {
     	fslp = new FactSheetsListPage(driver, logger);
@@ -83,6 +83,7 @@ public class factsheetslistpage_Test extends BaseClass {
 				Assert.fail("Error displaying Fact Sheet List Page Description Text.");
 		   }
   }
+
 
 	@Test
     public void verifyBreadCrumb() {

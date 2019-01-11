@@ -1,6 +1,7 @@
 package gov.nci.factsheets;
 
 
+
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -17,11 +18,13 @@ import gov.nci.framework.PageObjectBase;
 
 
 public class FactSheetsListPage extends PageObjectBase {
+
 	WebDriver driver;
 	ExtentTest logger;
 
 
-/**************** FactSheets Page WebElements *****************************/
+
+/*************** FactSheets Page WebElements *****************************/
 	@FindBy(how = How.CSS, using = "div.resize-content>h1>span")
 	   WebElement factsheetslist_PageTitle;
 	@FindBy(how = How.CSS, using = "#cgvBody>div.slot-item.first-SI>p")
@@ -43,21 +46,19 @@ public class FactSheetsListPage extends PageObjectBase {
 
 // Testing if the H1 header element exists on the page
 // ---------------------------------------------------
-
        public WebElement getPageH1Title() {
            return factsheetslist_PageTitle;
 		}
+
 
 // Verifying the Description Text
 // ---------------------------------------------------
         public WebElement getPageIntroText() {
 			return text_FSListIntroText;
+
 		}
+
 }
-
-
-
-
 
 
 
