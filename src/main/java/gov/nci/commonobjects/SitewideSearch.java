@@ -140,6 +140,11 @@ public class SitewideSearch {
 		return txt_Definition.getText();
 	}
 
+	// Get Search Results page Best Bet label
+	public WebElement getNewSearchLabel() {
+		return lbl_NewSearch;
+	}
+
 	// Get Search Results page Search Within Search Box
 	public WebElement getSearchWithinSearchBox() {
 		return txt_SearchWithinSearchBox;

@@ -70,6 +70,7 @@ public class SitewideSearch_Test extends BaseClass {
 	// Testing the New Search RadioButton on Bottom search bar on Search results
 	// page
 	@Test(groups = { "Smoke" }, dataProvider = "Search")
+
 	public void verifyNewSearchRadioButton(String keyword) {
 
 		search.search(keyword);
@@ -77,11 +78,20 @@ public class SitewideSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify that New Search radio button is displayed");
 	}
 
+	// Testing the New Search label is correct on Bottom search bar on Search
+	// results page
+	@Test(groups = { "Smoke" }, dataProvider = "Search")
+	public void verifySitewideSearchNewSearchLabel(String keyword) {
+
+		search.search(keyword);
+		Assert.assertTrue(search.getNewSearchLabel().getText().contains("New Search"));
+		logger.log(LogStatus.PASS, "Verify that New Search label is correct on Bottom search bar");
+	}
+
 	// Perform Site-wide search on English site and validate the results
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Search", groups = { "Smoke" })
 	public void verifySitewideSearch(String keyword) {
-
 		System.out.println("Search Keyword: " + keyword);
 		search.search(keyword);
 
