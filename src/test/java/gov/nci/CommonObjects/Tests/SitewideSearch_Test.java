@@ -88,6 +88,18 @@ public class SitewideSearch_Test extends BaseClass {
 		logger.log(LogStatus.PASS, "Verify that New Search label is correct on Bottom search bar");
 	}
 
+	// Testing the Search Within Search Button is present on Bottom search bar
+	// on Search results page
+	@Test(groups = { "Smoke" }, dataProvider = "Search")
+	public void verifySearchWithinSearchButton(String keyword) {
+
+		System.out.println("Search Keyword: " + keyword);
+		search.search(keyword);
+
+		Assert.assertTrue(search.getSearchWithinSearchButton().isDisplayed());
+		logger.log(LogStatus.PASS, "Verify that the Search Within Search Button is present");
+	}
+
 	// Perform Site-wide search on English site and validate the results
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Search", groups = { "Smoke" })
