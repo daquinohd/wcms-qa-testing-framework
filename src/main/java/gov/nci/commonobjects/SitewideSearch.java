@@ -44,6 +44,12 @@ public class SitewideSearch {
 	WebElement lbl_BestBet;
 	@FindBy(how = How.XPATH, using = "//div[@class='title-and-desc title desc container']//a")
 	WebElement txt_BestBet;
+	@FindBy(how = How.XPATH, using = "//div[@id='best-bet-definition']")
+	WebElement box_Definition;
+	@FindBy(how = How.XPATH, using = "//div[@id='best-bet-definition']//h2")
+	WebElement lbl_Definition;
+	@FindBy(how = How.XPATH, using = "//div[@id='best-bet-definition']//dl/dt")
+	WebElement txt_Definition;
 
 	// Initializing the Page Objects
 	public SitewideSearch(WebDriver driver, ExtentTest logger) {
@@ -96,6 +102,21 @@ public class SitewideSearch {
 	// Get Search box placeholder
 	public String getSearchboxPlaceholder() {
 		return getSearchBox().getAttribute("placeholder");
+	}
+
+	// Get Search Results page definition box
+	public WebElement getDefinitionBox() {
+		return box_Definition;
+	}
+
+	// Get Search Results page Definition label
+	public WebElement getDefinitionLabel() {
+		return lbl_Definition;
+	}
+
+	// Get Search Results page Definition text
+	public String getDefinitionKeywordText() {
+		return txt_Definition.getText();
 	}
 
 	// Get Search Results page Search Within Search Box

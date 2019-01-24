@@ -23,8 +23,10 @@ import gov.nci.commonobjects.SitewideSearch;
 public class SitewideSearch_Test extends BaseClass {
 
 	public static final String SITEWIDE_SEARCH_SHEET_NAME = "SitewideSearch";
+
 	public static final String BESTBET_SEARCH_SHEET_NAME = "BestBet";
 	public static final String SITEWIDE_SEARCH_NOISEWORDS_SHEET_NAME = "NoiseWords";
+	public static final String BESTBET_DEFINITION_SEARCH_SHEET_NAME = "BestBet_Definition";
 
 	SitewideSearch search;
 	String testDataFilePath;
@@ -161,8 +163,37 @@ public class SitewideSearch_Test extends BaseClass {
 						+ "Page Title, H1 Title, URL ending with 'results', error message");
 	}
 
+	// Perform Site-wide search for words which display Best Bet Box as well as
+	// Definition Box on the Search Result Page and validate the results
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "BestBets_Definitions", groups = { "Smoke" })
+	public void verifyBestBet_DefinitionSearch(String keyword) {
+
+		System.out.println("Search Keyword: " + keyword);
+		search.search(keyword);
+
+		// Verify Search Results page common validation
+		verifySearchResultsPage();
+
+		// Verify Best Bet box, label and text are displayed
+		Assert.assertTrue(search.getBestBetBox().isDisplayed());
+		Assert.assertTrue(search.getBestBetLabel().isDisplayed());
+		Assert.assertTrue(search.getBestBetLabel().getText().contains("Best Bets"));
+
+		// Verify Definition box is displayed
+		Assert.assertTrue(search.getDefinitionBox().isDisplayed());
+		Assert.assertTrue(search.getDefinitionLabel().isDisplayed());
+		Assert.assertTrue(search.getDefinitionLabel().getText().contains("Definition:"));
+		System.out.println("Definition Keyword Text: " + search.getDefinitionKeywordText());
+		Assert.assertEquals(search.getDefinitionKeywordText(), keyword);
+
+		logger.log(LogStatus.PASS,
+				"Verify that when a keyword having Best Bet and Definition is searched, Search Result page is displayed with Best Bet Box and Definition Box");
+	}
+
 	// Perform Search within Search and validate results
 	// -------------------------------------------------------------------------
+
 	@Test(dataProvider = "SearchWithinSearch", groups = { "Smoke" })
 	public void verifySearchWithinSearch(String keyword1, String keyword2) {
 
@@ -181,7 +212,7 @@ public class SitewideSearch_Test extends BaseClass {
 		// Verify that the Top Search Result Text contains search keywords
 		WebElement topResultText = driver.findElement(By.xpath("(//h4)[1]"));
 		System.out.println("Top Result Text Value ***********: " + topResultText.getText());
-		// "\u2013" is an endash
+
 		Assert.assertTrue(topResultText.getText().contains("Results 1\u201310 of"));
 		Assert.assertTrue(topResultText.getText().contains("for: " + keyword1 + " : " + keyword2));
 
@@ -254,6 +285,7 @@ public class SitewideSearch_Test extends BaseClass {
 	}
 
 	@DataProvider(name = "BestBets")
+
 	public Iterator<Object[]> readBestBetsSearchData() {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 
@@ -272,10 +304,27 @@ public class SitewideSearch_Test extends BaseClass {
 		ExcelManager excelReader = new ExcelManager(testDataFilePath);
 
 		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
-
 		for (int rowNum = 2; rowNum <= excelReader.getRowCount(SITEWIDE_SEARCH_NOISEWORDS_SHEET_NAME); rowNum++) {
 			String noiseWord = excelReader.getCellData(SITEWIDE_SEARCH_NOISEWORDS_SHEET_NAME, "NoiseWords", rowNum);
 			Object ob[] = { noiseWord };
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+
+	}
+
+	@DataProvider(name = "BestBets_Definitions")
+	public Iterator<Object[]> readBestBets_DefinitionsSearchData() {
+
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(BESTBET_DEFINITION_SEARCH_SHEET_NAME); rowNum++) {
+			String bestBet_DefinitionKeyword = excelReader.getCellData(BESTBET_DEFINITION_SEARCH_SHEET_NAME,
+					"BestBet_DefinitionKeywords", rowNum);
+			Object ob[] = { bestBet_DefinitionKeyword };
 
 			myObjects.add(ob);
 
