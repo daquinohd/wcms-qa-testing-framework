@@ -13,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.relevantcodes.extentreports.ExtentTest;
 
+import gov.nci.Utilities.ScrollUtil;
+
 public class SitewideSearch {
 	WebDriver driver;
 	ExtentTest logger;
@@ -151,7 +153,8 @@ public class SitewideSearch {
 	}
 
 	public WebElement getSearchWithinSearchButton() {
-		return btn_SearchWithinSearch;
+		ScrollUtil.scrollIntoview(driver, driver.findElement(By.xpath("(//h4)[2]")));
+		return rbtn_SearchWithinSearch;
 	}
 
 	// Get New Search button at bottom of Search Results page
