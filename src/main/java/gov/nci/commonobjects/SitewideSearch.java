@@ -1,7 +1,9 @@
 package gov.nci.commonobjects;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,10 +30,15 @@ public class SitewideSearch {
 	/***************
 	 * Site-wide Search Results Page WebElements
 	 **********************/
-	@FindBy(how = How.XPATH, using = "//label[@for='ctl34_rblSWRSearchType_0']")
+	@FindBy(how = How.CSS, using = "#ctl34_rblSWRSearchType > label:nth-child(2)")
+	WebElement lbl_NewSearch;
+	// @FindBy(how = How.CSS, using = "#ctl34_rblSWRSearchType_0")
+	@FindBy(how = How.XPATH, using = "//input[@id='ctl34_rblSWRSearchType_0']")
 	WebElement rbtn_NewSearch;
-	@FindBy(how = How.XPATH, using = "//label[@for='ctl34_rblSWRSearchType_1']")
+	@FindBy(how = How.CSS, using = "#ctl34_rblSWRSearchType_1")
 	WebElement rbtn_SearchWithinSearch;
+	@FindBy(how = How.CSS, using = "#ctl34_rblSWRSearchType > label:nth-child(4)n67iu")
+	WebElement lbl_SearchWithinSearch;
 	@FindBy(how = How.XPATH, using = "//input[@id='ctl34_txtSWRKeyword']")
 	WebElement txt_SearchWithinSearchBox;
 	@FindBy(how = How.XPATH, using = "//input[@type='submit']")
@@ -140,6 +147,18 @@ public class SitewideSearch {
 
 	public WebElement getSearchWithinSearchButton() {
 		return btn_SearchWithinSearch;
+	}
+
+	// Get New Search button at bottom of Search Results page
+	public boolean isNewSearchButtonVisible() {
+
+		try {
+			driver.findElement(By.cssSelector("#ctl34_rblSWRSearchType_0"));
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+
 	}
 
 	// Search Within Search based on any two keyword

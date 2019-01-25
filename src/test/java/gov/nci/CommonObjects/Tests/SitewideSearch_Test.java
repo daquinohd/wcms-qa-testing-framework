@@ -67,6 +67,16 @@ public class SitewideSearch_Test extends BaseClass {
 
 	}
 
+	// Testing the New Search RadioButton on Bottom search bar on Search results
+	// page
+	@Test(groups = { "Smoke" }, dataProvider = "Search")
+	public void verifyNewSearchRadioButton(String keyword) {
+
+		search.search(keyword);
+		Assert.assertTrue(search.isNewSearchButtonVisible(), "New Search button is not displayed");
+		logger.log(LogStatus.PASS, "Verify that New Search radio button is displayed");
+	}
+
 	// Perform Site-wide search on English site and validate the results
 	// -------------------------------------------------------------------------
 	@Test(dataProvider = "Search", groups = { "Smoke" })
@@ -102,7 +112,7 @@ public class SitewideSearch_Test extends BaseClass {
 	// Verify that when a search is performed with noise words, Search Result
 	// page is displayed with no search results
 	// -------------------------------------------------------------------------
-	@Test(dataProvider = "NoiseWords", groups = { "Smoke" }, priority = 8)
+	@Test(dataProvider = "NoiseWords", groups = { "Smoke" })
 	public void verifySitewideSearch_NoiseWords(String keyword) {
 
 		// Perform Search with noise word
@@ -166,7 +176,7 @@ public class SitewideSearch_Test extends BaseClass {
 		WebElement bottomResultText = driver.findElement(By.xpath("(//h4)[2]"));
 		System.out.println("Bottom Result Text Value ***********: " + bottomResultText.getText());
 		Assert.assertTrue(bottomResultText.getText().contains("0 results found for:"));
-
+		driver.navigate().to(pageURL);
 		logger.log(LogStatus.PASS,
 				"Verify that when a search is performed with empty keyword, Search Result page is displayed with following validations: "
 						+ "Page Title, H1 Title, URL ending with 'results', error message");
