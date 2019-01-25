@@ -3,6 +3,7 @@ package gov.nci.CommonObjects.Tests;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -27,6 +28,7 @@ public class SitewideSearch_Test extends BaseClass {
 	public static final String SITEWIDE_SEARCH_NOISEWORDS_SHEET_NAME = "NoiseWords";
 	public static final String BESTBET_DEFINITION_SEARCH_SHEET_NAME = "BestBet_Definition";
 	public static final String DEFINITION_SEARCH_SHEET_NAME = "Definition";
+	public static final String CONTENTTYPE_SEARCH_SHEET_NAME = "ContentTypeSearch";
 
 	SitewideSearch search;
 	String testDataFilePath;
@@ -262,10 +264,7 @@ public class SitewideSearch_Test extends BaseClass {
 
 		System.out.println("Search Keyword: " + keyword);
 		search.search(keyword);
-
-		// Verify Search Results page common validation
 		verifySearchResultsPage();
-
 		// Verify Definition box is displayed
 		Assert.assertTrue(search.getDefinitionBox().isDisplayed());
 		Assert.assertTrue(search.getDefinitionLabel().isDisplayed());
@@ -275,7 +274,35 @@ public class SitewideSearch_Test extends BaseClass {
 
 		logger.log(LogStatus.PASS,
 				"Verify that when a keyword having Definition is searched, Search Result page is displayed with Definition Box");
+	}
 
+	// Verify that the system displays following text for each of the content
+	// types search result:
+	// (Infographic), (Video), (Video Playlist)
+	// -------------------------------------------------------------------------
+	@Test(dataProvider = "ContentTypeSearch", groups = { "Smoke" }, priority = 9)
+	public void verifyContentTypeSearch(String keyword, String contentType) {
+
+		// Perform search on the Content type keyword
+		search.search(keyword);
+
+		// Verify Search Results page common validation
+		verifySearchResultsPage();
+
+		List<WebElement> lnk_list_item = driver.findElements(By.xpath("//div[@id='ctl34_rptResults']//ul//li//a"));
+		for (int i = 0; i < lnk_list_item.size(); i++) {
+			System.out.println("ITEM: " + lnk_list_item.get(i).getText());
+			if (lnk_list_item.get(i).getText().contains(keyword)) {
+				System.out.println("KEYWORD: " + keyword);
+				WebElement element = driver.findElement(By.xpath("(//div[@id='ctl34_rptResults']//ul//li//a)[" + (i + 1)
+						+ "]/following-sibling::span[@class='media-type']"));
+				System.out.println("MEDIA TYPE: " + element.getText());
+				Assert.assertEquals(element.getText(), contentType);
+			}
+			break;
+		}
+		logger.log(LogStatus.PASS,
+				"Verify that the system displays the search results with the content type after the page title in parentheses for the following content types: Infographic, Video, Video Carousel");
 	}
 
 	/********************** Data Providers **********************/
@@ -371,6 +398,24 @@ public class SitewideSearch_Test extends BaseClass {
 			String definitionKeyword = excelReader.getCellData(DEFINITION_SEARCH_SHEET_NAME, "DefinitionKeywords",
 					rowNum);
 			Object ob[] = { definitionKeyword };
+
+			myObjects.add(ob);
+
+		}
+		return myObjects.iterator();
+
+	}
+
+	@DataProvider(name = "ContentTypeSearch")
+	public Iterator<Object[]> readContentTypeSearchData() {
+		ExcelManager excelReader = new ExcelManager(testDataFilePath);
+
+		ArrayList<Object[]> myObjects = new ArrayList<Object[]>();
+
+		for (int rowNum = 2; rowNum <= excelReader.getRowCount(CONTENTTYPE_SEARCH_SHEET_NAME); rowNum++) {
+			String keyword = excelReader.getCellData(CONTENTTYPE_SEARCH_SHEET_NAME, "Keyword", rowNum);
+			String contentType = excelReader.getCellData(CONTENTTYPE_SEARCH_SHEET_NAME, "ContentType", rowNum);
+			Object ob[] = { keyword, contentType };
 
 			myObjects.add(ob);
 
