@@ -124,6 +124,16 @@ public class SitewideSearch_Test extends BaseClass {
 	// "Please enter a search phrase."
 	// -------------------------------------------------------------------------
 
+	@Test(dataProvider = "Search", groups = { "Smoke" })
+	public void verifySearchResultsShowResult(String keyword) {
+
+		search.search(keyword);
+		Assert.assertTrue(search.getShowResultsLabel().getText().contains("Show"));
+		Assert.assertTrue(search.getResultsPerPage().getText().contains("results per page"));
+
+		logger.log(LogStatus.PASS, "Verify that Show results per page is displayed on Search Results page");
+	}
+
 	@Test(groups = { "Smoke" })
 	public void verifyEmptySitewideSearch() {
 
