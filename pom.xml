@@ -17,7 +17,7 @@
       Set up the default test suite to run if one isn't specified from mvn command line.
       (override with "-Dsurefire.suiteXmlFiles=<testfile>", specifying a path if needed.)
     -->
-    <suiteFile>resources/testng-All.xml</suiteFile>
+    <suiteFile>resources/testng-WA.xml</suiteFile>
 
   </properties>
 
