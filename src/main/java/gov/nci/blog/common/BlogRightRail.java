@@ -72,7 +72,7 @@ public class BlogRightRail extends PageObjectBase {
 	 * @return
 	 */
 	public WebElement getArchiveMonth(String month, String year) {
-		String cssSelector = "filter[year]=" + year + "&filter[month]=" + month;
+		String cssSelector = "year=" + year + "&month=" + month;
 		WebElement element = driver.findElement(By.cssSelector("a[href*='" + cssSelector + "']"));
 		return element;
 	}
