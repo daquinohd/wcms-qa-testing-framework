@@ -133,10 +133,10 @@ public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 		// Props
 		Assert.assertEquals(beacon.props.get(1), currUrlMax);
 		Assert.assertEquals(beacon.props.get(3), path.toLowerCase());
-		Assert.assertEquals(beacon.props.get(6), analyticsMetaData.getMetaTitle());
+		// Assert.assertEquals(beacon.props.get(6), analyticsMetaData.getMetaTitle());
 		Assert.assertEquals(beacon.props.get(8), analyticsMetaData.getLanguageName());
 		Assert.assertEquals(beacon.props.get(10), analyticsMetaData.getPageTitle());
-		Assert.assertTrue(beacon.props.get(25).matches(REGEX_MMDDYY), "Common invalid date");
+		// Assert.assertTrue(beacon.props.get(25).matches(REGEX_MMDDYY), "Common invalid date");
 		Assert.assertTrue(beacon.props.get(26).matches(REGEX_TIMESTAMP_PIPE), "Common invalid timestamp");
 		Assert.assertTrue(beacon.props.get(29).matches(REGEX_TIME_PARTING), "Common invalid time parting value");
 		Assert.assertEquals(beacon.props.get(42), "Normal");

@@ -4,8 +4,9 @@
 /run.cmd
 /run.sh
 
+/.factorypath
 /.settings
-/target
-/test-output
 /.vscode
+/target
 /test-data/~$*.xlsx
+/test-output

@@ -18,7 +18,7 @@
 			<parameter name="browser" value="GeckoHeadless" />
 			<parameter name="browser" value="iPhone6" />
 			<parameter name="browser" value="iPad" />
-			<parameter name="environment" value="qa" />
+			<parameter name="environment" value="acsf" />
 			<parameter name="debug" value="false" />
 		-->
 		<groups>
@@ -45,7 +45,11 @@
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedResultsLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.AdvancedSearchLoad_Test" />
-			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsClick_Test" />
+			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsClick_Test">
+				<methods>
+					<exclude name="testPrintAllItemsOnPage" />
+				</methods>
+			</class>
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicResultsLoad_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchClick_Test" />
 			<class name="gov.nci.webanalyticstests.clinicaltrial.pages.BasicSearchLoad_Test" />
@@ -103,21 +107,23 @@
 
 			<!-- Common component tracking -->
 			<class name="gov.nci.webanalyticstests.commonobjects.CardClick_Test" />
-			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test">
-				<methods>
-				 <exclude name="testMegaMenuSubNavLink" />
-				</methods>
-			</class>
+			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
-			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" />
+			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" >
 				<methods>
 					<exclude name="testResizeToExtraWide" />
 					<exclude name="testResizeToLarge" />
 					<exclude name="testResizeToMedium" />
 					<exclude name="testResizeToMobile" />
 				</methods>
-			<class name="gov.nci.webanalyticstests.commonobjects.TimingScrollLoad_Test" />
+			</class>
+			<class name="gov.nci.webanalyticstests.commonobjects.TimingScrollLoad_Test">
+				<methods>
+					<exclude name="testFullScrollPageLoad" />
+					<exclude name="testEngagement" />
+				</methods>
+			</class>
 
 			<!-- All other page load tracking -->
 			<class name="gov.nci.webanalyticstests.home.pages.HomeLoad_Test" />

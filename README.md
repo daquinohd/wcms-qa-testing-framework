@@ -20,12 +20,12 @@ To use a different environment, on the maven commmand line, specify
 `-Denvironment=<environment_name>`
 
     Valid values are:
-      blue
-      red
-      pink
-      qa
-      dt
+      acsf
+      int
       stage
+      test
+      qa
+      dev
       
 
 ### Specifying a test suite.

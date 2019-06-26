@@ -47,6 +47,19 @@ public class ClickUtil {
 	}
 
 	/**
+	 * Mimic a user repeatedly scrolling up and down.
+	 * 
+	 * @param driver
+	 */
+	public static void stall(WebDriver driver) {
+		javaScript = (JavascriptExecutor) driver;
+		for (int i = 0; i <= 3; i++) {
+			javaScript.executeScript("window.scrollTo(0,document.body.scrollHeight),"
+					+ "window.scrollTo(0,document.body.scrollHeight/2),window.scrollTo(0,0);");
+		}
+	}
+
+	/**
 	 * Mimic a user repeatedly pressing up and down keys on a given element.
 	 * Currently used for engagement tracking and to stall for analytics event after
 	 * the megamenu is expanded.
@@ -70,19 +83,6 @@ public class ClickUtil {
 	 */
 	public static void stall(WebElement webElement) {
 		stall(webElement, 5);
-	}
-
-	/**
-	 * Mimic a user repeatedly scrolling up and down.
-	 * 
-	 * @param driver
-	 */
-	public static void stall(WebDriver driver) {
-		javaScript = (JavascriptExecutor) driver;
-		for (int i = 0; i <= 5; i++) {
-			javaScript.executeScript("window.scrollTo(0,document.body.scrollHeight),"
-					+ "window.scrollTo(0,document.body.scrollHeight/2),window.scrollTo(0,0);");
-		}
 	}
 
 }

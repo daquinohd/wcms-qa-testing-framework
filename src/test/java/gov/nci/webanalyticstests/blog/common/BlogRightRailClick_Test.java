@@ -123,7 +123,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_SERIES_ES);
 
 		try {
-			rightRail.clickArchiveHeader();
+			rightRail.expandArchiveHeader();
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
@@ -140,7 +140,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_POST_ES);
 
 		try {
-			rightRail.clickArchiveHeader();
+			rightRail.expandArchiveHeader();
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");
@@ -157,7 +157,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_SERIES_EN);
 
 		try {
-			rightRail.clickArchiveHeader();
+			rightRail.expandArchiveHeader();
 			rightRail.clickArchiveYear("2017");
 			rightRail.clickArchiveMonth("5", "2017");
 
@@ -177,7 +177,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
-			rightRail.clickArchiveHeader();
+			rightRail.expandArchiveHeader();
 			rightRail.clickArchiveYear("2017");
 			rightRail.clickArchiveMonth("5", "2017");
 
@@ -197,8 +197,8 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(BLOG_POST_EN);
 
 		try {
-			rightRail.clickArchiveHeader();
-			rightRail.clickArchiveHeader();
+			rightRail.expandArchiveHeader();
+			rightRail.collapseArchiveHeader();
 
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, "BlogAccordionAction");

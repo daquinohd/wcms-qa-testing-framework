@@ -97,13 +97,20 @@ public class MegaMenu extends PageObjectBase {
 	public void revealMegaMenuMobile() {
 		driver.manage().window().setSize(Resize.small);
 		mm_reveal_mobile.click();
-		
+
 		WebElement element = driver.findElement(By.cssSelector("button.toggle"));
 		ClickUtil.stall(element);
 	}
 
-	public void clickMegaMenuMobileButton() {
-		ClickUtil.forceClick(driver, ".nav-item-title button.toggle");
+	public void expandMegaMenuMobileButton() {
+		revealMegaMenuMobile();
+		ClickUtil.forceClick(driver, ".nav-item-title button.toggle[aria-expanded='false']");
+	}
+
+	public void collapseMegaMenuMobileButton() {
+		expandMegaMenuMobileButton();
+		ClickUtil.stall(driver);
+		ClickUtil.forceClick(driver, ".nav-item-title button.toggle[aria-expanded='true']");
 	}
 
 	/**
@@ -116,5 +123,5 @@ public class MegaMenu extends PageObjectBase {
 		WebElement element = driver.findElement(By.xpath("//*[contains(text(), '" + text + "')]"));
 		return element;
 	}
-	
+
 }
