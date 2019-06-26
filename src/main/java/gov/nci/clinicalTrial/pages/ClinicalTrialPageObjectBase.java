@@ -105,6 +105,17 @@ public class ClinicalTrialPageObjectBase extends PageObjectBase {
 	}
 
 	/**
+	 * Press the Enter key on a given element. 
+	 * 
+	 * @param selector
+	 */
+	public void pressEnterOnField(String selector) {
+		WebElement element = browser.findElement(By.cssSelector(selector));
+		ScrollUtil.scrollIntoview(browser, element);
+		element.sendKeys(Keys.ENTER);
+	}
+	
+	/**
 	 * Navigate away from the CTS page.
 	 * 
 	 * @param url
