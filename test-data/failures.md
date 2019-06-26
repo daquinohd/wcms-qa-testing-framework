@@ -15,3 +15,5 @@
 - testBlogSeriesSubscribeClick(), testBlogPostSubscribeClick()
   - false negative
 
+- testDictionaryPopupLoad() 
+  - deprecated functionality

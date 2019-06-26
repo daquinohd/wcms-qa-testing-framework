@@ -19,7 +19,7 @@ public class DictPopupLoad_Test extends DictionaryLoadBase {
 	// ==================== Test methods ==================== //
 
 	/// Test Dictionary Popup Page load event
-	@Test(dataProvider = "DictionaryPopupLoad", groups = { "Analytics" })
+	/// @Test(dataProvider = "DictionaryPopupLoad", groups = { "Analytics" })
 	public void testDictionaryPopupLoad(String path, String contentType) {
 		System.out.println("Path: " + path + ",  Type: " + contentType);
 		driver.get(config.goHome() + path);
