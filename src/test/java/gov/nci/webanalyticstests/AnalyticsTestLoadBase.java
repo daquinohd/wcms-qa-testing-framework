@@ -15,7 +15,7 @@ import gov.nci.webanalytics.Beacon;
 public class AnalyticsTestLoadBase extends AnalyticsTestBase {
 
 	private final String REGEX_BROWSER_SIZE = "^(Extra wide|Desktop|Tablet|Mobile)$";
-	private final String REGEX_MMDDYY = "^(0[1-9]|1[012])[- \\/.](0[1-9]|[12][0-9]|3[01])[- \\/.](19|20)\\d\\d$"; // 01/01/2018
+	private final String REGEX_MMDDYY = "^(0[1-9]|1[012])[- \\/.](0[1-9]|[12][0-9]|3[01])[- \\/.](19|20)\\d\\d.*"; // 01/01/2018
 	private final String REGEX_PAGELOAD_TIME = "^\\d{1,4}$";
 	private final String REGEX_TIME_PARTING = "^\\d{1,2}:\\d{2} (AM|PM)\\|[a-zA-z]+day$"; // 2:35 PM|Tuesday
 	private final String REGEX_TIMESTAMP_PIPE = "^\\d{4}\\|\\d{1,2}\\|\\d{1,2}\\|\\d{1,2}$"; // 05/06/2018
