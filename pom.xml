@@ -149,17 +149,17 @@
               To use a different environment, on the maven commmand line, specify
               `-Denvironment=<environment_name>`
 
-              Valid values are:              
-                blue
-                red
-                pink
-                qa
-                dt
+              Valid values are:
+                prod
+                acsf
+                int
                 stage
-
-              If no environment is specified, the default is QA.
+                test
+                qa
+                dev
+              If no environment is specified, the default is acsf.
             -->
-            <environment>qa</environment>
+            <environment>acsf</environment>
             <debug>false</debug>
           </systemPropertyVariables>
         </configuration>

@@ -21,8 +21,6 @@ public class AnalyticsMetaData extends PageObjectBase {
 	 *****************************/
 	@FindBy(how = How.XPATH, using = "//meta[@property='og:title']")
 	WebElement meta_title;
-	@FindBy(how = How.XPATH, using = "//meta[@name='content-language']")
-	WebElement meta_language;
 	@FindBy(how = How.XPATH, using = "//meta[@name='dcterms.coverage']")
 	WebElement meta_coverage;
 	@FindBy(how = How.XPATH, using = "//meta[@name='dcterms.subject']")
@@ -44,7 +42,8 @@ public class AnalyticsMetaData extends PageObjectBase {
 	}
 
 	public String getMetaLanguage() {
-		return meta_language.getAttribute("content").trim();
+		WebElement htmlTag = getElementFromCss("html");
+		return htmlTag.getAttribute("lang");
 	}
 
 	public String getMetaCoverage() {
@@ -98,7 +97,7 @@ public class AnalyticsMetaData extends PageObjectBase {
 				return "english";
 			}
 		} catch (Exception e) {
-			if (driver.getCurrentUrl().toLowerCase().contains("spanish")) {
+			if (driver.getCurrentUrl().toLowerCase().contains("espanol")) {
 				return "spanish";
 			} else {
 				return "english";
