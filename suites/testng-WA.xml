@@ -31,11 +31,7 @@
 			<!-- Blog tracking -->
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostLoad_Test" />
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostClick_Test" />
-			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesLoad_Test">
-				<methods>
-					<exclude name="testBlogSeriesPageLoad" />
-				</methods>
-			</class>
+			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesLoad_Test" />
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogSeriesClick_Test" />
 			<class name="gov.nci.webanalyticstests.blog.common.BlogLinksClick_Test" />
 			<class name="gov.nci.webanalyticstests.blog.common.BlogRightRailClick_Test" />

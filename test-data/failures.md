@@ -11,3 +11,7 @@
 - Assert.assertEquals(beacon.eVars.get(48), analyticsMetaData.getMetaIsPartOf() + " Viewer");
   - blog post load, prop48 not set
   - Fix: DTM library custom rule
+
+- testBlogSeriesSubscribeClick(), testBlogPostSubscribeClick()
+  - false negative
+

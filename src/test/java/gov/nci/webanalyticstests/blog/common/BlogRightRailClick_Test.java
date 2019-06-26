@@ -220,7 +220,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	private void doCommonClassAssertions(Beacon beacon, String linkName) {
 		// Note: remove this once pageName value is fixed on CDE side
 		Assert.assertEquals(beacon.linkName, linkName);
-		Assert.assertTrue(currentUrl.contains(beacon.props.get(67)), "prop67 incorrect");
+		doCommonClickAssertions(beacon);
 	}
 
 }
