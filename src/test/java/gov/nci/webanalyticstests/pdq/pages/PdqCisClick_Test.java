@@ -1,13 +1,10 @@
 package gov.nci.webanalyticstests.pdq.pages;
 
 import java.util.Iterator;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.Assert;
-
-import gov.nci.pdq.common.PdqRightNav;
 import gov.nci.pdq.pages.PdqPage;
 import gov.nci.webanalytics.Beacon;
 import gov.nci.webanalyticstests.AnalyticsTestClickBase;
@@ -15,7 +12,6 @@ import gov.nci.webanalyticstests.AnalyticsTestClickBase;
 public class PdqCisClick_Test extends AnalyticsTestClickBase {
 
 	private PdqPage pdqPage;
-	private PdqRightNav pdqRightNav;
 	private String testDataFilePath;
 
 	// ==================== Setup methods ==================== //
@@ -31,7 +27,6 @@ public class PdqCisClick_Test extends AnalyticsTestClickBase {
 		try {
 			driver.get(config.goHome() + path);
 			pdqPage = new PdqPage(driver);
-			pdqRightNav = pdqPage.getRightNav();
 			System.out.println("Path: " + path);
 		} catch (Exception e) {
 			Assert.fail("Error building PDQ page object.");
@@ -48,11 +43,6 @@ public class PdqCisClick_Test extends AnalyticsTestClickBase {
 		setupTestMethod(path);
 
 		try {
-			// We need to click the section link twice to ensure that we don't capture the
-			// old GlobalLinkTrack beacon.
-			pdqRightNav.clickSection(linkName);
-			pdqRightNav.clickSection(linkName);
-
 			Beacon beacon = getBeacon();
 			doCommonClickAssertions(beacon);
 			Assert.assertEquals(beacon.linkName, "RightNavLink-");

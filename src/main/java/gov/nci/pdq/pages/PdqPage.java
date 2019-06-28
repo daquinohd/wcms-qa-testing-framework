@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import gov.nci.framework.PageObjectBase;
-import gov.nci.pdq.common.PdqRightNav;
 import gov.nci.Utilities.ClickUtil;
 import gov.nci.Utilities.ScrollUtil;
 import gov.nci.commonobjects.OnThisPage;
@@ -17,7 +16,6 @@ import gov.nci.commonobjects.OnThisPage;
 public class PdqPage extends PageObjectBase {
 
 	private WebDriver driver;
-	private PdqRightNav rightNav;
 	private OnThisPage onThisPage;
 
 	/**
@@ -28,12 +26,7 @@ public class PdqPage extends PageObjectBase {
 	public PdqPage(WebDriver driver) throws MalformedURLException, UnsupportedEncodingException {
 		super(driver);
 		this.driver = driver;
-		this.rightNav = new PdqRightNav(driver);
 		PageFactory.initElements(driver, this);
-	}
-
-	public PdqRightNav getRightNav() {
-		return rightNav;
 	}
 
 	public OnThisPage getOnThisPage() {
