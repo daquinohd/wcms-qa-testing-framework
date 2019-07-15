@@ -20,12 +20,12 @@ To use a different environment, on the maven commmand line, specify
 `-Denvironment=<environment_name>`
 
     Valid values are:
-      blue
-      red
-      pink
-      qa
-      dt
+      acsf
+      int
       stage
+      test
+      qa
+      dev
       
 
 ### Specifying a test suite.
@@ -55,60 +55,45 @@ Valid browser names are:
 
 **NOTE:** Names are CaSe seNstive.  (e.g. "Chrome" is not the same as "chrome.")
 
+# Testing Web Analytics
+This package will eventually be used for testing analytics exclusively. 
 
-## Setup For Eclipse
-1. Open Eclipse and workspace.
-2. Install TestNG
-   1. Launch the Eclipse IDE and from Help menu, click **Install New Software**.
-   2. Click Add button.
-   3. Enter name as **TestNG** and type http://beust.com/eclipse/ as location. Click OK.
-   4. The TestNG option should display in the available software list. Click TestNG and click Next button.
-   5. Accept the terms of the license agreement, then click Finish.
-   6. Click Next again on the succeeding dialog box until it prompts you to Restart the Eclipse and click Yes.
-3. Wait for installation to complete, then restart Eclipse.
+### When to run the test
+* Any release involving analytics or DTM changes.
+* Any release involving changes to site HTML. 
+* Any release involving changes to CSS or JavaScript.
+* Every major release.
 
-## To run tests:
-1. In Eclipse navigator, expand resources -> drivers.
-2. Right-click **testng.xml**, select **Run as -> TestNG Suite**.
+### How to track issues
+Given the nature of CancerGov's release schedule and content changes, we can expect a handful of errors when the script is run. A pass rate of over 90% generally means that analytics are working as expected, but there are a few issues that need to be resolved. Anything below that may point to a larger issue in the site's code or require an update to the test data.
 
-## To change tests or browsers: 
-1. In Eclipse navigator, expand resources -> drivers.
-2. Open **testng.xml** for editing. 
-3. Add or uncomment any elements that should be tested.
+Errors will generally appear as one of two flavors:
 
-## To change testing tier:
-1. In Eclipse navigator, expand src/main/java/gov.nci.Utilities.
-2. Open **ConfigReader.java** for editing.
-3. Change the "/configuration/ConfigXXXX.property" string to match the desired tier.
-4. Save and run tests.
+### Assertion failures
+These are cases where the test runs as expected, but does not pass. 
 
-## Installing Drivers/Plugins
-*Note - the required drivers are currently pulled in with the Git repo and do not need to be installed. If any of these need to be reinstalled manually, download from the given link, extract, then copy the files to the referenced path in Eclipse.*
-### Maven Install:
-1. Go to URL: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-eclipse-plugin/2.10/
-2. Click on maven-eclipse-plugin-2.10-source-release.zip
-3. Extract files in the appropriate folder
-### Selenium Webdriver:
-1. http://selenium-release.storage.googleapis.com/index.html?path=3.5/
-2. Click on selenium-java-3.5.0.zip
-3. Extract files in the appropriate folder
-### ChromeDriver:
-1. https://chromedriver.storage.googleapis.com/index.html?path=2.34/
-2. Click on chromedriver_win32.zip
-3. Extract files in the appropriate folder
+Examples:
 
-### Gecko Driver:
-1. https://github.com/mozilla/geckodriver/releases/tag/v0.23.0
-2. Download file for desired OS:
-   1. **Windows:** geckodriver-v0.23.0-win64.zip
-   2. **Mac OS:** geckodriver-v0.23.0-macos.tar.gz
-   3. **Linux:** geckodriver-v0.23.0-linux64.tar.gz
-3. Extract file and copy to the appropriate folder
+`BlogRightRailClick_Test.testBlogPostRailMonthClick:185->doCommonClassAssertions:222 expected [BlogArchiveDateClick] but found [BlogAccordionAction]`
 
-### Apache Maven:
-1. https://maven.apache.org/download.cgi
-2. Click on apache-maven-3.5.2-bin.zip
-3. Extract files in the appropriate folder
-### BrowserMob Proxy:
-1. Download source from https://github.com/lightbody/browsermob-proxy
-2. Build and place jar in the appropriate folder
+`BasicSearchClick_Test.testBasicKeywordMatch:102 event39 expected [true] but found [false]`
+
+Reporting:
+1. Have the analytics team verify the error manually.
+1. If the issue is verified, submit a ticket to the dev team to resolve the issue.
+
+### DOM errors
+These are cases where a test fails due to a navigation error, page timeout, null selector, or some other server error.
+
+Examples:
+
+`ErrorClick_Test.testErrorPageSearchEn:46->AnalyticsTestClickBase.handleTestErrors:122 Click event exception in testErrorPageSearchEn(): org.openqa.selenium.NoSuchElementException: Unable to locate element: //label[@for='englishl']`
+
+`BlogPostClick_Test.testBlogPostRecommendedClick:89->AnalyticsTestClickBase.handleTestErrors:122 Click event exception in testBlogPostRecommendedClick(): java.lang.NullPointerException`
+
+`TrialPrintLoad_Test.testCtsPrintPageLoad:59->AnalyticsTestLoadBase.handleTestErrors:170 Load event exception in testCtsPrintPageLoad(): org.openqa.selenium.TimeoutException: Expected condition failed: waiting for gov.nci.framework.PageObjectBase$$Lambda$333/0x000000080053d840@5bb24a84 (tried for 20 second(s) with 500 milliseconds interval)`
+
+Reporting:
+1. Have the analytics team verify the error manually.
+1. If the issue is verified, the analytics team should submit a ticket to either: 1) update the code or content to pass the correct value or 2) update the test to match the site's data.
+
