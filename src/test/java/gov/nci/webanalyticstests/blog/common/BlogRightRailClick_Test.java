@@ -118,7 +118,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Blog Series Rail Archive Expand click
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testBlogSeriesRailArchiveExpand() {
 		setupTestMethod(BLOG_SERIES_ES);
 
@@ -192,7 +192,7 @@ public class BlogRightRailClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Blog Post Rail Archive collapse
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testBlogPostRailArchiveCollapse() {
 		setupTestMethod(BLOG_POST_EN);
 

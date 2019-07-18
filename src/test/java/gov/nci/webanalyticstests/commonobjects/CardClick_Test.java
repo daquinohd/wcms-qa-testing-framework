@@ -43,7 +43,7 @@ public class CardClick_Test extends AnalyticsTestClickBase {
 	// ==================== Test methods ==================== //
 
 	/// Test Home Page Card click events
-	@Test(dataProvider = "HomeCardClickData", groups = { "Analytics" })
+	/// @Test(dataProvider = "HomeCardClickData", groups = { "Analytics" })
 	public void testHomePageCardClick(String path, String titleSel, String linkSel, String cardTypePos) {
 		System.out.println("Path: " + path + ", Card type/position: " + cardTypePos);
 		setupTestMethod(path);
@@ -63,7 +63,7 @@ public class CardClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Landing Page Card click events
-	@Test(dataProvider = "LandingCardClickData", groups = { "Analytics" })
+	/// @Test(dataProvider = "LandingCardClickData", groups = { "Analytics" })
 	public void testLandingPageCardClick(String path, String titleSel, String linkSel, String cardTypePos) {
 		System.out.println("Path: " + path + ", Card type/position: " + cardTypePos);
 		setupTestMethod(path);
@@ -83,7 +83,7 @@ public class CardClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Topic Page Card click events
-	@Test(dataProvider = "TopicCardClickData", groups = { "Analytics" })
+	/// @Test(dataProvider = "TopicCardClickData", groups = { "Analytics" })
 	public void testTopicPageCardClick(String path, String titleSel, String linkSel, String cardTypePos) {
 		System.out.println("Path: " + path + ", Card type/position: " + cardTypePos);
 		setupTestMethod(path);

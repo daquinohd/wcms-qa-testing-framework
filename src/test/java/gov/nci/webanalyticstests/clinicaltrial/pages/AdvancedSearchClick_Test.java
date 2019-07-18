@@ -89,7 +89,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Advanced CTS zip submit click event
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testAdvancedCompleteZip() {
 		setupTestMethod();
 
@@ -149,7 +149,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Advanced CTS 'Abandon' click event (age)
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testAdvancedAbandonAge() {
 		setupTestMethod();
 
