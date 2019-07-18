@@ -147,7 +147,7 @@ public class CardClick_Test extends AnalyticsTestClickBase {
 
 		doCommonClickAssertions(beacon);
 		Assert.assertTrue(beacon.hasEvent(27), "Missing event27");
-		Assert.assertEquals(beacon.linkName, "FeatureCardClick");
+		Assert.assertEquals(beacon.linkName, "CardClick");
 		Assert.assertEquals(beacon.props.get(57), titleText.trim());
 		Assert.assertEquals(beacon.props.get(58), linkText.trim());
 		Assert.assertEquals(beacon.props.get(59), typePosition);

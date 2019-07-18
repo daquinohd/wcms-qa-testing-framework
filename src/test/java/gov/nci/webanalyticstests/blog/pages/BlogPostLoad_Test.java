@@ -39,7 +39,7 @@ public class BlogPostLoad_Test extends AnalyticsTestLoadBase {
 			
 			Beacon beacon = getBeacon();
 			doCommonLoadAssertions(beacon, analyticsMetaData, path);
-			Assert.assertEquals(beacon.eVars.get(48), analyticsMetaData.getMetaIsPartOf() + " Viewer");
+			// Assert.assertEquals(beacon.eVars.get(48), analyticsMetaData.getMetaIsPartOf() + " Viewer");
 			logger.log(LogStatus.PASS, "Test Blog Post Page load event passed.");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {

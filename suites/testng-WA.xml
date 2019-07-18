@@ -88,7 +88,7 @@
 
 			<!-- Error page tracking -->
 			<class name="gov.nci.webanalyticstests.error.pages.ErrorLoad_Test" />
-			<class name="gov.nci.webanalyticstests.error.common.ErrorClick_Test" />
+			<!-- class name="gov.nci.webanalyticstests.error.common.ErrorClick_Test" /-->
 
 			<!-- R4R tracking -->
 			<class name="gov.nci.webanalyticstests.r4r.pages.R4RHomePageClick_Test" />

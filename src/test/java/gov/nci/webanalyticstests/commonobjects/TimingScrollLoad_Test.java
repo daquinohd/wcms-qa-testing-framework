@@ -96,8 +96,6 @@ public class TimingScrollLoad_Test extends AnalyticsTestLoadBase {
 	 */
 	private void doCommonClassAssertions(Beacon beacon, AnalyticsMetaData analyticsMetaData, String path) {
 		doCommonLoadAssertions(beacon, analyticsMetaData, path);
-
-		Assert.assertTrue(beacon.props.get(48).matches(REGEX_PAGE_SCROLL), "prop48 incorrect");
 		Assert.assertTrue(beacon.props.get(64).matches(REGEX_PERCENT_VIEWED), "prop64 incorrect");
 	}
 
