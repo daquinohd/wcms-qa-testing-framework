@@ -128,7 +128,7 @@ public class BasicSearchClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Basic CTS 'Abandon' click event (age)
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testBasicAbandonAge() {
 		setupTestMethod();
 
