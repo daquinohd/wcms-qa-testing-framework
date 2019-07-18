@@ -28,6 +28,7 @@
 		</groups>
 		<classes>
 
+
 			<!-- Blog tracking -->
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostLoad_Test" />
 			<class name="gov.nci.webanalyticstests.blog.pages.BlogPostClick_Test" />
@@ -106,14 +107,7 @@
 			<class name="gov.nci.webanalyticstests.commonobjects.MegaMenuClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.OnThisPageClick_Test" />
 			<class name="gov.nci.webanalyticstests.commonobjects.RelatedResourcesClick_Test" />
-			<class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" >
-				<methods>
-					<exclude name="testResizeToExtraWide" />
-					<exclude name="testResizeToLarge" />
-					<exclude name="testResizeToMedium" />
-					<exclude name="testResizeToMobile" />
-				</methods>
-			</class>
+			<!-- class name="gov.nci.webanalyticstests.commonobjects.ResizeClick_Test" -->
 			<class name="gov.nci.webanalyticstests.commonobjects.TimingScrollLoad_Test">
 				<methods>
 					<exclude name="testFullScrollPageLoad" />

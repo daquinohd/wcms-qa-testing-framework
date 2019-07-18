@@ -108,7 +108,7 @@ public class AdvancedSearchClick_Test extends AnalyticsTestClickBase {
 	}
 
 	/// Test Advanced CTS 'Complete' click event (investigator)
-	@Test(groups = { "Analytics" })
+	/// @Test(groups = { "Analytics" })
 	public void testAdvancedCompleteInv() {
 		setupTestMethod();
 

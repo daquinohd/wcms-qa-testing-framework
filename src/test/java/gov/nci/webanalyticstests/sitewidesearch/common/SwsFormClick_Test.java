@@ -76,7 +76,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 			Beacon beacon = getBeacon();
 			doCommonClassAssertions(beacon, searchTerm);
 			Assert.assertEquals(beacon.props.get(8), "spanish");
-			Assert.assertEquals(beacon.props.get(11), "sitewide_spanish");
+			Assert.assertEquals(beacon.props.get(11), "sitewide");
 		} catch (Exception e) {
 			handleTestErrors(new Object() {
 			}, e);
@@ -181,7 +181,7 @@ public class SwsFormClick_Test extends AnalyticsTestClickBase {
 		doCommonClickAssertions(beacon);
 		Assert.assertTrue(beacon.hasEvent(2), "Missing event2");
 		Assert.assertEquals(beacon.linkName, "SiteWideSearch");
-		Assert.assertEquals(beacon.props.get(14), searchTerm.toLowerCase());
+		Assert.assertEquals(beacon.props.get(14), searchTerm);
 		Assert.assertEquals(beacon.eVars.get(11), beacon.props.get(11));
 		Assert.assertTrue(beacon.eVars.get(13).matches("^\\+\\d{1,2}$"), "eVar13 incorrect");
 		Assert.assertEquals(beacon.eVars.get(14), beacon.props.get(14));
